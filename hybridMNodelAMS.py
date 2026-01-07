@@ -160,6 +160,48 @@ def run_protein_transition_scenario(df_results, reduction_target=0.5):
     print(f"Baseline Emissions: {baseline_emissions:,.0f} tCO2e")
     print(f"Scenario Emissions: {new_emissions:,.0f} tCO2e")
     print(f"Total Reduction: {savings:,.0f} tCO2e (-{(savings/baseline_emissions)*100:.1f}%)")
+    
+def run_food_waste_reduction_scenario(calculator, df_cbs, df_rivm, reduction_target=0.5):
+    """
+    Simulates the 'Circular Food' policy:
+    Reduces the Waste Factor (upstream/retail loss) by a target percentage.
+    
+    Parameters:
+    - reduction_target: 0.5 means a 50% reduction in waste volume (Amsterdam 2030 Goal).
+    """
+    # 1. Capture Baseline State
+    # Run the model with the default configuration (e.g., Waste Factor 1.15)
+    baseline_results = calculator.run_model(df_cbs, df_rivm)
+    baseline_total = baseline_results.sum()
+    
+    # 2. Modify the WASTE_FACTOR
+    # Logic: The factor 1.15 implies 15% waste. We want to reduce that 0.15 portion.
+    original_factor = calculator.cfg.WASTE_FACTOR
+    waste_portion = original_factor - 1.0
+    new_waste_portion = waste_portion * (1.0 - reduction_target)
+    new_factor = 1.0 + new_waste_portion
+    
+    print(f"\n--- Running Scenario: {reduction_target*100}% Food Waste Reduction ---")
+    print(f"Adjusting Waste Factor: {original_factor} -> {new_factor:.3f}")
+    
+    # Apply new factor to the calculator's config
+    calculator.cfg.WASTE_FACTOR = new_factor
+    
+    # 3. Re-Run Model with New Factor
+    scenario_results = calculator.run_model(df_cbs, df_rivm)
+    scenario_total = scenario_results.sum()
+    
+    # 4. Calculate & Print Impact
+    savings = baseline_total - scenario_total
+    print(f"Baseline Emissions: {baseline_total:,.0f} tCO2e")
+    print(f"Scenario Emissions: {scenario_total:,.0f} tCO2e")
+    print(f"Total Reduction: {savings:,.0f} tCO2e (-{(savings/baseline_total)*100:.1f}%)")
+    
+    # 5. Reset Config (Important!)
+    # Restore the original factor so subsequent runs aren't affected
+    calculator.cfg.WASTE_FACTOR = original_factor
+    
+    return scenario_results
 
 # ==========================================
 # 5. EXECUTION
@@ -182,4 +224,9 @@ if __name__ == "__main__":
     print(hotspots.head())
     
     # Run Policy Scenario
+    # Run Protein Transition Scenario
     run_protein_transition_scenario(impact_data)
+
+    # Run Food Waste Reduction Scenario (New)
+    # Note: We pass the calculator object itself to allow config modification
+    run_food_waste_reduction_scenario(calculator, cbs_data, rivm_data, reduction_target=0.5)
