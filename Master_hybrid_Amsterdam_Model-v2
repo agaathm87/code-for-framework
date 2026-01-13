@@ -1,3 +1,33 @@
+"""
+Master Hybrid Amsterdam Model v2
+Comprehensive Food Systems Scope 3 Emissions Analysis
+
+This version provides advanced multi-chart visualization and spatial analysis:
+- 7 diet scenarios with behavioral modifiers (income + education)
+- Comprehensive visualization suite (nexus, plates, donuts, heatmap)
+- Distance-to-goals matrix showing required emission reductions
+- Neighborhood hotspot analysis with income scaling
+- Multi-dimensional impact assessment (CO2, land, water)
+
+New Features in v2:
+- Education-based behavioral modifiers (high education = lower meat preference)
+- Distance-to-goals heatmap (% reduction needed to reach targets)
+- Separated mass vs emissions visualizations
+- Side-by-side donuts showing category breakdown and total emissions
+
+Outputs:
+- 1_Nexus_Analysis.png: Multi-resource impact comparison
+- 2_All_Plates_Mass.png: Physical diet composition comparison
+- 3_All_Emissions_Donuts.png: Emission sources breakdown
+- 4_Distance_To_Goals.png: Heatmap of reduction pathways
+- 5_Neighborhood_Hotspots.png: Spatial emission distribution
+- Console: Master tonnage report with baseline comparison
+
+Author: Challenge Based Project Team
+Date: January 2026
+Version: 2.0
+"""
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,6 +37,17 @@ import seaborn as sns
 # 1. CONFIGURATION
 # ==========================================
 class HybridModelConfig:
+    """
+    Configuration parameters for the hybrid food systems model v2.
+    
+    Attributes:
+        NATIONAL_AVG_INCOME (int): Netherlands average household income (EUR/year)
+        SCALING_C1 (float): Valencia volume scaling coefficient
+        SCALING_C2 (float): Valencia income elasticity exponent
+        WASTE_FACTOR (float): Supply chain loss multiplier (1.15 = 15% waste)
+        POPULATION_TOTAL (int): Total Amsterdam metropolitan population
+    """
+    
     def __init__(self):
         self.NATIONAL_AVG_INCOME = 32000
         self.SCALING_C1 = 0.8
@@ -15,7 +56,8 @@ class HybridModelConfig:
         self.POPULATION_TOTAL = 882000
 
 # --- VISUALIZATION MAPPING ---
-# Consolidates granular model keys into 8 Report Categories
+# Consolidates granular model keys into 8 Report Categories for cleaner visualization
+# Maps individual food items (e.g., Beef, Pork) to broader food groups (e.g., Red Meat)
 VISUAL_MAPPING = {
     'Beef': 'Red Meat', 'Pork': 'Red Meat',
     'Chicken': 'Poultry', 'Poultry': 'Poultry',
@@ -28,15 +70,33 @@ VISUAL_MAPPING = {
 }
 
 # --- COLOR PALETTE ---
+# Consistent category ordering for all visualizations across the suite
 CAT_ORDER = ['Red Meat', 'Poultry', 'Dairy & Eggs', 'Fish', 'Plant Protein', 'Staples', 'Veg & Fruit', 'Ultra-Processed']
+
+# Color scheme: gradient from high-impact (dark red) to low-impact (light green)
 COLORS = ['#8B0000', '#F08080', '#FFD700', '#4682B4', '#2E8B57', '#DEB887', '#90EE90', '#A9A9A9']
+
+# Color mapping dictionary for easy lookup in plots
 COLOR_MAP = dict(zip(CAT_ORDER, COLORS))
 
 # ==========================================
 # 2. DATA INGESTION
 # ==========================================
 def load_impact_factors():
-    """ Scope 3 Factors (CO2 kg/kg, Land m2/kg, Water L/kg) """
+    """ 
+    Load comprehensive Scope 3 environmental impact factors.
+    
+    Data sources:
+    - CO2 factors: Trans-boundary LCA from Blonk Consultants
+    - Land use: Global agricultural land footprint (Poore & Nemecek 2018)
+    - Water: Blue water consumption (WaterFootprint Network)
+    
+    Returns:
+        pd.DataFrame: Impact factors indexed by food item with columns:
+            - co2: kg CO2e per kg product
+            - land: m² per kg product
+            - water: liters per kg product
+    """
     factors = {
         'Beef':      {'co2': 28.0, 'land': 25.0, 'water': 15400},
         'Pork':      {'co2': 5.0,  'land': 9.0,  'water': 6000},
@@ -59,8 +119,35 @@ def load_impact_factors():
 
 def load_diet_profiles():
     """ 
-    Comparison Diets (Grams/Day).
-    Includes Monitor 2024 (Empirical), Metropolitan, Metabolic Balance, and Goals.
+    Load 7 dietary scenario profiles for comprehensive comparison.
+    
+    Diet Scenarios:
+    1. Monitor 2024 (Current): Empirical data from Amsterdam Food Monitor 2024
+       - 48% plant protein / 52% animal protein
+       - Reflects actual consumption patterns with higher plant-based uptake
+       - Lower meat than national average (-20%)
+       
+    2. Amsterdam Theoretical: Pre-Monitor baseline estimate
+       
+    3. Metropolitan (High Risk): Western high-meat diet
+       - High red meat, processed foods, low vegetables
+       - Represents unhealthy urban consumption pattern
+       
+    4. Metabolic Balance: Animal-based low-carb diet
+       - High meat/fish/eggs, minimal grains
+       - Keto/paleo style consumption
+       
+    5. Dutch Goal (60:40): National protein transition target
+       - 60% plant protein, 40% animal protein
+       
+    6. Amsterdam Goal (70:30): City protein transition target
+       - 70% plant protein, 30% animal protein
+       
+    7. EAT-Lancet (Planetary): Global sustainability benchmark
+       - Planetary health diet for 10 billion people
+    
+    Returns:
+        dict: Dictionary mapping diet names to consumption profiles (grams/day)
     """
     diets = {
         # --- CURRENT STATES (BASELINES) ---
@@ -111,6 +198,22 @@ def load_diet_profiles():
     return diets
 
 def load_neighborhood_data():
+    """ 
+    Load Amsterdam neighborhood socio-economic and behavioral data.
+    
+    Behavioral Insight from Monitor:
+    - High education neighborhoods (Zuid, Centrum) eat 52% plant protein
+    - Low education neighborhoods eat 39% plant protein
+    - This creates counter-intuitive pattern: wealthy areas have LOWER meat 
+      consumption despite higher overall food expenditure
+    
+    Returns:
+        pd.DataFrame: Neighborhood data with columns:
+            - Neighborhood: District name
+            - Population: Resident count (2024)
+            - Avg_Income: Average household income (EUR/year)
+            - High_Education_Pct: Fraction with bachelor degree or higher
+    """
     return pd.DataFrame({
         'Neighborhood': ['Centrum', 'Zuid', 'West', 'Noord', 'Zuidoost', 'Nieuw-West', 'Oost'],
         'Population': [87000, 145000, 145000, 99000, 89000, 160000, 135000],
@@ -122,12 +225,49 @@ def load_neighborhood_data():
 # 3. CORE ENGINE
 # ==========================================
 class Scope3Engine:
+    """
+    Advanced Scope 3 emissions calculator with behavioral modifiers.
+    
+    Features:
+    - Composite beta calculation (volume + preference effects)
+    - Multi-dimensional impact assessment (CO2, land, water)
+    - Category-level aggregation for visualization
+    - Spatial simulation with neighborhood-level modifiers
+    
+    Attributes:
+        cfg (HybridModelConfig): Model configuration parameters
+        factors (pd.DataFrame): Environmental impact factors database
+    """
+    
     def __init__(self, config):
+        """
+        Initialize the Scope3 calculation engine.
+        
+        Args:
+            config (HybridModelConfig): Configuration object
+        """
         self.cfg = config
         self.factors = load_impact_factors()
 
     def calculate_beta(self, row):
-        """ Calculates Consumption Scaling Factor based on Income & Education """
+        """ 
+        Calculate composite consumption scaling factors.
+        
+        The Amsterdam Monitor revealed that:
+        1. Higher income = MORE total food volume (wealthier people waste more)
+        2. Higher education = LESS meat proportion (behavioral preference)
+        
+        Returns THREE values:
+        - volume_beta: Overall consumption scaling driven by income
+        - meat_modifier: Meat consumption adjustment based on education
+        - plant_modifier: Plant consumption adjustment based on education
+        
+        Args:
+            row (pd.Series): Neighborhood data with Avg_Income and High_Education_Pct
+            
+        Returns:
+            tuple: (volume_beta, meat_modifier, plant_modifier)
+        """
         income_ratio = row['Avg_Income'] / self.cfg.NATIONAL_AVG_INCOME
         volume_beta = self.cfg.SCALING_C1 * np.exp(self.cfg.SCALING_C2 * income_ratio)
         
@@ -142,7 +282,20 @@ class Scope3Engine:
         return volume_beta, meat_modifier, plant_modifier
 
     def calculate_raw_impact(self, diet_profile):
-        """ Calculates raw CO2, Land, Water per person/day """
+        """ 
+        Calculate total environmental impact for a given diet profile.
+        
+        Sums impacts across all food items, accounting for:
+        - Consumption amounts (grams/day)
+        - Production losses (waste factor)
+        - Environmental impact factors (CO2, land, water)
+        
+        Args:
+            diet_profile (dict): Food items and daily consumption (grams)
+            
+        Returns:
+            dict: Total daily per-capita impacts (co2, land, water)
+        """
         res = {'co2': 0, 'land': 0, 'water': 0}
         for food, grams in diet_profile.items():
             if food not in self.factors.index: continue
@@ -154,7 +307,20 @@ class Scope3Engine:
         return res
 
     def aggregate_visual_data(self, diet_profile):
-        """ Aggregates diet into 8 Visual Categories """
+        """ 
+        Aggregate food items into broader categories for visualization.
+        
+        Converts individual food items (Beef, Pork) into aggregated categories
+        (Red Meat, Poultry) for clearer charts. Scales to city-wide annual emissions.
+        
+        Args:
+            diet_profile (dict): Food items and daily consumption (grams)
+            
+        Returns:
+            tuple: (mass_dict, co2_dict)
+                - mass_dict: Consumption mass by category (grams/day)
+                - co2_dict: Annual city emissions by category (tonnes CO2e/year)
+        """
         agg_mass = {k: 0.0 for k in CAT_ORDER}
         agg_co2 = {k: 0.0 for k in CAT_ORDER}
         
@@ -173,8 +339,21 @@ class Scope3Engine:
         return agg_mass, agg_co2
 
     def run_spatial_simulation(self, neighborhoods, diet_profile):
-        results = []
+        """ 
+        Simulate emissions across neighborhoods with behavioral modifiers.
+        
+        Applies neighborhood-specific scaling factors based on income and education,
+        then aggregates to total neighborhood emissions.
+        
+        Args:
+            neighborhoods (pd.DataFrame): Neighborhood data
+            diet_profile (dict): Base diet profile to scale
+            
+        Returns:
+            pd.DataFrame: Results with neighborhood-level emissions and modifiers
+        """
         base_impact = self.calculate_raw_impact(diet_profile)
+        results = []
         for _, row in neighborhoods.iterrows():
             vol_beta, meat_mod, plant_mod = self.calculate_beta(row)
             local_scaling = (0.4 * meat_mod + 0.1 * plant_mod + 0.5 * 1.0) * vol_beta
@@ -192,13 +371,30 @@ class Scope3Engine:
 # 4. VISUALIZATION SUITE
 # ==========================================
 def run_full_analysis():
+    """
+    Execute complete food systems emissions analysis and visualization.
+    
+    Workflow:
+    1. Initialize model and load data
+    2. Calculate impacts for all 7 diet scenarios
+    3. Generate multi-chart visualization suite:
+       - Nexus analysis (CO2/Land/Water comparison)
+       - All plates (mass composition comparison)
+       - All donuts (emissions breakdown with totals)
+       - Distance to goals (heatmap of reduction pathways)
+       - Neighborhood hotspots (spatial distribution)
+    4. Output master tonnage console report
+    
+    Creates output files and prints detailed statistics to console.
+    """
     cfg = HybridModelConfig()
     engine = Scope3Engine(cfg)
     diets = load_diet_profiles()
     neighborhoods = load_neighborhood_data()
     
     # ---------------------------------------------------------
-    # PART A: DATA PREP
+    # PART A: DATA PREPARATION
+    # Calculate impacts and aggregate for visualization
     # ---------------------------------------------------------
     print("Calculating impacts for all diets...")
     results_mass = {}
@@ -212,7 +408,9 @@ def run_full_analysis():
         total_footprints[name] = sum(co2.values())
 
     # ---------------------------------------------------------
-    # CHART 1: NEXUS COMPARISON (Total Impact)
+    # CHART 1: NEXUS COMPARISON
+    # Multi-resource impact analysis (CO2, Land, Water)
+    # Shows which diet is worst/best across each dimension
     # ---------------------------------------------------------
     print("Generating 1_Nexus_Analysis.png...")
     nexus_data = []
@@ -230,7 +428,9 @@ def run_full_analysis():
     plt.savefig('1_Nexus_Analysis.png')
 
     # ---------------------------------------------------------
-    # CHART 2: THE PLATES (Comparison of Physical Mass)
+    # CHART 2: THE PLATES
+    # Physical mass composition of each diet
+    # Shows what people actually eat (grams/day breakdown)
     # ---------------------------------------------------------
     print("Generating 2_All_Plates_Mass.png...")
     fig2, axes2 = plt.subplots(2, 4, figsize=(24, 12))
@@ -253,7 +453,10 @@ def run_full_analysis():
     plt.savefig('2_All_Plates_Mass.png')
 
     # ---------------------------------------------------------
-    # CHART 3: THE EMISSIONS (Comparison of CO2 Breakdown)
+    # CHART 3: THE EMISSIONS
+    # Emission breakdown by food category for each diet
+    # Shows which categories are highest impact within each scenario
+    # Total emissions displayed in center of each donut
     # ---------------------------------------------------------
     print("Generating 3_All_Emissions_Donuts.png...")
     fig3, axes3 = plt.subplots(2, 4, figsize=(24, 12))
@@ -278,7 +481,10 @@ def run_full_analysis():
     plt.savefig('3_All_Emissions_Donuts.png')
 
     # ---------------------------------------------------------
-    # CHART 4: DISTANCE TO GOALS (Comparison Matrix)
+    # CHART 4: DISTANCE TO GOALS
+    # Heatmap showing % emission reduction needed to reach each goal
+    # Rows = Current states, Columns = Policy targets
+    # Higher % = Greater transformation required
     # ---------------------------------------------------------
     print("Generating 4_Distance_To_Goals.png...")
     
@@ -306,7 +512,9 @@ def run_full_analysis():
     plt.savefig('4_Distance_To_Goals.png')
 
     # ---------------------------------------------------------
-    # REPORT: MASTER CONSOLE TABLE
+    # CONSOLE REPORT: MASTER TONNAGE TABLE
+    # Detailed breakdown of emissions by food category
+    # Shows absolute values (tonnes/year) and % change from baseline
     # ---------------------------------------------------------
     print("\n" + "="*80)
     print(f"{'MASTER SCOPE 3 TONNAGE REPORT':^80}")
@@ -329,4 +537,13 @@ def run_full_analysis():
     print("="*80)
 
 if __name__ == "__main__":
+    """
+    Main execution block.
+    
+    Runs the complete food systems emissions analysis:
+    - Initializes model configuration and engine
+    - Loads all data (diets, neighborhoods, impact factors)
+    - Generates 4 visualization files
+    - Prints master tonnage report to console
+    """
     run_full_analysis()

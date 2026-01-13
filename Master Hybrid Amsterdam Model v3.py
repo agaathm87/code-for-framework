@@ -1,3 +1,35 @@
+"""
+Master Hybrid Amsterdam Model v3
+Advanced Food Systems Scope 3 Emissions Analysis
+
+This version extends the base model with enhanced features:
+- 7 diet scenarios including empirical Amsterdam Monitor 2024 data
+- Education-based meat consumption modifiers (behavioral factors)
+- Enhanced visualization suite with table outputs
+- Refined spatial analysis accounting for education levels
+- Multi-dimensional impact assessment (CO2, land, water)
+
+New in v3:
+- Integration of Amsterdam Monitor 2024 empirical diet data (48% plant protein)
+- Education level as behavioral modifier (high education = lower meat preference)
+- Composite beta factors (volume effect + plant preference effect)
+- Table visualization export (6_Table_Tonnage.png)
+- Extended color palette and visual mapping
+
+Outputs:
+- 1_Nexus_Analysis.png: Multi-resource impact comparison
+- 2a/b/c_Transition_*.png: Baseline to goal state transitions
+- 3_All_Diets_Plates.png: 7-way diet composition comparison
+- 4_Impact_Stack.png: Stacked emissions by category
+- 5_Neighborhood_Hotspots.png: Spatial distribution with behavioral modifiers
+- 6_Table_Tonnage.png: Tabular emissions data
+- Console: Comprehensive tonnage report
+
+Author: Challenge Based Project Team
+Date: January 2026
+Version: 3.0
+"""
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,6 +39,17 @@ import seaborn as sns
 # 1. CONFIGURATION
 # ==========================================
 class HybridModelConfig:
+    """
+    Configuration parameters for the hybrid food systems model v3.
+    
+    Attributes:
+        NATIONAL_AVG_INCOME (int): Netherlands average household income (EUR/year)
+        SCALING_C1 (float): Valencia volume scaling coefficient
+        SCALING_C2 (float): Valencia income elasticity exponent
+        WASTE_FACTOR (float): Supply chain loss multiplier (1.15 = 15% waste)
+        POPULATION_TOTAL (int): Total Amsterdam metropolitan population
+    """
+    
     def __init__(self):
         self.NATIONAL_AVG_INCOME = 32000
         self.SCALING_C1 = 0.8
@@ -15,6 +58,8 @@ class HybridModelConfig:
         self.POPULATION_TOTAL = 882000
 
 # --- VISUALIZATION MAPPING ---
+# Extended mapping including additional food items (Lamb, Rice, Pasta, Bread, Drinks)
+# Maps granular food items to 8 aggregated categories for visualization clarity
 VISUAL_MAPPING = {
     'Beef': 'Red Meat', 'Pork': 'Red Meat', 'Lamb': 'Red Meat',
     'Chicken': 'Poultry', 'Poultry': 'Poultry',
@@ -27,15 +72,33 @@ VISUAL_MAPPING = {
 }
 
 # --- COLOR PALETTE ---
+# Consistent category ordering for all visualizations
 CAT_ORDER = ['Red Meat', 'Poultry', 'Dairy & Eggs', 'Fish', 'Plant Protein', 'Staples', 'Veg & Fruit', 'Ultra-Processed']
+
+# Color scheme: gradient from high-impact (dark red) to low-impact (light green)
 COLORS = ['#8B0000', '#F08080', '#FFD700', '#4682B4', '#2E8B57', '#DEB887', '#90EE90', '#A9A9A9']
+
+# Color mapping dictionary for easy lookup
 COLOR_MAP = dict(zip(CAT_ORDER, COLORS))
 
 # ==========================================
 # 2. DATA INGESTION
 # ==========================================
 def load_impact_factors():
-    """ Scope 3 Factors (CO2 kg/kg, Land m2/kg, Water L/kg) """
+    """ 
+    Load comprehensive Scope 3 environmental impact factors.
+    
+    Data sources:
+    - CO2 factors: Trans-boundary LCA from Blonk Consultants
+    - Land use: Global agricultural land footprint (Poore & Nemecek 2018)
+    - Water: Blue water consumption (WaterFootprint Network)
+    
+    Returns:
+        pd.DataFrame: Impact factors indexed by food item with columns:
+            - co2: kg CO2e per kg product
+            - land: m² per kg product
+            - water: liters per kg product
+    """
     factors = {
         'Beef':      {'co2': 28.0, 'land': 25.0, 'water': 15400},
         'Pork':      {'co2': 5.0,  'land': 9.0,  'water': 6000},
@@ -57,7 +120,41 @@ def load_impact_factors():
     return pd.DataFrame.from_dict(factors, orient='index')
 
 def load_diet_profiles():
-    """ Comparison Diets (Grams/Day) """
+    """ 
+    Load 7 dietary scenario profiles for comprehensive comparison.
+    
+    Diet Scenarios:
+    1. Monitor 2024 (Current): Empirical data from Amsterdam Food Monitor 2024
+       - 48% plant protein / 52% animal protein
+       - Reflects actual consumption patterns with higher plant-based uptake
+       - Lower meat than national average (-20%)
+       
+    2. Amsterdam Theoretical: Pre-Monitor baseline estimate
+       - Used for historical comparison
+       
+    3. Metropolitan (High Risk): Western high-meat diet
+       - High red meat, processed foods, low vegetables
+       - Represents unhealthy urban consumption pattern
+       
+    4. Metabolic Balance: Animal-based low-carb diet
+       - High meat/fish/eggs, minimal grains
+       - Keto/paleo style consumption
+       
+    5. Dutch Goal (60:40): National protein transition target
+       - 60% plant protein, 40% animal protein
+       - Moderate reduction pathway
+       
+    6. Amsterdam Goal (70:30): City protein transition target
+       - 70% plant protein, 30% animal protein
+       - Ambitious reduction pathway
+       
+    7. EAT-Lancet (Planetary): Global sustainability benchmark
+       - Planetary health diet for 10 billion people
+       - Maximum environmental sustainability
+    
+    Returns:
+        dict: Dictionary mapping diet names to consumption profiles (grams/day per food item)
+    """
     diets = {
         '1. Monitor 2024 (Current)': {
             'Beef': 10, 'Pork': 15, 'Chicken': 25, 'Cheese': 35, 'Milk': 220, 
@@ -105,6 +202,29 @@ def load_diet_profiles():
     return diets
 
 def load_neighborhood_data():
+    """ 
+    Load Amsterdam neighborhood socio-economic and behavioral data.
+    
+    NEW IN V3: Added 'High_Education_Pct' column
+    
+    Behavioral Insight from Monitor:
+    - High education neighborhoods (Zuid, Centrum) eat 52% plant protein
+    - Low education neighborhoods eat 39% plant protein
+    - This creates a counter-intuitive pattern: wealthy areas have LOWER meat 
+      consumption despite higher overall food expenditure
+    
+    Key Neighborhoods:
+    - Zuid & Centrum: Highest income + education = Lower meat intensity
+    - Nieuw-West & Zuidoost: Lower income = Higher meat preference
+    - Noord & Oost: Middle-income mixed patterns
+    
+    Returns:
+        pd.DataFrame: Neighborhood data with columns:
+            - Neighborhood: District name
+            - Population: Resident count (2024)
+            - Avg_Income: Average household income (EUR/year)
+            - High_Education_Pct: Fraction with bachelor degree or higher
+    """
     return pd.DataFrame({
         'Neighborhood': ['Centrum', 'Zuid', 'West', 'Noord', 'Zuidoost', 'Nieuw-West', 'Oost'],
         'Population': [87000, 145000, 145000, 99000, 89000, 160000, 135000],
@@ -116,27 +236,82 @@ def load_neighborhood_data():
 # 3. CORE ENGINE
 # ==========================================
 class Scope3Engine:
+    """
+    Advanced Scope 3 emissions calculator with behavioral modifiers.
+    
+    NEW IN V3: Composite beta calculation
+    - Volume Beta: Income-driven total consumption scaling
+    - Meat/Plant Modifiers: Education-driven dietary preferences
+    
+    This creates a two-factor model:
+    1. Wealthier neighborhoods buy MORE food overall (volume effect)
+    2. Higher education neighborhoods choose LESS meat (preference effect)
+    
+    Attributes:
+        cfg (HybridModelConfig): Model configuration parameters
+        factors (pd.DataFrame): Environmental impact factors database
+    """
+    
     def __init__(self, config):
+        """
+        Initialize the enhanced Scope3 calculation engine.
+        
+        Args:
+            config (HybridModelConfig): Configuration object
+        """
         self.cfg = config
         self.factors = load_impact_factors()
 
+    # --- 3A. REFINED BETA FACTOR (The Monitor Logic) ---
     def calculate_beta(self, row):
-        """ Calculates Consumption Scaling Factor based on Income & Education """
+        """
+        Calculate composite consumption scaling factors.
+        
+        NEW IN V3: Returns THREE values instead of one
+        
+        The Amsterdam Monitor revealed that:
+        1. Higher income = MORE total food volume (wealthier people waste more)
+        2. Higher education = LESS meat proportion (behavioral preference)
+        
+        These effects are INDEPENDENT and MULTIPLICATIVE:
+        - A wealthy, educated person (Zuid) = High volume × Low meat = Moderate meat total
+        - A lower-income person (Zuidoost) = Lower volume × High meat = Moderate meat total
+        
+        Args:
+            row (pd.Series): Neighborhood data row with Avg_Income and High_Education_Pct
+            
+        Returns:
+            tuple: (volume_beta, meat_modifier, plant_modifier)
+                - volume_beta: Overall consumption scaling (0.8 to 1.2)
+                - meat_modifier: Meat consumption adjustment (0.85 or 1.1)
+                - plant_modifier: Plant consumption adjustment (1.15 or 0.9)
+        """
+        # 1. Volume Effect: Wealthier neighborhoods consume more total food
         income_ratio = row['Avg_Income'] / self.cfg.NATIONAL_AVG_INCOME
         volume_beta = self.cfg.SCALING_C1 * np.exp(self.cfg.SCALING_C2 * income_ratio)
         
-        # Education Modifier (Higher Edu = Less Meat)
+        # 2. Education Effect: Higher education correlates with plant-based preference
+        # Monitor data: 52% plant (high edu) vs 39% plant (low edu)
         if row['High_Education_Pct'] > 0.5:
-            meat_modifier = 0.85
-            plant_modifier = 1.15
+            meat_modifier = 0.85   # Eat 15% less meat than average
+            plant_modifier = 1.15  # Eat 15% more plant foods than average
         else:
-            meat_modifier = 1.1
-            plant_modifier = 0.9
+            meat_modifier = 1.1    # Eat 10% more meat than average
+            plant_modifier = 0.9   # Eat 10% less plant foods than average
             
         return volume_beta, meat_modifier, plant_modifier
 
+    # --- 3B. Raw Impact Calculation (Per Capita Per Day) ---
     def calculate_raw_impact(self, diet_profile):
-        """ Calculates raw CO2, Land, Water per person/day """
+        """
+        Calculate total environmental impact for a diet profile.
+        
+        Args:
+            diet_profile (dict): Food items and daily consumption (grams)
+            
+        Returns:
+            dict: Daily per-capita impacts (co2, land, water)
+        """
         res = {'co2': 0, 'land': 0, 'water': 0}
         for food, grams in diet_profile.items():
             if food not in self.factors.index: continue

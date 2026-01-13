@@ -53,10 +53,10 @@ def load_cbs_neighborhood_data():
     Variables: Neighborhood Name, Population, Average Income.
     """
     data = {
-        'neighborhood_id':,
-        'neighborhood_name':,
-        'population': ,
-        'avg_income':  # Variable In from Valencia
+        'neighborhood_id': [1, 2, 3],
+        'neighborhood_name': ['De Pijp', 'Oud-West', 'Centrum'],
+        'population': [8500, 12000, 15000],
+        'avg_income': [35000, 32000, 38000]  # Variable In from Valencia
     }
     return pd.DataFrame(data)
 
@@ -66,7 +66,7 @@ def load_rivm_consumption_data():
     Variables: Food Category, kg/capita/year, Emission Factor (LCA).
     """
     data = {
-        'food_category':,
+        'food_category': ['Beef', 'Vegetables', 'Grains', 'Dairy', 'Legumes'],
         'national_kg_per_capita': [15.4, 95.0, 120.0, 80.0, 5.0],
         # EF: kgCO2e per kg product (Trans-boundary LCA from Blonk/Boyer)
         'emission_factor': [25.0, 3.2, 0.4, 0.5, 1.2], 
@@ -130,28 +130,12 @@ class Scope3Calculator:
 
     def run_model(self, df_cbs, df_rivm):
         """
-        Executes the full Hybrid Model calculation.
-        
-        Performs a double iteration:
-        1. Iterates through neighborhoods (spatial dimension - 'Who')
-        2. Iterates through food groups (consumption dimension - 'What')
-        3. Calculates total Scope 3 emissions combining both dimensions
-        
-        The model applies:
-        - Valencia downscaling (beta factor) for local consumption estimation
-        - Boyer LCA emission factors for environmental impact
-        - Waste factors for supply chain losses
-        
-        Args:
-            df_cbs (pd.DataFrame): CBS neighborhood data with columns:
-                - neighborhood_name, population, avg_income
-            df_rivm (pd.DataFrame): RIVM consumption data with columns:
-                - food_category, national_kg_per_capita, emission_factor, income_elasticity
-        
-        Returns:
-            pd.DataFrame: Results table with emissions per neighborhood per food category
+        Executes the Hybrid Model:
+        1. Iterates through neighborhoods (The 'Who' - Valencia)
+        2. Iterates through food groups (The 'Where' - Boyer)
+        3. Calculates total Scope 3 footprint
         """
-        results =
+        results = []
 
         print("--- Starting Hybrid Model Simulation ---")
         
@@ -199,23 +183,8 @@ class Scope3Calculator:
 # ==========================================
 def run_protein_transition_scenario(df_results, reduction_target=0.5):
     """
-    Simulates the 'Protein Transition' policy intervention.
-    
-    Models the impact of shifting from animal-based to plant-based proteins
-    by reducing meat/dairy consumption and replacing with plant alternatives.
-    
-    This scenario reflects Amsterdam's protein transition goals where
-    citizens reduce animal protein intake in favor of legumes, nuts, and
-    plant-based meat substitutes.
-    
-    Args:
-        df_results (pd.DataFrame): Baseline emission results from run_model()
-        reduction_target (float): Fraction of meat/dairy to reduce (0.5 = 50% reduction)
-    
-    Prints:
-        - Baseline total emissions
-        - Scenario total emissions
-        - Absolute and relative emission savings
+    Simulates the 'Protein Transition' policy:
+    Reduces Meat/Dairy consumption by 50%, replaces with Plant-Alt.
     """
     print(f"\n--- Running Scenario: {reduction_target*100}% Meat Reduction ---")
     
@@ -226,10 +195,10 @@ def run_protein_transition_scenario(df_results, reduction_target=0.5):
     df_scenario = df_results.copy()
     
     # Identify meat rows
-    is_meat = df_scenario['Food_Category'].isin()
+    is_meat = df_scenario['Food_Category'].isin(['Beef', 'Dairy'])
     
     # Reduce Meat Emissions
-    df_scenario.loc *= (1 - reduction_target)
+    df_scenario.loc[is_meat, 'Total_Scope3_tCO2e'] *= (1 - reduction_target)
     
     # Calculate savings
     new_emissions = df_scenario.sum()
@@ -241,32 +210,11 @@ def run_protein_transition_scenario(df_results, reduction_target=0.5):
     
 def run_food_waste_reduction_scenario(calculator, df_cbs, df_rivm, reduction_target=0.5):
     """
-    Simulates the 'Circular Food System' policy intervention.
+    Simulates the 'Circular Food' policy:
+    Reduces the Waste Factor (upstream/retail loss) by a target percentage.
     
-    Models the impact of reducing food waste across the supply chain
-    (upstream production, retail losses, and consumer waste).
-    
-    The waste factor represents the additional food that must be produced
-    to account for losses. Reducing this factor simulates better:
-    - Supply chain efficiency
-    - Retail inventory management
-    - Consumer behavior change (less household waste)
-    
-    This aligns with Amsterdam's 2030 circular economy goals.
-    
-    Args:
-        calculator (Scope3Calculator): The calculator instance to modify
-        df_cbs (pd.DataFrame): CBS neighborhood data
-        df_rivm (pd.DataFrame): RIVM consumption data
-        reduction_target (float): Fraction of waste to eliminate (0.5 = 50% waste reduction)
-    
-    Returns:
-        pd.DataFrame: Updated emission results after waste reduction
-    
-    Prints:
-        - Original and new waste factors
-        - Baseline vs scenario emissions
-        - Emission savings achieved
+    Parameters:
+    - reduction_target: 0.5 means a 50% reduction in waste volume (Amsterdam 2030 Goal).
     """
     # 1. Capture Baseline State
     # Run the model with the default configuration (e.g., Waste Factor 1.15)
@@ -306,18 +254,7 @@ def run_food_waste_reduction_scenario(calculator, df_cbs, df_rivm, reduction_tar
 # 5. EXECUTION
 # ==========================================
 if __name__ == "__main__":
-    """
-    Main execution block.
-    
-    Workflow:
-    1. Initialize model configuration
-    2. Load neighborhood and consumption data
-    3. Run baseline emission calculations
-    4. Perform hotspot analysis to identify high-impact areas
-    5. Simulate policy scenarios (protein transition, waste reduction)
-    """
-    
-    # Initialize configuration and calculator
+    # Initialize
     config = HybridModelConfig()
     calculator = Scope3Calculator(config)
     

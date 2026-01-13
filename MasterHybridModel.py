@@ -1,3 +1,28 @@
+"""
+Master Hybrid Amsterdam Food Systems Model
+
+This model provides a comprehensive analysis of Amsterdam's food system emissions
+through multi-scenario diet comparisons and spatial impact analysis.
+
+Key Features:
+- Compares 6 diet scenarios from current baseline to planetary health diets
+- Calculates Scope 3 emissions across CO2, land use, and water footprints
+- Generates visual outputs (pie charts, stacked bars, transition diagrams)
+- Performs neighborhood-level hotspot analysis with income-based scaling
+- Supports policy scenario testing and impact quantification
+
+Outputs:
+- 1_Nexus_Analysis.png: Multi-dimensional impact comparison
+- 2_Transition_*.png: Baseline vs goal state visualizations
+- 3_All_Diets_Plates.png: Comparative diet composition
+- 4_Impact_Stack.png: Stacked emissions by category
+- 5_Neighborhood_Hotspots.png: Spatial emission distribution
+- Console: Detailed tonnage report and comparative statistics
+
+Author: Challenge Based Project Team
+Date: January 2026
+"""
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,14 +31,26 @@ import matplotlib.pyplot as plt
 # 1. CONFIGURATION
 # ==========================================
 class HybridModelConfig:
+    """
+    Configuration parameters for the hybrid food systems model.
+    
+    Attributes:
+        NATIONAL_AVG_INCOME (int): Netherlands average household income (EUR/year)
+        SCALING_C1 (float): Valencia scaling coefficient (base multiplier)
+        SCALING_C2 (float): Valencia scaling exponent (income sensitivity)
+        WASTE_FACTOR (float): Supply chain loss multiplier (1.15 = 15% waste)
+        POPULATION_TOTAL (int): Total Amsterdam population
+    """
+    
     def __init__(self):
-        self.NATIONAL_AVG_INCOME = 32000
-        self.SCALING_C1 = 0.8
-        self.SCALING_C2 = 0.2
-        self.WASTE_FACTOR = 1.15   # Supply chain loss
-        self.POPULATION_TOTAL = 882000
+        self.NATIONAL_AVG_INCOME = 32000  # EUR/year - CBS national average
+        self.SCALING_C1 = 0.8  # Valencia base scaling coefficient
+        self.SCALING_C2 = 0.2  # Valencia income elasticity exponent
+        self.WASTE_FACTOR = 1.15  # 15% supply chain loss (AEB/Boyer)
+        self.POPULATION_TOTAL = 882000  # Amsterdam metro population
 
-# Visualization Mapping
+# --- VISUALIZATION MAPPING ---
+# Maps individual food items to aggregated categories for cleaner visualizations
 VISUAL_MAPPING = {
     'Beef': 'Red Meat', 'Pork': 'Red Meat',
     'Chicken': 'Poultry', 'Poultry': 'Poultry',
@@ -25,14 +62,28 @@ VISUAL_MAPPING = {
     'Sugar': 'Ultra-Processed', 'Processed': 'Ultra-Processed', 'Ultra-Processed': 'Ultra-Processed'
 }
 
+# --- VISUALIZATION CONSTANTS ---
+# Order of food categories for consistent chart display
 CAT_ORDER = ['Red Meat', 'Poultry', 'Dairy & Eggs', 'Fish', 'Plant Protein', 'Staples', 'Veg & Fruit', 'Ultra-Processed']
+
+# Color palette for food categories (high to low environmental impact)
 COLORS = ['#8B0000', '#F08080', '#FFD700', '#4682B4', '#2E8B57', '#DEB887', '#90EE90', '#A9A9A9']
 
 # ==========================================
 # 2. DATA INGESTION
 # ==========================================
 def load_impact_factors():
-    """ Scope 3 Factors (CO2 kg/kg, Land m2/kg, Water L/kg) """
+    """ 
+    Load Scope 3 environmental impact factors for food items.
+    
+    Based on trans-boundary LCA data from Blonk Consultants and Boyer et al.
+    
+    Returns:
+        pd.DataFrame: Impact factors with columns:
+            - co2: kg CO2e per kg product (climate impact)
+            - land: m² per kg product (land use)
+            - water: liters per kg product (blue water consumption)
+    """
     factors = {
         'Beef':      {'co2': 28.0, 'land': 25.0, 'water': 15400},
         'Pork':      {'co2': 5.0,  'land': 9.0,  'water': 6000},
@@ -54,7 +105,20 @@ def load_impact_factors():
     return pd.DataFrame.from_dict(factors, orient='index')
 
 def load_diet_profiles():
-    """ The 6 Comparison Diets (Grams/Day) """
+    """ 
+    Load dietary scenario profiles for comparison analysis.
+    
+    Each diet represents a different consumption pattern:
+    1. Amsterdam Baseline: Current estimated average consumption
+    2. Metropolitan: High-risk Western diet (high meat/processed)
+    3. Metabolic Balance: Animal-based low-carb diet
+    4. Dutch Goal (60:40): National policy target (60% plant, 40% animal protein)
+    5. Amsterdam Goal (70:30): City policy target (70% plant, 30% animal protein)
+    6. EAT-Lancet: Planetary health diet (global sustainability benchmark)
+    
+    Returns:
+        dict: Dictionary of diet names to food consumption profiles (grams/day)
+    """
     diets = {
         '1. Amsterdam Baseline': {
             'Beef': 12, 'Pork': 20, 'Chicken': 28, 'Cheese': 40, 'Milk': 260,
@@ -97,7 +161,18 @@ def load_diet_profiles():
 
 def load_neighborhood_data():
     """ 
-    Mock CBS Data: Income drives the Beta Factor.
+    Load Amsterdam neighborhood socio-economic data.
+    
+    Data simulates CBS 'Kerncijfers wijken en buurten' statistics.
+    Income differences drive consumption scaling via Valencia beta factors:
+    - Higher income areas (Zuid, Centrum) have higher consumption volumes
+    - Lower income areas consume closer to national average
+    
+    Returns:
+        pd.DataFrame: Neighborhood data with columns:
+            - Neighborhood: District name
+            - Population: Resident count
+            - Avg_Income: Average household income (EUR/year)
     """
     return pd.DataFrame({
         'Neighborhood': ['Centrum', 'Zuid', 'West', 'Noord', 'Zuidoost', 'Nieuw-West', 'Oost'],
@@ -109,23 +184,69 @@ def load_neighborhood_data():
 # 3. CORE ENGINE
 # ==========================================
 class Scope3Engine:
+    """
+    Core calculation engine for Scope 3 food system emissions.
+    
+    Integrates:
+    - Boyer LCA methodology for emission factors
+    - Valencia spatial downscaling for neighborhood-level estimates
+    - Multi-dimensional impact assessment (CO2, land, water)
+    
+    Attributes:
+        cfg (HybridModelConfig): Model configuration parameters
+        factors (pd.DataFrame): Environmental impact factors per food item
+    """
+    
     def __init__(self, config):
+        """
+        Initialize the Scope3 calculation engine.
+        
+        Args:
+            config (HybridModelConfig): Configuration object with model parameters
+        """
         self.cfg = config
         self.factors = load_impact_factors()
 
     # --- 3A. Beta Factor Logic (The "Hybrid" part) ---
     def calculate_beta(self, local_income):
         """ 
-        Calculates Consumption Scaling Factor based on Income.
-        Wealthier neighborhoods (Zuid) consume more meat/luxury goods (Beta > 1).
+        Calculate consumption scaling factor using Valencia downscaling.
+        
+        Higher income neighborhoods consume more total food volume and
+        have higher waste rates. Uses exponential scaling relationship:
+        Beta = C1 * exp(C2 * income_ratio)
+        
+        Args:
+            local_income (float): Average neighborhood income (EUR/year)
+            
+        Returns:
+            float: Beta scaling factor (>1 for high income, <1 for low income)
+                   Floor of 0.75 prevents unrealistic low consumption estimates
         """
         income_ratio = local_income / self.cfg.NATIONAL_AVG_INCOME
         # Valencia Formula: Beta = C1 * e^(C2 * ratio)
         beta = self.cfg.SCALING_C1 * np.exp(self.cfg.SCALING_C2 * income_ratio)
         return max(beta, 0.75) # Floor to prevent starvation modeling
 
-    # --- 3B. Standard Calc (Per Capita) ---
+    # --- 3B. Standard Impact Calculation (Per Capita Per Day) ---
     def calculate_raw_impact(self, diet_profile):
+        """
+        Calculate total environmental impact for a given diet profile.
+        
+        Sums impacts across all food items, accounting for:
+        - Consumption amounts (grams/day)
+        - Production losses (waste factor)
+        - Environmental impact factors (CO2, land, water)
+        
+        Args:
+            diet_profile (dict): Food items and daily consumption (grams)
+            
+        Returns:
+            dict: Total daily per-capita impacts:
+                - co2: kg CO2e per person per day
+                - land: m² per person per day
+                - water: liters per person per day
+        """
         res = {'co2': 0, 'land': 0, 'water': 0}
         for food, grams in diet_profile.items():
             if food not in self.factors.index: continue
@@ -136,8 +257,23 @@ class Scope3Engine:
             res['water'] += kg_produced * f['water']
         return res
 
-    # --- 3C. Aggregation for Graphs ---
+    # --- 3C. Data Aggregation for Visualization ---
     def aggregate_visual_data(self, diet_profile):
+        """
+        Aggregate food items into broader categories for visualization.
+        
+        Converts individual food items (e.g., Beef, Pork, Chicken) into
+        aggregated categories (e.g., Red Meat, Poultry) for clearer charts.
+        Scales to city-wide annual emissions.
+        
+        Args:
+            diet_profile (dict): Food items and daily consumption (grams)
+            
+        Returns:
+            tuple: (mass_dict, co2_dict)
+                - mass_dict: Consumption mass by category (grams/day)
+                - co2_dict: Annual city emissions by category (tonnes CO2e/year)
+        """
         agg_mass = {k: 0.0 for k in CAT_ORDER}
         agg_co2 = {k: 0.0 for k in CAT_ORDER}
         for food, grams in diet_profile.items():
