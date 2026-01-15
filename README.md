@@ -10,9 +10,9 @@ This project contains **5 complementary Python modules** with increasing sophist
 |------|------|-------------|--------|
 | **hybridMNodelAMS.py** | Foundational | Valencia downscaling | Per-neighborhood breakdown |
 | **MasterHybridModel.py** | Enhanced | 6 diets + 3 metrics (CO2, land, water) | 5 PNG charts + report |
-| **Master_hybrid_Amsterdam_Model.py** | Advanced | Monitor 2024 baseline + education effects | 5 charts + hotspot analysis |
-| **Master_hybrid_Amsterdam_Model-v2** | Comprehensive | 7 diets + distance-to-goals heatmap | 4 charts + heatmap + report |
-| **Master Hybrid Amsterdam Model v3.py** | ⭐ Latest | Composite beta + table export | 6 charts + table + report |
+| **Master_hybrid_Amsterdam_Model.py** | Advanced | Monitor 2024 baseline + education effects | 5 charts + hotspot analysis + 2 extra transitions |
+| **Master_hybrid_Amsterdam_Model-v2** | Comprehensive | 9 diets + distance-to-goals heatmap | 4 charts + heatmap + report |
+| **Master Hybrid Amsterdam Model v3.py** | ⭐ Latest | Composite beta + table export | 6 charts + table + report + Schijf/Mediterranean transitions |
 
 **Recommended:** Use `Master Hybrid Amsterdam Model v3.py` for the most advanced analysis.
 
@@ -24,7 +24,7 @@ This project contains **5 complementary Python modules** with increasing sophist
 ✅ **Multi-Metric LCA** — Tracks CO2, land use, and water across 16 food categories  
 ✅ **Income-Sensitive Consumption** — Valencia downscaling method scales by neighborhood income  
 ✅ **Education Effects** — Models behavioral differences: high-education areas eat 15% less meat  
-✅ **7 Dietary Scenarios** — From current baseline to planetary health diet  
+✅ **9 Dietary Scenarios** — Added Schijf van 5 and Mediterranean diets  
 ✅ **Supply Chain Integration** — Accounts for 15% waste across production-retail pipeline  
 ✅ **Spatial Hotspot Analysis** — Neighborhood-level emissions with behavioral adjustments  
 ✅ **Publication-Ready Visualizations** — 6 professional charts per run  
@@ -74,6 +74,7 @@ This project contains **5 complementary Python modules** with increasing sophist
 - **Counter-intuitive Finding:** Wealthy, educated areas (Zuid) consume LESS meat than lower-income areas
 
 **Outputs:** Same 5 visualizations as MasterHybridModel.py, but education-adjusted
+- Transition extras: 2d_Transition_Schijf.png, 2e_Transition_Mediterranean.png
 
 ---
 
@@ -81,7 +82,7 @@ This project contains **5 complementary Python modules** with increasing sophist
 **Best For:** Strategic planning & understanding transformation difficulty
 
 **New Features:**
-- 7 diet scenarios (adds "Theoretical" baseline)
+- 9 diet scenarios (adds Schijf van 5 and Mediterranean)
 - **Distance-to-Goals Heatmap** — % emission reduction needed for each pathway
 - **All Plates Mass** — Physical consumption vs emissions separated
 - **All Emissions Donuts** — Composition + total per diet
@@ -112,6 +113,8 @@ This project contains **5 complementary Python modules** with increasing sophist
 4. **4_Impact_Stack.png** — Stacked emissions across categories
 5. **5_Neighborhood_Hotspots.png** — Spatial distribution with behavioral mods
 6. **6_Table_Tonnage.png** — Tabular emissions breakdown
+7. **5d_Transition_Schijf.png** — Baseline to Schijf van 5
+8. **5e_Transition_Mediterranean.png** — Baseline to Mediterranean
 
 **Console Report:**
 - Master tonnage table (7 diets × 8 categories)
@@ -373,6 +376,15 @@ Output files:
 ├── 5_Neighborhood_Hotspots.png
 └── 6_Table_Tonnage.png                   # v3 only
 ```
+
+### Transitions Index
+- MasterHybridModel.py: [2a_Transition_DutchGoal.png](2a_Transition_DutchGoal.png), [2b_Transition_AmsterdamGoal.png](2b_Transition_AmsterdamGoal.png), [2c_Transition_EAT_Lancet.png](2c_Transition_EAT_Lancet.png), [2d_Transition_Schijf.png](2d_Transition_Schijf.png), [2e_Transition_Mediterranean.png](2e_Transition_Mediterranean.png)
+- Master_hybrid_Amsterdam_Model.py: [2a_Transition_DutchGoal.png](2a_Transition_DutchGoal.png), [2b_Transition_AmsterdamGoal.png](2b_Transition_AmsterdamGoal.png), [2c_Transition_EAT_Lancet.png](2c_Transition_EAT_Lancet.png), [2d_Transition_Schijf.png](2d_Transition_Schijf.png), [2e_Transition_Mediterranean.png](2e_Transition_Mediterranean.png)
+- Master Hybrid Amsterdam Model v3.py: [5a_Transition_Dutch.png](5a_Transition_Dutch.png), [5b_Transition_Amsterdam.png](5b_Transition_Amsterdam.png), [5c_Transition_EAT.png](5c_Transition_EAT.png), [5d_Transition_Schijf.png](5d_Transition_Schijf.png), [5e_Transition_Mediterranean.png](5e_Transition_Mediterranean.png)
+
+### Scope 1+2 vs Scope 3 Outputs
+- [6_Scope12_vs_Scope3.png](6_Scope12_vs_Scope3.png): Grouped bars comparing Scope 1+2 vs Scope 3 per diet.
+- [7_Scope3_Share.png](7_Scope3_Share.png): Share of Scope 3 in total emissions (%).
 
 ---
 

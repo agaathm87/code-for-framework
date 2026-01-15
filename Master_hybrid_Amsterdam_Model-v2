@@ -98,22 +98,22 @@ def load_impact_factors():
             - water: liters per kg product
     """
     factors = {
-        'Beef':      {'co2': 28.0, 'land': 25.0, 'water': 15400},
-        'Pork':      {'co2': 5.0,  'land': 9.0,  'water': 6000},
-        'Chicken':   {'co2': 3.5,  'land': 7.0,  'water': 4300},
-        'Cheese':    {'co2': 10.0, 'land': 12.0, 'water': 5000},
-        'Milk':      {'co2': 1.3,  'land': 1.5,  'water': 1000},
-        'Fish':      {'co2': 3.5,  'land': 0.5,  'water': 2000},
-        'Eggs':      {'co2': 2.2,  'land': 2.5,  'water': 3300},
-        'Pulses':    {'co2': 0.9,  'land': 3.0,  'water': 4000},
-        'Nuts':      {'co2': 0.3,  'land': 2.5,  'water': 9000},
-        'Meat_Subs': {'co2': 2.5,  'land': 3.0,  'water': 200}, 
-        'Grains':    {'co2': 1.1,  'land': 1.8,  'water': 1600},
-        'Vegetables':{'co2': 0.6,  'land': 0.5,  'water': 320},
-        'Fruits':    {'co2': 0.7,  'land': 0.6,  'water': 960},
-        'Potatoes':  {'co2': 0.4,  'land': 0.3,  'water': 290},
-        'Sugar':     {'co2': 2.0,  'land': 1.5,  'water': 200},
-        'Processed': {'co2': 2.5,  'land': 1.5,  'water': 300}
+        'Beef':      {'co2': 28.0, 'land': 25.0, 'water': 15400, 'scope12': 0.5},
+        'Pork':      {'co2': 5.0,  'land': 9.0,  'water': 6000,  'scope12': 0.4},
+        'Chicken':   {'co2': 3.5,  'land': 7.0,  'water': 4300,  'scope12': 0.3},
+        'Cheese':    {'co2': 10.0, 'land': 12.0, 'water': 5000,  'scope12': 0.2},
+        'Milk':      {'co2': 1.3,  'land': 1.5,  'water': 1000,  'scope12': 0.1},
+        'Fish':      {'co2': 3.5,  'land': 0.5,  'water': 2000,  'scope12': 0.4},
+        'Eggs':      {'co2': 2.2,  'land': 2.5,  'water': 3300,  'scope12': 0.2},
+        'Pulses':    {'co2': 0.9,  'land': 3.0,  'water': 4000,  'scope12': 0.1},
+        'Nuts':      {'co2': 0.3,  'land': 2.5,  'water': 9000,  'scope12': 0.05},
+        'Meat_Subs': {'co2': 2.5,  'land': 3.0,  'water': 200,   'scope12': 0.1}, 
+        'Grains':    {'co2': 1.1,  'land': 1.8,  'water': 1600,  'scope12': 0.05},
+        'Vegetables':{'co2': 0.6,  'land': 0.5,  'water': 320,   'scope12': 0.05},
+        'Fruits':    {'co2': 0.7,  'land': 0.6,  'water': 960,   'scope12': 0.05},
+        'Potatoes':  {'co2': 0.4,  'land': 0.3,  'water': 290,   'scope12': 0.05},
+        'Sugar':     {'co2': 2.0,  'land': 1.5,  'water': 200,   'scope12': 0.05},
+        'Processed': {'co2': 2.5,  'land': 1.5,  'water': 300,   'scope12': 0.1}
     }
     return pd.DataFrame.from_dict(factors, orient='index')
 
@@ -193,6 +193,18 @@ def load_diet_profiles():
             'Fish': 28, 'Eggs': 13, 'Pulses': 75, 'Nuts': 50, 'Meat_Subs': 0,
             'Grains': 232, 'Vegetables': 300, 'Fruits': 200, 'Potatoes': 50,
             'Sugar': 30, 'Processed': 0
+        },
+        '8. Schijf van 5 (Guideline)': {
+            'Beef': 10, 'Pork': 10, 'Chicken': 25, 'Cheese': 30, 'Milk': 250,
+            'Fish': 25, 'Eggs': 20, 'Pulses': 30, 'Nuts': 25, 'Meat_Subs': 20,
+            'Grains': 240, 'Vegetables': 250, 'Fruits': 200, 'Potatoes': 70,
+            'Sugar': 25, 'Processed': 60
+        },
+        '9. Mediterranean Diet': {
+            'Beef': 8, 'Pork': 8, 'Chicken': 20, 'Cheese': 30, 'Milk': 200,
+            'Fish': 35, 'Eggs': 18, 'Pulses': 60, 'Nuts': 30, 'Meat_Subs': 10,
+            'Grains': 240, 'Vegetables': 300, 'Fruits': 220, 'Potatoes': 60,
+            'Sugar': 20, 'Processed': 50
         }
     }
     return diets
@@ -428,13 +440,135 @@ def run_full_analysis():
     plt.savefig('1_Nexus_Analysis.png')
 
     # ---------------------------------------------------------
+    # NEW: Scope 1+2 vs Scope 3 Comparison & Shares
+    # ---------------------------------------------------------
+    print("Generating 6_Scope12_vs_Scope3.png and 7_Scope3_Share.png...")
+    factors = load_impact_factors()
+    results_scope12 = {}
+    for name, profile in diets.items():
+        cat_totals = {cat: 0.0 for cat in CAT_ORDER}
+        for item, grams_day in profile.items():
+            if item not in factors.index:
+                continue
+            kg_day = grams_day / 1000.0
+            kg_year_person = kg_day * 365.0
+            scope12_intensity = factors.loc[item, 'scope12'] if 'scope12' in factors.columns else 0.0
+            co2_scope12_person_year = kg_year_person * scope12_intensity
+            cat = VISUAL_MAPPING.get(item, item)
+            if cat in cat_totals:
+                cat_totals[cat] += co2_scope12_person_year
+            else:
+                cat_totals[cat] = co2_scope12_person_year
+        try:
+            pop = cfg.POPULATION_TOTAL
+        except AttributeError:
+            pop = None
+        if pop:
+            for cat in cat_totals:
+                cat_totals[cat] = (cat_totals[cat] * pop) / 1000.0
+        results_scope12[name] = cat_totals
+
+    scope3_totals = {diet: sum(results_co2.get(diet, {}).values()) for diet in results_co2}
+    scope12_totals = {diet: sum(results_scope12.get(diet, {}).values()) for diet in results_scope12}
+    total_totals = {diet: scope12_totals.get(diet, 0.0) + scope3_totals.get(diet, 0.0) for diet in results_co2}
+    
+    df_compare = pd.DataFrame({
+        'Scope 1+2': pd.Series(scope12_totals),
+        'Scope 3': pd.Series(scope3_totals),
+        'Total': pd.Series(total_totals)
+    }).fillna(0.0)
+
+    ax6 = df_compare.plot(kind='bar', figsize=(14, 8), color=['#7f8c8d', '#e67e22', '#2c3e50'])
+    ax6.set_title('Scope 1+2, Scope 3, and Total Food Emissions by Diet (Tonnes CO2e/Year)')
+    ax6.set_ylabel('Tonnes CO2e / Year')
+    plt.xticks(rotation=15, ha='right')
+    plt.tight_layout()
+    plt.savefig('6_Scope12_vs_Scope3_Total.png')
+
+    total_emissions = df_compare['Total']
+    share_s12 = (df_compare['Scope 1+2'] / total_emissions).replace([np.inf, np.nan], 0.0) * 100.0
+    share_s3 = (df_compare['Scope 3'] / total_emissions).replace([np.inf, np.nan], 0.0) * 100.0
+    
+    fig7, ax7 = plt.subplots(figsize=(14, 6))
+    x = np.arange(len(share_s12))
+    ax7.bar(x, share_s12, label='Scope 1+2', color='#7f8c8d', width=0.4)
+    ax7.bar(x, share_s3, bottom=share_s12, label='Scope 3', color='#e67e22', width=0.4)
+    ax7.set_title('Share of Scope 1+2 and Scope 3 in Total Food CO2')
+    ax7.set_ylabel('% of Total Emissions')
+    ax7.set_xticks(x)
+    ax7.set_xticklabels(df_compare.index, rotation=15, ha='right')
+    ax7.legend()
+    plt.tight_layout()
+    plt.savefig('7_Scope_Shares.png')
+
+    print("Generating 8_All_Total_Emissions_Donuts.png...")
+    results_total = {}
+    for name, profile in diets.items():
+        cat_totals = {cat: 0.0 for cat in CAT_ORDER}
+        for item, grams_day in profile.items():
+            if item not in factors.index:
+                continue
+            kg_day = grams_day / 1000.0
+            kg_year_person = kg_day * 365.0
+            scope3_intensity = factors.loc[item, 'co2'] if 'co2' in factors.columns else 0.0
+            scope12_intensity = factors.loc[item, 'scope12'] if 'scope12' in factors.columns else 0.0
+            total_intensity = scope3_intensity + scope12_intensity
+            co2_total_person_year = kg_year_person * total_intensity
+            cat = VISUAL_MAPPING.get(item, item)
+            if cat in cat_totals:
+                cat_totals[cat] += co2_total_person_year
+            else:
+                cat_totals[cat] = co2_total_person_year
+        try:
+            pop = cfg.POPULATION_TOTAL
+        except AttributeError:
+            pop = None
+        if pop:
+            for cat in cat_totals:
+                cat_totals[cat] = (cat_totals[cat] * pop) / 1000.0
+        results_total[name] = cat_totals
+
+    n_diets8 = len(results_total)
+    cols8 = int(np.ceil(np.sqrt(n_diets8)))
+    rows8 = int(np.ceil(n_diets8 / cols8))
+    fig8, axes8 = plt.subplots(rows8, cols8, figsize=(6 * cols8, 6 * rows8))
+    axes8 = np.array(axes8).reshape(-1)
+    
+    for i, (name, total_dict) in enumerate(results_total.items()):
+        if i >= len(axes8): break
+        ax = axes8[i]
+        vals = [total_dict[c] for c in CAT_ORDER]
+        ax.pie(vals, labels=None, autopct='%1.0f%%', startangle=90, pctdistance=0.85, colors=COLORS)
+        ax.set_title(name, fontsize=12, fontweight='bold')
+        ax.add_artist(plt.Circle((0,0),0.65,fc='white'))
+        total_t = sum(vals)
+        ax.text(0, 0, f"{int(total_t/1000)}k\\nTonnes\\n(1+2+3)", ha='center', va='center', fontsize=9, fontweight='bold')
+    
+    for j in range(n_diets8, len(axes8)): axes8[j].axis('off')
+    fig8.legend(CAT_ORDER, loc='lower center', ncol=8)
+    plt.suptitle('Total Emissions (Scope 1+2+3) by Category', fontsize=16, fontweight='bold', y=0.995)
+    plt.savefig('8_All_Total_Emissions_Donuts.png')
+
+    print("\nScope 1+2 vs Scope 3 vs Total Summary (Tonnes CO2e/Year):")
+    for diet in df_compare.index:
+        s12 = df_compare.loc[diet, 'Scope 1+2']
+        s3 = df_compare.loc[diet, 'Scope 3']
+        total = df_compare.loc[diet, 'Total']
+        s3_share = (s3 / total * 100.0) if total > 0 else 0.0
+        s12_share = (s12 / total * 100.0) if total > 0 else 0.0
+        print(f"- {diet}: S1+2={s12:,.0f} ({s12_share:.1f}%), S3={s3:,.0f} ({s3_share:.1f}%), Total={total:,.0f}")
+
+    # ---------------------------------------------------------
     # CHART 2: THE PLATES
     # Physical mass composition of each diet
     # Shows what people actually eat (grams/day breakdown)
     # ---------------------------------------------------------
     print("Generating 2_All_Plates_Mass.png...")
-    fig2, axes2 = plt.subplots(2, 4, figsize=(24, 12))
-    axes2 = axes2.flatten()
+    n_diets = len(results_mass)
+    cols2 = int(np.ceil(np.sqrt(n_diets)))
+    rows2 = int(np.ceil(n_diets / cols2))
+    fig2, axes2 = plt.subplots(rows2, cols2, figsize=(6 * cols2, 6 * rows2))
+    axes2 = np.array(axes2).reshape(-1)
     
     for i, (name, mass_dict) in enumerate(results_mass.items()):
         if i >= len(axes2): break
@@ -446,7 +580,7 @@ def run_full_analysis():
         ax.text(0, 0, "MASS", ha='center', va='center', fontsize=10, color='gray')
 
     # Hide unused subplots
-    for j in range(i+1, len(axes2)): axes2[j].axis('off')
+    for j in range(n_diets, len(axes2)): axes2[j].axis('off')
     
     fig2.legend(CAT_ORDER, loc='lower center', ncol=8, bbox_to_anchor=(0.5, 0.02))
     plt.suptitle("The Plate: Physical Composition (Grams) Across Diets", fontsize=20, fontweight='bold', y=0.95)
@@ -459,8 +593,11 @@ def run_full_analysis():
     # Total emissions displayed in center of each donut
     # ---------------------------------------------------------
     print("Generating 3_All_Emissions_Donuts.png...")
-    fig3, axes3 = plt.subplots(2, 4, figsize=(24, 12))
-    axes3 = axes3.flatten()
+    n_diets3 = len(results_co2)
+    cols3 = int(np.ceil(np.sqrt(n_diets3)))
+    rows3 = int(np.ceil(n_diets3 / cols3))
+    fig3, axes3 = plt.subplots(rows3, cols3, figsize=(6 * cols3, 6 * rows3))
+    axes3 = np.array(axes3).reshape(-1)
     
     for i, (name, co2_dict) in enumerate(results_co2.items()):
         if i >= len(axes3): break
@@ -474,7 +611,7 @@ def run_full_analysis():
         total_t = sum(vals)
         ax.text(0, 0, f"{int(total_t/1000)}k\nTonnes", ha='center', va='center', fontsize=10, fontweight='bold')
 
-    for j in range(i+1, len(axes3)): axes3[j].axis('off')
+    for j in range(n_diets3, len(axes3)): axes3[j].axis('off')
     
     fig3.legend(CAT_ORDER, loc='lower center', ncol=8, bbox_to_anchor=(0.5, 0.02))
     plt.suptitle("The Footprint: Emission Sources (CO2e) Across Diets", fontsize=20, fontweight='bold', y=0.95)
@@ -520,18 +657,30 @@ def run_full_analysis():
     print(f"{'MASTER SCOPE 3 TONNAGE REPORT':^80}")
     print("="*80)
     
-    short_names = ["1.Monitor", "2.Metro", "3.Meta", "4.DuGoal", "5.AmGoal", "6.EAT"]
+    diet_names = list(diets.keys())
+    short_map = {
+        '1. Monitor 2024 (Current)': '1.Monitor',
+        '2. Amsterdam Theoretical': '2.Theory',
+        '3. Metropolitan (High Risk)': '3.Metro',
+        '4. Metabolic Balance': '4.Meta',
+        '5. Dutch Goal (60:40)': '5.DuGoal',
+        '6. Amsterdam Goal (70:30)': '6.AmGoal',
+        '7. EAT-Lancet (Planetary)': '7.EAT',
+        '8. Schijf van 5 (Guideline)': '8.Schijf',
+        '9. Mediterranean Diet': '9.Med'
+    }
+    short_names = [short_map.get(n, n) for n in diet_names]
     row_fmt = "{:<22}" + "{:>12}" * len(short_names)
     print(row_fmt.format("CATEGORY", *short_names))
     print("-" * 120)
     
     for cat in CAT_ORDER:
-        vals = [results_co2[d][cat] for d in diets.keys()]
+        vals = [results_co2[d][cat] for d in diet_names]
         f_vals = [f"{v:,.0f}" for v in vals]
         print(row_fmt.format(cat, *f_vals))
         
     print("-" * 120)
-    totals = [sum(results_co2[d].values()) for d in diets.keys()]
+    totals = [sum(results_co2[d].values()) for d in diet_names]
     f_totals = [f"{t:,.0f}" for t in totals]
     print(row_fmt.format("TOTAL (Tonnes)", *f_totals))
     print("="*80)
