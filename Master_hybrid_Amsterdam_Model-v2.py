@@ -618,12 +618,17 @@ def run_full_analysis():
     plt.savefig('3_All_Emissions_Donuts.png')
 
     # ---------------------------------------------------------
-    # CHART 4: DISTANCE TO GOALS
+    # CHART 4A: DISTANCE TO GOALS (PERCENTAGE)
     # Heatmap showing % emission reduction needed to reach each goal
-    # Rows = Current states, Columns = Policy targets
-    # Higher % = Greater transformation required
+    # Rows = Current states (what we eat now)
+    # Columns = Policy targets (what we want to achieve)
+    # Values = % reduction in total emissions needed
+    # 
+    # Example: 30% means current diet emits 30% MORE than target
+    # → Need to CUT emissions by 30% to reach that goal
+    # Higher % = Greater dietary transformation required
     # ---------------------------------------------------------
-    print("Generating 4_Distance_To_Goals.png...")
+    print("Generating 4a_Distance_To_Goals_Percentage.png...")
     
     goals = ['5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)', '7. EAT-Lancet (Planetary)']
     baselines = ['1. Monitor 2024 (Current)', '3. Metropolitan (High Risk)', '4. Metabolic Balance']
@@ -640,15 +645,300 @@ def run_full_analysis():
     
     df_matrix = pd.DataFrame(data_matrix, index=baselines, columns=goals)
     
-    plt.figure(figsize=(10, 6))
-    sns.heatmap(df_matrix, annot=True, fmt=".1f", cmap="Reds", cbar_kws={'label': '% Reduction Needed'})
-    plt.title("Distance to Target: % Reduction Required to Reach Goals", fontsize=14, fontweight='bold')
-    plt.ylabel("Current State")
-    plt.xlabel("Policy Goal")
+    fig4a, ax4a = plt.subplots(figsize=(12, 7))
+    sns.heatmap(df_matrix, annot=True, fmt=".1f", cmap="Reds", cbar_kws={'label': '% Reduction Needed'}, ax=ax4a)
+    ax4a.set_title("Distance to Target: % Emission Reduction Required\n(How much must current diets change to reach policy goals?)", 
+                   fontsize=14, fontweight='bold', pad=20)
+    ax4a.set_ylabel("Current Diet Pattern (Baseline)", fontsize=11, fontweight='bold')
+    ax4a.set_xlabel("Policy Target (Goal)", fontsize=11, fontweight='bold')
+    
+    # Add explanation text
+    fig4a.text(0.5, 0.02, 
+               "Note: Values show % reduction in total food emissions needed. Example: 30% means current diet must CUT emissions by 30% to reach target.",
+               ha='center', fontsize=9, style='italic', wrap=True)
+    
     plt.tight_layout()
-    plt.savefig('4_Distance_To_Goals.png')
+    plt.savefig('4a_Distance_To_Goals_Percentage.png')
+    
+    # ---------------------------------------------------------
+    # CHART 4B: DISTANCE TO GOALS (ABSOLUTE CO2)
+    # Heatmap showing absolute CO2 reduction needed (tonnes/year)
+    # Shows the actual tonnage that must be eliminated from Amsterdam's food system
+    # Higher values = More tonnes of CO2e that need to be cut
+    # ---------------------------------------------------------
+    print("Generating 4b_Distance_To_Goals_CO2_Tonnes.png...")
+    
+    data_matrix_co2 = []
+    for base in baselines:
+        row = []
+        base_val = total_footprints[base]
+        for goal in goals:
+            goal_val = total_footprints[goal]
+            reduction_tonnes = (base_val - goal_val) / 1000  # Convert to thousands of tonnes
+            row.append(reduction_tonnes)
+        data_matrix_co2.append(row)
+    
+    df_matrix_co2 = pd.DataFrame(data_matrix_co2, index=baselines, columns=goals)
+    
+    fig4b, ax4b = plt.subplots(figsize=(12, 7))
+    sns.heatmap(df_matrix_co2, annot=True, fmt=".0f", cmap="YlOrRd", 
+                cbar_kws={'label': 'CO2e Reduction (k Tonnes/Year)'}, ax=ax4b)
+    ax4b.set_title("Distance to Target: Absolute CO2e Reduction Required\n(How many tonnes of emissions must Amsterdam eliminate?)", 
+                   fontsize=14, fontweight='bold', pad=20)
+    ax4b.set_ylabel("Current Diet Pattern (Baseline)", fontsize=11, fontweight='bold')
+    ax4b.set_xlabel("Policy Target (Goal)", fontsize=11, fontweight='bold')
+    
+    # Add explanation text
+    fig4b.text(0.5, 0.02, 
+               "Note: Values show thousands of tonnes of CO2e per year that must be cut. Example: 240k tonnes ≈ emissions from 50,000 cars/year.",
+               ha='center', fontsize=9, style='italic', wrap=True)
+    
+    plt.tight_layout()
+    plt.savefig('4b_Distance_To_Goals_CO2_Tonnes.png')
 
     # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    # CHART 9: SHARE IN CO2 VS SHARE IN CONSUMPTION (Monitor Figure 5 Style)
+    # For each diet, compare % contribution to total CO2 vs % contribution to total mass
+    # ---------------------------------------------------------
+    print("Generating 9_CO2_vs_Mass_Share.png...")
+    
+    # Calculate for key diets
+    comparison_diets = ['1. Monitor 2024 (Current)', '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)']
+    
+    fig9, axes = plt.subplots(1, len(comparison_diets), figsize=(20, 8))
+    if len(comparison_diets) == 1:
+        axes = [axes]
+    
+    for idx, diet_name in enumerate(comparison_diets):
+        ax = axes[idx]
+        
+        # Get total mass and CO2
+        mass_data = results_mass[diet_name]
+        co2_data = results_co2[diet_name]
+        
+        total_mass = sum(mass_data.values())
+        total_co2 = sum(co2_data.values())
+        
+        # Calculate percentages
+        mass_pct = {cat: (mass_data[cat] / total_mass * 100) for cat in CAT_ORDER}
+        co2_pct = {cat: (co2_data[cat] / total_co2 * 100) for cat in CAT_ORDER}
+        
+        # Sort by CO2 contribution
+        sorted_cats = sorted(CAT_ORDER, key=lambda c: co2_pct[c], reverse=True)
+        
+        y_pos = np.arange(len(sorted_cats))
+        width = 0.35
+        
+        bars1 = ax.barh(y_pos - width/2, [co2_pct[c] for c in sorted_cats], width, 
+                        label='Share in CO2 emissions', color='#E74C3C', alpha=0.8)
+        bars2 = ax.barh(y_pos + width/2, [mass_pct[c] for c in sorted_cats], width,
+                        label='Share in consumption (mass)', color='#3498DB', alpha=0.8)
+        
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels(sorted_cats, fontsize=10)
+        ax.set_xlabel('Percentage (%)', fontsize=11, fontweight='bold')
+        ax.set_title(diet_name.split('(')[0].strip(), fontsize=12, fontweight='bold')
+        ax.legend(loc='lower right', fontsize=9)
+        ax.grid(axis='x', alpha=0.3, linestyle='--')
+        ax.axvline(x=0, color='black', linewidth=0.8)
+        
+        # Add percentage labels
+        for bar in bars1:
+            width_val = bar.get_width()
+            if width_val > 1:
+                ax.text(width_val, bar.get_y() + bar.get_height()/2, f'{width_val:.1f}%',
+                       ha='left', va='center', fontsize=8, color='#E74C3C', fontweight='bold')
+    
+    plt.tight_layout()
+    plt.savefig('9_CO2_vs_Mass_Share.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    
+    # ---------------------------------------------------------
+    # CHART 10: ENVIRONMENTAL IMPACT BY FOOD TYPE (Monitor Figure 4 Style)
+    # Breakdown by plant-based, animal, mixed (dairy/eggs), processed
+    # ---------------------------------------------------------
+    print("Generating 10_Impact_by_Food_Type.png...")
+    
+    # Define food type categories
+    FOOD_TYPE_MAP = {
+        'Red Meat': 'Animal', 'Poultry': 'Animal', 'Fish': 'Animal',
+        'Dairy & Eggs': 'Mixed (Dairy/Eggs)',
+        'Plant Protein': 'Plant-based', 'Veg & Fruit': 'Plant-based', 'Staples': 'Plant-based',
+        'Ultra-Processed': 'Processed'
+    }
+    
+    fig10, axes = plt.subplots(2, 2, figsize=(16, 12))
+    axes = axes.flatten()
+    
+    comparison_diets_4 = ['1. Monitor 2024 (Current)', '5. Dutch Goal (60:40)', 
+                          '6. Amsterdam Goal (70:30)', '7. EAT-Lancet (Planetary)']
+    
+    for idx, diet_name in enumerate(comparison_diets_4):
+        ax = axes[idx]
+        
+        # Aggregate by food type
+        type_totals = {'Plant-based': 0, 'Animal': 0, 'Mixed (Dairy/Eggs)': 0, 'Processed': 0}
+        for cat in CAT_ORDER:
+            food_type = FOOD_TYPE_MAP[cat]
+            type_totals[food_type] += results_co2[diet_name][cat]
+        
+        total = sum(type_totals.values())
+        type_pct = {k: (v/total*100) for k, v in type_totals.items()}
+        
+        # Create stacked bar
+        categories = ['Climate\nChange', 'Land Use', 'Water Use']
+        plant_vals = [type_pct['Plant-based']] * 3
+        animal_vals = [type_pct['Animal']] * 3
+        mixed_vals = [type_pct['Mixed (Dairy/Eggs)']] * 3
+        processed_vals = [type_pct['Processed']] * 3
+        
+        x = np.arange(len(categories))
+        width = 0.6
+        
+        p1 = ax.bar(x, plant_vals, width, label='Plant-based', color='#2ECC71')
+        p2 = ax.bar(x, animal_vals, width, bottom=plant_vals, label='Animal', color='#E74C3C')
+        p3 = ax.bar(x, mixed_vals, width, bottom=np.array(plant_vals)+np.array(animal_vals), 
+                    label='Mixed (Dairy/Eggs)', color='#F39C12')
+        p4 = ax.bar(x, processed_vals, width, 
+                    bottom=np.array(plant_vals)+np.array(animal_vals)+np.array(mixed_vals),
+                    label='Processed', color='#95A5A6')
+        
+        ax.set_ylabel('Percentage (%)', fontsize=11, fontweight='bold')
+        ax.set_title(diet_name.split('(')[0].strip(), fontsize=12, fontweight='bold')
+        ax.set_xticks(x)
+        ax.set_xticklabels(categories, fontsize=10)
+        ax.set_ylim(0, 100)
+        ax.legend(loc='upper right', fontsize=9)
+        ax.grid(axis='y', alpha=0.3, linestyle='--')
+        
+        # Add percentage labels
+        for i, rect in enumerate(p1):
+            height = rect.get_height()
+            if height > 3:
+                ax.text(rect.get_x() + rect.get_width()/2., height/2,
+                       f'{height:.0f}%', ha='center', va='center', fontsize=9, fontweight='bold')
+        
+        for i, rect in enumerate(p2):
+            height = rect.get_height()
+            bottom = plant_vals[i]
+            if height > 3:
+                ax.text(rect.get_x() + rect.get_width()/2., bottom + height/2,
+                       f'{height:.0f}%', ha='center', va='center', fontsize=9, fontweight='bold')
+    
+    plt.tight_layout()
+    plt.savefig('10_Impact_by_Food_Type.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    
+    # ---------------------------------------------------------
+    # CHART 11: CONSUMPTION VS PROTEIN CONTRIBUTION (Monitor Figure 2 Style)
+    # Compare mass share vs protein share for each food category
+    # ---------------------------------------------------------
+    print("Generating 11_Mass_vs_Protein.png...")
+    
+    # Protein content per kg (approximate values)
+    PROTEIN_CONTENT = {
+        'Red Meat': 0.20, 'Poultry': 0.25, 'Fish': 0.20, 'Dairy & Eggs': 0.12,
+        'Plant Protein': 0.20, 'Staples': 0.10, 'Veg & Fruit': 0.02, 'Ultra-Processed': 0.05
+    }
+    
+    fig11, axes = plt.subplots(1, len(comparison_diets), figsize=(20, 8))
+    if len(comparison_diets) == 1:
+        axes = [axes]
+    
+    for idx, diet_name in enumerate(comparison_diets):
+        ax = axes[idx]
+        
+        mass_data = results_mass[diet_name]
+        total_mass = sum(mass_data.values())
+        
+        # Calculate protein contribution
+        protein_data = {cat: mass_data[cat] * PROTEIN_CONTENT[cat] for cat in CAT_ORDER}
+        total_protein = sum(protein_data.values())
+        
+        # Calculate percentages
+        mass_pct = {cat: (mass_data[cat] / total_mass * 100) for cat in CAT_ORDER}
+        protein_pct = {cat: (protein_data[cat] / total_protein * 100) for cat in CAT_ORDER}
+        
+        # Sort by protein contribution
+        sorted_cats = sorted(CAT_ORDER, key=lambda c: protein_pct[c], reverse=True)
+        
+        y_pos = np.arange(len(sorted_cats))
+        width = 0.35
+        
+        bars1 = ax.barh(y_pos - width/2, [mass_pct[c] for c in sorted_cats], width,
+                        label='Share in consumption (mass)', color='#3498DB', alpha=0.8)
+        bars2 = ax.barh(y_pos + width/2, [protein_pct[c] for c in sorted_cats], width,
+                        label='Share in protein intake', color='#2ECC71', alpha=0.8)
+        
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels(sorted_cats, fontsize=10)
+        ax.set_xlabel('Percentage (%)', fontsize=11, fontweight='bold')
+        ax.set_title(diet_name.split('(')[0].strip(), fontsize=12, fontweight='bold')
+        ax.legend(loc='lower right', fontsize=9)
+        ax.grid(axis='x', alpha=0.3, linestyle='--')
+        ax.axvline(x=0, color='black', linewidth=0.8)
+        
+        # Calculate plant vs animal protein
+        plant_protein = sum([protein_data[c] for c in ['Plant Protein', 'Staples', 'Veg & Fruit']])
+        animal_protein = sum([protein_data[c] for c in ['Red Meat', 'Poultry', 'Fish', 'Dairy & Eggs']])
+        plant_pct_total = plant_protein / (plant_protein + animal_protein) * 100
+        
+        ax.text(0.98, 0.98, f'Plant protein: {plant_pct_total:.0f}%\nAnimal protein: {100-plant_pct_total:.0f}%',
+               transform=ax.transAxes, ha='right', va='top', fontsize=10, 
+               bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    
+    plt.tight_layout()
+    plt.savefig('11_Mass_vs_Protein.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    
+    # ---------------------------------------------------------
+    # CHART 12: INTAKE VS REFERENCE LEVELS (Monitor Last Figure Style)
+    # Compare dietary intake against reference guidelines (Schijf van 5)
+    # ---------------------------------------------------------
+    print("Generating 12_Intake_vs_Reference.png...")
+    
+    # Use Schijf van 5 as reference
+    reference_diet = '8. Schijf van 5 (Guideline)'
+    comparison_diets_ref = ['1. Monitor 2024 (Current)', '3. Metropolitan (High Risk)',
+                            '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)', '7. EAT-Lancet (Planetary)']
+    
+    fig12, ax = plt.subplots(figsize=(14, 10))
+    
+    ref_mass = results_mass[reference_diet]
+    
+    # Sort categories by reference intake
+    sorted_cats = sorted(CAT_ORDER, key=lambda c: ref_mass[c], reverse=True)
+    y_pos = np.arange(len(sorted_cats))
+    
+    # Calculate percentage of reference for each diet
+    width = 0.15
+    colors_diets = ['#3498DB', '#E74C3C', '#F39C12', '#2ECC71', '#9B59B6']
+    
+    for idx, diet_name in enumerate(comparison_diets_ref):
+        diet_mass = results_mass[diet_name]
+        pct_of_ref = [(diet_mass[cat] / ref_mass[cat] * 100) if ref_mass[cat] > 0 else 0 
+                      for cat in sorted_cats]
+        
+        offset = (idx - len(comparison_diets_ref)/2 + 0.5) * width
+        bars = ax.barh(y_pos + offset, pct_of_ref, width,
+                       label=diet_name.split('(')[0].strip()[:20], 
+                       color=colors_diets[idx], alpha=0.8)
+    
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(sorted_cats, fontsize=11)
+    ax.set_xlabel('2024 dietary intake versus reference intake (%)', fontsize=12, fontweight='bold')
+    ax.set_title('Dietary Intake Comparison Against Schijf van 5 Reference', 
+                 fontsize=14, fontweight='bold', pad=20)
+    ax.axvline(x=100, color='black', linewidth=2, linestyle='--', label='Reference (100%)')
+    ax.legend(loc='lower right', fontsize=9, ncol=2)
+    ax.grid(axis='x', alpha=0.3, linestyle='--')
+    ax.set_xlim(0, 250)
+    
+    plt.tight_layout()
+    plt.savefig('12_Intake_vs_Reference.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    
     # CONSOLE REPORT: MASTER TONNAGE TABLE
     # Detailed breakdown of emissions by food category
     # Shows absolute values (tonnes/year) and % change from baseline

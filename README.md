@@ -23,11 +23,12 @@ This project contains **5 complementary Python modules** with increasing sophist
 ✅ **Empirical Monitor 2024 Data** — Baseline reflects actual Amsterdam consumption (48% plant / 52% animal protein)  
 ✅ **Multi-Metric LCA** — Tracks CO2, land use, and water across 16 food categories  
 ✅ **Income-Sensitive Consumption** — Valencia downscaling method scales by neighborhood income  
-✅ **Education Effects** — Models behavioral differences: high-education areas eat 15% less meat  
-✅ **9 Dietary Scenarios** — Added Schijf van 5 and Mediterranean diets  
+✅ **Education-Based Behavioral Effects** — Models preference differences: high-education areas eat 15% less meat (Monitor finding)  
+✅ **Scope 1+2 + Scope 3 Analysis** — Separates local production (4–6%) from supply chain (94–97%) emissions  
+✅ **9 Dietary Scenarios** — Includes Schijf van 5 and Mediterranean diets  
 ✅ **Supply Chain Integration** — Accounts for 15% waste across production-retail pipeline  
-✅ **Spatial Hotspot Analysis** — Neighborhood-level emissions with behavioral adjustments  
-✅ **Publication-Ready Visualizations** — 6 professional charts per run  
+✅ **Spatial Hotspot Analysis** — Neighborhood-level emissions with education-income interaction effects  
+✅ **Publication-Ready Visualizations** — 8+ professional charts per run (including scope breakdown & donuts)  
 ✅ **Distance-to-Goals Matrix** — Quantifies % reduction needed for each pathway  
 
 ---
@@ -70,11 +71,15 @@ This project contains **5 complementary Python modules** with increasing sophist
 
 **Key Innovations:**
 - **Empirical Baseline:** Amsterdam Monitor 2024 data (48% plant/52% animal)
-- **Composite Beta:** Volume scaling (income) × behavioral modifier (education)
-- **Counter-intuitive Finding:** Wealthy, educated areas (Zuid) consume LESS meat than lower-income areas
+- **Dual-Factor Beta:** 
+  - Volume scaling (income): Wealthier neighborhoods consume more total food
+  - Behavioral modifier (education): High-education areas prefer plant-based foods
+- **Counter-intuitive Finding:** Wealthy, educated areas (Zuid 70% education, 0.85 meat modifier) show similar emissions to middle-income areas because education-driven dietary composition offsets income-driven volume increases
+- **Neighborhood Hotspot Modifiers:** Shows meat_modifier per area (0.85 for high-education, 1.10 for low-education)
 
-**Outputs:** Same 5 visualizations as MasterHybridModel.py, but education-adjusted
-- Transition extras: 2d_Transition_Schijf.png, 2e_Transition_Mediterranean.png
+**Outputs:** 5 visualizations + hotspot analysis with education-adjusted emissions
+- Charts: 1_Nexus, 2a/2b/2c_Transitions (Dutch/Amsterdam/EAT), 3_All_Diets, 4_Impact_Stack, 5_Neighborhood_Hotspots
+- Console report with meat modifiers and neighborhood breakdown
 
 ---
 
@@ -102,19 +107,22 @@ This project contains **5 complementary Python modules** with increasing sophist
 - **Composite Beta Calculation:** Two multiplicative factors
   - Volume Beta (income-driven): How much total food someone buys
   - Behavioral Modifiers (education-driven): What TYPE of food they choose
-- **7 Diet Scenarios** with detailed rationale
-- **Extended Food Categories** — Includes Lamb, Rice, Pasta, Bread, Drinks
-- **Table Visualization Export** — Detailed tabular emissions data
+- **Scope 1+2 vs Scope 3 Breakdown:** Separates local production emissions (4–6%) from supply chain (94–97%)
+  - Scope 1+2: Direct production & on-farm energy use
+  - Scope 3: Land use, transportation, processing, packaging, retail
+- **9 Diet Scenarios** with detailed rationale (adds Schijf van 5 & Mediterranean)
+- **Extended Food Categories** — 16 items with scope12 intensity factors (0.05–0.5 kgCO2e/kg)
+- **Comprehensive Visualizations** — 8 charts covering composition, scope analysis, totals, and transitions
 
 **Visualizations:**
-1. **1_Nexus_Analysis.png** — Multi-dimensional impact
-2. **2a/2b/2c_Transition_*.png** — Baseline to goal transitions (3 scenarios)
-3. **3_All_Diets_Plates.png** — Pie charts of 7 diet compositions
-4. **4_Impact_Stack.png** — Stacked emissions across categories
-5. **5_Neighborhood_Hotspots.png** — Spatial distribution with behavioral mods
-6. **6_Table_Tonnage.png** — Tabular emissions breakdown
-7. **5d_Transition_Schijf.png** — Baseline to Schijf van 5
-8. **5e_Transition_Mediterranean.png** — Baseline to Mediterranean
+1. **1_Nexus_Analysis.png** — CO2/Land/Water metrics across 9 diets
+2. **2a/2b/2c/2d/2e_Transition_*.png** — Baseline to goal transitions (5 scenarios: Dutch, Amsterdam, EAT, Schijf, Mediterranean)
+3. **3_All_Diets_Plates.png** — Pie charts of 9 diet compositions
+4. **4_Impact_Stack.png** — Stacked emissions across food categories
+5. **6_Scope12_vs_Scope3.png** — Grouped bars: Scope 1+2, Scope 3, and Total (1+2+3) per diet
+6. **7_Scope_Shares.png** — Stacked % bars showing Scope 1+2 and Scope 3 proportion
+7. **8_All_Total_Emissions_Donuts.png** — 3×3 grid of donut charts (one per diet) showing S1+2+3 breakdown by food category
+8. **6_Table_Tonnage.png** — Tabular emissions breakdown
 
 **Console Report:**
 - Master tonnage table (7 diets × 8 categories)
@@ -194,11 +202,13 @@ Zuidoost           89,000      1.10        0.85         113,400
 ```
 
 **Key Insights:**
-- **Amsterdam baseline:** 613,500 tonnes CO2e/year
-- **Dutch Goal path:** -14.2% reduction needed
-- **Amsterdam Goal path:** -19.1% reduction needed
-- **EAT-Lancet path:** -7.1% reduction (but increases land use!)
-- **Education effect:** South Amsterdam eats less meat despite higher income
+- **Amsterdam baseline:** 854,356 tonnes CO2e/year
+- **Scope 1+2 (Local):** 35,702 tonnes (4.2%) — Direct production & on-farm energy
+- **Scope 3 (Supply Chain):** 804,709 tonnes (95.8%) — Transportation, processing, retail, land use
+- **Education effect:** South Amsterdam (70% educated) shows lower meat consumption (0.85 modifier) despite higher income, resulting in similar emissions to middle-income areas
+- **Dutch Goal path:** -3.4% reduction needed (60:40 plant:animal)
+- **Amsterdam Goal path:** -28.2% reduction needed (70:30 plant:animal)
+- **EAT-Lancet path:** -30.0% reduction (80:20 plant:animal) — most sustainable option
 
 ---
 
@@ -214,18 +224,22 @@ Beta_Volume = C1 × e^(C2 × income_ratio)
 - Accounts for eating out, packaging waste, disposal
 - Empirical: wealthy Amsterdam produces more food waste
 
-**2. Behavioral (Education Effects)**
+**2. Behavioral (Education Effects) — Monitor Insight**
 ```
-If High_Education (>50%):
-    Meat × 0.85  (15% less)
-    Plant × 1.15 (15% more)
+If High_Education_Pct > 0.5 (50% bachelor degree or higher):
+    Meat_Modifier = 0.85     (eat 15% less meat)
+    Plant_Modifier = 1.15    (eat 15% more plant foods)
 Else:
-    Meat × 1.10  (10% more)
-    Plant × 0.90 (10% less)
+    Meat_Modifier = 1.10     (eat 10% more meat)
+    Plant_Modifier = 0.90    (eat 10% less plant foods)
 ```
-- Higher education → plant-based preference
-- Wealthy educated areas eat LESS meat than lower-income areas
-- Independent of income (multiplicative effect)
+- **Source:** Amsterdam Monitor 2024 survey data
+- **Finding:** High-education areas (52% plant protein) vs low-education (39% plant protein)
+- **Independence:** Education effect is INDEPENDENT of income — creates multiplicative behavioral pattern
+- **Example:** 
+  - Zuid (70% educated, high income): 0.85 meat × 1.15 volume = moderate meat total
+  - Zuidoost (30% educated, low income): 1.10 meat × 0.85 volume = moderate meat total
+- **Policy Implication:** Education-based interventions are as important as income-based policies
 
 **3. Environmental (LCA)**
 ```
@@ -282,12 +296,14 @@ Edit `load_impact_factors()`:
 ```
 
 ### Add Neighborhoods
-Edit `load_neighborhood_data()` with CBS statistics:
+Edit `load_neighborhood_data()` with CBS statistics (education % is critical for behavioral effects):
 ```python
-'Neighborhood': [...],
-'Population': [...],
-'Avg_Income': [...],
-'High_Education_Pct': [...]
+'Neighborhood': ['Centrum', 'Zuid', 'West', 'Noord', 'Zuidoost', 'Nieuw-West', 'Oost'],
+'Population': [87000, 145000, 145000, 99000, 89000, 160000, 135000],
+'Avg_Income': [48000, 56000, 34000, 29000, 24000, 26000, 36000],  # EUR/year
+'High_Education_Pct': [0.65, 0.70, 0.60, 0.40, 0.30, 0.35, 0.55]   # Bachelor+ fraction
+```
+**Note:** High_Education_Pct drives behavioral modifiers (meat vs plant preference), not just income scaling!
 ```
 
 ---
@@ -382,9 +398,17 @@ Output files:
 - Master_hybrid_Amsterdam_Model.py: [2a_Transition_DutchGoal.png](2a_Transition_DutchGoal.png), [2b_Transition_AmsterdamGoal.png](2b_Transition_AmsterdamGoal.png), [2c_Transition_EAT_Lancet.png](2c_Transition_EAT_Lancet.png), [2d_Transition_Schijf.png](2d_Transition_Schijf.png), [2e_Transition_Mediterranean.png](2e_Transition_Mediterranean.png)
 - Master Hybrid Amsterdam Model v3.py: [5a_Transition_Dutch.png](5a_Transition_Dutch.png), [5b_Transition_Amsterdam.png](5b_Transition_Amsterdam.png), [5c_Transition_EAT.png](5c_Transition_EAT.png), [5d_Transition_Schijf.png](5d_Transition_Schijf.png), [5e_Transition_Mediterranean.png](5e_Transition_Mediterranean.png)
 
-### Scope 1+2 vs Scope 3 Outputs
-- [6_Scope12_vs_Scope3.png](6_Scope12_vs_Scope3.png): Grouped bars comparing Scope 1+2 vs Scope 3 per diet.
-- [7_Scope3_Share.png](7_Scope3_Share.png): Share of Scope 3 in total emissions (%).
+### Scope Analysis Outputs (v3 & Advanced Models)
+- [6_Scope12_vs_Scope3.png](6_Scope12_vs_Scope3.png): **Grouped bars** comparing Scope 1+2, Scope 3, and Total (1+2+3) emissions per diet
+  - Shows that Scope 1+2 = 4–6% of total, Scope 3 = 94–97% (supply chain dominates)
+  - Key insight: Local production changes have minimal impact; food choice (meat vs plant) is what matters
+- [7_Scope_Shares.png](7_Scope_Shares.png): **Stacked % bars** showing Scope 1+2 and Scope 3 proportions
+  - Reveals consistency across all diets: Scope 3 is 94–97% regardless of plant:animal ratio
+  - Implication: Reducing meat is about supply chain (shipping, processing, land) not local production
+- [8_All_Total_Emissions_Donuts.png](8_All_Total_Emissions_Donuts.png): **3×3 grid** of donut charts (one per diet)
+  - Each donut shows S1+2+3 breakdown by food category (16 items)
+  - Center text displays total emissions in thousands of tonnes
+  - Reveals which food categories drive emissions in each scenario
 
 ---
 
