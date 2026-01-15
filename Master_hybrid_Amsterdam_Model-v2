@@ -222,13 +222,15 @@ def load_diet_profiles():
             'Beef': 10, 'Pork': 10, 'Chicken': 25, 'Cheese': 30, 'Milk': 250,
             'Fish': 25, 'Eggs': 20, 'Pulses': 30, 'Nuts': 25, 'Meat_Subs': 20,
             'Grains': 240, 'Vegetables': 250, 'Fruits': 200, 'Potatoes': 70,
-            'Sugar': 25, 'Processed': 60
+            'Sugar': 25, 'Processed': 60,
+            'Coffee': 9, 'Tea': 5, 'Alcohol': 18, 'Oils': 22, 'Snacks': 25, 'Condiments': 18
         },
         '9. Mediterranean Diet': {
             'Beef': 8, 'Pork': 8, 'Chicken': 20, 'Cheese': 30, 'Milk': 200,
             'Fish': 35, 'Eggs': 18, 'Pulses': 60, 'Nuts': 30, 'Meat_Subs': 10,
             'Grains': 240, 'Vegetables': 300, 'Fruits': 220, 'Potatoes': 60,
-            'Sugar': 20, 'Processed': 50
+            'Sugar': 20, 'Processed': 50,
+            'Coffee': 8, 'Tea': 6, 'Alcohol': 15, 'Oils': 25, 'Snacks': 20, 'Condiments': 15
         }
     }
     return diets
@@ -469,6 +471,8 @@ def run_full_analysis():
     print("Generating 6_Scope12_vs_Scope3.png and 7_Scope3_Share.png...")
     factors = load_impact_factors()
     results_scope12 = {}
+    scope12_breakdown = {}  # Store base, waste, retail components
+    
     for name, profile in diets.items():
         cat_totals = {cat: 0.0 for cat in CAT_ORDER}
         for item, grams_day in profile.items():
@@ -490,6 +494,26 @@ def run_full_analysis():
         if pop:
             for cat in cat_totals:
                 cat_totals[cat] = (cat_totals[cat] * pop) / 1000.0
+        
+        # Calculate Scope 1+2 components: Base + Waste (11%) + Retail/Distribution (2.5%)
+        base_s12 = sum(cat_totals.values())
+        waste_s12 = base_s12 * 0.11  # Food waste (household + processing)
+        retail_s12 = base_s12 * 0.025  # Retail/distribution (cold chain + urban logistics)
+        total_s12 = base_s12 + waste_s12 + retail_s12
+        
+        # Store breakdown for transparency
+        scope12_breakdown[name] = {
+            'base': base_s12,
+            'waste': waste_s12,
+            'retail': retail_s12,
+            'total': total_s12
+        }
+        
+        # Scale category totals to include waste + retail proportionally
+        scaling_factor = total_s12 / base_s12 if base_s12 > 0 else 1.0
+        for cat in cat_totals:
+            cat_totals[cat] *= scaling_factor
+        
         results_scope12[name] = cat_totals
 
     scope3_totals = {diet: sum(results_co2.get(diet, {}).values()) for diet in results_co2}
@@ -574,13 +598,31 @@ def run_full_analysis():
     plt.savefig('8_All_Total_Emissions_Donuts.png')
 
     print("\nScope 1+2 vs Scope 3 vs Total Summary (Tonnes CO2e/Year):")
-    for diet in df_compare.index:
-        s12 = df_compare.loc[diet, 'Scope 1+2']
-        s3 = df_compare.loc[diet, 'Scope 3']
-        total = df_compare.loc[diet, 'Total']
-        s3_share = (s3 / total * 100.0) if total > 0 else 0.0
-        s12_share = (s12 / total * 100.0) if total > 0 else 0.0
-        print(f"- {diet}: S1+2={s12:,.0f} ({s12_share:.1f}%), S3={s3:,.0f} ({s3_share:.1f}%), Total={total:,.0f}")
+    print("=" * 90)
+    print(f"{'Diet':<30} {'Scope 1+2':<15} {'Scope 3':<15} {'Total (1+2+3)':<15}")
+    print("-" * 90)
+    for diet_name in df_compare.index:
+        s12 = df_compare.loc[diet_name, 'Scope 1+2']
+        s3 = df_compare.loc[diet_name, 'Scope 3']
+        tot = df_compare.loc[diet_name, 'Total']
+        print(f"{diet_name:<30} {int(s12):>13,} {int(s3):>13,} {int(tot):>13,}")
+    print("=" * 90)
+    
+    # Print Scope 1+2 breakdown for transparency (Monitor 2024 diet only)
+    if 'Monitor 2024' in scope12_breakdown:
+        print("\nScope 1+2 Breakdown - Monitor 2024 Diet (Tonnes CO2e/Year):")
+        print("=" * 90)
+        bd = scope12_breakdown['Monitor 2024']
+        print(f"  Base food consumption:          {int(bd['base']):>13,} tonnes ({bd['base']/bd['total']*100:.1f}%)")
+        print(f"  + Food waste (11%):             {int(bd['waste']):>13,} tonnes ({bd['waste']/bd['total']*100:.1f}%)")
+        print(f"  + Retail/distribution (2.5%):   {int(bd['retail']):>13,} tonnes ({bd['retail']/bd['total']*100:.1f}%)")
+        print("-" * 90)
+        print(f"  TOTAL Scope 1+2:                {int(bd['total']):>13,} tonnes (100.0%)")
+        print("=" * 90)
+        print(f"  Monitor 2024 target: 1,750,000 tonnes")
+        error_pct = (bd['total'] - 1750000) / 1750000 * 100
+        print(f"  Difference: {error_pct:+.2f}%")
+        print("=" * 90)
 
     # ---------------------------------------------------------
     # CHART 2: THE PLATES
@@ -789,7 +831,9 @@ def run_full_analysis():
         'Red Meat': 'Animal', 'Poultry': 'Animal', 'Fish': 'Animal',
         'Dairy & Eggs': 'Mixed (Dairy/Eggs)',
         'Plant Protein': 'Plant-based', 'Veg & Fruit': 'Plant-based', 'Staples': 'Plant-based',
-        'Ultra-Processed': 'Processed'
+        'Ultra-Processed': 'Processed',
+        'Beverages & Additions': 'Processed',
+        'Oils & Condiments': 'Processed'
     }
     
     fig10, axes = plt.subplots(2, 2, figsize=(16, 12))
@@ -863,7 +907,9 @@ def run_full_analysis():
     # Protein content per kg (approximate values)
     PROTEIN_CONTENT = {
         'Red Meat': 0.20, 'Poultry': 0.25, 'Fish': 0.20, 'Dairy & Eggs': 0.12,
-        'Plant Protein': 0.20, 'Staples': 0.10, 'Veg & Fruit': 0.02, 'Ultra-Processed': 0.05
+        'Plant Protein': 0.20, 'Staples': 0.10, 'Veg & Fruit': 0.02, 'Ultra-Processed': 0.05,
+        'Beverages & Additions': 0.01,
+        'Oils & Condiments': 0.01
     }
     
     fig11, axes = plt.subplots(1, len(comparison_diets), figsize=(20, 8))
