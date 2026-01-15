@@ -176,20 +176,29 @@ def load_neighborhood_data():
     Load Amsterdam neighborhood socio-economic data.
     
     Data simulates CBS 'Kerncijfers wijken en buurten' statistics.
-    Income differences drive consumption scaling via Valencia beta factors:
-    - Higher income areas (Zuid, Centrum) have higher consumption volumes
-    - Lower income areas consume closer to national average
+    
+    TWO BEHAVIORAL DRIVERS:
+    1. Income effect: Higher income → higher total food consumption volume
+    2. Education effect: Higher education → plant-based preference (lower meat, higher plant protein)
+    
+    These are INDEPENDENT and MULTIPLICATIVE:
+    - Wealthy, educated (Zuid, Centrum): High volume × Low meat = Moderate meat total
+    - Lower-income (Zuidoost): Low volume × High meat = Lower meat absolute
+    
+    Monitor finding: High education (52% plant) vs Low education (39% plant)
     
     Returns:
         pd.DataFrame: Neighborhood data with columns:
             - Neighborhood: District name
             - Population: Resident count
             - Avg_Income: Average household income (EUR/year)
+            - High_Education_Pct: Fraction with bachelor degree or higher
     """
     return pd.DataFrame({
         'Neighborhood': ['Centrum', 'Zuid', 'West', 'Noord', 'Zuidoost', 'Nieuw-West', 'Oost'],
         'Population': [87000, 145000, 145000, 99000, 89000, 160000, 135000],
-        'Avg_Income': [48000, 56000, 34000, 29000, 24000, 26000, 36000] # Euros/year
+        'Avg_Income': [48000, 56000, 34000, 29000, 24000, 26000, 36000], # Euros/year
+        'High_Education_Pct': [0.65, 0.70, 0.60, 0.40, 0.30, 0.35, 0.55] # From Monitor insights
     })
 
 # ==========================================
@@ -220,25 +229,41 @@ class Scope3Engine:
         self.factors = load_impact_factors()
 
     # --- 3A. Beta Factor Logic (The "Hybrid" part) ---
-    def calculate_beta(self, local_income):
+    def calculate_beta(self, row):
         """ 
-        Calculate consumption scaling factor using Valencia downscaling.
+        Calculate composite consumption scaling factors with dual behavioral drivers.
         
-        Higher income neighborhoods consume more total food volume and
-        have higher waste rates. Uses exponential scaling relationship:
-        Beta = C1 * exp(C2 * income_ratio)
+        The Amsterdam Monitor revealed that:
+        1. Higher income = MORE total food volume (wealthier people waste more)
+        2. Higher education = LESS meat proportion (behavioral preference)
+        
+        These effects are INDEPENDENT and MULTIPLICATIVE:
+        - A wealthy, educated person (Zuid) = High volume × Low meat = Moderate meat total
+        - A lower-income person (Zuidoost) = Lower volume × High meat = Moderate meat total
         
         Args:
-            local_income (float): Average neighborhood income (EUR/year)
+            row (pd.Series): Neighborhood data row with Avg_Income and High_Education_Pct
             
         Returns:
-            float: Beta scaling factor (>1 for high income, <1 for low income)
-                   Floor of 0.75 prevents unrealistic low consumption estimates
+            tuple: (volume_beta, meat_modifier, plant_modifier)
+                - volume_beta: Overall consumption scaling (0.8 to 1.2)
+                - meat_modifier: Meat consumption adjustment (0.85 or 1.1)
+                - plant_modifier: Plant consumption adjustment (1.15 or 0.9)
         """
-        income_ratio = local_income / self.cfg.NATIONAL_AVG_INCOME
-        # Valencia Formula: Beta = C1 * e^(C2 * ratio)
-        beta = self.cfg.SCALING_C1 * np.exp(self.cfg.SCALING_C2 * income_ratio)
-        return max(beta, 0.75) # Floor to prevent starvation modeling
+        # 1. Volume Effect: Wealthier neighborhoods consume more total food
+        income_ratio = row['Avg_Income'] / self.cfg.NATIONAL_AVG_INCOME
+        volume_beta = self.cfg.SCALING_C1 * np.exp(self.cfg.SCALING_C2 * income_ratio)
+        
+        # 2. Education Effect: Higher education correlates with plant-based preference
+        # Monitor data: 52% plant (high edu) vs 39% plant (low edu)
+        if row['High_Education_Pct'] > 0.5:
+            meat_modifier = 0.85   # Eat 15% less meat than average
+            plant_modifier = 1.15  # Eat 15% more plant foods than average
+        else:
+            meat_modifier = 1.1    # Eat 10% more meat than average
+            plant_modifier = 0.9   # Eat 10% less plant foods than average
+            
+        return volume_beta, meat_modifier, plant_modifier
 
     # --- 3B. Standard Impact Calculation (Per Capita Per Day) ---
     def calculate_raw_impact(self, diet_profile):
@@ -307,16 +332,19 @@ class Scope3Engine:
         """
         Runs the model per neighborhood, scaling consumption by Beta.
         Returns DataFrame with 'Total_CO2_Tonnes' per neighborhood.
+        
+        NEW: Applies both volume_beta (income effect) and education modifiers
+        (meat_modifier, plant_modifier) to neighborhood-specific consumption.
         """
         results = []
         base_impact = self.calculate_raw_impact(diet_profile) # Per capita impact of base diet
         
         for _, row in neighborhoods.iterrows():
-            beta = self.calculate_beta(row['Avg_Income'])
+            vol_beta, meat_mod, plant_mod = self.calculate_beta(row)
             
-            # Apply Beta to the impact (Assuming impact scales with expenditure/volume)
-            # In a full model, we'd scale only luxury foods, but scaling total is a valid proxy
-            local_co2_per_capita = base_impact['co2'] * beta 
+            # Weighted scaling: 40% meat modifier, 10% plant modifier, 50% neutral (dairy/other)
+            local_scaling = (0.4 * meat_mod + 0.1 * plant_mod + 0.5 * 1.0) * vol_beta
+            local_co2_per_capita = base_impact['co2'] * local_scaling
             
             # Total Neighborhood Tonnage
             total_tonnes = (local_co2_per_capita * 365 * row['Population']) / 1000
@@ -325,7 +353,10 @@ class Scope3Engine:
                 'Neighborhood': row['Neighborhood'],
                 'Population': row['Population'],
                 'Income': row['Avg_Income'],
-                'Beta': beta,
+                'Education_Pct': row['High_Education_Pct'],
+                'Vol_Beta': vol_beta,
+                'Meat_Modifier': meat_mod,
+                'Plant_Modifier': plant_mod,
                 'Per_Capita_Daily_CO2': local_co2_per_capita,
                 'Total_CO2_Tonnes': total_tonnes
             })
@@ -619,8 +650,8 @@ def run_full_analysis():
     print("="*90)
     
     # Hotspot Report
-    print("\n--- NEIGHBORHOOD HOTSPOT ANALYSIS (BASELINE) ---")
-    print(df_spatial[['Neighborhood', 'Population', 'Beta', 'Total_CO2_Tonnes']].sort_values('Total_CO2_Tonnes', ascending=False).to_string(index=False))
+    print("\n--- NEIGHBORHOOD HOTSPOT ANALYSIS (BASELINE WITH EDUCATION MODIFIERS) ---")
+    print(df_spatial[['Neighborhood', 'Population', 'Education_Pct', 'Meat_Modifier', 'Total_CO2_Tonnes']].sort_values('Total_CO2_Tonnes', ascending=False).to_string(index=False))
 
 if __name__ == "__main__":
     run_full_analysis()
