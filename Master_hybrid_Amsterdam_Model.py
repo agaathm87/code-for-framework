@@ -131,6 +131,13 @@ def load_diet_profiles():
             'Grains': 240, 'Vegetables': 300, 'Fruits': 220, 'Potatoes': 60,
             'Sugar': 20, 'Processed': 50,
             'Coffee': 8, 'Tea': 5, 'Alcohol': 30, 'Oils': 30, 'Snacks': 25, 'Condiments': 15
+        },
+        '9. Amsterdam Theoretical': {
+            'Beef': 12, 'Pork': 20, 'Chicken': 28, 'Cheese': 40, 'Milk': 260,
+            'Fish': 10, 'Eggs': 25, 'Pulses': 8, 'Nuts': 10, 'Meat_Subs': 15,
+            'Grains': 220, 'Vegetables': 150, 'Fruits': 130, 'Potatoes': 50,
+            'Sugar': 40, 'Processed': 150,
+            'Coffee': 12, 'Tea': 4, 'Alcohol': 30, 'Oils': 30, 'Snacks': 50, 'Condiments': 25
         }
     }
     return diets
@@ -512,13 +519,13 @@ def run_full_analysis():
     # CHART 9: SHARE IN CO2 VS SHARE IN CONSUMPTION (Monitor Figure 5 Style)
     # ---------------------------------------------------------
     print("Generating 9_CO2_vs_Mass_Share.png...")
-    comparison_diets = ['1. Amsterdam Monitor 2024', '4. Dutch Goal (60:40)', '5. Amsterdam Goal (70:30)']
+    diet_names = list(results_co2.keys())
+    fig9, axes = plt.subplots(3, 3, figsize=(22, 16))
+    axes = axes.flatten()
     
-    fig9, axes = plt.subplots(1, len(comparison_diets), figsize=(20, 8))
-    if len(comparison_diets) == 1:
-        axes = [axes]
-    
-    for idx, diet_name in enumerate(comparison_diets):
+    for idx, diet_name in enumerate(diet_names):
+        if idx >= 9:
+            break
         ax = axes[idx]
         mass_data = results_mass[diet_name]
         co2_data = results_co2[diet_name]
@@ -557,7 +564,9 @@ def run_full_analysis():
         'Red Meat': 'Animal', 'Poultry': 'Animal', 'Fish': 'Animal',
         'Dairy & Eggs': 'Mixed (Dairy/Eggs)',
         'Plant Protein': 'Plant-based', 'Veg & Fruit': 'Plant-based', 'Staples': 'Plant-based',
-        'Ultra-Processed': 'Processed'
+        'Ultra-Processed': 'Processed',
+        'Beverages & Additions': 'Processed',
+        'Oils & Condiments': 'Processed'
     }
     
     fig10, axes = plt.subplots(2, 2, figsize=(16, 12))
@@ -618,15 +627,17 @@ def run_full_analysis():
         'Plant Protein': 0.20, 'Staples': 0.10, 'Veg & Fruit': 0.02, 'Ultra-Processed': 0.05
     }
     
-    fig11, axes = plt.subplots(1, len(comparison_diets), figsize=(20, 8))
-    if len(comparison_diets) == 1:
-        axes = [axes]
+    diet_names = list(results_mass.keys())
+    fig11, axes = plt.subplots(3, 3, figsize=(22, 16))
+    axes = axes.flatten()
     
-    for idx, diet_name in enumerate(comparison_diets):
+    for idx, diet_name in enumerate(diet_names):
+        if idx >= 9:
+            break
         ax = axes[idx]
         mass_data = results_mass[diet_name]
         total_mass = sum(mass_data.values())
-        protein_data = {cat: mass_data[cat] * PROTEIN_CONTENT[cat] for cat in CAT_ORDER}
+        protein_data = {cat: mass_data.get(cat, 0) * PROTEIN_CONTENT.get(cat, 0) for cat in CAT_ORDER}
         total_protein = sum(protein_data.values())
         mass_pct = {cat: (mass_data[cat] / total_mass * 100) for cat in CAT_ORDER}
         protein_pct = {cat: (protein_data[cat] / total_protein * 100) for cat in CAT_ORDER}

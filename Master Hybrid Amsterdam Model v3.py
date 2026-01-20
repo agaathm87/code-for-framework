@@ -869,7 +869,7 @@ def run_full_analysis():
         total_emission = sum(total_emissions.values())
         
         # Calculate protein contribution
-        protein_data = {cat: mass_data[cat] * PROTEIN_CONTENT[cat] for cat in CAT_ORDER}
+        protein_data = {cat: mass_data.get(cat, 0) * PROTEIN_CONTENT.get(cat, 0) for cat in CAT_ORDER}
         total_protein = sum(protein_data.values())
         
         # Calculate percentages
@@ -910,59 +910,138 @@ def run_full_analysis():
     plt.close()
 
     # ---------------------------------------------------------
-    # CHART 12: TOTAL EMISSIONS VS REFERENCE (All 9 Diets Comparison)
+    # CHART 12: DIETS VS GOALS – MULTI-RESOURCE GAP (CO2, LAND, WATER)
     # ---------------------------------------------------------
-    print("Generating 12_Emissions_vs_Reference.png...")
-    reference_diet = '8. Schijf van 5 (Guideline)'
-    all_diets_chart12 = ['1. Monitor 2024 (Current)', '2. Amsterdam Theoretical',
-                         '3. Metropolitan (High Risk)', '4. Metabolic Balance',
-                         '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)',
-                         '7. EAT-Lancet (Planetary)', '8. Schijf van 5 (Guideline)', '9. Mediterranean Diet']
-    
-    fig12, ax = plt.subplots(figsize=(16, 12))
-    
-    # Calculate total emissions (Scope 1+2 + Scope 3) for reference
-    ref_emissions = {cat: results_scope12[reference_diet][cat] + results_co2[reference_diet][cat] 
-                     for cat in CAT_ORDER}
-    sorted_cats = sorted(CAT_ORDER, key=lambda c: ref_emissions[c], reverse=True)[:8]  # Top 8
-    
-    y_pos = np.arange(len(sorted_cats))
-    width = 0.09
-    colors_diets = ['#3498DB', '#9B59B6', '#E74C3C', '#F39C12', '#F1C40F', '#2ECC71', '#16A085', '#34495E', '#D35400']
-    
-    for idx, diet_name in enumerate(all_diets_chart12):
-        # Calculate total emissions for this diet
-        diet_emissions = {cat: results_scope12[diet_name][cat] + results_co2[diet_name][cat] 
-                         for cat in CAT_ORDER}
-        
-        # Calculate percentage of reference
-        pct_of_ref = [(diet_emissions[cat] / ref_emissions[cat] * 100) if ref_emissions[cat] > 0 else 0 
-                      for cat in sorted_cats]
-        
-        offset = (idx - len(all_diets_chart12)/2 + 0.5) * width
-        bars = ax.barh(y_pos + offset, pct_of_ref, width,
-                       label=diet_name.split('(')[0].strip()[:20], 
-                       color=colors_diets[idx], alpha=0.85)
-    
-    ax.set_yticks(y_pos)
-    ax.set_yticklabels(sorted_cats, fontsize=11)
-    ax.set_xlabel('Total emissions versus reference (%)', fontsize=12, fontweight='bold')
-    ax.set_title('Total Emissions (Scope 1+2+3) - All 9 Diets vs Schijf van 5 Reference', 
-                 fontsize=14, fontweight='bold', pad=20)
-    ax.axvline(x=100, color='black', linewidth=2.5, linestyle='--', label='Reference (100%)')
-    ax.legend(loc='lower right', fontsize=8, ncol=2)
-    ax.grid(axis='x', alpha=0.3, linestyle='--')
-    ax.set_xlim(0, 250)
-    
-    # Add annotation box
-    total_ref = sum(ref_emissions.values())
-    ax.text(0.02, 0.98, f'Reference total:\n{total_ref/1000:.0f} kton CO2e',
-           transform=ax.transAxes, ha='left', va='top', fontsize=11, 
-           bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
-    
-    plt.tight_layout()
-    plt.savefig('12_Emissions_vs_Reference.png', dpi=300, bbox_inches='tight')
+    print("Generating 12_Diets_vs_Goals_MultiResource.png...")
+    comparison_diets = [
+        '1. Monitor 2024 (Current)',
+        '9. Mediterranean Diet',
+        '2. Amsterdam Theoretical',
+        '4. Metabolic Balance'
+    ]
+    goal_refs = [
+        '8. Schijf van 5 (Guideline)',
+        '5. Dutch Goal (60:40)',
+        '6. Amsterdam Goal (70:30)',
+        '7. EAT-Lancet (Planetary)'
+    ]
+    goal_titles = ['Schijf van 5', 'Dutch Goal 60:40', 'Amsterdam Goal 70:30', 'EAT-Lancet']
+    diet_labels = ['Monitor', 'Mediterranean', 'Municipal', 'Metabolic']
+    diet_colors = ['#3498DB', '#E67E22', '#9B59B6', '#E74C3C']
+    resource_map = {
+        'CO2 (Scope 1+2+3)': lambda d: sum((results_scope12[d][c] + results_co2[d][c]) for c in CAT_ORDER),
+        'Land (m²)': lambda d: sum(results_land.get(d, {}).values()),
+        'Water (L)': lambda d: sum(results_water.get(d, {}).values())
+    }
+
+    fig12, axes = plt.subplots(3, 4, figsize=(22, 12), sharey=True)
+    axes = axes.reshape(3, 4)
+
+    for col, (ref_key, ref_title) in enumerate(zip(goal_refs, goal_titles)):
+        ref_values = {name: fn(ref_key) for name, fn in resource_map.items()}
+        for row, (res_name, fn) in enumerate(resource_map.items()):
+            ax = axes[row, col]
+            pct_changes = []
+            for diet in comparison_diets:
+                ref_val = ref_values[res_name]
+                diet_val = fn(diet)
+                change = ((diet_val - ref_val) / ref_val * 100) if ref_val else 0.0
+                pct_changes.append(change)
+            ax.bar(np.arange(len(comparison_diets)), pct_changes, color=diet_colors, alpha=0.85)
+            if row == 0:
+                ax.set_title(ref_title, fontsize=12, fontweight='bold')
+            if row == len(resource_map) - 1:
+                ax.set_xticks(np.arange(len(comparison_diets)))
+                ax.set_xticklabels(diet_labels, rotation=20, fontsize=10)
+            else:
+                ax.set_xticks([])
+            ax.axhline(0, color='black', linewidth=1.0)
+            ax.grid(axis='y', linestyle='--', alpha=0.4)
+            if col == 0:
+                ax.set_ylabel(f"{res_name}\n% vs goal", fontsize=11, fontweight='bold')
+
+    handles = [plt.Rectangle((0, 0), 1, 1, color=color) for color in diet_colors]
+    fig12.legend(handles, diet_labels, title='Diets vs Goals', loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.02))
+    plt.tight_layout(rect=[0, 0.03, 1, 1])
+    plt.savefig('12_Diets_vs_Goals_MultiResource.png', dpi=300, bbox_inches='tight')
     plt.close()
+
+    # ---------------------------------------------------------
+    # CHART 12B: TOTAL EMISSIONS VS MULTIPLE REFERENCES (GOALS)
+    # Clear titles, labels, and per-goal single-panel exports
+    # ---------------------------------------------------------
+    print("Generating 12b_Emissions_vs_Reference_MultiGoal.png and per-goal panels...")
+    ref_keys = goal_refs
+    ref_titles = goal_titles
+    fig12b, axes = plt.subplots(1, 4, figsize=(22, 7), sharey=True)
+    total_emissions_map = {
+        diet: sum((results_scope12[diet][c] + results_co2[diet][c]) for c in CAT_ORDER)
+        for diet in comparison_diets + ref_keys
+    }
+
+    # overall title/subtitle
+    fig12b.suptitle('Total Food System Emissions vs Goal References', fontsize=16, fontweight='bold', y=1.02)
+    fig12b.text(0.5, 0.98, 'Percent of reference (Scope 1+2+3)', ha='center', fontsize=12)
+
+    per_goal_panels = []
+    for col, (ref_key, ref_title) in enumerate(zip(ref_keys, ref_titles)):
+        ax = axes[col]
+        ref_val = total_emissions_map.get(ref_key, 0)
+        pct_vals = []
+        for diet in comparison_diets:
+            diet_val = total_emissions_map.get(diet, 0)
+            pct = (diet_val / ref_val * 100) if ref_val else 0.0
+            pct_vals.append(pct)
+        bars = ax.bar(np.arange(len(comparison_diets)), pct_vals, color=diet_colors, alpha=0.9)
+        ax.axhline(100, color='black', linewidth=1.2, linestyle='--')
+        ax.set_title(ref_title, fontsize=12, fontweight='bold', pad=10)
+        ax.set_xticks(np.arange(len(comparison_diets)))
+        ax.set_xticklabels(diet_labels, rotation=20, fontsize=10)
+        ax.grid(axis='y', linestyle='--', alpha=0.4)
+        if col == 0:
+            ax.set_ylabel('Total emissions vs reference (%)', fontsize=11, fontweight='bold')
+        ax.set_ylim(0, max(pct_vals + [140]))
+        # add value labels
+        for rect, val in zip(bars, pct_vals):
+            ax.text(rect.get_x() + rect.get_width()/2, rect.get_height() + 2, f'{val:.0f}%',
+                    ha='center', va='bottom', fontsize=9)
+        # annotate reference absolute kton
+        ax.text(0.02, 0.95, f'Ref: {ref_val/1000:.1f} kton', transform=ax.transAxes,
+                ha='left', va='top', fontsize=9, bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+        per_goal_panels.append((ref_title, pct_vals, ref_val))
+
+    handles_b = [plt.Rectangle((0, 0), 1, 1, color=color) for color in diet_colors]
+    fig12b.legend(handles_b, diet_labels, title='Diets', loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.12))
+    plt.tight_layout(rect=[0, 0.06, 1, 0.95])
+    plt.savefig('12b_Emissions_vs_Reference_MultiGoal.png', dpi=300, bbox_inches='tight')
+    plt.close()
+
+    # Per-goal single panels for clarity
+    for ref_key, ref_title in zip(ref_keys, ref_titles):
+        ref_val = total_emissions_map.get(ref_key, 0)
+        pct_vals = []
+        for diet in comparison_diets:
+            diet_val = total_emissions_map.get(diet, 0)
+            pct_vals.append((diet_val / ref_val * 100) if ref_val else 0.0)
+        fig_single, ax_single = plt.subplots(figsize=(6, 5))
+        bars = ax_single.bar(np.arange(len(comparison_diets)), pct_vals, color=diet_colors, alpha=0.9)
+        ax_single.axhline(100, color='black', linewidth=1.2, linestyle='--', label=f'{ref_title} (100%)')
+        ax_single.set_title(f'Total Emissions vs {ref_title}', fontsize=13, fontweight='bold')
+        ax_single.set_xticks(np.arange(len(comparison_diets)))
+        ax_single.set_xticklabels(diet_labels, rotation=20, fontsize=10)
+        ax_single.set_ylabel('% of reference', fontsize=11, fontweight='bold')
+        ax_single.grid(axis='y', linestyle='--', alpha=0.4)
+        ax_single.set_ylim(0, max(pct_vals + [140]))
+        for rect, val in zip(bars, pct_vals):
+            ax_single.text(rect.get_x() + rect.get_width()/2, rect.get_height() + 2, f'{val:.0f}%',
+                           ha='center', va='bottom', fontsize=9)
+        ax_single.legend(loc='upper left', fontsize=9)
+        ax_single.text(0.02, 0.94, f'Ref total: {ref_val/1000:.1f} kton', transform=ax_single.transAxes,
+                        ha='left', va='top', fontsize=9, bbox=dict(boxstyle='round', facecolor='white', alpha=0.85))
+        plt.tight_layout()
+        safe_title = ref_title.replace(' ', '_').replace(':', '')
+        plt.savefig(f'12b_Emissions_vs_{safe_title}.png', dpi=300, bbox_inches='tight')
+        plt.close(fig_single)
 
     # ---------------------------------------------------------
     # CHART 13: INFOGRAPHIC - AMSTERDAM FOOD SYSTEM BREAKDOWN
@@ -986,26 +1065,54 @@ def run_full_analysis():
     
     # Create figure with custom layout
     fig = plt.figure(figsize=(16, 12))
-    gs = fig.add_gridspec(3, 2, hspace=0.3, wspace=0.3)
-    
+    gs = fig.add_gridspec(3, 2, hspace=0.35, wspace=0.35)
+
     # --- PANEL 1: Main emissions breakdown ---
-    ax1 = fig.add_subplot(gs[0, :])
-    ax1.axis('off')
-    ax1.text(0.5, 0.9, 'Amsterdam Food System Emissions', 
-             ha='center', fontsize=22, fontweight='bold')
-    ax1.text(0.5, 0.75, f'Total: {total_emissions/1000:.0f} kiloton CO₂e per year', 
-             ha='center', fontsize=18, color='#E74C3C')
-    ax1.text(0.5, 0.6, f'(Population: {config.POPULATION_TOTAL:,} | Monitor 2024 Diet)', 
-             ha='center', fontsize=12, color='gray')
-    
+    top_grid = gs[0, :].subgridspec(1, 2, width_ratios=[1.3, 1], wspace=0.35)
+    ax1_text = fig.add_subplot(top_grid[0, 0])
+    ax1_pie = fig.add_subplot(top_grid[0, 1])
+    ax1_text.axis('off')
+    ax1_text.text(0.0, 0.95, 'Amsterdam Food System Emissions', 
+             ha='left', fontsize=22, fontweight='bold', transform=ax1_text.transAxes)
+    total_kton = total_emissions/1000
+    ax1_text.text(0.0, 0.80, f'Total: {total_kton:.0f} kiloton CO2e per year', 
+             ha='left', fontsize=17, color='#E74C3C', transform=ax1_text.transAxes)
+    pop_formatted = f"{cfg.POPULATION_TOTAL:,}"
+    ax1_text.text(0.0, 0.68, f'(Population: {pop_formatted} | Monitor 2024 Diet)', 
+             ha='left', fontsize=12, color='gray', transform=ax1_text.transAxes)
+
+    # Quick comparison vs goal reference diets
+    goal_refs_inf = [
+        '8. Schijf van 5 (Guideline)',
+        '5. Dutch Goal (60:40)',
+        '6. Amsterdam Goal (70:30)',
+        '7. EAT-Lancet (Planetary)'
+    ]
+    goal_titles_inf = ['Schijf van 5', 'Dutch Goal 60:40', 'Amsterdam Goal 70:30', 'EAT-Lancet']
+    goal_totals_inf = {
+        ref: sum((results_scope12[ref][c] + results_co2[ref][c]) for c in CAT_ORDER)
+        for ref in goal_refs_inf
+    }
+    goal_lines = []
+    for ref, title in zip(goal_refs_inf, goal_titles_inf):
+        ref_total = goal_totals_inf.get(ref, 0)
+        pct_vs = (total_emissions / ref_total * 100) if ref_total else 0
+        goal_lines.append(f"{title}: {pct_vs:.0f}% of ref ({ref_total/1000:.0f} kton)")
+    ax1_text.text(0.0, 0.50, 'Versus goals:', ha='left', fontsize=12, fontweight='bold', transform=ax1_text.transAxes)
+    ax1_text.text(0.0, 0.30, '\n'.join(goal_lines), ha='left', fontsize=10, 
+                  bbox=dict(boxstyle='round', facecolor='white', alpha=0.8, edgecolor='#CCCCCC'),
+                  transform=ax1_text.transAxes)
+
     # Pie chart showing Scope 1+2 vs Scope 3
     scope_vals = [total_scope12, total_scope3]
     scope_labels = [f'Scope 1+2\n{total_scope12/1000:.0f} kton\n({total_scope12/total_emissions*100:.1f}%)', 
                     f'Scope 3\n{total_scope3/1000:.0f} kton\n({total_scope3/total_emissions*100:.1f}%)']
     colors_scope = ['#F39C12', '#3498DB']
-    
-    wedges, texts = ax1.pie(scope_vals, labels=scope_labels, colors=colors_scope, 
-                             startangle=90, textprops={'fontsize': 12, 'fontweight': 'bold'})
+
+    wedges, texts = ax1_pie.pie(scope_vals, labels=scope_labels, colors=colors_scope, radius=0.9,
+                             startangle=90, labeldistance=1.1, pctdistance=0.75,
+                             textprops={'fontsize': 11, 'fontweight': 'bold'})
+    ax1_pie.set_title('Scope 1+2 vs Scope 3', fontsize=12, fontweight='bold', pad=10)
     
     # --- PANEL 2: Scope 1+2 detailed breakdown ---
     ax2 = fig.add_subplot(gs[1, 0])
@@ -1047,13 +1154,18 @@ def run_full_analysis():
     cat_emissions = {cat: results_scope12[monitor_diet][cat] + results_co2[monitor_diet][cat] 
                      for cat in CAT_ORDER}
     sorted_cats_top = sorted(CAT_ORDER, key=lambda c: cat_emissions[c], reverse=True)[:6]
+    mass_data_monitor = results_mass.get(monitor_diet, {})
+    total_mass_monitor = sum(mass_data_monitor.values()) if mass_data_monitor else 0
     
     y_pos = np.arange(len(sorted_cats_top))
     scope12_vals = [results_scope12[monitor_diet][c]/1000 for c in sorted_cats_top]
     scope3_vals = [results_co2[monitor_diet][c]/1000 for c in sorted_cats_top]
+    max_total = max((s1 + s3) for s1, s3 in zip(scope12_vals, scope3_vals)) if scope12_vals else 0
+    label_offset = max_total * 0.04 if max_total else 5
     
     bars1 = ax4.barh(y_pos, scope12_vals, height=0.6, label='Scope 1+2', color='#F39C12', alpha=0.9)
     bars2 = ax4.barh(y_pos, scope3_vals, height=0.6, left=scope12_vals, label='Scope 3', color='#3498DB', alpha=0.9)
+    ax4.set_xlim(0, max_total + label_offset * 6)
     
     ax4.set_yticks(y_pos)
     ax4.set_yticklabels(sorted_cats_top, fontsize=11)
@@ -1065,8 +1177,12 @@ def run_full_analysis():
     # Add total labels
     for i, cat in enumerate(sorted_cats_top):
         total = scope12_vals[i] + scope3_vals[i]
-        ax4.text(total, y_pos[i], f' {total:.0f} kton', 
-                ha='left', va='center', fontsize=9, fontweight='bold')
+        mass_pct = (mass_data_monitor.get(cat, 0) / total_mass_monitor * 100) if total_mass_monitor else 0
+        scope3_pct = (results_co2[monitor_diet][cat] / total_scope3 * 100) if total_scope3 else 0
+        ax4.text(total + label_offset, y_pos[i], f'{total:.0f} kton', 
+            ha='left', va='center', fontsize=9, fontweight='bold')
+        ax4.text(total + label_offset * 3, y_pos[i], f'Mass {mass_pct:.0f}% | S3 {scope3_pct:.0f}%',
+            ha='left', va='center', fontsize=9, color='gray')
     
     plt.savefig('13_Amsterdam_Food_Infographic.png', dpi=300, bbox_inches='tight')
     plt.close()

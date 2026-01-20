@@ -703,14 +703,14 @@ def run_full_analysis():
     # ---------------------------------------------------------
     print("Generating 9_CO2_vs_Mass_Share.png...")
     
-    # Calculate for key diets
-    comparison_diets = ['1. Monitor 2024 (Current)', '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)']
+    # Show for all 9 diets in a 3×3 grid
+    diet_names = list(results_co2.keys())
+    fig9, axes = plt.subplots(3, 3, figsize=(24, 18))
+    axes = axes.flatten()
     
-    fig9, axes = plt.subplots(1, len(comparison_diets), figsize=(20, 8))
-    if len(comparison_diets) == 1:
-        axes = [axes]
-    
-    for idx, diet_name in enumerate(comparison_diets):
+    for idx, diet_name in enumerate(diet_names):
+        if idx >= 9:
+            break
         ax = axes[idx]
         
         # Get total mass and CO2
@@ -842,18 +842,19 @@ def run_full_analysis():
         'Plant Protein': 0.20, 'Staples': 0.10, 'Veg & Fruit': 0.02, 'Ultra-Processed': 0.05
     }
     
-    fig11, axes = plt.subplots(1, len(comparison_diets), figsize=(20, 8))
-    if len(comparison_diets) == 1:
-        axes = [axes]
+    fig11, axes = plt.subplots(3, 3, figsize=(24, 18))
+    axes = axes.flatten()
     
-    for idx, diet_name in enumerate(comparison_diets):
+    for idx, diet_name in enumerate(diet_names):
+        if idx >= 9:
+            break
         ax = axes[idx]
         
         mass_data = results_mass[diet_name]
         total_mass = sum(mass_data.values())
         
         # Calculate protein contribution
-        protein_data = {cat: mass_data[cat] * PROTEIN_CONTENT[cat] for cat in CAT_ORDER}
+        protein_data = {cat: mass_data.get(cat, 0) * PROTEIN_CONTENT.get(cat, 0) for cat in CAT_ORDER}
         total_protein = sum(protein_data.values())
         
         # Calculate percentages

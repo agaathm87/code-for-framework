@@ -1026,7 +1026,7 @@ def run_full_analysis():
         mass_data = results_mass[diet_name]
         total_emissions = {cat: results_scope12[diet_name][cat] + results_co2[diet_name][cat] for cat in CAT_ORDER}
         total_emission = sum(total_emissions.values())
-        protein_data = {cat: mass_data[cat] * PROTEIN_CONTENT[cat] for cat in CAT_ORDER}
+        protein_data = {cat: mass_data.get(cat, 0) * PROTEIN_CONTENT.get(cat, 0) for cat in CAT_ORDER}
         total_protein = sum(protein_data.values())
         
         emission_pct = {cat: (total_emissions[cat] / total_emission * 100) for cat in CAT_ORDER}
