@@ -358,9 +358,12 @@ class Scope3Engine:
         return res
 
     def aggregate_visual_data(self, diet_profile):
-        """ Aggregates diet into 8 Visual Categories """
+        """ Aggregates diet into 8 Visual Categories and calculates all impact metrics """
         agg_mass = {k: 0.0 for k in CAT_ORDER}
         agg_co2 = {k: 0.0 for k in CAT_ORDER}
+        agg_scope12 = {k: 0.0 for k in CAT_ORDER}
+        agg_land = {k: 0.0 for k in CAT_ORDER}
+        agg_water = {k: 0.0 for k in CAT_ORDER}
         
         for food, grams in diet_profile.items():
             if food not in self.factors.index: continue
@@ -371,10 +374,16 @@ class Scope3Engine:
             kg_produced_yr = kg_consumed_yr * self.cfg.WASTE_FACTOR
             f = self.factors.loc[food]
             co2_tonnes = (kg_produced_yr * f['co2'] * self.cfg.POPULATION_TOTAL) / 1000
+            scope12_tonnes = (kg_consumed_yr * f['scope12'] * self.cfg.POPULATION_TOTAL) / 1000
+            land_m2 = kg_produced_yr * f['land'] * self.cfg.POPULATION_TOTAL
+            water_l = kg_produced_yr * f['water'] * self.cfg.POPULATION_TOTAL
             
             agg_mass[category] += grams
             agg_co2[category] += co2_tonnes
-        return agg_mass, agg_co2
+            agg_scope12[category] += scope12_tonnes
+            agg_land[category] += land_m2
+            agg_water[category] += water_l
+        return agg_mass, agg_co2, agg_scope12, agg_land, agg_water
 
     def run_spatial_simulation(self, neighborhoods, diet_profile):
         results = []
@@ -404,12 +413,18 @@ def run_full_analysis():
     print("Calculating impacts for all diets...")
     results_mass = {}
     results_co2 = {}
+    results_scope12 = {}
+    results_land = {}
+    results_water = {}
     total_footprints = {}
     
     for name, profile in diets.items():
-        mass, co2 = engine.aggregate_visual_data(profile)
+        mass, co2, scope12, land, water = engine.aggregate_visual_data(profile)
         results_mass[name] = mass
         results_co2[name] = co2
+        results_scope12[name] = scope12
+        results_land[name] = land
+        results_water[name] = water
         total_footprints[name] = sum(co2.values())
 
     # 1. NEXUS COMPARISON
@@ -683,50 +698,73 @@ def run_full_analysis():
     plt.savefig('6_Table_Tonnage.png')
 
     # ---------------------------------------------------------
-    # CHART 9: SHARE IN CO2 VS SHARE IN CONSUMPTION (Monitor Figure 5 Style)
+    # CHART 9: SCOPE 1+2 VS SCOPE 3 EMISSIONS BY CATEGORY (All 9 Diets Grid)
     # ---------------------------------------------------------
-    print("Generating 9_CO2_vs_Mass_Share.png...")
-    comparison_diets = ['1. Monitor 2024 (Current)', '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)']
+    print("Generating 9_Scope_Breakdown_by_Category.png...")
+    all_comparison_diets = ['1. Monitor 2024 (Current)', '2. Amsterdam Theoretical',
+                            '3. Metropolitan (High Risk)', '4. Metabolic Balance',
+                            '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)',
+                            '7. EAT-Lancet (Planetary)', '8. Schijf van 5 (Guideline)', '9. Mediterranean Diet']
     
-    fig9, axes = plt.subplots(1, len(comparison_diets), figsize=(20, 8))
-    if len(comparison_diets) == 1:
-        axes = [axes]
+    fig9, axes = plt.subplots(3, 3, figsize=(20, 16))
+    axes = axes.flatten()
     
-    for idx, diet_name in enumerate(comparison_diets):
+    for idx, diet_name in enumerate(all_comparison_diets):
         ax = axes[idx]
-        mass_data = results_mass[diet_name]
-        co2_data = results_co2[diet_name]
-        total_mass = sum(mass_data.values())
-        total_co2 = sum(co2_data.values())
-        mass_pct = {cat: (mass_data[cat] / total_mass * 100) for cat in CAT_ORDER}
-        co2_pct = {cat: (co2_data[cat] / total_co2 * 100) for cat in CAT_ORDER}
-        sorted_cats = sorted(CAT_ORDER, key=lambda c: co2_pct[c], reverse=True)
+        # Get Scope 1+2 and Scope 3 data for this diet
+        scope12_data = results_scope12[diet_name]
+        scope3_data = results_co2[diet_name]
+        
+        # Calculate total emissions per category
+        total_data = {cat: scope12_data[cat] + scope3_data[cat] for cat in CAT_ORDER}
+        
+        # Get top 8 categories by total emissions
+        sorted_cats = sorted(CAT_ORDER, key=lambda c: total_data[c], reverse=True)[:8]
+        
         y_pos = np.arange(len(sorted_cats))
-        width = 0.35
-        bars1 = ax.barh(y_pos - width/2, [co2_pct[c] for c in sorted_cats], width, 
-                        label='Share in CO2 emissions', color='#E74C3C', alpha=0.8)
-        bars2 = ax.barh(y_pos + width/2, [mass_pct[c] for c in sorted_cats], width,
-                        label='Share in consumption (mass)', color='#3498DB', alpha=0.8)
+        width = 0.7
+        
+        # Stacked horizontal bars: Scope 1+2 (base) + Scope 3 (on top)
+        scope12_vals = [scope12_data[c] / 1000 for c in sorted_cats]  # Convert to kilotonnes
+        scope3_vals = [scope3_data[c] / 1000 for c in sorted_cats]
+        
+        bars1 = ax.barh(y_pos, scope12_vals, width, 
+                        label='Scope 1+2 (Local)', color='#F39C12', alpha=0.9)
+        bars2 = ax.barh(y_pos, scope3_vals, width, left=scope12_vals,
+                        label='Scope 3 (Supply Chain)', color='#3498DB', alpha=0.9)
+        
         ax.set_yticks(y_pos)
-        ax.set_yticklabels(sorted_cats, fontsize=10)
-        ax.set_xlabel('Percentage (%)', fontsize=11, fontweight='bold')
-        ax.set_title(diet_name.split('(')[0].strip(), fontsize=12, fontweight='bold')
-        ax.legend(loc='lower right', fontsize=9)
+        ax.set_yticklabels(sorted_cats, fontsize=9)
+        ax.set_xlabel('Emissions (kton CO2e/year)', fontsize=10, fontweight='bold')
+        total_emissions = sum(total_data.values())
+        s12_total = sum([scope12_data[c] for c in CAT_ORDER])
+        s12_pct = (s12_total / total_emissions * 100) if total_emissions > 0 else 0
+        ax.set_title(f'{diet_name.split("(")[0].strip()}\nTotal: {total_emissions/1000:.0f} kton ({s12_pct:.0f}% S1+2)', 
+                     fontsize=11, fontweight='bold')
+        if idx == 0:
+            ax.legend(loc='lower right', fontsize=8)
         ax.grid(axis='x', alpha=0.3, linestyle='--')
-        ax.axvline(x=0, color='black', linewidth=0.8)
-        for bar in bars1:
-            width_val = bar.get_width()
-            if width_val > 1:
-                ax.text(width_val, bar.get_y() + bar.get_height()/2, f'{width_val:.1f}%',
-                       ha='left', va='center', fontsize=8, color='#E74C3C', fontweight='bold')
+        
+        # Add percentage labels for significant segments
+        for i, cat in enumerate(sorted_cats):
+            total = total_data[cat]
+            s12_pct_cat = (scope12_data[cat] / total * 100) if total > 0 else 0
+            s3_pct_cat = (scope3_data[cat] / total * 100) if total > 0 else 0
+            if s12_pct_cat > 4:
+                ax.text(scope12_vals[i]/2, y_pos[i], f'{s12_pct_cat:.0f}%',
+                       ha='center', va='center', fontsize=7, fontweight='bold', color='white')
+            if s3_pct_cat > 4:
+                ax.text(scope12_vals[i] + scope3_vals[i]/2, y_pos[i], f'{s3_pct_cat:.0f}%',
+                       ha='center', va='center', fontsize=7, fontweight='bold', color='white')
+    
     plt.tight_layout()
-    plt.savefig('9_CO2_vs_Mass_Share.png', dpi=300, bbox_inches='tight')
+    plt.savefig('9_Scope_Breakdown_by_Category.png', dpi=300, bbox_inches='tight')
     plt.close()
 
     # ---------------------------------------------------------
-    # CHART 10: ENVIRONMENTAL IMPACT BY FOOD TYPE (Monitor Figure 4 Style)
+    # CHART 10: MULTI-RESOURCE IMPACT (CO2, LAND, WATER) WITH SCOPE BREAKDOWN
     # ---------------------------------------------------------
-    print("Generating 10_Impact_by_Food_Type.png...")
+    print("Generating 10_Multi_Resource_Impact.png...")
     FOOD_TYPE_MAP = {
         'Red Meat': 'Animal', 'Poultry': 'Animal', 'Fish': 'Animal',
         'Dairy & Eggs': 'Mixed (Dairy/Eggs)',
@@ -736,24 +774,40 @@ def run_full_analysis():
         'Oils & Condiments': 'Processed'
     }
     
-    fig10, axes = plt.subplots(2, 2, figsize=(16, 12))
-    axes = axes.flatten()
-    comparison_diets_4 = ['1. Monitor 2024 (Current)', '5. Dutch Goal (60:40)', 
-                          '6. Amsterdam Goal (70:30)', '7. EAT-Lancet (Planetary)']
+    fig10, axes = plt.subplots(3, 3, figsize=(20, 16))
+    comparison_diets_9 = ['1. Monitor 2024 (Current)', '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)',
+                          '4. Metabolic Balance', '7. EAT-Lancet (Planetary)', '8. Schijf van 5 (Guideline)',
+                          '2. Amsterdam Theoretical', '3. Metropolitan (High Risk)', '9. Mediterranean Diet']
     
-    for idx, diet_name in enumerate(comparison_diets_4):
-        ax = axes[idx]
-        type_totals = {'Plant-based': 0, 'Animal': 0, 'Mixed (Dairy/Eggs)': 0, 'Processed': 0}
+    for idx, diet_name in enumerate(comparison_diets_9):
+        ax = axes[idx // 3, idx % 3]
+        
+        # Calculate type totals for CO2 (Scope 1+2 + Scope 3)
+        type_totals_co2 = {'Plant-based': 0, 'Animal': 0, 'Mixed (Dairy/Eggs)': 0, 'Processed': 0}
+        type_totals_land = {'Plant-based': 0, 'Animal': 0, 'Mixed (Dairy/Eggs)': 0, 'Processed': 0}
+        type_totals_water = {'Plant-based': 0, 'Animal': 0, 'Mixed (Dairy/Eggs)': 0, 'Processed': 0}
+        
         for cat in CAT_ORDER:
             food_type = FOOD_TYPE_MAP[cat]
-            type_totals[food_type] += results_co2[diet_name][cat]
-        total = sum(type_totals.values())
-        type_pct = {k: (v/total*100) for k, v in type_totals.items()}
-        categories = ['Climate\nChange', 'Land Use', 'Water Use']
-        plant_vals = [type_pct['Plant-based']] * 3
-        animal_vals = [type_pct['Animal']] * 3
-        mixed_vals = [type_pct['Mixed (Dairy/Eggs)']] * 3
-        processed_vals = [type_pct['Processed']] * 3
+            # CO2: Scope 1+2 + Scope 3
+            type_totals_co2[food_type] += results_scope12[diet_name][cat] + results_co2[diet_name][cat]
+            type_totals_land[food_type] += results_land[diet_name][cat]
+            type_totals_water[food_type] += results_water[diet_name][cat]
+        
+        total_co2 = sum(type_totals_co2.values())
+        total_land = sum(type_totals_land.values())
+        total_water = sum(type_totals_water.values())
+        
+        type_pct_co2 = {k: (v/total_co2*100) if total_co2 > 0 else 0 for k, v in type_totals_co2.items()}
+        type_pct_land = {k: (v/total_land*100) if total_land > 0 else 0 for k, v in type_totals_land.items()}
+        type_pct_water = {k: (v/total_water*100) if total_water > 0 else 0 for k, v in type_totals_water.items()}
+        
+        categories = ['CO2\n(Scope 1+2+3)', 'Land Use\n(Scope 3)', 'Water\n(Scope 3)']
+        plant_vals = [type_pct_co2['Plant-based'], type_pct_land['Plant-based'], type_pct_water['Plant-based']]
+        animal_vals = [type_pct_co2['Animal'], type_pct_land['Animal'], type_pct_water['Animal']]
+        mixed_vals = [type_pct_co2['Mixed (Dairy/Eggs)'], type_pct_land['Mixed (Dairy/Eggs)'], type_pct_water['Mixed (Dairy/Eggs)']]
+        processed_vals = [type_pct_co2['Processed'], type_pct_land['Processed'], type_pct_water['Processed']]
+        
         x = np.arange(len(categories))
         width = 0.6
         p1 = ax.bar(x, plant_vals, width, label='Plant-based', color='#2ECC71')
@@ -763,108 +817,258 @@ def run_full_analysis():
         p4 = ax.bar(x, processed_vals, width, 
                     bottom=np.array(plant_vals)+np.array(animal_vals)+np.array(mixed_vals),
                     label='Processed', color='#95A5A6')
-        ax.set_ylabel('Percentage (%)', fontsize=11, fontweight='bold')
-        ax.set_title(diet_name.split('(')[0].strip(), fontsize=12, fontweight='bold')
+        
+        ax.set_ylabel('Percentage (%)', fontsize=10, fontweight='bold')
+        ax.set_title(f'{diet_name.split("(")[0].strip()}\nTotal CO2: {total_co2/1000:.0f} kton', 
+                     fontsize=11, fontweight='bold')
         ax.set_xticks(x)
-        ax.set_xticklabels(categories, fontsize=10)
+        ax.set_xticklabels(categories, fontsize=9)
         ax.set_ylim(0, 100)
-        ax.legend(loc='upper right', fontsize=9)
+        if idx == 0:
+            ax.legend(loc='upper right', fontsize=8)
         ax.grid(axis='y', alpha=0.3, linestyle='--')
-        for i, rect in enumerate(p1):
-            height = rect.get_height()
-            if height > 3:
-                ax.text(rect.get_x() + rect.get_width()/2., height/2,
-                       f'{height:.0f}%', ha='center', va='center', fontsize=9, fontweight='bold')
-        for i, rect in enumerate(p2):
+        
+        # Add percentage labels for significant segments
+        for i, rect in enumerate(p2):  # Animal products (usually largest)
             height = rect.get_height()
             bottom = plant_vals[i]
-            if height > 3:
+            if height > 8:
                 ax.text(rect.get_x() + rect.get_width()/2., bottom + height/2,
-                       f'{height:.0f}%', ha='center', va='center', fontsize=9, fontweight='bold')
+                       f'{height:.0f}%', ha='center', va='center', fontsize=8, fontweight='bold', color='white')
+    
     plt.tight_layout()
-    plt.savefig('10_Impact_by_Food_Type.png', dpi=300, bbox_inches='tight')
+    plt.savefig('10_Multi_Resource_Impact.png', dpi=300, bbox_inches='tight')
     plt.close()
 
     # ---------------------------------------------------------
-    # CHART 11: CONSUMPTION VS PROTEIN CONTRIBUTION (Monitor Figure 2 Style)
+    # CHART 11: TOTAL EMISSIONS (SCOPE 1+2+3) VS PROTEIN CONTRIBUTION (All 9 Diets)
     # ---------------------------------------------------------
-    print("Generating 11_Mass_vs_Protein.png...")
+    print("Generating 11_Emissions_vs_Protein.png...")
     PROTEIN_CONTENT = {
         'Red Meat': 0.20, 'Poultry': 0.25, 'Fish': 0.20, 'Dairy & Eggs': 0.12,
         'Plant Protein': 0.20, 'Staples': 0.10, 'Veg & Fruit': 0.02, 'Ultra-Processed': 0.05,
         'Beverages & Additions': 0.01, 'Oils & Condiments': 0.01
     }
     
-    fig11, axes = plt.subplots(1, len(comparison_diets), figsize=(20, 8))
-    if len(comparison_diets) == 1:
-        axes = [axes]
+    fig11, axes = plt.subplots(3, 3, figsize=(22, 18))
+    axes = axes.flatten()
+    all_comparison_diets_11 = ['1. Monitor 2024 (Current)', '2. Amsterdam Theoretical',
+                               '3. Metropolitan (High Risk)', '4. Metabolic Balance',
+                               '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)',
+                               '7. EAT-Lancet (Planetary)', '8. Schijf van 5 (Guideline)', '9. Mediterranean Diet']
     
-    for idx, diet_name in enumerate(comparison_diets):
+    for idx, diet_name in enumerate(all_comparison_diets_11):
         ax = axes[idx]
         mass_data = results_mass[diet_name]
+        
+        # Total emissions = Scope 1+2 + Scope 3
+        total_emissions = {cat: results_scope12[diet_name][cat] + results_co2[diet_name][cat] 
+                          for cat in CAT_ORDER}
+        
         total_mass = sum(mass_data.values())
+        total_emission = sum(total_emissions.values())
+        
+        # Calculate protein contribution
         protein_data = {cat: mass_data[cat] * PROTEIN_CONTENT[cat] for cat in CAT_ORDER}
         total_protein = sum(protein_data.values())
-        mass_pct = {cat: (mass_data[cat] / total_mass * 100) for cat in CAT_ORDER}
+        
+        # Calculate percentages
+        emission_pct = {cat: (total_emissions[cat] / total_emission * 100) for cat in CAT_ORDER}
         protein_pct = {cat: (protein_data[cat] / total_protein * 100) for cat in CAT_ORDER}
-        sorted_cats = sorted(CAT_ORDER, key=lambda c: protein_pct[c], reverse=True)
+        
+        sorted_cats = sorted(CAT_ORDER, key=lambda c: emission_pct[c], reverse=True)
         y_pos = np.arange(len(sorted_cats))
         width = 0.35
-        bars1 = ax.barh(y_pos - width/2, [mass_pct[c] for c in sorted_cats], width,
-                        label='Share in consumption (mass)', color='#3498DB', alpha=0.8)
+        
+        bars1 = ax.barh(y_pos - width/2, [emission_pct[c] for c in sorted_cats], width,
+                        label='Share in total emissions (Scope 1+2+3)', color='#E74C3C', alpha=0.9)
         bars2 = ax.barh(y_pos + width/2, [protein_pct[c] for c in sorted_cats], width,
-                        label='Share in protein intake', color='#2ECC71', alpha=0.8)
+                        label='Share in protein intake', color='#2ECC71', alpha=0.9)
+        
         ax.set_yticks(y_pos)
-        ax.set_yticklabels(sorted_cats, fontsize=10)
-        ax.set_xlabel('Percentage (%)', fontsize=11, fontweight='bold')
-        ax.set_title(diet_name.split('(')[0].strip(), fontsize=12, fontweight='bold')
-        ax.legend(loc='lower right', fontsize=9)
+        ax.set_yticklabels(sorted_cats, fontsize=9)
+        ax.set_xlabel('Percentage (%)', fontsize=10, fontweight='bold')
+        ax.set_title(f'{diet_name.split("(")[0].strip()}\nTotal: {total_emission/1000:.0f} kton CO2e', 
+                     fontsize=11, fontweight='bold')
+        if idx == 0:
+            ax.legend(loc='lower right', fontsize=8)
         ax.grid(axis='x', alpha=0.3, linestyle='--')
         ax.axvline(x=0, color='black', linewidth=0.8)
+        
+        # Calculate plant vs animal protein
         plant_protein = sum([protein_data[c] for c in ['Plant Protein', 'Staples', 'Veg & Fruit']])
         animal_protein = sum([protein_data[c] for c in ['Red Meat', 'Poultry', 'Fish', 'Dairy & Eggs']])
-        plant_pct_total = plant_protein / (plant_protein + animal_protein) * 100
-        ax.text(0.98, 0.98, f'Plant protein: {plant_pct_total:.0f}%\nAnimal protein: {100-plant_pct_total:.0f}%',
-               transform=ax.transAxes, ha='right', va='top', fontsize=10, 
-               bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+        plant_pct_total = plant_protein / (plant_protein + animal_protein) * 100 if (plant_protein + animal_protein) > 0 else 0
+        
+        # Add efficiency indicator
+        ax.text(0.98, 0.98, f'Plant: {plant_pct_total:.0f}%\nAnimal: {100-plant_pct_total:.0f}%',
+               transform=ax.transAxes, ha='right', va='top', fontsize=9, 
+               bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.7))
+    
     plt.tight_layout()
-    plt.savefig('11_Mass_vs_Protein.png', dpi=300, bbox_inches='tight')
+    plt.savefig('11_Emissions_vs_Protein.png', dpi=300, bbox_inches='tight')
     plt.close()
 
     # ---------------------------------------------------------
-    # CHART 12: INTAKE VS REFERENCE LEVELS (Monitor Last Figure Style)
+    # CHART 12: TOTAL EMISSIONS VS REFERENCE (All 9 Diets Comparison)
     # ---------------------------------------------------------
-    print("Generating 12_Intake_vs_Reference.png...")
+    print("Generating 12_Emissions_vs_Reference.png...")
     reference_diet = '8. Schijf van 5 (Guideline)'
-    comparison_diets_ref = ['1. Monitor 2024 (Current)', '3. Metropolitan (High Risk)',
-                            '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)', '7. EAT-Lancet (Planetary)']
+    all_diets_chart12 = ['1. Monitor 2024 (Current)', '2. Amsterdam Theoretical',
+                         '3. Metropolitan (High Risk)', '4. Metabolic Balance',
+                         '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)',
+                         '7. EAT-Lancet (Planetary)', '8. Schijf van 5 (Guideline)', '9. Mediterranean Diet']
     
-    fig12, ax = plt.subplots(figsize=(14, 10))
-    ref_mass = results_mass[reference_diet]
-    sorted_cats = sorted(CAT_ORDER, key=lambda c: ref_mass[c], reverse=True)
+    fig12, ax = plt.subplots(figsize=(16, 12))
+    
+    # Calculate total emissions (Scope 1+2 + Scope 3) for reference
+    ref_emissions = {cat: results_scope12[reference_diet][cat] + results_co2[reference_diet][cat] 
+                     for cat in CAT_ORDER}
+    sorted_cats = sorted(CAT_ORDER, key=lambda c: ref_emissions[c], reverse=True)[:8]  # Top 8
+    
     y_pos = np.arange(len(sorted_cats))
-    width = 0.15
-    colors_diets = ['#3498DB', '#E74C3C', '#F39C12', '#2ECC71', '#9B59B6']
+    width = 0.09
+    colors_diets = ['#3498DB', '#9B59B6', '#E74C3C', '#F39C12', '#F1C40F', '#2ECC71', '#16A085', '#34495E', '#D35400']
     
-    for idx, diet_name in enumerate(comparison_diets_ref):
-        diet_mass = results_mass[diet_name]
-        pct_of_ref = [(diet_mass[cat] / ref_mass[cat] * 100) if ref_mass[cat] > 0 else 0 
+    for idx, diet_name in enumerate(all_diets_chart12):
+        # Calculate total emissions for this diet
+        diet_emissions = {cat: results_scope12[diet_name][cat] + results_co2[diet_name][cat] 
+                         for cat in CAT_ORDER}
+        
+        # Calculate percentage of reference
+        pct_of_ref = [(diet_emissions[cat] / ref_emissions[cat] * 100) if ref_emissions[cat] > 0 else 0 
                       for cat in sorted_cats]
-        offset = (idx - len(comparison_diets_ref)/2 + 0.5) * width
+        
+        offset = (idx - len(all_diets_chart12)/2 + 0.5) * width
         bars = ax.barh(y_pos + offset, pct_of_ref, width,
                        label=diet_name.split('(')[0].strip()[:20], 
-                       color=colors_diets[idx], alpha=0.8)
+                       color=colors_diets[idx], alpha=0.85)
+    
     ax.set_yticks(y_pos)
     ax.set_yticklabels(sorted_cats, fontsize=11)
-    ax.set_xlabel('2024 dietary intake versus reference intake (%)', fontsize=12, fontweight='bold')
-    ax.set_title('Dietary Intake Comparison Against Schijf van 5 Reference', 
+    ax.set_xlabel('Total emissions versus reference (%)', fontsize=12, fontweight='bold')
+    ax.set_title('Total Emissions (Scope 1+2+3) - All 9 Diets vs Schijf van 5 Reference', 
                  fontsize=14, fontweight='bold', pad=20)
-    ax.axvline(x=100, color='black', linewidth=2, linestyle='--', label='Reference (100%)')
-    ax.legend(loc='lower right', fontsize=9, ncol=2)
+    ax.axvline(x=100, color='black', linewidth=2.5, linestyle='--', label='Reference (100%)')
+    ax.legend(loc='lower right', fontsize=8, ncol=2)
     ax.grid(axis='x', alpha=0.3, linestyle='--')
     ax.set_xlim(0, 250)
+    
+    # Add annotation box
+    total_ref = sum(ref_emissions.values())
+    ax.text(0.02, 0.98, f'Reference total:\n{total_ref/1000:.0f} kton CO2e',
+           transform=ax.transAxes, ha='left', va='top', fontsize=11, 
+           bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+    
     plt.tight_layout()
-    plt.savefig('12_Intake_vs_Reference.png', dpi=300, bbox_inches='tight')
+    plt.savefig('12_Emissions_vs_Reference.png', dpi=300, bbox_inches='tight')
+    plt.close()
+
+    # ---------------------------------------------------------
+    # CHART 13: INFOGRAPHIC - AMSTERDAM FOOD SYSTEM BREAKDOWN
+    # ---------------------------------------------------------
+    print("Generating 13_Amsterdam_Food_Infographic.png...")
+    
+    # Use Monitor 2024 diet as the baseline
+    monitor_diet = '1. Monitor 2024 (Current)'
+    
+    # Calculate totals
+    total_scope12 = sum(results_scope12[monitor_diet].values())
+    total_scope3 = sum(results_co2[monitor_diet].values())
+    total_land = sum(results_land[monitor_diet].values())
+    total_water = sum(results_water[monitor_diet].values())
+    total_emissions = total_scope12 + total_scope3
+    
+    # Scope 1+2 breakdown (from transparent system)
+    base_food = total_scope12 / 1.138  # Remove waste and retail to get base
+    waste_emissions = base_food * 0.11
+    retail_emissions = base_food * 0.025
+    
+    # Create figure with custom layout
+    fig = plt.figure(figsize=(16, 12))
+    gs = fig.add_gridspec(3, 2, hspace=0.3, wspace=0.3)
+    
+    # --- PANEL 1: Main emissions breakdown ---
+    ax1 = fig.add_subplot(gs[0, :])
+    ax1.axis('off')
+    ax1.text(0.5, 0.9, 'Amsterdam Food System Emissions', 
+             ha='center', fontsize=22, fontweight='bold')
+    ax1.text(0.5, 0.75, f'Total: {total_emissions/1000:.0f} kiloton CO₂e per year', 
+             ha='center', fontsize=18, color='#E74C3C')
+    ax1.text(0.5, 0.6, f'(Population: {config.POPULATION_TOTAL:,} | Monitor 2024 Diet)', 
+             ha='center', fontsize=12, color='gray')
+    
+    # Pie chart showing Scope 1+2 vs Scope 3
+    scope_vals = [total_scope12, total_scope3]
+    scope_labels = [f'Scope 1+2\n{total_scope12/1000:.0f} kton\n({total_scope12/total_emissions*100:.1f}%)', 
+                    f'Scope 3\n{total_scope3/1000:.0f} kton\n({total_scope3/total_emissions*100:.1f}%)']
+    colors_scope = ['#F39C12', '#3498DB']
+    
+    wedges, texts = ax1.pie(scope_vals, labels=scope_labels, colors=colors_scope, 
+                             startangle=90, textprops={'fontsize': 12, 'fontweight': 'bold'})
+    
+    # --- PANEL 2: Scope 1+2 detailed breakdown ---
+    ax2 = fig.add_subplot(gs[1, 0])
+    breakdown_labels = ['Base Food\nConsumption', 'Food Waste\n(11%)', 'Retail/Distribution\n(2.5%)']
+    breakdown_vals = [base_food, waste_emissions, retail_emissions]
+    breakdown_pcts = [base_food/total_scope12*100, waste_emissions/total_scope12*100, retail_emissions/total_scope12*100]
+    colors_breakdown = ['#2ECC71', '#E74C3C', '#95A5A6']
+    
+    bars = ax2.barh(breakdown_labels, breakdown_vals, color=colors_breakdown, alpha=0.8)
+    ax2.set_xlabel('Emissions (tonnes CO₂e/year)', fontsize=11, fontweight='bold')
+    ax2.set_title('Scope 1+2 Components\n(Production + Retail + Waste)', fontsize=13, fontweight='bold')
+    ax2.grid(axis='x', alpha=0.3)
+    
+    for i, (bar, pct) in enumerate(zip(bars, breakdown_pcts)):
+        width = bar.get_width()
+        ax2.text(width, bar.get_y() + bar.get_height()/2, 
+                f' {pct:.1f}%', ha='left', va='center', fontsize=10, fontweight='bold')
+    
+    # --- PANEL 3: Resource comparison ---
+    ax3 = fig.add_subplot(gs[1, 1])
+    resources = ['CO₂\n(kton)', 'Land\n(km²)', 'Water\n(million m³)']
+    resource_vals = [total_emissions/1000, total_land/1e6, total_water/1e9]
+    colors_resources = ['#E74C3C', '#8B4513', '#3498DB']
+    
+    bars_res = ax3.bar(resources, resource_vals, color=colors_resources, alpha=0.8, width=0.6)
+    ax3.set_ylabel('Impact', fontsize=11, fontweight='bold')
+    ax3.set_title('Multi-Resource Footprint', fontsize=13, fontweight='bold')
+    ax3.grid(axis='y', alpha=0.3)
+    
+    for bar, val in zip(bars_res, resource_vals):
+        height = bar.get_height()
+        ax3.text(bar.get_x() + bar.get_width()/2, height, 
+                f'{val:.1f}', ha='center', va='bottom', fontsize=11, fontweight='bold')
+    
+    # --- PANEL 4: Food category emissions (top contributors) ---
+    ax4 = fig.add_subplot(gs[2, :])
+    
+    # Get total emissions by category
+    cat_emissions = {cat: results_scope12[monitor_diet][cat] + results_co2[monitor_diet][cat] 
+                     for cat in CAT_ORDER}
+    sorted_cats_top = sorted(CAT_ORDER, key=lambda c: cat_emissions[c], reverse=True)[:6]
+    
+    y_pos = np.arange(len(sorted_cats_top))
+    scope12_vals = [results_scope12[monitor_diet][c]/1000 for c in sorted_cats_top]
+    scope3_vals = [results_co2[monitor_diet][c]/1000 for c in sorted_cats_top]
+    
+    bars1 = ax4.barh(y_pos, scope12_vals, height=0.6, label='Scope 1+2', color='#F39C12', alpha=0.9)
+    bars2 = ax4.barh(y_pos, scope3_vals, height=0.6, left=scope12_vals, label='Scope 3', color='#3498DB', alpha=0.9)
+    
+    ax4.set_yticks(y_pos)
+    ax4.set_yticklabels(sorted_cats_top, fontsize=11)
+    ax4.set_xlabel('Emissions (kilotonnes CO₂e/year)', fontsize=11, fontweight='bold')
+    ax4.set_title('Top 6 Food Categories by Total Emissions', fontsize=13, fontweight='bold')
+    ax4.legend(loc='lower right', fontsize=10)
+    ax4.grid(axis='x', alpha=0.3)
+    
+    # Add total labels
+    for i, cat in enumerate(sorted_cats_top):
+        total = scope12_vals[i] + scope3_vals[i]
+        ax4.text(total, y_pos[i], f' {total:.0f} kton', 
+                ha='left', va='center', fontsize=9, fontweight='bold')
+    
+    plt.savefig('13_Amsterdam_Food_Infographic.png', dpi=300, bbox_inches='tight')
     plt.close()
 
     # ---------------------------------------------------------

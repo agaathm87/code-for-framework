@@ -120,64 +120,58 @@ def load_diet_profiles():
     Load dietary scenario profiles for comparison analysis.
     
     Each diet represents a different consumption pattern:
-    1. Amsterdam Baseline: Current estimated average consumption
-    2. Metropolitan: High-risk Western diet (high meat/processed)
-    3. Metabolic Balance: Animal-based low-carb diet
+    1. Monitor 2024: Amsterdam empirical data (48% plant protein, 52% animal)
+    2. Schijf van 5: Dutch dietary guidelines (reference baseline)
+    3. EAT-Lancet: Planetary health diet (global sustainability benchmark)
     4. Dutch Goal (60:40): National policy target (60% plant, 40% animal protein)
     5. Amsterdam Goal (70:30): City policy target (70% plant, 30% animal protein)
-    6. EAT-Lancet: Planetary health diet (global sustainability benchmark)
+    6. Metropolitan: High-risk Western diet (comparison scenario)
     
     Returns:
         dict: Dictionary of diet names to food consumption profiles (grams/day)
     """
     diets = {
-        '1. Amsterdam Baseline': {
-            'Beef': 12, 'Pork': 20, 'Chicken': 28, 'Cheese': 40, 'Milk': 260,
-            'Fish': 10, 'Eggs': 25, 'Pulses': 8, 'Nuts': 10, 'Meat_Subs': 15,
-            'Grains': 220, 'Vegetables': 150, 'Fruits': 130, 'Potatoes': 50,
-            'Sugar': 40, 'Processed': 150 
+        '1. Monitor 2024 (Current)': {
+            'Beef': 10, 'Pork': 15, 'Chicken': 25, 'Cheese': 35, 'Milk': 220, 
+            'Fish': 22, 'Eggs': 28, 'Pulses': 15, 'Nuts': 15, 'Meat_Subs': 20, 
+            'Grains': 230, 'Vegetables': 160, 'Fruits': 145, 'Potatoes': 45,
+            'Sugar': 35, 'Processed': 140,
+            'Coffee': 12, 'Tea': 3, 'Alcohol': 25, 'Oils': 25, 'Snacks': 45, 'Condiments': 20
         },
-        '2. Metropolitan (High Risk)': {
-            'Beef': 45, 'Pork': 25, 'Chicken': 60, 'Cheese': 50, 'Milk': 200,
-            'Fish': 15, 'Eggs': 30, 'Pulses': 5, 'Nuts': 5, 'Meat_Subs': 5,
-            'Grains': 180, 'Vegetables': 110, 'Fruits': 100, 'Potatoes': 80,
-            'Sugar': 80, 'Processed': 200 
+        '2. Schijf van 5 (Guideline)': {
+            'Beef': 10, 'Pork': 10, 'Chicken': 25, 'Cheese': 30, 'Milk': 250,
+            'Fish': 25, 'Eggs': 20, 'Pulses': 30, 'Nuts': 25, 'Meat_Subs': 20,
+            'Grains': 240, 'Vegetables': 250, 'Fruits': 200, 'Potatoes': 70,
+            'Sugar': 25, 'Processed': 60,
+            'Coffee': 10, 'Tea': 4, 'Alcohol': 15, 'Oils': 20, 'Snacks': 30, 'Condiments': 15
         },
-        '3. Metabolic Balance (Animal)': {
-            'Beef': 60, 'Pork': 40, 'Chicken': 80, 'Cheese': 50, 'Milk': 50,
-            'Fish': 40, 'Eggs': 50, 'Pulses': 10, 'Nuts': 20, 'Meat_Subs': 0,
-            'Grains': 50, 'Vegetables': 200, 'Fruits': 100, 'Potatoes': 0,
-            'Sugar': 5, 'Processed': 10
+        '3. EAT-Lancet (Planetary)': {
+            'Beef': 7, 'Pork': 7, 'Chicken': 29, 'Cheese': 0, 'Milk': 250,
+            'Fish': 28, 'Eggs': 13, 'Pulses': 75, 'Nuts': 50, 'Meat_Subs': 0,
+            'Grains': 232, 'Vegetables': 300, 'Fruits': 200, 'Potatoes': 50,
+            'Sugar': 30, 'Processed': 0,
+            'Coffee': 8, 'Tea': 5, 'Alcohol': 10, 'Oils': 18, 'Snacks': 15, 'Condiments': 12
         },
         '4. Dutch Goal (60:40)': {
             'Beef': 15, 'Pork': 15, 'Chicken': 25, 'Cheese': 35, 'Milk': 250,
             'Fish': 15, 'Eggs': 20, 'Pulses': 40, 'Nuts': 20, 'Meat_Subs': 25,
             'Grains': 225, 'Vegetables': 200, 'Fruits': 180, 'Potatoes': 90,
-            'Sugar': 30, 'Processed': 80
+            'Sugar': 30, 'Processed': 80,
+            'Coffee': 10, 'Tea': 4, 'Alcohol': 20, 'Oils': 22, 'Snacks': 35, 'Condiments': 15
         },
         '5. Amsterdam Goal (70:30)': {
             'Beef': 5, 'Pork': 5, 'Chicken': 10, 'Cheese': 20, 'Milk': 100,
             'Fish': 15, 'Eggs': 15, 'Pulses': 80, 'Nuts': 40, 'Meat_Subs': 40,
             'Grains': 250, 'Vegetables': 250, 'Fruits': 200, 'Potatoes': 80,
-            'Sugar': 20, 'Processed': 50
+            'Sugar': 20, 'Processed': 50,
+            'Coffee': 9, 'Tea': 5, 'Alcohol': 12, 'Oils': 20, 'Snacks': 25, 'Condiments': 12
         },
-        '6. EAT-Lancet (Planetary)': {
-            'Beef': 7, 'Pork': 7, 'Chicken': 29, 'Cheese': 0, 'Milk': 250,
-            'Fish': 28, 'Eggs': 13, 'Pulses': 75, 'Nuts': 50, 'Meat_Subs': 0,
-            'Grains': 232, 'Vegetables': 300, 'Fruits': 200, 'Potatoes': 50,
-            'Sugar': 30, 'Processed': 0
-        },
-        '7. Schijf van 5 (Guideline)': {
-            'Beef': 10, 'Pork': 10, 'Chicken': 25, 'Cheese': 30, 'Milk': 250,
-            'Fish': 25, 'Eggs': 20, 'Pulses': 30, 'Nuts': 25, 'Meat_Subs': 20,
-            'Grains': 240, 'Vegetables': 250, 'Fruits': 200, 'Potatoes': 70,
-            'Sugar': 25, 'Processed': 60
-        },
-        '8. Mediterranean Diet': {
-            'Beef': 8, 'Pork': 8, 'Chicken': 20, 'Cheese': 30, 'Milk': 200,
-            'Fish': 35, 'Eggs': 18, 'Pulses': 60, 'Nuts': 30, 'Meat_Subs': 10,
-            'Grains': 240, 'Vegetables': 300, 'Fruits': 220, 'Potatoes': 60,
-            'Sugar': 20, 'Processed': 50
+        '6. Metropolitan (High Risk)': {
+            'Beef': 45, 'Pork': 25, 'Chicken': 60, 'Cheese': 50, 'Milk': 200,
+            'Fish': 15, 'Eggs': 30, 'Pulses': 5, 'Nuts': 5, 'Meat_Subs': 5,
+            'Grains': 180, 'Vegetables': 110, 'Fruits': 100, 'Potatoes': 80,
+            'Sugar': 80, 'Processed': 200,
+            'Coffee': 15, 'Tea': 2, 'Alcohol': 35, 'Oils': 30, 'Snacks': 70, 'Condiments': 25
         }
     }
     return diets
@@ -318,12 +312,19 @@ class Scope3Engine:
             diet_profile (dict): Food items and daily consumption (grams)
             
         Returns:
-            tuple: (mass_dict, co2_dict)
+            tuple: (mass_dict, co2_dict, scope12_dict, land_dict, water_dict)
                 - mass_dict: Consumption mass by category (grams/day)
-                - co2_dict: Annual city emissions by category (tonnes CO2e/year)
+                - co2_dict: Annual city Scope 3 emissions by category (tonnes CO2e/year)
+                - scope12_dict: Annual city Scope 1+2 emissions by category (tonnes CO2e/year)
+                - land_dict: Annual city land use by category (m²/year)
+                - water_dict: Annual city water use by category (liters/year)
         """
         agg_mass = {k: 0.0 for k in CAT_ORDER}
         agg_co2 = {k: 0.0 for k in CAT_ORDER}
+        agg_scope12 = {k: 0.0 for k in CAT_ORDER}
+        agg_land = {k: 0.0 for k in CAT_ORDER}
+        agg_water = {k: 0.0 for k in CAT_ORDER}
+        
         for food, grams in diet_profile.items():
             if food not in self.factors.index: continue
             category = VISUAL_MAPPING.get(food, 'Other')
@@ -332,11 +333,19 @@ class Scope3Engine:
             kg_consumed_yr = (grams / 1000) * 365
             kg_produced_yr = kg_consumed_yr * self.cfg.WASTE_FACTOR
             f = self.factors.loc[food]
+            
             co2_tonnes = (kg_produced_yr * f['co2'] * self.cfg.POPULATION_TOTAL) / 1000
+            scope12_tonnes = (kg_consumed_yr * f['scope12'] * self.cfg.POPULATION_TOTAL) / 1000
+            land_m2 = kg_produced_yr * f['land'] * self.cfg.POPULATION_TOTAL
+            water_l = kg_produced_yr * f['water'] * self.cfg.POPULATION_TOTAL
             
             agg_mass[category] += grams
             agg_co2[category] += co2_tonnes
-        return agg_mass, agg_co2
+            agg_scope12[category] += scope12_tonnes
+            agg_land[category] += land_m2
+            agg_water[category] += water_l
+            
+        return agg_mass, agg_co2, agg_scope12, agg_land, agg_water
 
     # --- 3D. Spatial Simulation (Hotspots) ---
     def run_spatial_simulation(self, neighborhoods, diet_profile):
@@ -387,12 +396,18 @@ def run_full_analysis():
     # ---------------------------------------------------------
     results_mass = {}
     results_co2 = {}
+    results_scope12 = {}
+    results_land = {}
+    results_water = {}
     
     print("Running Scope 3 Engine for all diets...")
     for name, profile in diets.items():
-        mass, co2 = engine.aggregate_visual_data(profile)
+        mass, co2, scope12, land, water = engine.aggregate_visual_data(profile)
         results_mass[name] = mass
         results_co2[name] = co2
+        results_scope12[name] = scope12
+        results_land[name] = land
+        results_water[name] = water
 
     # CHART 1: NEXUS ANALYSIS
     print("Generating 1_Nexus_Analysis.png...")
@@ -443,12 +458,9 @@ def run_full_analysis():
         plt.savefig(filename)
         plt.close()
 
-    plot_transition('1. Amsterdam Baseline', '4. Dutch Goal (60:40)', '2a_Transition_DutchGoal.png')
-    plot_transition('1. Amsterdam Baseline', '5. Amsterdam Goal (70:30)', '2b_Transition_AmsterdamGoal.png')
-    plot_transition('1. Amsterdam Baseline', '6. EAT-Lancet (Planetary)', '2c_Transition_EAT_Lancet.png')
-    # New transitions for added diets
-    plot_transition('1. Amsterdam Baseline', '7. Schijf van 5 (Guideline)', '2d_Transition_Schijf.png')
-    plot_transition('1. Amsterdam Baseline', '8. Mediterranean Diet', '2e_Transition_Mediterranean.png')
+    plot_transition('1. Monitor 2024 (Current)', '4. Dutch Goal (60:40)', '2a_Transition_DutchGoal.png')
+    plot_transition('1. Monitor 2024 (Current)', '5. Amsterdam Goal (70:30)', '2b_Transition_AmsterdamGoal.png')
+    plot_transition('1. Monitor 2024 (Current)', '3. EAT-Lancet (Planetary)', '2c_Transition_EAT_Lancet.png')
 
     # CHART 3: ALL DIETS PLATE
     print("Generating 3_All_Diets_Plates.png...")
@@ -614,7 +626,7 @@ def run_full_analysis():
     # ---------------------------------------------------------
     print("Generating 5_Neighborhood_Hotspots.png...")
     # Run Simulation on Baseline Diet
-    df_spatial = engine.run_spatial_simulation(neighborhoods, diets['1. Amsterdam Baseline'])
+    df_spatial = engine.run_spatial_simulation(neighborhoods, diets['1. Monitor 2024 (Current)'])
     
     # Sort for visualization
     df_spatial = df_spatial.sort_values('Total_CO2_Tonnes', ascending=True)
@@ -637,7 +649,7 @@ def run_full_analysis():
     # CHART 9: SHARE IN CO2 VS SHARE IN CONSUMPTION (Monitor Figure 5 Style)
     # ---------------------------------------------------------
     print("Generating 9_CO2_vs_Mass_Share.png...")
-    comparison_diets = ['1. Amsterdam Baseline', '4. Dutch Goal (60:40)', '5. Amsterdam Goal (70:30)']
+    comparison_diets = ['1. Monitor 2024 (Current)', '4. Dutch Goal (60:40)', '5. Amsterdam Goal (70:30)']
     
     fig9, axes = plt.subplots(1, len(comparison_diets), figsize=(20, 8))
     if len(comparison_diets) == 1:
@@ -687,8 +699,8 @@ def run_full_analysis():
     
     fig10, axes = plt.subplots(2, 2, figsize=(16, 12))
     axes = axes.flatten()
-    comparison_diets_4 = ['1. Amsterdam Baseline', '4. Dutch Goal (60:40)', 
-                          '5. Amsterdam Goal (70:30)', '6. EAT-Lancet (Planetary)']
+    comparison_diets_4 = ['1. Monitor 2024 (Current)', '4. Dutch Goal (60:40)', 
+                          '5. Amsterdam Goal (70:30)', '3. EAT-Lancet (Planetary)']
     
     for idx, diet_name in enumerate(comparison_diets_4):
         ax = axes[idx]
@@ -780,40 +792,349 @@ def run_full_analysis():
     plt.close()
 
     # ---------------------------------------------------------
-    # CHART 12: INTAKE VS REFERENCE LEVELS (Monitor Last Figure Style)
+    # NEW: CHANGE OF SYSTEM-WIDE ENVIRONMENTAL IMPACTS
+    # Monitor 2024 baseline vs Goal Diets (CO2, Land, Water)
     # ---------------------------------------------------------
-    print("Generating 12_Intake_vs_Reference.png...")
-    diet_names = list(diets.keys())
-    reference_diet = diet_names[-1] if 'Schijf' in diet_names[-1] else diet_names[0]
-    comparison_diets_ref = [d for d in diet_names[:5] if d != reference_diet]
+    print("Generating 11a_Change_System_Wide_Impacts.png...")
+    baseline = '1. Monitor 2024 (Current)'
+    targets = ['4. Dutch Goal (60:40)', '5. Amsterdam Goal (70:30)', '3. EAT-Lancet (Planetary)', '2. Schijf van 5 (Guideline)']
+    targets = [d for d in targets if d in diet_names]
+
+    if baseline in diet_names and len(targets) > 0:
+        # Helper to sum totals
+        def totals_for(dname):
+            tot_co2 = sum(results_scope12[dname].values()) + sum(results_co2[dname].values())
+            tot_land = sum(results_land[dname].values())
+            tot_water = sum(results_water[dname].values())
+            return tot_co2, tot_land, tot_water
+
+        b_co2, b_land, b_water = totals_for(baseline)
+
+        # Compute percent change for each target diet
+        changes = []  # list of dicts {diet, co2_pct, land_pct, water_pct}
+        for d in targets:
+            t_co2, t_land, t_water = totals_for(d)
+            co2_pct = (t_co2 - b_co2) / b_co2 * 100 if b_co2 else 0
+            land_pct = (t_land - b_land) / b_land * 100 if b_land else 0
+            water_pct = (t_water - b_water) / b_water * 100 if b_water else 0
+            changes.append({
+                'diet': d.split('(')[0].strip(),
+                'co2': co2_pct,
+                'land': land_pct,
+                'water': water_pct
+            })
+
+        # Plot style inspired by ES&T system-wide impacts figure
+        metrics = ['GHG (CO2e)', 'Land', 'Water']
+        fig11a, axes = plt.subplots(len(metrics), 1, figsize=(10, 8), sharex=True)
+        colors_m = ['#E74C3C', '#2ECC71', '#3498DB']
+
+        # X-range symmetrical around zero for clarity
+        # Determine dynamic limits from data (pad by 5%)
+        all_vals = []
+        for c in changes:
+            all_vals.extend([c['co2'], c['land'], c['water']])
+        xlim = max(20, min(60, max(abs(v) for v in all_vals) + 5)) if all_vals else 30
+
+        for i, metric in enumerate(metrics):
+            ax = axes[i]
+            vals = [ch['co2'] if metric.startswith('GHG') else ch['land'] if metric == 'Land' else ch['water'] for ch in changes]
+            y = np.arange(len(changes))
+            ax.barh(y, vals, color=colors_m[i], alpha=0.85)
+            ax.set_yticks(y)
+            ax.set_yticklabels([ch['diet'] for ch in changes], fontsize=10)
+            ax.set_xlim(-xlim, xlim)
+            ax.axvline(0, color='black', linewidth=1)
+            ax.set_xlabel('% change vs Monitor 2024', fontsize=11, fontweight='bold')
+            ax.set_title(metric, fontsize=12, fontweight='bold')
+            ax.grid(axis='x', alpha=0.3, linestyle='--')
+            for yi, v in enumerate(vals):
+                if abs(v) > 1:
+                    ax.text(v + (2 if v>=0 else -2), yi, f'{v:+.1f}%', va='center', ha='left' if v>=0 else 'right', fontsize=9)
+
+        plt.suptitle('Change of System-Wide Environmental Impacts\nMonitor 2024 baseline vs Goal Diets', fontsize=14, fontweight='bold', y=0.98)
+        plt.tight_layout()
+        plt.savefig('11a_Change_System_Wide_Impacts.png', dpi=300, bbox_inches='tight')
+        plt.close()
+
+    # ---------------------------------------------------------
+    # NEW: ALL DIETS VS GOAL DIETS - SCOPE BREAKDOWN
+    # Compares all available diets (Monitor 2024, Metropolitan, etc) to 4 goal diets
+    # Scope 1+2 = Local (production + retail + waste)
+    # Scope 3 = Supply Chain (indirect emissions through consumption)
+    # ---------------------------------------------------------
+    print("Generating 11b_Amsterdam_Monitor_vs_Goals_Scope.png...")
+    # Show Monitor 2024 as primary baseline, plus other important diets and goals
+    all_comparison_diets = ['1. Monitor 2024 (Current)', '6. Metropolitan (High Risk)', 
+                           '2. Schijf van 5 (Guideline)', '3. EAT-Lancet (Planetary)', 
+                           '4. Dutch Goal (60:40)', '5. Amsterdam Goal (70:30)']
+    available_diets = [d for d in all_comparison_diets if d in diet_names]
     
-    fig12, ax = plt.subplots(figsize=(14, 10))
-    ref_mass = results_mass[reference_diet]
-    sorted_cats = sorted(CAT_ORDER, key=lambda c: ref_mass[c], reverse=True)
+    if len(available_diets) >= 2:
+        # Create grid: 2 rows for all 6 diets
+        n_cols = min(3, len(available_diets))
+        n_rows = int(np.ceil(len(available_diets) / n_cols))
+        fig11b, axes = plt.subplots(n_rows, n_cols, figsize=(6*n_cols, 5*n_rows))
+        axes = np.array(axes).reshape(-1) if len(available_diets) > 1 else np.array([axes])
+        
+        for idx, diet_name in enumerate(available_diets):
+            ax = axes[idx]
+            scope12_data = results_scope12[diet_name]
+            scope3_data = results_co2[diet_name]  # Scope 3 = supply chain indirect emissions
+            total_data = {cat: scope12_data[cat] + scope3_data[cat] for cat in CAT_ORDER}
+            sorted_cats = sorted(CAT_ORDER, key=lambda c: total_data[c], reverse=True)[:8]
+            
+            y_pos = np.arange(len(sorted_cats))
+            scope12_vals = [scope12_data[c] / 1000 for c in sorted_cats]
+            scope3_vals = [scope3_data[c] / 1000 for c in sorted_cats]
+            
+            bars1 = ax.barh(y_pos, scope12_vals, 0.7, label='Scope 1+2 (Local)', color='#F39C12', alpha=0.9)
+            bars2 = ax.barh(y_pos, scope3_vals, 0.7, left=scope12_vals, label='Scope 3 (Supply Chain)', color='#3498DB', alpha=0.9)
+            
+            ax.set_yticks(y_pos)
+            ax.set_yticklabels(sorted_cats, fontsize=9)
+            ax.set_xlabel('Emissions (kton CO2e/year)', fontsize=10, fontweight='bold')
+            diet_label = diet_name.split('(')[0].strip()
+            for prefix in ['1. ', '2. ', '3. ', '4. ', '5. ', '6. ']:
+                diet_label = diet_label.replace(prefix, '')
+            total_ktons = sum(total_data.values())/1000
+            scope12_pct = sum(scope12_vals)*100/total_ktons if total_ktons > 0 else 0
+            ax.set_title(f'{diet_label}\nTotal: {total_ktons:.0f} kton | S1+2: {scope12_pct:.1f}%', fontsize=11, fontweight='bold')
+            if idx == 0:
+                ax.legend(loc='lower right', fontsize=8)
+            ax.grid(axis='x', alpha=0.3)
+        
+        # Hide extra subplots
+        for idx in range(len(available_diets), len(axes)):
+            axes[idx].set_visible(False)
+        
+        plt.suptitle('Amsterdam Food System: All Diets vs Goal Diets - Scope 1+2 vs Supply Chain Emissions', fontsize=13, fontweight='bold', y=0.995)
+        plt.tight_layout()
+        plt.savefig('11b_Amsterdam_Monitor_vs_Goals_Scope.png', dpi=300, bbox_inches='tight')
+        plt.close()
+
+    # ---------------------------------------------------------
+    # NEW: MULTI-RESOURCE IMPACT METRICS - ALL DIETS VS GOALS
+    # Shows three independent environmental footprints:
+    # - CO2: Scope 1+2+3 combined (complete emissions)
+    # - Land Use: Agricultural land footprint (separate metric)
+    # - Water: Blue water consumption footprint (separate metric)
+    # ---------------------------------------------------------
+    print("Generating 11c_Amsterdam_Multi_Resource_Impact.png...")
+    # Compare all diets to goal diets
+    all_diets_multi = ['1. Monitor 2024 (Current)', '6. Metropolitan (High Risk)',
+                       '2. Schijf van 5 (Guideline)', '3. EAT-Lancet (Planetary)', 
+                       '4. Dutch Goal (60:40)', '5. Amsterdam Goal (70:30)']
+    available_diets_multi = [d for d in all_diets_multi if d in diet_names]
+    
+    # Food type aggregation mapping
+    FOOD_TYPE_MAP = {
+        'Red Meat': 'Animal Products', 'Poultry': 'Animal Products', 
+        'Dairy & Eggs': 'Animal Products', 'Fish': 'Animal Products',
+        'Plant Protein': 'Plant-Based', 'Staples': 'Plant-Based', 
+        'Veg & Fruit': 'Plant-Based',
+        'Ultra-Processed': 'Processed/Other'
+    }
+    
+    if len(available_diets_multi) >= 2:
+        n_cols = 3
+        n_rows = int(np.ceil(len(available_diets_multi) / n_cols))
+        fig11c, axes = plt.subplots(n_rows, n_cols, figsize=(18, 5*n_rows))
+        axes = np.array(axes).reshape(-1) if len(available_diets_multi) > 1 else np.array([axes])
+        
+        for idx, diet_name in enumerate(available_diets_multi):
+            ax = axes[idx]
+            scope12_data = results_scope12[diet_name]
+            scope3_data = results_co2[diet_name]  # Scope 3 = supply chain emissions
+            land_data = results_land[diet_name]   # Land use (separate metric)
+            water_data = results_water[diet_name] # Water footprint (separate metric)
+            
+            # Aggregate to food types
+            type_co2_total = {}
+            type_land = {}
+            type_water = {}
+            
+            for cat in CAT_ORDER:
+                food_type = FOOD_TYPE_MAP.get(cat, 'Processed/Other')
+                type_co2_total[food_type] = type_co2_total.get(food_type, 0) + (scope12_data[cat] + scope3_data[cat])
+                type_land[food_type] = type_land.get(food_type, 0) + land_data[cat]
+                type_water[food_type] = type_water.get(food_type, 0) + water_data[cat]
+            
+            # Calculate totals and percentages
+            total_co2 = sum(type_co2_total.values())
+            total_land = sum(type_land.values())
+            total_water = sum(type_water.values())
+            
+            type_order = ['Animal Products', 'Plant-Based', 'Processed/Other']
+            co2_pcts = [100 * type_co2_total.get(t, 0) / total_co2 if total_co2 > 0 else 0 for t in type_order]
+            land_pcts = [100 * type_land.get(t, 0) / total_land if total_land > 0 else 0 for t in type_order]
+            water_pcts = [100 * type_water.get(t, 0) / total_water if total_water > 0 else 0 for t in type_order]
+            
+            colors_type = ['#E74C3C', '#2ECC71', '#95A5A6']
+            diet_label = diet_name.split('(')[0].strip()
+            for prefix in ['1. ', '2. ', '3. ', '4. ', '5. ', '6. ']:
+                diet_label = diet_label.replace(prefix, '')
+            
+            # CO2 bar chart
+            ax.barh([0], [sum(co2_pcts)], left=0, color='white', edgecolor='none')
+            x_pos = 0
+            for i, pct in enumerate(co2_pcts):
+                ax.barh([0], [pct], left=x_pos, color=colors_type[i], alpha=0.85)
+                if pct > 5:
+                    ax.text(x_pos + pct/2, 0, f'{pct:.0f}%', ha='center', va='center', 
+                           fontsize=9, color='white', fontweight='bold')
+                x_pos += pct
+            
+            ax.set_ylim(-0.5, 0.5)
+            ax.set_xlim(0, 100)
+            ax.set_yticks([])
+            ax.set_xlabel('')
+            ax.set_title(f'{diet_label}', fontsize=11, fontweight='bold', pad=10)
+            
+            # Add values below chart
+            co2_text = f'CO2: {total_co2/1000:.0f} kt'
+            land_text = f'Land: {total_land/1e6:.1f} km²'
+            water_text = f'Water: {total_water/1e6:.1f} ML'
+            ax.text(0.5, -0.35, f'{co2_text}\\n{land_text}\\n{water_text}', 
+                   ha='center', va='top', fontsize=9, transform=ax.transData, fontweight='bold')
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+            ax.spines['left'].set_visible(False)
+        
+        # Hide extra subplots
+        for idx in range(len(available_diets_multi), len(axes)):
+            axes[idx].set_visible(False)
+        
+        plt.suptitle('Amsterdam Food System: Multi-Resource Footprints (CO2, Land, Water) - All Diets vs Goals\\nColor: Red=Animal | Green=Plant | Gray=Processed', 
+                    fontsize=12, fontweight='bold', y=0.995)
+        plt.tight_layout()
+        plt.savefig('11c_Amsterdam_Multi_Resource_Impact.png', dpi=300, bbox_inches='tight')
+        plt.close()
+
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    # CHART 12: ALL DIETS VS GOAL REFERENCE
+    # Shows total emissions (Scope 1+2+3) compared to Schijf van 5 reference
+    # Includes Monitor 2024, other diets, and all goal diets
+    # ---------------------------------------------------------
+    print("Generating 12_Emissions_vs_Reference.png...")
+    reference_diet = '2. Schijf van 5 (Guideline)' if '2. Schijf van 5 (Guideline)' in diet_names else next((d for d in diet_names if 'Schijf' in d or 'EAT' in d), diet_names[0])
+    # Show all diets with emphasis on goals
+    all_diets_chart12 = ['1. Monitor 2024 (Current)', '6. Metropolitan (High Risk)',
+                         '2. Schijf van 5 (Guideline)', '3. EAT-Lancet (Planetary)', 
+                         '4. Dutch Goal (60:40)', '5. Amsterdam Goal (70:30)']
+    comparison_diets_ref = [d for d in all_diets_chart12 if d in diet_names]
+    
+    fig12, ax = plt.subplots(figsize=(14, 8))
+    ref_emissions = {cat: results_scope12[reference_diet][cat] + results_co2[reference_diet][cat] for cat in CAT_ORDER}
+    sorted_cats = sorted(CAT_ORDER, key=lambda c: ref_emissions[c], reverse=True)
+    
     y_pos = np.arange(len(sorted_cats))
-    width = 0.15
-    colors_diets = ['#3498DB', '#E74C3C', '#F39C12', '#2ECC71', '#9B59B6']
+    width = 0.13
+    colors_diets = ['#3498DB', '#E67E22', '#2ECC71', '#9B59B6', '#E74C3C', '#1ABC9C']
     
-    for idx, diet_name in enumerate(comparison_diets_ref):
-        diet_mass = results_mass[diet_name]
-        pct_of_ref = [(diet_mass[cat] / ref_mass[cat] * 100) if ref_mass[cat] > 0 else 0 
-                      for cat in sorted_cats]
-        offset = (idx - len(comparison_diets_ref)/2 + 0.5) * width
-        bars = ax.barh(y_pos + offset, pct_of_ref, width,
-                       label=diet_name.split('(')[0].strip()[:20], 
-                       color=colors_diets[idx % len(colors_diets)], alpha=0.8)
+    for idx, diet_name in enumerate(comparison_diets_ref[:6]):
+        diet_emissions = {cat: results_scope12[diet_name][cat] + results_co2[diet_name][cat] for cat in CAT_ORDER}
+        pct_of_ref = [(diet_emissions[cat] / ref_emissions[cat] * 100) if ref_emissions[cat] > 0 else 0 for cat in sorted_cats]
+        offset = (idx - len(comparison_diets_ref[:6])/2 + 0.5) * width
+        bars = ax.barh(y_pos + offset, pct_of_ref, width, 
+                      label=diet_name.split('(')[0].strip()[:20], 
+                      color=colors_diets[idx % len(colors_diets)], alpha=0.85)
+    
     ax.set_yticks(y_pos)
-    ax.set_yticklabels(sorted_cats, fontsize=11)
-    ax.set_xlabel('2024 dietary intake versus reference intake (%)', fontsize=12, fontweight='bold')
-    ax.set_title(f'Dietary Intake Comparison Against {reference_diet.split("(")[0].strip()} Reference', 
-                 fontsize=14, fontweight='bold', pad=20)
-    ax.axvline(x=100, color='black', linewidth=2, linestyle='--', label='Reference (100%)')
+    ax.set_yticklabels(sorted_cats, fontsize=10)
+    ax.set_xlabel('Total emissions versus Schijf van 5 reference (%)', fontsize=12, fontweight='bold')
+    ax.set_title(f'Total Food System Emissions (Scope 1+2+3) - All Diets vs Schijf van 5 Reference', 
+                fontsize=13, fontweight='bold', pad=20)
+    ax.axvline(x=100, color='black', linewidth=2.5, linestyle='--', label='Schijf van 5 (100%)')
     ax.legend(loc='lower right', fontsize=9, ncol=2)
-    ax.grid(axis='x', alpha=0.3, linestyle='--')
-    ax.set_xlim(0, 250)
+    ax.grid(axis='x', alpha=0.3)
+    ax.set_xlim(0, 300)
+    
+    total_ref = sum(ref_emissions.values())
+    info_text = f'Reference Diet (Schijf van 5):\nTotal: {total_ref/1000:.0f} kton CO2e\n(Scope 1+2 + Scope 3 supply chain)'
+    ax.text(0.02, 0.98, info_text, transform=ax.transAxes, ha='left', va='top', fontsize=10, 
+           bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+    
     plt.tight_layout()
-    plt.savefig('12_Intake_vs_Reference.png', dpi=300, bbox_inches='tight')
+    plt.savefig('12_Emissions_vs_Reference.png', dpi=300, bbox_inches='tight')
     plt.close()
+
+    # ---------------------------------------------------------
+    # CHART 13: SYSTEM-WIDE IMPACT CHANGE FROM MONITOR 2024 TO GOAL DIETS
+    # ---------------------------------------------------------
+    print("Generating 13_System_Wide_Impact_Change.png...")
+    baseline_diet = '1. Monitor 2024 (Current)'
+    goal_comparison_diets = ['2. Schijf van 5 (Guideline)', '3. EAT-Lancet (Planetary)', 
+                            '4. Dutch Goal (60:40)', '5. Amsterdam Goal (70:30)']
+    goal_comparison_diets = [d for d in goal_comparison_diets if d in diet_names]
+    
+    if baseline_diet in diet_names and len(goal_comparison_diets) >= 2:
+        # Calculate baseline total impacts
+        baseline_ghg = sum(results_scope12[baseline_diet].values()) + sum(results_co2[baseline_diet].values())
+        baseline_water = sum(results_water[baseline_diet].values())
+        baseline_land = sum(results_land[baseline_diet].values())
+        
+        fig13, ax = plt.subplots(figsize=(14, 8))
+        
+        x_pos = np.arange(len(goal_comparison_diets))
+        width = 0.25
+        
+        ghg_changes = []
+        water_changes = []
+        land_changes = []
+        
+        for diet_name in goal_comparison_diets:
+            goal_ghg = sum(results_scope12[diet_name].values()) + sum(results_co2[diet_name].values())
+            goal_water = sum(results_water[diet_name].values())
+            goal_land = sum(results_land[diet_name].values())
+            
+            ghg_pct_change = ((goal_ghg - baseline_ghg) / baseline_ghg) * 100
+            water_pct_change = ((goal_water - baseline_water) / baseline_water) * 100
+            land_pct_change = ((goal_land - baseline_land) / baseline_land) * 100
+            
+            ghg_changes.append(ghg_pct_change)
+            water_changes.append(water_pct_change)
+            land_changes.append(land_pct_change)
+        
+        # Create bars
+        bars1 = ax.bar(x_pos - width, ghg_changes, width, label='GHG Emissions', color='#C0392B', alpha=0.85)
+        bars2 = ax.bar(x_pos, water_changes, width, label='Water Use', color='#3498DB', alpha=0.85)
+        bars3 = ax.bar(x_pos + width, land_changes, width, label='Land Use', color='#27AE60', alpha=0.85)
+        
+        # Add zero line
+        ax.axhline(y=0, color='black', linewidth=2, linestyle='-')
+        
+        # Formatting
+        ax.set_ylabel('% Change from Monitor 2024', fontsize=12, fontweight='bold')
+        ax.set_title('System-Wide Environmental Impact Change:\\nMonitor 2024 vs Goal Diets', 
+                    fontsize=14, fontweight='bold', pad=20)
+        ax.set_xticks(x_pos)
+        ax.set_xticklabels([d.split('(')[0].strip().replace('2. ', '').replace('3. ', '').replace('4. ', '').replace('5. ', '') 
+                           for d in goal_comparison_diets], fontsize=11)
+        ax.legend(fontsize=11, loc='upper left')
+        ax.grid(axis='y', alpha=0.3)
+        ax.set_ylim(min(min(ghg_changes), min(water_changes), min(land_changes)) - 5, 
+                    max(max(ghg_changes), max(water_changes), max(land_changes)) + 5)
+        
+        # Add value labels on bars
+        for bars in [bars1, bars2, bars3]:
+            for bar in bars:
+                height = bar.get_height()
+                ax.text(bar.get_x() + bar.get_width()/2., height,
+                       f'{height:.1f}%',
+                       ha='center', va='bottom' if height > 0 else 'top', fontsize=9, fontweight='bold')
+        
+        # Add legend text box with baseline values
+        textstr = f'Monitor 2024 Baseline:\\nGHG: {baseline_ghg/1000:.0f} kton CO2e\\nWater: {baseline_water/1e6:.1f} ML\\nLand: {baseline_land/1e6:.2f} km²'
+        ax.text(0.98, 0.97, textstr, transform=ax.transAxes, fontsize=10,
+               verticalalignment='top', horizontalalignment='right',
+               bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+        
+        plt.tight_layout()
+        plt.savefig('13_System_Wide_Impact_Change.png', dpi=300, bbox_inches='tight')
+        plt.close()
+        print("\u2713 Chart 13 saved: 13_System_Wide_Impact_Change.png")
 
     # ---------------------------------------------------------
     # PART C: CONSOLE REPORT

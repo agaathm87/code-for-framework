@@ -1,0 +1,1 @@
+Python is niet gevonden; uitvoeren zonder argumenten om te installeren vanaf de Microsoft Store, of schakel deze snelkoppeling uit via Instellingen > Apps > Geavanceerde app-instellingen > aliassen voor het uitvoeren van apps.

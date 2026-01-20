@@ -1,0 +1,41 @@
+Calculating impacts for all diets...
+Generating 1_Nexus_Analysis.png...
+Generating 6_Scope12_vs_Scope3.png and 7_Scope3_Share.png...
+Generating 8_All_Total_Emissions_Donuts.png...
+
+Scope 1+2 vs Scope 3 vs Total Summary (Tonnes CO2e/Year):
+- 1. Monitor 2024 (Current): S1+2=35,702 (4.2%), S3=804,709 (95.8%), Total=840,411
+- 2. Amsterdam Theoretical: S1+2=36,282 (4.1%), S3=854,356 (95.9%), Total=890,637
+- 3. Metropolitan (High Risk): S1+2=45,473 (3.4%), S3=1,302,432 (96.6%), Total=1,347,905
+- 4. Metabolic Balance: S1+2=42,414 (3.4%), S3=1,210,618 (96.6%), Total=1,253,032
+- 5. Dutch Goal (60:40): S1+2=36,941 (4.3%), S3=832,253 (95.7%), Total=869,195
+- 6. Amsterdam Goal (70:30): S1+2=28,813 (4.7%), S3=578,098 (95.3%), Total=606,910
+- 7. EAT-Lancet (Planetary): S1+2=33,609 (5.6%), S3=563,400 (94.4%), Total=597,010
+- 8. Schijf van 5 (Guideline): S1+2=36,378 (4.6%), S3=755,433 (95.4%), Total=791,811
+- 9. Mediterranean Diet: S1+2=36,153 (4.8%), S3=714,931 (95.2%), Total=751,084
+Generating 2_All_Plates_Mass.png...
+Generating 3_All_Emissions_Donuts.png...
+Generating 4a_Distance_To_Goals_Percentage.png...
+Generating 4b_Distance_To_Goals_CO2_Tonnes.png...
+Generating 9_CO2_vs_Mass_Share.png...
+Generating 10_Impact_by_Food_Type.png...
+Generating 11_Mass_vs_Protein.png...
+Generating 12_Intake_vs_Reference.png...
+
+================================================================================
+                         MASTER SCOPE 3 TONNAGE REPORT                          
+================================================================================
+CATEGORY                 1.Monitor    2.Theory     3.Metro      4.Meta    5.DuGoal    6.AmGoal       7.EAT    8.Schijf       9.Med
+------------------------------------------------------------------------------------------------------------------------
+Red Meat                   131,428     161,416     512,754     696,013     183,259      61,086      85,521     122,172      97,738
+Poultry                     32,394      36,282      77,746     103,661      32,394      12,958      37,577      32,394      25,915
+Dairy & Eggs               258,265     293,584     305,801     249,898     266,188     134,390     130,910     247,677     221,984
+Fish                        28,507      12,958      19,437      51,831      19,437      19,437      36,282      32,394      45,352
+Plant Protein               25,175      17,659       6,849       5,553      38,688      68,120      30,543      31,284      32,579
+Staples                    100,329      96,998      85,150      20,362     104,957     113,657     101,884     108,104     106,623
+Veg & Fruit                 73,118      67,010      50,350      70,342      91,074     107,364     118,470     107,364     123,653
+Ultra-Processed            155,492     168,450     244,345      12,958      96,257      61,086      22,213      74,044      61,086
+------------------------------------------------------------------------------------------------------------------------
+TOTAL (Tonnes)             804,709     854,356   1,302,432   1,210,618     832,253     578,098     563,400     755,433     714,931
+================================================================================
+

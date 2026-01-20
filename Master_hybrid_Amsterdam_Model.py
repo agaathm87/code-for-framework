@@ -655,39 +655,156 @@ def run_full_analysis():
     plt.close()
 
     # ---------------------------------------------------------
-    # CHART 12: INTAKE VS REFERENCE LEVELS (Monitor Last Figure Style)
+    # NEW CHART: SCOPE 1+2 VS SCOPE 3 BREAKDOWN (All 8 Diets)
     # ---------------------------------------------------------
-    print("Generating 12_Intake_vs_Reference.png...")
+    print("Generating 11b_Scope_Breakdown_All_Diets.png...")
+    all_diets_11b = ['1. Amsterdam Monitor 2024', '2. Metropolitan (High Risk)', '3. Metabolic Balance (Animal)',
+                     '4. Dutch Goal (60:40)', '5. Amsterdam Goal (70:30)', '6. EAT-Lancet (Planetary)',
+                     '7. Schijf van 5 (Guideline)', '8. Mediterranean Diet']
+    
+    fig11b, axes = plt.subplots(2, 4, figsize=(24, 12))
+    axes = axes.flatten()
+    
+    for idx, diet_name in enumerate(all_diets_11b):
+        ax = axes[idx]
+        scope12_data = results_scope12[diet_name]
+        scope3_data = results_co2[diet_name]
+        total_data = {cat: scope12_data[cat] + scope3_data[cat] for cat in CAT_ORDER}
+        sorted_cats = sorted(CAT_ORDER, key=lambda c: total_data[c], reverse=True)[:8]  # Top 8
+        
+        y_pos = np.arange(len(sorted_cats))
+        width = 0.7
+        scope12_vals = [scope12_data[c] / 1000 for c in sorted_cats]
+        scope3_vals = [scope3_data[c] / 1000 for c in sorted_cats]
+        
+        bars1 = ax.barh(y_pos, scope12_vals, width, label='Scope 1+2 (Local)', color='#F39C12', alpha=0.9)
+        bars2 = ax.barh(y_pos, scope3_vals, width, left=scope12_vals, label='Scope 3 (Supply Chain)', color='#3498DB', alpha=0.9)
+        
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels(sorted_cats, fontsize=8)
+        ax.set_xlabel('Emissions (kton CO2e/year)', fontsize=9, fontweight='bold')
+        total_emissions = sum(total_data.values())
+        s12_total = sum([scope12_data[c] for c in CAT_ORDER])
+        s12_pct = (s12_total / total_emissions * 100) if total_emissions > 0 else 0
+        ax.set_title(f'{diet_name.split("(")[0].strip()}\nTotal: {total_emissions/1000:.0f} kton ({s12_pct:.0f}% S1+2)', 
+                     fontsize=10, fontweight='bold')
+        if idx == 0:
+            ax.legend(loc='lower right', fontsize=7)
+        ax.grid(axis='x', alpha=0.3, linestyle='--')
+        
+        # Add percentage labels for significant segments
+        for i, cat in enumerate(sorted_cats):
+            total = total_data[cat]
+            s12_pct_cat = (scope12_data[cat] / total * 100) if total > 0 else 0
+            if s12_pct_cat > 5:
+                ax.text(scope12_vals[i]/2, y_pos[i], f'{s12_pct_cat:.0f}%',
+                       ha='center', va='center', fontsize=7, fontweight='bold', color='white')
+    
+    plt.tight_layout()
+    plt.savefig('11b_Scope_Breakdown_All_Diets.png', dpi=300, bbox_inches='tight')
+    plt.close()
+
+    # ---------------------------------------------------------
+    # NEW CHART: MULTI-RESOURCE IMPACT (ALL 8 DIETS)
+    # ---------------------------------------------------------
+    print("Generating 11c_Multi_Resource_All_Diets.png...")
+    FOOD_TYPE_MAP = {
+        'Red Meat': 'Animal', 'Poultry': 'Animal', 'Fish': 'Animal',
+        'Dairy & Eggs': 'Mixed (Dairy/Eggs)',
+        'Plant Protein': 'Plant-based', 'Veg & Fruit': 'Plant-based', 'Staples': 'Plant-based',
+        'Ultra-Processed': 'Processed', 'Beverages & Additions': 'Processed', 'Oils & Condiments': 'Processed'
+    }
+    
+    fig11c, axes = plt.subplots(2, 4, figsize=(24, 12))
+    axes = axes.flatten()
+    
+    for idx, diet_name in enumerate(all_diets_11b):
+        ax = axes[idx]
+        type_totals_co2 = {'Plant-based': 0, 'Animal': 0, 'Mixed (Dairy/Eggs)': 0, 'Processed': 0}
+        type_totals_land = {'Plant-based': 0, 'Animal': 0, 'Mixed (Dairy/Eggs)': 0, 'Processed': 0}
+        type_totals_water = {'Plant-based': 0, 'Animal': 0, 'Mixed (Dairy/Eggs)': 0, 'Processed': 0}
+        
+        for cat in CAT_ORDER:
+            food_type = FOOD_TYPE_MAP[cat]
+            type_totals_co2[food_type] += results_scope12[diet_name][cat] + results_co2[diet_name][cat]
+            type_totals_land[food_type] += results_land[diet_name][cat]
+            type_totals_water[food_type] += results_water[diet_name][cat]
+        
+        total_co2 = sum(type_totals_co2.values())
+        total_land = sum(type_totals_land.values())
+        total_water = sum(type_totals_water.values())
+        
+        type_pct_co2 = {k: (v/total_co2*100) if total_co2 > 0 else 0 for k, v in type_totals_co2.items()}
+        type_pct_land = {k: (v/total_land*100) if total_land > 0 else 0 for k, v in type_totals_land.items()}
+        type_pct_water = {k: (v/total_water*100) if total_water > 0 else 0 for k, v in type_totals_water.items()}
+        
+        categories = ['CO2', 'Land', 'Water']
+        plant_vals = [type_pct_co2['Plant-based'], type_pct_land['Plant-based'], type_pct_water['Plant-based']]
+        animal_vals = [type_pct_co2['Animal'], type_pct_land['Animal'], type_pct_water['Animal']]
+        mixed_vals = [type_pct_co2['Mixed (Dairy/Eggs)'], type_pct_land['Mixed (Dairy/Eggs)'], type_pct_water['Mixed (Dairy/Eggs)']]
+        processed_vals = [type_pct_co2['Processed'], type_pct_land['Processed'], type_pct_water['Processed']]
+        
+        x = np.arange(len(categories))
+        width = 0.6
+        p1 = ax.bar(x, plant_vals, width, label='Plant-based', color='#2ECC71')
+        p2 = ax.bar(x, animal_vals, width, bottom=plant_vals, label='Animal', color='#E74C3C')
+        p3 = ax.bar(x, mixed_vals, width, bottom=np.array(plant_vals)+np.array(animal_vals), label='Mixed (Dairy)', color='#F39C12')
+        p4 = ax.bar(x, processed_vals, width, bottom=np.array(plant_vals)+np.array(animal_vals)+np.array(mixed_vals), label='Processed', color='#95A5A6')
+        
+        ax.set_ylabel('Percentage (%)', fontsize=9, fontweight='bold')
+        ax.set_title(f'{diet_name.split("(")[0].strip()}\nTotal CO2: {total_co2/1000:.0f} kton', fontsize=10, fontweight='bold')
+        ax.set_xticks(x)
+        ax.set_xticklabels(categories, fontsize=9)
+        ax.set_ylim(0, 100)
+        if idx == 0:
+            ax.legend(loc='upper right', fontsize=8)
+        ax.grid(axis='y', alpha=0.3, linestyle='--')
+        
+        for i, rect in enumerate(p2):
+            height = rect.get_height()
+            bottom = plant_vals[i]
+            if height > 8:
+                ax.text(rect.get_x() + rect.get_width()/2., bottom + height/2, f'{height:.0f}%', ha='center', va='center', fontsize=8, fontweight='bold', color='white')
+    
+    plt.tight_layout()
+    plt.savefig('11c_Multi_Resource_Goals.png', dpi=300, bbox_inches='tight')
+    plt.close()
+
+    # ---------------------------------------------------------
+    # CHART 12: TOTAL EMISSIONS VS REFERENCE (GOAL DIETS)
+    # ---------------------------------------------------------
+    print("Generating 12_Emissions_vs_Reference.png...")
     reference_diet = '7. Schijf van 5 (Guideline)'
-    comparison_diets_ref = ['1. Amsterdam Monitor 2024', '2. Metropolitan (High Risk)',
-                            '4. Dutch Goal (60:40)', '5. Amsterdam Goal (70:30)', '6. EAT-Lancet (Planetary)']
+    comparison_diets_ref = ['1. Amsterdam Monitor 2024', '4. Dutch Goal (60:40)', '5. Amsterdam Goal (70:30)', '6. EAT-Lancet (Planetary)']
     
     fig12, ax = plt.subplots(figsize=(14, 10))
-    ref_mass = results_mass[reference_diet]
-    sorted_cats = sorted(CAT_ORDER, key=lambda c: ref_mass[c], reverse=True)
+    ref_emissions = {cat: results_scope12[reference_diet][cat] + results_co2[reference_diet][cat] for cat in CAT_ORDER}
+    sorted_cats = sorted(CAT_ORDER, key=lambda c: ref_emissions[c], reverse=True)
+    
     y_pos = np.arange(len(sorted_cats))
-    width = 0.15
-    colors_diets = ['#3498DB', '#E74C3C', '#F39C12', '#2ECC71', '#9B59B6']
+    width = 0.18
+    colors_diets = ['#3498DB', '#F39C12', '#2ECC71', '#9B59B6']
     
     for idx, diet_name in enumerate(comparison_diets_ref):
-        diet_mass = results_mass[diet_name]
-        pct_of_ref = [(diet_mass[cat] / ref_mass[cat] * 100) if ref_mass[cat] > 0 else 0 
-                      for cat in sorted_cats]
+        diet_emissions = {cat: results_scope12[diet_name][cat] + results_co2[diet_name][cat] for cat in CAT_ORDER}
+        pct_of_ref = [(diet_emissions[cat] / ref_emissions[cat] * 100) if ref_emissions[cat] > 0 else 0 for cat in sorted_cats]
         offset = (idx - len(comparison_diets_ref)/2 + 0.5) * width
-        bars = ax.barh(y_pos + offset, pct_of_ref, width,
-                       label=diet_name.split('(')[0].strip()[:20], 
-                       color=colors_diets[idx], alpha=0.8)
+        bars = ax.barh(y_pos + offset, pct_of_ref, width, label=diet_name.split('(')[0].strip()[:25], color=colors_diets[idx], alpha=0.85)
+    
     ax.set_yticks(y_pos)
     ax.set_yticklabels(sorted_cats, fontsize=11)
-    ax.set_xlabel('2024 dietary intake versus reference intake (%)', fontsize=12, fontweight='bold')
-    ax.set_title('Dietary Intake Comparison Against Schijf van 5 Reference', 
-                 fontsize=14, fontweight='bold', pad=20)
+    ax.set_xlabel('Total emissions versus reference (%)', fontsize=12, fontweight='bold')
+    ax.set_title('Total Emissions (Scope 1+2+3) Comparison Against Schijf van 5 Reference', fontsize=14, fontweight='bold', pad=20)
     ax.axvline(x=100, color='black', linewidth=2, linestyle='--', label='Reference (100%)')
     ax.legend(loc='lower right', fontsize=9, ncol=2)
     ax.grid(axis='x', alpha=0.3, linestyle='--')
-    ax.set_xlim(0, 250)
+    ax.set_xlim(0, 300)
+    
+    total_ref = sum(ref_emissions.values())
+    ax.text(0.02, 0.98, f'Reference total: {total_ref/1000:.0f} kton CO2e\n(Scope 1+2 + Scope 3)', transform=ax.transAxes, ha='left', va='top', fontsize=10, bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+    
     plt.tight_layout()
-    plt.savefig('12_Intake_vs_Reference.png', dpi=300, bbox_inches='tight')
+    plt.savefig('12_Emissions_vs_Reference.png', dpi=300, bbox_inches='tight')
     plt.close()
 
     # ---------------------------------------------------------
