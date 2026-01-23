@@ -12,26 +12,29 @@ This project contains **5 complementary Python modules** with increasing sophist
 | **MasterHybridModel.py** | Enhanced | 6 diets + 3 metrics (CO2, land, water) | 5 PNG charts + report |
 | **Master_hybrid_Amsterdam_Model.py** | Advanced | Monitor 2024 baseline + education effects | 5 charts + hotspot analysis + 2 extra transitions |
 | **Master_hybrid_Amsterdam_Model-v2** | Comprehensive | 9 diets + 22 foods + transparent Scope 1+2 | 12 charts + Scope breakdown + waste/retail |
-| **Master Hybrid Amsterdam Model v3.py** | ⭐ Latest | Composite beta + 22 foods + calibrated factors | 12 charts + table + report + all transitions |
+| **Master Hybrid Amsterdam Model v3.py** | ⭐ Latest | 31 foods + 14 categories + delta analysis | 16 charts + CSV export + sensitivity analysis |
 
 **Recommended:** Use `Master Hybrid Amsterdam Model v3.py` for the most advanced analysis.
 
 ---
 
-## 🎯 Key Features
+## 🎯 Key Features (v3)
 
 ✅ **Empirical Monitor 2024 Data** — Baseline reflects actual Amsterdam consumption (48% plant / 52% animal protein)  
-✅ **Complete Food System** — 22 explicit food items (including beverages, oils, condiments)  
+✅ **Expanded Food System** — 31 explicit food items across 14 granular categories  
 ✅ **Transparent Scope 1+2** — Verified against Monitor 2024's 1,750 kton target with explicit breakdown: Base 88.1% + Waste 9.7% + Retail 2.2%  
 ✅ **Calibrated Factors** — Scope 1+2 coefficients validated for accuracy against Monitor data  
-✅ **Multi-Metric LCA** — Tracks CO2, land use, and water across 22 food categories  
+✅ **Multi-Metric LCA** — Tracks CO2, land use, and water across all food items  
 ✅ **Income-Sensitive Consumption** — Valencia downscaling method scales by neighborhood income  
 ✅ **Education-Based Behavioral Effects** — Models preference differences: high-education areas eat 15% less meat (Monitor finding)  
 ✅ **Scope 1+2 + Scope 3 Analysis** — Separates local production + waste (11–14%) from supply chain (86–89%) emissions  
-✅ **9 Dietary Scenarios** — Includes Schijf van 5 and Mediterranean diets  
+✅ **9 Dietary Scenarios** — Includes Schijf van 5 and Mediterranean diets with 4 reference goals  
+✅ **Delta Analysis** — Quantifies emissions changes needed to achieve dietary goals (by category)  
+✅ **Sensitivity Analysis** — Tornado diagrams showing impact of factors, adherence, and waste  
+✅ **APA-Formatted Tables** — Publication-ready emissions comparison exports (PNG + CSV)  
 ✅ **Explicit Waste & Retail** — 11% food waste + 2.5% distribution/cold chain modeled transparently  
 ✅ **Spatial Hotspot Analysis** — Neighborhood-level emissions with education-income interaction effects  
-✅ **Publication-Ready Visualizations** — 12+ professional charts per run (scope comparison, food type breakdown, protein analysis)  
+✅ **Colorblind-Friendly Visualizations** — 16 professional charts using Paul Tol palette  
 ✅ **Distance-to-Goals Matrix** — Quantifies % reduction needed for each pathway  
 
 ---
@@ -95,18 +98,39 @@ This project contains **5 complementary Python modules** with increasing sophist
 - **All Plates Mass** — Physical consumption vs emissions separated
 - **All Emissions Donuts** — Composition + total per diet
 
-**Visualizations:**
-1. **1_Nexus_Analysis.png** — Multi-resource comparison
-2. **2_All_Plates_Mass.png** — Physical diet compositions
+**Visualizations (16 charts saved to /images folder):**
+1. **1_Nexus_Analysis.png** — Multi-resource comparison (CO2, land, water)
+2. **2_All_Plates_Mass.png** — Physical diet compositions across all diets
 3. **3_All_Emissions_Donuts.png** — Emission breakdown with totals
 4. **4_Distance_To_Goals.png** — Heatmap of reduction pathways
+5. **5a-5e_Transition_*.png** — Baseline to goal transitions (Dutch, Amsterdam, EAT-Lancet, Schijf, Mediterranean)
+6. **6_Scope12_vs_Scope3_Total.png** — Grouped bars: Scope 1+2, Scope 3, and Total
+7. **7_Scope_Shares.png** — Stacked % bars showing scope proportions
+8. **8_All_Total_Emissions_Donuts.png** — 3×3 grid of donut charts by diet
+9. **9_Scope_Breakdown_by_Category.png** — Category-level scope analysis
+10. **10_Multi_Resource_Impact.png** — CO2/Land/Water comparative analysis
+11. **11_Emissions_vs_Protein.png** — Protein efficiency analysis
+12. **12_Diets_vs_Goals_MultiResource.png** — Multi-metric comparison matrix
+13. **12b_Emissions_vs_Reference_MultiGoal.png** — Individual goal comparisons
+14. **13_Amsterdam_Food_Infographic.png** — Comprehensive system infographic
+15. **14a_Delta_Analysis_Total_Emissions.png** — Total emissions change vs reference goals
+16. **14b_Delta_Analysis_By_Category.png** — Category-level emissions deltas
+17. **14c_Mass_vs_Emissions_Share.png** — Mass vs CO₂ share analysis
+18. **14d_Scope_Breakdown_Baseline_vs_Goals.png** — Scope 1+2 vs 3 breakdown
+19. **15_Table_APA_Emissions.png** — APA-formatted emissions table (also exported as CSV)
+20. **16_Sensitivity_Analysis_Tornado.png** — Tornado diagram for sensitivity analysis
 
 ---
 
 ### **Master Hybrid Amsterdam Model v3.py** ⭐ LATEST
-**Best For:** Research publication, comprehensive policy analysis
+**Best For:** Research publication, comprehensive policy analysis with delta analysis
 
 **Key Enhancements:**
+- **Expanded Food System:** 31 food items across 14 granular categories
+- **Delta Analysis:** Quantifies emissions changes (by category) needed to achieve goals
+- **Sensitivity Analysis:** Tornado diagrams showing impact of factors, adherence, and waste
+- **APA Tables:** Publication-ready emissions comparison (PNG + CSV export)
+- **Colorblind-Friendly:** Paul Tol palette for accessibility
 - **Composite Beta Calculation:** Two multiplicative factors
   - Volume Beta (income-driven): How much total food someone buys
   - Behavioral Modifiers (education-driven): What TYPE of food they choose
@@ -114,36 +138,38 @@ This project contains **5 complementary Python modules** with increasing sophist
   - Base food consumption: 1,541 kton (88.1%)
   - Food waste (11%): 169 kton (9.7%)
   - Retail/distribution (2.5%): 39 kton (2.2%)
-  - **Calibrated Factors:** 22 items with verified scope12 factors (1.33–23.34 kgCO2e/kg)
+  - **Calibrated Factors:** 31 items with verified scope12 factors
 - **Scope 1+2 vs Scope 3 Breakdown:** Separates local production (11–14%) from supply chain (86–89%)
   - Scope 1+2: Direct production, waste, retail/cold chain
   - Scope 3: Land use, transportation, processing, packaging
-- **22 Food Categories** — Explicit modeling of all major food groups:
-  - Proteins: Beef, Pork, Chicken, Fish, Eggs, Pulses, Nuts, Meat_Subs
-  - Dairy: Cheese, Milk
-  - Staples: Grains, Potatoes
-  - Vegetables & Fruits
-  - Processed foods: Sugar, Processed foods
-  - **NEW Beverages:** Coffee, Tea, Alcohol
-  - **NEW Additions:** Oils, Snacks, Condiments
-- **9 Diet Scenarios** with detailed rationale (adds Schijf van 5 & Mediterranean)
-- **Comprehensive Visualizations** — 12+ charts covering composition, scope analysis, food type breakdown, and transitions
 
-**Visualizations:**
-1. **1_Nexus_Analysis.png** — CO2/Land/Water metrics across 9 diets
-2. **2a/2b/2c/2d/2e_Transition_*.png** — Baseline to goal transitions (5 scenarios: Dutch, Amsterdam, EAT, Schijf, Mediterranean)
-3. **3_All_Diets_Plates.png** — Pie charts of 9 diet compositions
-4. **4_Impact_Stack.png** — Stacked emissions across food categories
-5. **6_Scope12_vs_Scope3.png** — Grouped bars: Scope 1+2, Scope 3, and Total (1+2+3) per diet
-6. **7_Scope_Shares.png** — Stacked % bars showing Scope 1+2 and Scope 3 proportion
-7. **8_All_Total_Emissions_Donuts.png** — 3×3 grid of donut charts (one per diet) showing S1+2+3 breakdown by food category
-8. **6_Table_Tonnage.png** — Tabular emissions breakdown
+**14 Food Categories (31 explicit items):**
+1. **Red Meat** — Beef, Pork
+2. **Poultry** — Chicken
+3. **Dairy (Liquid)** — Milk
+4. **Dairy (Solid) & Eggs** — Cheese, Eggs
+5. **Fish** — Fish
+6. **Plant Protein** — Pulses, Nuts, Meat_Subs
+7. **Staples** — Bread, Pasta
+8. **Rice** — Rice
+9. **Veg & Fruit** — Vegetables, Fruit
+10. **Ultra-Processed** — Sugar, Processed_Foods, Ready_Meals, Instant_Noodles, Instant_Pasta, Snacks
+11. **Beverages & Additions** — Coffee, Tea, Alcohol
+12. **Fats (Solid, Animal)** — Butter, Animal_Fats, Frying_Oil_Animal
+13. **Oils (Plant-based)** — Oil_Plant
+14. **Condiments** — Condiment_Sauces, Spice_Mixes
 
-**Console Report:**
-- Master tonnage table (7 diets × 8 categories)
-- Absolute emissions per category
-- % change from baseline Monitor diet
-- Neighborhood hotspot analysis with modifiers
+**9 Diet Scenarios with 4 Reference Goals:**
+- Baseline: Monitor 2024 (Current consumption)
+- Theoretical: Amsterdam Theoretical, Metropolitan, Metabolic Balance
+- **Reference Goals (for delta analysis):**
+  - Dutch Goal (60:40 plant:animal)
+  - Amsterdam Goal (70:30 plant:animal)
+  - EAT-Lancet (Planetary health)
+  - Schijf van 5 (Dutch dietary guidelines with 50:50 plant:animal)
+- Mediterranean Diet
+
+**Comprehensive Visualizations (16 charts):**
 
 ---
 
@@ -170,9 +196,10 @@ python "Master Hybrid Amsterdam Model v3.py"
 ```
 
 **Outputs:**
-- 6 PNG charts (see above)
+- **16 PNG charts** saved to `/images` folder (colorblind-friendly)
+- **1 CSV file** (APA-formatted emissions table) in `/images` folder
 - Console report with statistics and hotspot analysis
-- Generated in current directory
+- All visualizations use Paul Tol colorblind-safe palette
 
 ### Run Alternative Versions
 ```bash
