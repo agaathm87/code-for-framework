@@ -109,6 +109,121 @@ Quantify emissions changes when adopting each policy goal.
 
 ---
 
+## 📊 Data Exports Catalog
+
+### **Reproducibility: 64 CSV Files Exported**
+
+All visualizations (charts 1–16) export underlying data to `data/results/` for reproducibility, auditing, and downstream analysis.
+
+**Quick Access**: See [`data/results/EXPORT_MANIFEST.csv`](data/results/EXPORT_MANIFEST.csv) for the complete file catalog with schemas.
+
+### Export Categories
+
+#### 1. Core Calculation Outputs (6 files)
+Foundational datasets generated from diet compositions and impact factors.
+
+| File | Rows | Schema | Description |
+|------|------|--------|-------------|
+| `emissions_scope12_by_category.csv` | 126 | diet, category, scope12_tonnes_per_year | Scope 1+2 emissions (production, retail, waste) by food category for all 9 diets |
+| `emissions_scope3_by_category.csv` | 126 | diet, category, scope3_tonnes_per_year | Scope 3 emissions (supply chain, transport) by food category |
+| `impacts_land_use_by_category.csv` | 126 | diet, category, land_use_m2_per_year | Land use impacts by food category |
+| `impacts_water_use_by_category.csv` | 126 | diet, category, water_use_L_per_year | Water use impacts by food category |
+| `emissions_totals_by_diet.csv` | 9 | diet, total_scope12_tonnes, total_scope3_tonnes, grand_total_tonnes | Aggregated emission totals across all scopes |
+| `diet_composition_by_category_grams.csv` | 126 | diet, category, grams_per_day | Daily intake in grams by food category |
+
+#### 2. Charts 1–4: Nexus, Composition, and Goal Distances (24 files)
+Multi-resource analysis, diet composition, and policy goal gap analysis.
+
+**Core vs Appendix**: Charts 1–4 export both `_core.csv` (3-7 focus diets) and `_all.csv` (full 9 diets) variants.
+
+**Key Files**:
+- `1a_Nexus_Stacked_*.csv` — CO₂/land/water percentage composition
+- `1b_Nexus_Diverging_*.csv` — Percent change vs baseline (long-form: diet, resource, pct_change)
+- `1c_System_Wide_Impact_Change.csv` — System-wide aggregate changes
+- `2_All_Plates_Mass_*.csv` — Mass share by food category
+- `3_All_Emissions_Donuts_*.csv` — Scope 3 emission shares
+- `4_Distance_To_Goals_*.csv` — Reduction percentages needed to reach each goal
+- `4a_Distance_*_*.csv` — Separate scope 3 and total distance matrices
+- `4b_Gap_Analysis_Readiness_*.csv` — Long-form gap data (base_diet, goal_diet, gap_distance_pct)
+- `4c_Scope_Breakdown_Waterfall_*.csv` — S1+2/S3 current vs goal averages with reduction %
+- `4d_Diet_Shift_Categories_*.csv` — Top 8 category deltas per baseline→goal transition
+- `4e_Reduction_Pathways_*.csv` — Matrix replicating distance-to-goals for pathway visualization
+
+#### 3. Charts 5–8: Transitions, Scopes, and Totals (10 files)
+Transition scenarios, scope breakdowns, and comprehensive emission totals.
+
+| File | Schema | Description |
+|------|--------|-------------|
+| `5_Transitions_Scope3_by_Category.csv` | Baseline, Goal, Category, Baseline/Goal scope3 values, Delta, Delta_pct | Scope 3 changes for all baseline→goal pairs (5 transitions × 14 categories) |
+| `6_Scope12_vs_Scope3_Total_core.csv` | Diet, Scope 1+2, Scope 3, Total | Absolute emissions by scope (focus diets) |
+| `6_Scope12_vs_Scope3_Total_all.csv` | Diet, Scope 1+2, Scope 3, Total | Absolute emissions by scope (all 9 diets) |
+| `6_Table_Tonnage.csv` | Category, [9 diet columns] | Wide format: scope 3 tonnage per category and diet |
+| `6_Table_Tonnage_long.csv` | Diet, Category, Scope3_tonnes_per_year | Long format variant for easy analysis |
+| `7_Scope_Shares_core.csv` | Diet, Scope1+2_share_pct, Scope3_share_pct | Percentage shares of each scope (focus diets) |
+| `7_Scope_Shares_all.csv` | Diet, Scope1+2_share_pct, Scope3_share_pct | Percentage shares of each scope (all 9 diets) |
+| `8_Total_Emissions_by_Category_all.csv` | Diet, Category, Total_emissions_tonnes_per_year | Combined S1+2+3 emissions per category |
+
+#### 4. Charts 9–13: Detailed Breakdowns and Infographic (10 files)
+Category-level scope breakdown, multi-resource impacts, protein efficiency, dietary intake vs reference, and infographic summary data.
+
+| File | Schema | Description |
+|------|--------|-------------|
+| `9_Scope_Breakdown_by_Category.csv` | Diet, Category, Scope1+2/Scope3/Total tonnes, Scope1+2/Scope3 pct | Full scope breakdown by category for all 9 diets (126 rows) |
+| `9_CO2_vs_Mass_Share.csv` | Diet, Category, CO2_share_pct, Mass_share_pct | Share in emissions vs share in consumption (126 rows) |
+| `10_Multi_Resource_Impact.csv` | Diet, Food_Type, CO2_pct, Land_pct, Water_pct | Multi-resource % by food type (plant/animal/dairy/processed/oils/fats) |
+| `10_Impact_by_Food_Type.csv` | Diet, Food_Type, CO2_pct | Simplified CO₂ impact by food type (4 comparison diets) |
+| `11_Emissions_vs_Protein.csv` | Diet, Category, Emissions_share_pct, Protein_share_pct | Emissions efficiency vs protein contribution (all 9 diets) |
+| `11_Mass_vs_Protein.csv` | Diet, Category, Mass_share_pct, Protein_share_pct | Dietary mass vs protein contribution (all 9 diets) |
+| `12_Diets_vs_Goals_MultiResource.csv` | Diet, Goal_Reference, Resource, Pct_vs_goal | Multi-resource gap: 4 diets × 4 goals × 3 resources = 48 rows |
+| `12b_Emissions_vs_Reference_MultiGoal.csv` | Diet, Goal_Reference, Total_emissions_pct_of_goal, Goal/Diet totals | Total emissions comparison (4 diets × 4 goals) |
+| `12_Dietary_Intake_Comparison.csv` | Diet, Category, Pct_of_reference, Diet/Reference mass values | Intake vs Schijf van 5 reference (5 diets × 14 categories) |
+| `13_Infographic_Summary.csv` | Total_Scope12/Scope3/Emissions, Base_Food, Waste, Retail, Land, Water totals | Key infographic metrics (Monitor 2024 baseline) |
+| `13_Infographic_Top6_Categories.csv` | Category, Scope1+2/Scope3/Total kton, Mass/Scope3 share % | Top 6 emitting categories for infographic panel |
+
+#### 5. Charts 14a–d: Delta Analysis (4 files)
+Quantify emission changes when transitioning from baseline diets to policy goals.
+
+| File | Schema | Description |
+|------|--------|-------------|
+| `14a_Delta_Analysis_Total_Emissions.csv` | Baseline_Diet, Goal_Diet, Baseline/Goal totals, Reduction_pct | Total emissions change (3 focus × 4 goals = 12 transitions) |
+| `14b_Delta_Analysis_By_Category.csv` | Goal_Diet, Category, Baseline/Goal tonnes, Delta_kton, Delta_pct | Category-level deltas from Monitor 2024 to each goal (4 goals × 14 categories) |
+| `14c_Mass_vs_Emissions_Share.csv` | Diet, Category, Mass_share_pct, Emissions_share_pct, Gap_pct | Mass vs emissions gap (over-emitting categories, 3 focus diets) |
+| `14d_Scope_Breakdown_Baseline_vs_Goals.csv` | Focus_Diet, Scenario, Scope1+2_kton, Scope3_kton, Total_kton | Scope breakdown across scenarios (3 focus × 5 scenarios = 15 rows) |
+
+#### 6. Charts 15–16: APA Summary and Sensitivity Analysis (11 files)
+Publication-ready APA table and comprehensive sensitivity suite.
+
+| File | Schema | Description |
+|------|--------|-------------|
+| `15_APA_emissions_summary.csv` | Diet, Scope 1+2 (kton), Scope 3 (kton), Total (kton), S1+2 %, S3 % | APA-formatted emissions summary (4 key diets) |
+| `16a_Sensitivity_Tornado_Diagram.csv` | parameter, baseline/low/high values, low/high impacts | Tornado diagram data (parameter rankings) |
+| `16b_Sensitivity_Analysis_Table.csv` | parameter, baseline, low, high, impact_range | Sensitivity analysis table |
+| `16c_Sensitivity_Grouped_Comparison.csv` | group, parameter, impact_range | Grouped sensitivity comparison |
+| `16d–16i_Sensitivity_*.csv` | various schemas | Additional sensitivity visualizations (radar, waterfall, scenario stacking, feasibility, heatmap, policy levers) |
+| `sensitivity_analysis_parameters.csv` | parameter, baseline, low, high, impact_low, impact_high | Master sensitivity parameter definitions |
+
+### Verification and Regeneration
+
+**Verify Exports**:
+```bash
+cd data/results
+ls *.csv | wc -l  # Should return 64
+```
+
+**Regenerate All Exports**:
+```bash
+python "Master Hybrid Amsterdam Model v3.py"
+```
+All CSVs are regenerated in `data/results/` each run. Existing files are overwritten.
+
+**Schema Consistency**:
+- **Diet names**: Cleaned labels (e.g., "Monitor 2024" instead of "1. Monitor 2024 (Current)")
+- **Percentages**: Columns ending in `_pct` are percentages (0-100 scale)
+- **Absolute values**: Tonnes CO₂e per year, m² land, L water
+- **Long vs wide formats**: Most exports use long-form (diet, category, value); some use wide matrices for direct visual mapping
+
+---
+
 ## 🎯 Focus Diets (Core Report) vs. Policy Goals
 
 ### Three Focus Diets

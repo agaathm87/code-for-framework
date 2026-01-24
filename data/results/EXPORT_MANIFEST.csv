@@ -1,0 +1,65 @@
+Chart,Filename,Type,Schema,Description
+1a,1a_Nexus_Stacked_core.csv,Core,"diet, co2_pct, land_pct, water_pct",Nexus stacked percentages (focus diets)
+1a,1a_Nexus_Stacked_all.csv,Appendix,"diet, co2_pct, land_pct, water_pct",Nexus stacked percentages (all 9 diets)
+1b,1b_Nexus_Diverging_core.csv,Core,"diet, resource, pct_change_vs_baseline",Diverging percent change vs baseline (focus diets)
+1b,1b_Nexus_Diverging_all.csv,Appendix,"diet, resource, pct_change_vs_baseline",Diverging percent change vs baseline (all 9 diets)
+1c,1c_System_Wide_Impact_Change.csv,Both,"resource, pct_change_vs_baseline",System-wide percent change for GHG/land/water
+1d,1d_System_Wide_Impact_Matrix_core.csv,Core,"diet, co2_pct, land_pct, water_pct",Matrix of percent changes (focus diets)
+1d,1d_System_Wide_Impact_Matrix_all.csv,Appendix,"diet, co2_pct, land_pct, water_pct",Matrix of percent changes (all 9 diets)
+2,2_All_Plates_Mass_core.csv,Core,"diet, category, mass_share_pct",Mass share by category (focus diets)
+2,2_All_Plates_Mass_all.csv,Appendix,"diet, category, mass_share_pct",Mass share by category (all 9 diets)
+3,3_All_Emissions_Donuts_core.csv,Core,"diet, category, scope3_share_pct",Scope 3 emissions share by category (focus diets)
+3,3_All_Emissions_Donuts_all.csv,Appendix,"diet, category, scope3_share_pct",Scope 3 emissions share by category (all 9 diets)
+4,4_Distance_To_Goals_core.csv,Core,"base_diet, goal_diet, pct_reduction_needed",Distance matrix - reduction percent needed (core pairs)
+4,4_Distance_To_Goals_all.csv,Appendix,"base_diet, goal_diet, pct_reduction_needed",Distance matrix - reduction percent needed (all pairs)
+4a,4a_Distance_Scope3_core.csv,Core,"base_diet, goal_diet, pct_reduction_needed",Scope 3 distance matrix (core)
+4a,4a_Distance_Total_core.csv,Core,"base_diet, goal_diet, pct_reduction_needed",Total emissions distance matrix (core)
+4a,4a_Distance_Scope3_all.csv,Appendix,"base_diet, goal_diet, pct_reduction_needed",Scope 3 distance matrix (all)
+4a,4a_Distance_Total_all.csv,Appendix,"base_diet, goal_diet, pct_reduction_needed",Total emissions distance matrix (all)
+4b,4b_Gap_Analysis_Readiness_core.csv,Core,"base_diet, goal_diet, gap_distance_pct",Gap analysis long-form (core pairs)
+4b,4b_Gap_Analysis_Readiness_all.csv,Appendix,"base_diet, goal_diet, gap_distance_pct",Gap analysis long-form (all pairs)
+4c,4c_Scope_Breakdown_Waterfall_core.csv,Core,"scope, current_kton, goal_avg_kton, total_kton, reduction_pct",Scope breakdown waterfall (S1+2/S3 current vs avg goals)
+4d,4d_Diet_Shift_Categories_core.csv,Core,"base_diet, goal_diet, category, delta_grams, rank",Top 8 category deltas per baseline→goal pair (core)
+4d,4d_avg_Diet_Shift_Categories_core.csv,Core,"base_diet, category, avg_delta_grams, rank",Top 8 category deltas baseline→avg goals (core)
+4e,4e_Reduction_Pathways_core.csv,Core,"base_diet, goal_diet, pct_reduction_needed",Reduction pathway matrix (core)
+4e,4e_Reduction_Pathways_all.csv,Appendix,"base_diet, goal_diet, pct_reduction_needed",Reduction pathway matrix (all)
+5,5_Transitions_Scope3_by_Category.csv,Both,"Baseline, Goal, Category, Baseline_scope3_tonnes_per_year, Goal_scope3_tonnes_per_year, Delta_tonnes_per_year, Delta_pct",Transition Scope 3 data for all baseline→goal pairs
+6,6_Scope12_vs_Scope3_Total_core.csv,Core,"Diet, Scope 1+2, Scope 3, Total",Scope totals in tonnes CO2e (focus diets)
+6,6_Scope12_vs_Scope3_Total_all.csv,Appendix,"Diet, Scope 1+2, Scope 3, Total",Scope totals in tonnes CO2e (all 9 diets)
+6,6_Table_Tonnage.csv,Both,"Category, 1.Monitor, 2.Theory, ..., 9.Med",Wide format scope 3 tonnage table
+6,6_Table_Tonnage_long.csv,Both,"Diet, Category, Scope3_tonnes_per_year",Long format scope 3 tonnage table
+7,7_Scope_Shares_core.csv,Core,"Diet, Scope1+2_share_pct, Scope3_share_pct",Scope share percentages (focus diets)
+7,7_Scope_Shares_all.csv,Appendix,"Diet, Scope1+2_share_pct, Scope3_share_pct",Scope share percentages (all 9 diets)
+8,8_Total_Emissions_by_Category_all.csv,Appendix,"Diet, Category, Total_emissions_tonnes_per_year",Total emissions (S1+2+3) by category per diet
+9,9_Scope_Breakdown_by_Category.csv,Both,"Diet, Category, Scope1+2_tonnes_per_year, Scope3_tonnes_per_year, Total_tonnes_per_year, Scope1+2_pct, Scope3_pct",Scope breakdown by category (all 9 diets)
+9,9_CO2_vs_Mass_Share.csv,Both,"Diet, Category, CO2_share_pct, Mass_share_pct",CO2 vs Mass share comparison (all 9 diets)
+10,10_Multi_Resource_Impact.csv,Both,"Diet, Food_Type, CO2_pct, Land_pct, Water_pct",Multi-resource impact by food type (9 diets)
+10,10_Impact_by_Food_Type.csv,Both,"Diet, Food_Type, CO2_pct",CO2 impact by food type (4 comparison diets)
+11,11_Emissions_vs_Protein.csv,Both,"Diet, Category, Emissions_share_pct, Protein_share_pct",Emissions vs protein share (all 9 diets)
+11,11_Mass_vs_Protein.csv,Both,"Diet, Category, Mass_share_pct, Protein_share_pct",Mass vs protein share (all 9 diets)
+12,12_Diets_vs_Goals_MultiResource.csv,Both,"Diet, Goal_Reference, Resource, Pct_vs_goal",Multi-resource gap analysis (4 diets × 4 goals × 3 resources)
+12b,12b_Emissions_vs_Reference_MultiGoal.csv,Both,"Diet, Goal_Reference, Total_emissions_pct_of_goal, Goal_total_tonnes_per_year, Diet_total_tonnes_per_year",Total emissions vs goal references (4 diets × 4 goals)
+12,12_Dietary_Intake_Comparison.csv,Both,"Diet, Category, Pct_of_reference, Diet_mass_grams, Reference_mass_grams",Dietary intake vs Schijf van 5 reference (5 diets)
+13,13_Infographic_Summary.csv,Both,"Total_Scope12_tonnes, Total_Scope3_tonnes, Total_Emissions_tonnes, ..., Total_Water_L",Key infographic totals (Monitor 2024 baseline)
+13,13_Infographic_Top6_Categories.csv,Both,"Category, Scope1+2_kton, Scope3_kton, Total_kton, Mass_share_pct, Scope3_share_pct",Top 6 categories by emissions for infographic
+14a,14a_Delta_Analysis_Total_Emissions.csv,Both,"Baseline_Diet, Goal_Diet, Baseline_total_tonnes, Goal_total_tonnes, Reduction_pct",Total emissions change (3 focus diets × 4 goals)
+14b,14b_Delta_Analysis_By_Category.csv,Both,"Goal_Diet, Category, Baseline_tonnes, Goal_tonnes, Delta_kton, Delta_pct",Category-level deltas from Monitor to each goal
+14c,14c_Mass_vs_Emissions_Share.csv,Both,"Diet, Category, Mass_share_pct, Emissions_share_pct, Gap_pct",Mass vs emissions share gap (3 focus diets)
+14d,14d_Scope_Breakdown_Baseline_vs_Goals.csv,Both,"Focus_Diet, Scenario, Scope1+2_kton, Scope3_kton, Total_kton",Scope breakdown baseline vs goals (3 focus × 5 scenarios)
+15,15_APA_emissions_summary.csv,Both,"Diet, Scope 1+2 (kton), Scope 3 (kton), Total (kton), S1+2 %, S3 %",APA-formatted emissions summary table (4 diets)
+Core,emissions_scope12_by_category.csv,Calculation,"diet, category, scope12_tonnes_per_year",Scope 1+2 emissions by category (all diets)
+Core,emissions_scope3_by_category.csv,Calculation,"diet, category, scope3_tonnes_per_year",Scope 3 emissions by category (all diets)
+Core,impacts_land_use_by_category.csv,Calculation,"diet, category, land_use_m2_per_year",Land use by category (all diets)
+Core,impacts_water_use_by_category.csv,Calculation,"diet, category, water_use_L_per_year",Water use by category (all diets)
+Core,emissions_totals_by_diet.csv,Calculation,"diet, total_scope12_tonnes, total_scope3_tonnes, grand_total_tonnes",Emission totals (all diets)
+Core,diet_composition_by_category_grams.csv,Calculation,"diet, category, grams_per_day",Diet composition in grams per day (all diets)
+16a,16a_Sensitivity_Tornado_Diagram.csv,Sensitivity,"parameter, baseline_value, low_value, high_value, low_impact, high_impact",Tornado diagram sensitivity data
+16b,16b_Sensitivity_Analysis_Table.csv,Sensitivity,"parameter, baseline, low, high, impact_range",Sensitivity analysis table data
+16c,16c_Sensitivity_Grouped_Comparison.csv,Sensitivity,"group, parameter, impact_range",Grouped sensitivity comparison
+16d,16d_Sensitivity_Radar_Chart.csv,Sensitivity,"parameter, normalized_impact",Radar chart sensitivity data
+16e,16e_Sensitivity_Waterfall_Chart.csv,Sensitivity,"parameter, impact",Waterfall chart sensitivity data
+16f,16f_Scenario_Stacking.csv,Sensitivity,"scenario, total_impact",Scenario stacking data
+16g,16g_Feasibility_Quadrant.csv,Sensitivity,"parameter, impact, feasibility",Feasibility quadrant data
+16h,16h_Sensitivity_Heatmap.csv,Sensitivity,"parameter1, parameter2, combined_impact",Sensitivity heatmap data
+16i,16i_Policy_Levers_Dashboard.csv,Sensitivity,"policy_lever, current, target, gap, priority",Policy levers dashboard data
+Params,sensitivity_analysis_parameters.csv,Sensitivity,"parameter, baseline, low, high, impact_low, impact_high",Sensitivity analysis parameters
