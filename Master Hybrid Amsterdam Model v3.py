@@ -4281,6 +4281,19 @@ def run_full_analysis():
     except:
         pass
     safe_savefig(os.path.join(core_dir, '17_Emissions_by_Category_vs_Reference.png'), dpi=300)
+    # CSV export for Chart 17 core
+    chart17_core_rows = []
+    for goal_ref in goal_refs:
+        for baseline in baseline_diets_names:
+            for cat in CAT_ORDER:
+                val = results_scope12[baseline].get(cat, 0) + results_co2[baseline].get(cat, 0)
+                chart17_core_rows.append({
+                    'Baseline_Diet': clean_diet_label(baseline),
+                    'Goal_Reference': clean_diet_label(goal_ref),
+                    'Category': cat,
+                    'Total_emissions_tonnes_per_year': val
+                })
+    pd.DataFrame(chart17_core_rows).to_csv(os.path.join(data_dir, '17_Emissions_by_Category_vs_Reference_core.csv'), index=False)
     plt.close()
     
     # APPENDIX: 9 Diets vs 9 Goals (excluding self-comparison, like dietary intake chart)
@@ -4325,6 +4338,20 @@ def run_full_analysis():
     except:
         pass
     safe_savefig(os.path.join(appendix_dir, '17_Emissions_by_Category_vs_Reference.png'), dpi=300)
+    # CSV export for Chart 17 appendix (all 9 diets)
+    chart17_all_rows = []
+    for goal_ref in all_diets_list:
+        baseline_list = [d for d in all_diets_list if d != goal_ref]
+        for baseline in baseline_list:
+            for cat in CAT_ORDER:
+                val = results_scope12[baseline].get(cat, 0) + results_co2[baseline].get(cat, 0)
+                chart17_all_rows.append({
+                    'Baseline_Diet': clean_diet_label(baseline),
+                    'Goal_Reference': clean_diet_label(goal_ref),
+                    'Category': cat,
+                    'Total_emissions_tonnes_per_year': val
+                })
+    pd.DataFrame(chart17_all_rows).to_csv(os.path.join(data_dir, '17_Emissions_by_Category_vs_Reference_all.csv'), index=False)
     plt.close()
     print("✓ Saved: 17_Emissions_by_Category_vs_Reference (core + appendix)")
 
@@ -4382,6 +4409,25 @@ def run_full_analysis():
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '18_Dietary_Intake_vs_Reference.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '18_Dietary_Intake_vs_Reference.png'), dpi=300, bbox_inches='tight')
+    # CSV export for Chart 18 (dietary intake vs reference)
+    chart18_rows = []
+    for diet_key in comparison_all_diets:
+        diet_intake = diets[diet_key]
+        for item in ref_diet_intake.keys():
+            ref_amt = ref_diet_intake.get(item, 0)
+            diet_amt = diet_intake.get(item, 0)
+            if ref_amt > 0:
+                pct = (diet_amt / ref_amt) * 100
+            else:
+                pct = 0 if diet_amt == 0 else 100
+            chart18_rows.append({
+                'Diet': clean_diet_label(diet_key),
+                'Food_Item': item,
+                'Reference_grams_per_day': ref_amt,
+                'Diet_grams_per_day': diet_amt,
+                'Pct_of_reference': pct
+            })
+    pd.DataFrame(chart18_rows).to_csv(os.path.join(data_dir, '18_Dietary_Intake_vs_Reference.csv'), index=False)
     plt.close()
     print("✓ Saved: 18_Dietary_Intake_vs_Reference.png")
 
@@ -4640,9 +4686,19 @@ def run_full_analysis():
     ax16d.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1), fontsize=11, frameon=True)
     
     fig16d.tight_layout()
-    fig16d.savefig(os.path.join(core_dir, '16d_Sensitivity_Radar_Chart.png'), dpi=300, bbox_inches='tight')
-    fig16d.savefig(os.path.join(appendix_dir, '16d_Sensitivity_Radar_Chart.png'), dpi=300, bbox_inches='tight')
-    plt.close()
+    # Use try-except for radar chart save to handle PIL issues
+    try:
+        fig16d.savefig(os.path.join(core_dir, '16d_Sensitivity_Radar_Chart.png'), dpi=300, bbox_inches='tight')
+        fig16d.savefig(os.path.join(appendix_dir, '16d_Sensitivity_Radar_Chart.png'), dpi=300, bbox_inches='tight')
+    except Exception as e:
+        print(f"Warning: Could not save radar chart PNG (PIL issue): {e}")
+        # Try alternative save without bbox_inches
+        try:
+            fig16d.savefig(os.path.join(core_dir, '16d_Sensitivity_Radar_Chart.png'), dpi=300)
+            fig16d.savefig(os.path.join(appendix_dir, '16d_Sensitivity_Radar_Chart.png'), dpi=300)
+        except:
+            print("Skipping 16d PNG save - continuing with CSV export")
+    plt.close(fig16d)
     print("✓ Saved: 16d_Sensitivity_Radar_Chart.png")
     # Export 16d radar chart data to CSV (magnitude % per parameter)
     df16d = pd.DataFrame({

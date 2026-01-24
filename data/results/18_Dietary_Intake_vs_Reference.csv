@@ -1,0 +1,273 @@
+Diet,Food_Item,Reference_grams_per_day,Diet_grams_per_day,Pct_of_reference
+Monitor 2024,Beef,10,10,100.0
+Monitor 2024,Pork,10,15,150.0
+Monitor 2024,Chicken,25,25,100.0
+Monitor 2024,Cheese,30,35,116.66666666666667
+Monitor 2024,Milk,250,220,88.0
+Monitor 2024,Fish,25,22,88.0
+Monitor 2024,Eggs,20,28,140.0
+Monitor 2024,Pulses,30,15,50.0
+Monitor 2024,Nuts,25,15,60.0
+Monitor 2024,Meat_Subs,20,20,100.0
+Monitor 2024,Grains,240,230,95.83333333333334
+Monitor 2024,Vegetables,250,160,64.0
+Monitor 2024,Fruits,200,145,72.5
+Monitor 2024,Potatoes,70,45,64.28571428571429
+Monitor 2024,Sugar,25,35,140.0
+Monitor 2024,Processed,60,140,233.33333333333334
+Monitor 2024,Coffee,12,12,100.0
+Monitor 2024,Tea,3,3,100.0
+Monitor 2024,Alcohol,20,25,125.0
+Monitor 2024,Oils,25,25,100.0
+Monitor 2024,Snacks,35,45,128.57142857142858
+Monitor 2024,Condiments,18,20,111.11111111111111
+Monitor 2024,Rice,40,30,75.0
+Monitor 2024,Bread,170,150,88.23529411764706
+Monitor 2024,Pasta,30,30,100.0
+Monitor 2024,Dairy,0,0,0.0
+Monitor 2024,Butter,8,12,150.0
+Monitor 2024,Animal_Fats,2,3,150.0
+Monitor 2024,Frying_Oil_Animal,3,5,166.66666666666669
+Monitor 2024,Ready_Meals,12,20,166.66666666666669
+Monitor 2024,Instant_Noodles,4,8,200.0
+Monitor 2024,Instant_Pasta,2,5,250.0
+Monitor 2024,Condiment_Sauces,12,15,125.0
+Monitor 2024,Spice_Mixes,4,3,75.0
+Amsterdam Theoretical,Beef,10,12,120.0
+Amsterdam Theoretical,Pork,10,20,200.0
+Amsterdam Theoretical,Chicken,25,28,112.00000000000001
+Amsterdam Theoretical,Cheese,30,40,133.33333333333331
+Amsterdam Theoretical,Milk,250,260,104.0
+Amsterdam Theoretical,Fish,25,10,40.0
+Amsterdam Theoretical,Eggs,20,25,125.0
+Amsterdam Theoretical,Pulses,30,8,26.666666666666668
+Amsterdam Theoretical,Nuts,25,10,40.0
+Amsterdam Theoretical,Meat_Subs,20,15,75.0
+Amsterdam Theoretical,Grains,240,220,91.66666666666666
+Amsterdam Theoretical,Vegetables,250,150,60.0
+Amsterdam Theoretical,Fruits,200,130,65.0
+Amsterdam Theoretical,Potatoes,70,50,71.42857142857143
+Amsterdam Theoretical,Sugar,25,40,160.0
+Amsterdam Theoretical,Processed,60,150,250.0
+Amsterdam Theoretical,Coffee,12,12,100.0
+Amsterdam Theoretical,Tea,3,4,133.33333333333331
+Amsterdam Theoretical,Alcohol,20,30,150.0
+Amsterdam Theoretical,Oils,25,30,120.0
+Amsterdam Theoretical,Snacks,35,50,142.85714285714286
+Amsterdam Theoretical,Condiments,18,25,138.88888888888889
+Amsterdam Theoretical,Rice,40,25,62.5
+Amsterdam Theoretical,Bread,170,140,82.35294117647058
+Amsterdam Theoretical,Pasta,30,35,116.66666666666667
+Amsterdam Theoretical,Dairy,0,0,0.0
+Amsterdam Theoretical,Butter,8,15,187.5
+Amsterdam Theoretical,Animal_Fats,2,4,200.0
+Amsterdam Theoretical,Frying_Oil_Animal,3,6,200.0
+Amsterdam Theoretical,Ready_Meals,12,25,208.33333333333334
+Amsterdam Theoretical,Instant_Noodles,4,10,250.0
+Amsterdam Theoretical,Instant_Pasta,2,6,300.0
+Amsterdam Theoretical,Condiment_Sauces,12,18,150.0
+Amsterdam Theoretical,Spice_Mixes,4,4,100.0
+Metropolitan,Beef,10,45,450.0
+Metropolitan,Pork,10,25,250.0
+Metropolitan,Chicken,25,60,240.0
+Metropolitan,Cheese,30,50,166.66666666666669
+Metropolitan,Milk,250,200,80.0
+Metropolitan,Fish,25,15,60.0
+Metropolitan,Eggs,20,30,150.0
+Metropolitan,Pulses,30,5,16.666666666666664
+Metropolitan,Nuts,25,5,20.0
+Metropolitan,Meat_Subs,20,5,25.0
+Metropolitan,Grains,240,180,75.0
+Metropolitan,Vegetables,250,110,44.0
+Metropolitan,Fruits,200,100,50.0
+Metropolitan,Potatoes,70,80,114.28571428571428
+Metropolitan,Sugar,25,80,320.0
+Metropolitan,Processed,60,200,333.33333333333337
+Metropolitan,Coffee,12,18,150.0
+Metropolitan,Tea,3,2,66.66666666666666
+Metropolitan,Alcohol,20,40,200.0
+Metropolitan,Oils,25,40,160.0
+Metropolitan,Snacks,35,80,228.57142857142856
+Metropolitan,Condiments,18,30,166.66666666666669
+Metropolitan,Rice,40,20,50.0
+Metropolitan,Bread,170,120,70.58823529411765
+Metropolitan,Pasta,30,40,133.33333333333331
+Metropolitan,Dairy,0,0,0.0
+Metropolitan,Butter,8,20,250.0
+Metropolitan,Animal_Fats,2,8,400.0
+Metropolitan,Frying_Oil_Animal,3,12,400.0
+Metropolitan,Ready_Meals,12,60,500.0
+Metropolitan,Instant_Noodles,4,25,625.0
+Metropolitan,Instant_Pasta,2,15,750.0
+Metropolitan,Condiment_Sauces,12,25,208.33333333333334
+Metropolitan,Spice_Mixes,4,2,50.0
+Metabolic Balance,Beef,10,60,600.0
+Metabolic Balance,Pork,10,40,400.0
+Metabolic Balance,Chicken,25,80,320.0
+Metabolic Balance,Cheese,30,50,166.66666666666669
+Metabolic Balance,Milk,250,50,20.0
+Metabolic Balance,Fish,25,40,160.0
+Metabolic Balance,Eggs,20,50,250.0
+Metabolic Balance,Pulses,30,10,33.33333333333333
+Metabolic Balance,Nuts,25,20,80.0
+Metabolic Balance,Meat_Subs,20,0,0.0
+Metabolic Balance,Grains,240,50,20.833333333333336
+Metabolic Balance,Vegetables,250,200,80.0
+Metabolic Balance,Fruits,200,100,50.0
+Metabolic Balance,Potatoes,70,0,0.0
+Metabolic Balance,Sugar,25,5,20.0
+Metabolic Balance,Processed,60,10,16.666666666666664
+Metabolic Balance,Coffee,12,15,125.0
+Metabolic Balance,Tea,3,5,166.66666666666669
+Metabolic Balance,Alcohol,20,20,100.0
+Metabolic Balance,Oils,25,35,140.0
+Metabolic Balance,Snacks,35,20,57.14285714285714
+Metabolic Balance,Condiments,18,15,83.33333333333334
+Metabolic Balance,Rice,40,10,25.0
+Metabolic Balance,Bread,170,50,29.411764705882355
+Metabolic Balance,Pasta,30,10,33.33333333333333
+Metabolic Balance,Dairy,0,0,0.0
+Metabolic Balance,Butter,8,25,312.5
+Metabolic Balance,Animal_Fats,2,12,600.0
+Metabolic Balance,Frying_Oil_Animal,3,15,500.0
+Metabolic Balance,Ready_Meals,12,5,41.66666666666667
+Metabolic Balance,Instant_Noodles,4,0,0.0
+Metabolic Balance,Instant_Pasta,2,0,0.0
+Metabolic Balance,Condiment_Sauces,12,10,83.33333333333334
+Metabolic Balance,Spice_Mixes,4,5,125.0
+Dutch Goal,Beef,10,10,100.0
+Dutch Goal,Pork,10,10,100.0
+Dutch Goal,Chicken,25,18,72.0
+Dutch Goal,Cheese,30,25,83.33333333333334
+Dutch Goal,Milk,250,180,72.0
+Dutch Goal,Fish,25,12,48.0
+Dutch Goal,Eggs,20,15,75.0
+Dutch Goal,Pulses,30,60,200.0
+Dutch Goal,Nuts,25,35,140.0
+Dutch Goal,Meat_Subs,20,40,200.0
+Dutch Goal,Grains,240,240,100.0
+Dutch Goal,Vegetables,250,230,92.0
+Dutch Goal,Fruits,200,200,100.0
+Dutch Goal,Potatoes,70,90,128.57142857142858
+Dutch Goal,Sugar,25,25,100.0
+Dutch Goal,Processed,60,70,116.66666666666667
+Dutch Goal,Coffee,12,12,100.0
+Dutch Goal,Tea,3,3,100.0
+Dutch Goal,Alcohol,20,20,100.0
+Dutch Goal,Oils,25,22,88.0
+Dutch Goal,Snacks,35,30,85.71428571428571
+Dutch Goal,Condiments,18,20,111.11111111111111
+Dutch Goal,Rice,40,40,100.0
+Dutch Goal,Bread,170,170,100.0
+Dutch Goal,Pasta,30,35,116.66666666666667
+Dutch Goal,Dairy,0,0,0.0
+Dutch Goal,Butter,8,6,75.0
+Dutch Goal,Animal_Fats,2,2,100.0
+Dutch Goal,Frying_Oil_Animal,3,3,100.0
+Dutch Goal,Ready_Meals,12,10,83.33333333333334
+Dutch Goal,Instant_Noodles,4,3,75.0
+Dutch Goal,Instant_Pasta,2,2,100.0
+Dutch Goal,Condiment_Sauces,12,12,100.0
+Dutch Goal,Spice_Mixes,4,3,75.0
+Amsterdam Goal,Beef,10,5,50.0
+Amsterdam Goal,Pork,10,5,50.0
+Amsterdam Goal,Chicken,25,10,40.0
+Amsterdam Goal,Cheese,30,20,66.66666666666666
+Amsterdam Goal,Milk,250,100,40.0
+Amsterdam Goal,Fish,25,15,60.0
+Amsterdam Goal,Eggs,20,15,75.0
+Amsterdam Goal,Pulses,30,80,266.66666666666663
+Amsterdam Goal,Nuts,25,40,160.0
+Amsterdam Goal,Meat_Subs,20,40,200.0
+Amsterdam Goal,Grains,240,250,104.16666666666667
+Amsterdam Goal,Vegetables,250,250,100.0
+Amsterdam Goal,Fruits,200,200,100.0
+Amsterdam Goal,Potatoes,70,80,114.28571428571428
+Amsterdam Goal,Sugar,25,20,80.0
+Amsterdam Goal,Processed,60,50,83.33333333333334
+Amsterdam Goal,Coffee,12,10,83.33333333333334
+Amsterdam Goal,Tea,3,3,100.0
+Amsterdam Goal,Alcohol,20,15,75.0
+Amsterdam Goal,Oils,25,20,80.0
+Amsterdam Goal,Snacks,35,30,85.71428571428571
+Amsterdam Goal,Condiments,18,15,83.33333333333334
+Amsterdam Goal,Rice,40,50,125.0
+Amsterdam Goal,Bread,170,180,105.88235294117648
+Amsterdam Goal,Pasta,30,25,83.33333333333334
+Amsterdam Goal,Dairy,0,0,0.0
+Amsterdam Goal,Butter,8,5,62.5
+Amsterdam Goal,Animal_Fats,2,1,50.0
+Amsterdam Goal,Frying_Oil_Animal,3,2,66.66666666666666
+Amsterdam Goal,Ready_Meals,12,8,66.66666666666666
+Amsterdam Goal,Instant_Noodles,4,2,50.0
+Amsterdam Goal,Instant_Pasta,2,1,50.0
+Amsterdam Goal,Condiment_Sauces,12,10,83.33333333333334
+Amsterdam Goal,Spice_Mixes,4,4,100.0
+EAT-Lancet,Beef,10,7,70.0
+EAT-Lancet,Pork,10,7,70.0
+EAT-Lancet,Chicken,25,29,115.99999999999999
+EAT-Lancet,Cheese,30,0,0.0
+EAT-Lancet,Milk,250,250,100.0
+EAT-Lancet,Fish,25,28,112.00000000000001
+EAT-Lancet,Eggs,20,13,65.0
+EAT-Lancet,Pulses,30,75,250.0
+EAT-Lancet,Nuts,25,50,200.0
+EAT-Lancet,Meat_Subs,20,0,0.0
+EAT-Lancet,Grains,240,232,96.66666666666667
+EAT-Lancet,Vegetables,250,300,120.0
+EAT-Lancet,Fruits,200,200,100.0
+EAT-Lancet,Potatoes,70,50,71.42857142857143
+EAT-Lancet,Sugar,25,30,120.0
+EAT-Lancet,Processed,60,0,0.0
+EAT-Lancet,Coffee,12,8,66.66666666666666
+EAT-Lancet,Tea,3,4,133.33333333333331
+EAT-Lancet,Alcohol,20,10,50.0
+EAT-Lancet,Oils,25,18,72.0
+EAT-Lancet,Snacks,35,25,71.42857142857143
+EAT-Lancet,Condiments,18,12,66.66666666666666
+EAT-Lancet,Rice,40,60,150.0
+EAT-Lancet,Bread,170,170,100.0
+EAT-Lancet,Pasta,30,20,66.66666666666666
+EAT-Lancet,Dairy,0,0,0.0
+EAT-Lancet,Butter,8,3,37.5
+EAT-Lancet,Animal_Fats,2,0,0.0
+EAT-Lancet,Frying_Oil_Animal,3,1,33.33333333333333
+EAT-Lancet,Ready_Meals,12,0,0.0
+EAT-Lancet,Instant_Noodles,4,0,0.0
+EAT-Lancet,Instant_Pasta,2,0,0.0
+EAT-Lancet,Condiment_Sauces,12,8,66.66666666666666
+EAT-Lancet,Spice_Mixes,4,5,125.0
+Mediterranean Diet,Beef,10,8,80.0
+Mediterranean Diet,Pork,10,8,80.0
+Mediterranean Diet,Chicken,25,20,80.0
+Mediterranean Diet,Cheese,30,30,100.0
+Mediterranean Diet,Milk,250,200,80.0
+Mediterranean Diet,Fish,25,35,140.0
+Mediterranean Diet,Eggs,20,18,90.0
+Mediterranean Diet,Pulses,30,60,200.0
+Mediterranean Diet,Nuts,25,30,120.0
+Mediterranean Diet,Meat_Subs,20,10,50.0
+Mediterranean Diet,Grains,240,240,100.0
+Mediterranean Diet,Vegetables,250,300,120.0
+Mediterranean Diet,Fruits,200,220,110.00000000000001
+Mediterranean Diet,Potatoes,70,60,85.71428571428571
+Mediterranean Diet,Sugar,25,20,80.0
+Mediterranean Diet,Processed,60,50,83.33333333333334
+Mediterranean Diet,Coffee,12,8,66.66666666666666
+Mediterranean Diet,Tea,3,5,166.66666666666669
+Mediterranean Diet,Alcohol,20,30,150.0
+Mediterranean Diet,Oils,25,30,120.0
+Mediterranean Diet,Snacks,35,25,71.42857142857143
+Mediterranean Diet,Condiments,18,15,83.33333333333334
+Mediterranean Diet,Rice,40,45,112.5
+Mediterranean Diet,Bread,170,180,105.88235294117648
+Mediterranean Diet,Pasta,30,35,116.66666666666667
+Mediterranean Diet,Dairy,0,0,0.0
+Mediterranean Diet,Butter,8,6,75.0
+Mediterranean Diet,Animal_Fats,2,1,50.0
+Mediterranean Diet,Frying_Oil_Animal,3,2,66.66666666666666
+Mediterranean Diet,Ready_Meals,12,5,41.66666666666667
+Mediterranean Diet,Instant_Noodles,4,1,25.0
+Mediterranean Diet,Instant_Pasta,2,1,50.0
+Mediterranean Diet,Condiment_Sauces,12,10,83.33333333333334
+Mediterranean Diet,Spice_Mixes,4,4,100.0
