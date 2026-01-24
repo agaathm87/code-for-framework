@@ -1,0 +1,100 @@
+
+================================================================================
+NEVO PROTEIN CONTENT MAPPER
+Extract protein data from NEVO 2025 and map to model categories
+================================================================================
+
+================================================================================
+LOADING NEVO 2025 DATABASE
+================================================================================
+
+✓ Loaded 2328 NEVO products
+✓ Columns (first 20): ['NEVO-versie/NEVO-version', 'Voedingsmiddelgroep', 'Food group', 'NEVO-code', 'Voedingsmiddelnaam/Dutch food name', 'Engelse naam/Food name', 'Synoniem', 'Hoeveelheid/Quantity', 'Opmerking', 'Bevat sporen van/Contains traces of', 'Is verrijkt met/Is fortified with', 'ENERCJ (kJ)', 'ENERCC (kcal)', 'WATER (g)', 'PROT (g)', 'PROTPL (g)', 'PROTAN (g)', 'NT (g)', 'TRP (mg)', 'FAT (g)']
+
+✓ Using protein column: 'PROT (g)'
+✓ Using product name column: 'Engelse naam/Food name'
+
+
+================================================================================
+MAPPING NEVO PRODUCTS TO MODEL CATEGORIES
+================================================================================
+
+✅ Beef                 → Red Meat                  | 106 products | Median: 22.40g/100g (0.224)
+✅ Pork                 → Red Meat                  |  99 products | Median: 19.80g/100g (0.198)
+✅ Lamb                 → Red Meat                  |  23 products | Median: 19.30g/100g (0.193)
+✅ Chicken              → Poultry                   |  53 products | Median: 14.40g/100g (0.144)
+✅ Fish                 → Fish                      |  33 products | Median: 20.00g/100g (0.200)
+✅ Eggs                 → Dairy (Solid) & Eggs      |  73 products | Median:  7.30g/100g (0.073)
+✅ Cheese               → Dairy (Solid) & Eggs      | 106 products | Median: 17.00g/100g (0.170)
+✅ Milk                 → Dairy (Liquid)            |  81 products | Median:  4.00g/100g (0.040)
+✅ Dairy                → Dairy (Liquid)            |  67 products | Median:  3.50g/100g (0.035)
+✅ Pulses               → Plant Protein             |  41 products | Median:  7.50g/100g (0.075)
+✅ Nuts                 → Plant Protein             |  95 products | Median:  9.20g/100g (0.092)
+✅ Meat_Subs            → Plant Protein             |  32 products | Median: 14.10g/100g (0.141)
+✅ Bread                → Staples                   | 121 products | Median: 10.90g/100g (0.109)
+✅ Pasta                → Staples                   |  15 products | Median:  5.60g/100g (0.056)
+✅ Rice                 → Rice                      |  49 products | Median:  6.10g/100g (0.061)
+✅ Grains               → Staples                   |  97 products | Median: 10.20g/100g (0.102)
+✅ Potatoes             → Staples                   |  57 products | Median:  2.70g/100g (0.027)
+✅ Vegetables           → Veg & Fruit               | 103 products | Median:  1.60g/100g (0.016)
+✅ Fruits               → Veg & Fruit               | 171 products | Median:  0.80g/100g (0.008)
+✅ Sugar                → Ultra-Processed           |  79 products | Median:  0.50g/100g (0.005)
+✅ Snacks               → Ultra-Processed           |  60 products | Median:  6.15g/100g (0.062)
+✅ Coffee               → Beverages & Additions     |  19 products | Median:  2.50g/100g (0.025)
+✅ Tea                  → Beverages & Additions     |  41 products | Median: 21.10g/100g (0.211)
+✅ Alcohol              → Beverages & Additions     |  20 products | Median:  0.30g/100g (0.003)
+✅ Butter               → Fats (Solid, Animal)      |  47 products | Median:  4.00g/100g (0.040)
+✅ Oils                 → Oils (Plant-based)        | 197 products | Median:  2.00g/100g (0.020)
+✅ Condiment_Sauces     → Condiments                | 120 products | Median:  7.45g/100g (0.074)
+✅ Spice_Mixes          → Condiments                | 133 products | Median:  5.20g/100g (0.052)
+
+================================================================================
+VISUALIZATION CATEGORY PROTEIN CONTENT (Median)
+================================================================================
+
+Beverages & Additions          | 0.025 ( 2.50g per 100g)
+Condiments                     | 0.063 ( 6.33g per 100g)
+Dairy (Liquid)                 | 0.038 ( 3.75g per 100g)
+Dairy (Solid) & Eggs           | 0.121 (12.15g per 100g)
+Fats (Solid, Animal)           | 0.040 ( 4.00g per 100g)
+Fish                           | 0.200 (20.00g per 100g)
+Oils (Plant-based)             | 0.020 ( 2.00g per 100g)
+Plant Protein                  | 0.092 ( 9.20g per 100g)
+Poultry                        | 0.144 (14.40g per 100g)
+Red Meat                       | 0.198 (19.80g per 100g)
+Rice                           | 0.061 ( 6.10g per 100g)
+Staples                        | 0.079 ( 7.90g per 100g)
+Ultra-Processed                | 0.033 ( 3.33g per 100g)
+Veg & Fruit                    | 0.012 ( 1.20g per 100g)
+
+
+================================================================================
+PYTHON CODE FOR INTEGRATION
+================================================================================
+
+# Protein content from NEVO 2025 database (fraction: g protein / g food)
+# Source: NEVO 2025 v9.0 - Nederlandse Voedingsmiddelentabel
+# Mapped to 14 visualization categories using median values
+PROTEIN_CONTENT = {
+    'Beverages & Additions': 0.025,
+    'Condiments': 0.063,
+    'Dairy (Liquid)': 0.038,
+    'Dairy (Solid) & Eggs': 0.121,
+    'Fats (Solid, Animal)': 0.040,
+    'Fish': 0.200,
+    'Oils (Plant-based)': 0.020,
+    'Plant Protein': 0.092,
+    'Poultry': 0.144,
+    'Red Meat': 0.198,
+    'Rice': 0.061,
+    'Staples': 0.079,
+    'Ultra-Processed': 0.033,
+    'Veg & Fruit': 0.012,
+}
+
+✅ Exported to: nevo_protein_content_by_category.csv
+
+================================================================================
+✅ COMPLETE
+================================================================================
+

@@ -1,0 +1,16 @@
+
+================================================================================
+NEVO PROTEIN CONTENT MAPPER
+Extract protein data from NEVO 2025 and map to model categories
+================================================================================
+
+================================================================================
+LOADING NEVO 2025 DATABASE
+================================================================================
+
+✓ Loaded 2328 NEVO products
+✓ Cleaned column names
+✓ First 15 columns: ['FAUN (g)']
+
+❌ Could not find protein column. Available columns:
+['FAUN (g)']

@@ -201,11 +201,11 @@ class HybridModelConfig:
     """
     
     def __init__(self):
-        self.NATIONAL_AVG_INCOME = 32000
+        self.NATIONAL_AVG_INCOME = 38300
         self.SCALING_C1 = 0.8
         self.SCALING_C2 = 0.2
         self.WASTE_FACTOR = 1.15   # Supply chain loss
-        self.POPULATION_TOTAL = 882000
+        self.POPULATION_TOTAL = 934374  # Amsterdam metro population 2024
 
 # --- VISUALIZATION MAPPING ---
 # Maps 31 food items to 14 aggregated categories for comprehensive visualization
@@ -300,44 +300,53 @@ def load_impact_factors():
         >>> beef_co2 = factors.loc['Beef', 'co2']  # Scope 3 CO2
         >>> beef_s12 = factors.loc['Beef', 'scope12']  # Scope 1+2 CO2
     """
-    # FULL FOOD SYSTEM Scope 1+2 factors (kgCO2e/kg consumed) - CALIBRATED TO MONITOR 1750 KTON reflecting monitor 2024 diet
-    # Includes: Production + Retail + Food Service + Household (cooking/refrigeration) + Waste Management
-    # System boundary verified against Amsterdam Monitor 2024 (1750 kton total Scope 1+2)
-    # All 31 food items explicitly modeled for transparency
+    # FULL FOOD SYSTEM FACTORS - RIVM Database (Sept 23, 2024) - CALIBRATED TO 1,750 KTON
+    # 
+    # Data extraction: 31/33 categories from RIVM (411 products), 2 estimates (Oils, Instant_Pasta)
+    # Methodology: Median aggregation per category (robust to outliers)
+    # 
+    # SCOPE SPLIT APPROACH:
+    # - RIVM "kg CO2 eq" = Total lifecycle emissions (Scopes 1+2+3 combined)
+    # - Baseline with RIVM totals = 1,960 kton for Amsterdam
+    # - Calibration factor = 0.893 to match Monitor 2024's 1,750 kton Scope 1+2
+    # - scope12 = RIVM_total × 0.893 (in-bounds Amsterdam: production + local retail + waste)
+    # - co2 = RIVM_total - scope12 (out-of-bounds: supply chain transport, upstream)
+    # 
+    # VERIFICATION: Baseline Scope 1+2 = 1,750 kton ✓ (exact match to Monitor 2024)
     factors = {
-        'Beef':       {'co2': 28.0,  'land': 25.0,  'water': 15400, 'scope12': 16.67},
-        'Pork':       {'co2': 5.0,   'land': 9.0,   'water': 6000,  'scope12': 13.34},
-        'Chicken':    {'co2': 3.5,   'land': 7.0,   'water': 4300,  'scope12': 10.00},
-        'Cheese':     {'co2': 10.0,  'land': 12.0,  'water': 5000,  'scope12': 6.67},
-        'Milk':       {'co2': 1.3,   'land': 1.5,   'water': 1000,  'scope12': 3.33},
-        'Dairy':      {'co2': 1.3,   'land': 1.5,   'water': 1000,  'scope12': 3.33},
-        'Fish':       {'co2': 3.5,   'land': 0.5,   'water': 2000,  'scope12': 12.00},
-        'Eggs':       {'co2': 2.2,   'land': 2.5,   'water': 3300,  'scope12': 5.34},
-        'Pulses':     {'co2': 0.9,   'land': 3.0,   'water': 4000,  'scope12': 2.67},
-        'Nuts':       {'co2': 0.3,   'land': 2.5,   'water': 9000,  'scope12': 1.33},
-        'Meat_Subs':  {'co2': 2.5,   'land': 3.0,   'water': 200,   'scope12': 3.33},
-        'Grains':     {'co2': 1.1,   'land': 1.8,   'water': 1600,  'scope12': 1.67},
-        'Bread':      {'co2': 1.2,   'land': 1.6,   'water': 1500,  'scope12': 1.67},
-        'Pasta':      {'co2': 1.1,   'land': 1.8,   'water': 1600,  'scope12': 1.67},
-        'Rice':       {'co2': 2.5,   'land': 3.0,   'water': 2300,  'scope12': 2.50},
-        'Vegetables': {'co2': 0.6,   'land': 0.5,   'water': 320,   'scope12': 1.33},
-        'Fruits':     {'co2': 0.7,   'land': 0.6,   'water': 960,   'scope12': 1.33},
-        'Potatoes':   {'co2': 0.4,   'land': 0.3,   'water': 290,   'scope12': 1.33},
-        'Sugar':      {'co2': 2.0,   'land': 1.5,   'water': 200,   'scope12': 1.33},
-        'Processed':  {'co2': 2.5,   'land': 1.5,   'water': 300,   'scope12': 3.33},
-        'Snacks':     {'co2': 4.0,   'land': 2.0,   'water': 400,   'scope12': 5.00},
-        'Ready_Meals': {'co2': 4.5,  'land': 2.2,   'water': 450,   'scope12': 6.00},
-        'Instant_Noodles': {'co2': 3.5, 'land': 2.0, 'water': 400, 'scope12': 4.50},
-        'Instant_Pasta': {'co2': 2.5,   'land': 1.8,  'water': 350,   'scope12': 3.00},
-        'Coffee':     {'co2': 2.8,   'land': 0.8,   'water': 140,   'scope12': 23.34},
-        'Tea':        {'co2': 0.4,   'land': 0.2,   'water': 300,   'scope12': 8.00},
-        'Alcohol':    {'co2': 1.2,   'land': 0.5,   'water': 500,   'scope12': 13.34},
-        'Butter':     {'co2': 12.0,  'land': 8.0,   'water': 5000,  'scope12': 18.00},
-        'Animal_Fats': {'co2': 14.0, 'land': 9.0,   'water': 6000,  'scope12': 22.00},
-        'Frying_Oil_Animal': {'co2': 14.0, 'land': 9.0, 'water': 6000, 'scope12': 22.00},
-        'Oils':       {'co2': 1.0,   'land': 1.0,   'water': 200,   'scope12': 3.00},
-        'Condiment_Sauces': {'co2': 3.0, 'land': 1.5, 'water': 400, 'scope12': 4.50},
-        'Spice_Mixes': {'co2': 2.0,   'land': 1.0,   'water': 250,   'scope12': 3.00}
+        'Alcohol': {'co2': 0.56, 'land': 5.87, 'water': 56, 'scope12': 4.64},
+        'Animal_Fats': {'co2': 0.25, 'land': 5.54, 'water': 19, 'scope12': 2.10},
+        'Beef': {'co2': 2.61, 'land': 13.49, 'water': 149, 'scope12': 21.82},
+        'Bread': {'co2': 0.16, 'land': 1.89, 'water': 9, 'scope12': 1.33},
+        'Butter': {'co2': 0.40, 'land': 4.32, 'water': 44, 'scope12': 3.37},
+        'Cheese': {'co2': 0.82, 'land': 3.91, 'water': 72, 'scope12': 6.82},
+        'Chicken': {'co2': 0.47, 'land': 5.96, 'water': 52, 'scope12': 3.89},
+        'Coffee': {'co2': 0.16, 'land': 0.59, 'water': 13, 'scope12': 1.34},
+        'Condiment_Sauces': {'co2': 0.42, 'land': 6.29, 'water': 46, 'scope12': 3.54},
+        'Dairy': {'co2': 0.18, 'land': 0.61, 'water': 15, 'scope12': 1.49},
+        'Eggs': {'co2': 0.29, 'land': 2.89, 'water': 45, 'scope12': 2.40},
+        'Fish': {'co2': 0.55, 'land': 1.84, 'water': 38, 'scope12': 4.60},
+        'Fruits': {'co2': 0.11, 'land': 0.61, 'water': 33, 'scope12': 0.93},
+        'Frying_Oil_Animal': {'co2': 0.44, 'land': 3.90, 'water': 38, 'scope12': 3.69},
+        'Grains': {'co2': 0.12, 'land': 2.41, 'water': 8, 'scope12': 0.99},
+        'Instant_Noodles': {'co2': 0.11, 'land': 0.41, 'water': 37, 'scope12': 0.88},
+        'Instant_Pasta': {'co2': 0.20, 'land': 0.79, 'water': 25, 'scope12': 1.70},
+        'Meat_Subs': {'co2': 0.41, 'land': 4.68, 'water': 50, 'scope12': 3.45},
+        'Milk': {'co2': 0.14, 'land': 1.24, 'water': 12, 'scope12': 1.20},
+        'Nuts': {'co2': 0.33, 'land': 6.73, 'water': 896, 'scope12': 2.73},
+        'Oils': {'co2': 0.18, 'land': 2.10, 'water': 200, 'scope12': 1.60},
+        'Pasta': {'co2': 0.20, 'land': 0.79, 'water': 25, 'scope12': 1.70},
+        'Pork': {'co2': 1.26, 'land': 12.73, 'water': 67, 'scope12': 10.51},
+        'Potatoes': {'co2': 0.13, 'land': 0.73, 'water': 20, 'scope12': 1.06},
+        'Processed': {'co2': 1.38, 'land': 8.32, 'water': 77, 'scope12': 11.49},
+        'Pulses': {'co2': 0.18, 'land': 1.35, 'water': 39, 'scope12': 1.50},
+        'Ready_Meals': {'co2': 0.19, 'land': 1.27, 'water': 47, 'scope12': 1.58},
+        'Rice': {'co2': 0.23, 'land': 1.39, 'water': 213, 'scope12': 1.93},
+        'Snacks': {'co2': 0.33, 'land': 2.93, 'water': 20, 'scope12': 2.74},
+        'Spice_Mixes': {'co2': 0.28, 'land': 2.49, 'water': 20, 'scope12': 2.38},
+        'Sugar': {'co2': 0.10, 'land': 1.01, 'water': 5, 'scope12': 0.86},
+        'Tea': {'co2': 0.08, 'land': 0.44, 'water': 36, 'scope12': 0.70},
+        'Vegetables': {'co2': 0.11, 'land': 0.57, 'water': 26, 'scope12': 0.95},
     }
     return pd.DataFrame.from_dict(factors, orient='index')
 
@@ -505,10 +514,10 @@ def load_neighborhood_data():
             - High_Education_Pct: Fraction with bachelor degree or higher
     """
     return pd.DataFrame({
-        'Neighborhood': ['Centrum', 'Zuid', 'West', 'Noord', 'Zuidoost', 'Nieuw-West', 'Oost'],#todo base on kbt and include weesp(probs increase of 1,5 prct)
-        'Population': [87000, 145000, 145000, 99000, 89000, 160000, 135000],
-        'Avg_Income': [48000, 56000, 34000, 29000, 24000, 26000, 36000],
-        'High_Education_Pct': [0.65, 0.70, 0.60, 0.40, 0.30, 0.35, 0.55] 
+        'Neighborhood': ['Centrum', 'Zuid', 'West', 'Noord', 'Zuidoost', 'Nieuw-West', 'Oost','Westpoort','Weesp'],
+        'Population': [91014, 147015, 149607, 110557, 93228, 166462, 147971, 1795, 26725],
+        'Avg_Income': [64393, 69946, 51909, 48433, 41339, 47493, 56552, 20543, 62476],
+        'High_Education_Pct': [0.64, 0.61, 0.56, 0.37, 0.29, 0.34, 0.55, 0.53, 0.46],
     })
 
 # ==========================================
@@ -1388,9 +1397,9 @@ def run_full_analysis():
     
     # Create better legend with 2 rows for readability
     fig3.legend(CAT_ORDER, loc='lower center', ncol=7, frameon=True,
-            bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
+            bbox_to_anchor=(0.5, -0.08), fontsize=9, edgecolor='black')
+    fig3.subplots_adjust(bottom=0.15)
     fig3.suptitle('Scope 3 Emissions Distribution: 3 Focus Diets', fontsize=15, fontweight='bold', y=0.98)
-    plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '3_All_Emissions_Donuts.png'), dpi=300, bbox_inches='tight')
     plt.close()
     # Export per-chart data (Chart 3 - core)
@@ -1440,9 +1449,9 @@ def run_full_analysis():
     
     # Create better legend with 2 rows for readability
     fig3b.legend(CAT_ORDER, loc='lower center', ncol=7, frameon=True,
-            bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
+            bbox_to_anchor=(0.5, -0.08), fontsize=9, edgecolor='black')
+    fig3b.subplots_adjust(bottom=0.15)
     fig3b.suptitle('Scope 3 Emissions Distribution: All 9 Diets', fontsize=15, fontweight='bold', y=0.98)
-    plt.tight_layout()
     plt.savefig(os.path.join(appendix_dir, '3_All_Emissions_Donuts.png'), dpi=300, bbox_inches='tight')
     plt.close()
     # Export per-chart data (Chart 3 - appendix)
@@ -3170,12 +3179,26 @@ def run_full_analysis():
     # CHART 11: TOTAL EMISSIONS (SCOPE 1+2+3) VS PROTEIN CONTRIBUTION (All 9 Diets)
     # ---------------------------------------------------------
     print("Generating 11_Emissions_vs_Protein.png...")
+    
+    # Protein content from NEVO 2025 database (fraction: g protein / g food)
+    # Source: NEVO 2025 v9.0 - Nederlandse Voedingsmiddelentabel
+    # Mapped to 14 visualization categories using median values from 2,328 products
+    # Extraction date: January 2026
     PROTEIN_CONTENT = {
-        'Red Meat': 0.20, 'Poultry': 0.25, 'Fish': 0.20,
-        'Dairy (Liquid)': 0.03, 'Dairy (Solid) & Eggs': 0.15,
-        'Plant Protein': 0.20, 'Staples': 0.10, 'Rice': 0.08, 'Veg & Fruit': 0.02,
-        'Ultra-Processed': 0.05, 'Beverages & Additions': 0.01,
-        'Oils (Plant-based)': 0.00, 'Fats (Solid, Animal)': 0.00, 'Condiments': 0.01
+        'Red Meat': 0.198,              # Median of beef (22.4%), pork (19.8%), lamb (19.3%)
+        'Poultry': 0.144,               # Median from 53 chicken products
+        'Fish': 0.200,                  # Median from 33 fish products
+        'Dairy (Liquid)': 0.038,        # Median from 148 milk/yogurt products
+        'Dairy (Solid) & Eggs': 0.121,  # Median from 179 cheese/egg products
+        'Plant Protein': 0.092,         # Median from 168 pulses/nuts/meat substitutes
+        'Staples': 0.079,               # Median from 290 bread/pasta/grains/potatoes
+        'Rice': 0.061,                  # Median from 49 rice products
+        'Veg & Fruit': 0.012,           # Median from 274 vegetable/fruit products
+        'Ultra-Processed': 0.033,       # Median from 139 sugar/snacks products
+        'Beverages & Additions': 0.025, # Median from 80 coffee/tea/alcohol products
+        'Oils (Plant-based)': 0.020,    # Median from 197 oil products
+        'Fats (Solid, Animal)': 0.040,  # Median from 47 butter/fat products
+        'Condiments': 0.063             # Median from 253 sauce/spice products
     }
     
     fig11, axes = plt.subplots(3, 3, figsize=(22, 18))
@@ -4150,7 +4173,6 @@ def run_full_analysis():
     
     plt.subplots_adjust(top=0.92, bottom=0.10, left=0.08, right=0.95, wspace=0.3, hspace=0.3)
     plt.savefig(os.path.join(core_dir, '14d_Scope_Breakdown_Baseline_vs_Goals.png'), dpi=300, bbox_inches='tight')
-    plt.savefig(os.path.join(appendix_dir, '14d_Scope_Breakdown_Baseline_vs_Goals.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '14d_Scope_Breakdown_Baseline_vs_Goals.png'), dpi=300, bbox_inches='tight')
     # CSV export for Chart 14d (scope breakdown baseline vs goals)
     scope_breakdown_14d_rows = []

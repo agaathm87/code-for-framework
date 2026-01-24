@@ -1,0 +1,331 @@
+Model_Category,Product_Name,NEVO_Group,CO2_kg,Land_m2,Water_m3
+Alcohol,"Beer, pilsner | Ambient (long) | Glass bottle, non returnable | Chilled at consumer | consumed/NL Economic",Alcoholische dranken,0.576,0.261,0.0069
+Alcohol,"Beer, pilsner | Ambient (long) | Glass bottle, returnable | Chilled at consumer | consumed/NL Economic",Alcoholische dranken,0.374,0.246,0.0057
+Alcohol,"Beer, pilsner | Ambient (long) | Metal can (Aluminium) | Chilled at consumer | consumed/NL Economic",Alcoholische dranken,0.464,0.247,0.0094
+Alcohol,"Beer >7 vol% alcohol | Ambient (long) | Glass bottle, non returnable | Chilled at consumer | consumed/NL Economic",Alcoholische dranken,0.638,0.262,0.0073
+Alcohol,"Beer >7 vol% alcohol | Ambient (long) | Glass bottle, returnable | Chilled at consumer | consumed/NL Economic",Alcoholische dranken,0.435,0.247,0.0061
+Alcohol,Beer >7 vol% alcohol | Ambient (long) | Metal can (Aluminium) | Chilled at consumer | consumed/NL Economic,Alcoholische dranken,0.525,0.248,0.0098
+Alcohol,"Gin, young Dutch | Ambient (long) | Still wine bottle - 750 ml | No preparation | consumed/NL Economic",Alcoholische dranken,1.811,0.043,0.0095
+Alcohol,Whisky | Ambient (long) | Still wine bottle - 750 ml | No preparation | consumed/NL Economic,Alcoholische dranken,2.745,3.685,0.034
+Alcohol,Red wine | Ambient (long) | Still wine bottle - 750 ml | No preparation | consumed/NL Economic,Alcoholische dranken,1.088,1.349,0.0551
+Alcohol,Rose wine | Ambient (long) | Still wine bottle - 750 ml | Chilled at consumer | consumed/NL Economic,Alcoholische dranken,1.156,1.295,0.0573
+Alcohol,"White wine, dry | Ambient (long) | Still wine bottle - 750 ml | Chilled at consumer | consumed/NL Economic",Alcoholische dranken,1.176,1.241,0.0591
+Alcohol,Insects | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Diversen,4.346,6.266,0.0722
+Alcohol,Trout | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vis,12.193,4.833,0.0938
+Alcohol,"Shrimps, Dutch peeled | Cooled | Meat packaging (PP) - 1 kg | Boiling | consumed/NL Economic",Vis,18.959,13.762,0.3779
+Alcohol,"Herring, salted | Cooled | Meat packaging (PP) - 1 kg | No preparation | consumed/NL Economic",Vis,0.768,0.021,0.0238
+Alcohol,Cod | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vis,5.204,0.15,0.0332
+Alcohol,"Pollack, fillet | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic",Vis,1.507,0.092,0.0371
+Alcohol,"Mackerel fillet, smoked | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic",Vis,0.944,0.021,0.0044
+Alcohol,Mussels boiled | Cooled | Meat packaging (PP) - 1 kg | Boiling | consumed/NL Economic,Vis,4.786,0.111,0.0309
+Alcohol,Pangasius | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vis,11.204,13.677,0.1816
+Alcohol,"Plaice, fillet | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic",Vis,5.65,0.157,0.0329
+Alcohol,Tilapia  | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vis,21.854,11.968,0.202
+Alcohol,Lemon sole | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vis,5.65,0.157,0.0329
+Alcohol,"Cod, in batter (kibbeling) | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic",Vis,3.796,1.387,0.0361
+Alcohol,Veal <5% fat | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,26.589,16.144,0.2543
+Alcohol,Mincemeat vegetarian unprepared | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vleesvervangers en zuivelvervangers,3.999,5.867,0.06
+Alcohol,Quorn minced | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vleesvervangers en zuivelvervangers,3.675,3.66,0.0196
+Alcohol,Vegetarian schnitzel Valles | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vleesvervangers en zuivelvervangers,4.027,3.849,0.0443
+Alcohol,Filet americain  | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic,Vleeswaren,14.792,10.085,0.1083
+Alcohol,Minced meat loaf (sandwich meat) | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic,Vleeswaren,7.621,7.546,0.0443
+Animal_Fats,Gravy 25% fat clear prep w gravypowder | Ambient (long) | Plastic cup - 250 gram | No preparation | consumed/NL Economic,Hartige sauzen,1.225,2.735,0.0197
+Beef,Minced beef/pork  | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,17.868,12.732,0.107
+Beef,Minced beef  | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,25.545,14.327,0.1562
+Beef,Minced beef shallow fried | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,25.545,14.327,0.1562
+Beef,Beef frying steak | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,26.662,14.507,0.1627
+Beef,Beef rump steak | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,26.662,14.507,0.1627
+Beef,Sausage beef Braadworst | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,26.299,14.252,0.161
+Beef,Beef roast | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,32.579,18.112,0.1993
+Beef,"Sausage, smoke-cooked beef | Cooled | Meat packaging (PP) - 1 kg | Boiling | consumed/NL Economic",Vlees en gevogelte,18.812,9.999,0.1181
+Beef,"Sausage, smoke-cooked beef | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic",Vlees en gevogelte,18.198,9.993,0.1125
+Beef,"Beef, smoked-dried | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic",Vleeswaren,23.317,12.722,0.1425
+Beef,"Sausage, cooked beef | Cooled | Meat packaging (PP) - 1 kg | Boiling | consumed/NL Economic",Vleeswaren,14.094,9.559,0.0855
+Beef,"Sausage, raw beef (ox) | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic",Vleeswaren,20.567,11.152,0.1255
+Bread,Crispbakes Dutch wholemeal | Ambient (average) | Cardboard box | No preparation | consumed/NL Economic,Brood,1.927,3.532,0.0189
+Bread,"Bun, currant/raisin | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Brood,1.708,2.663,0.024
+Bread,Bread rye dark | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Brood,1.485,1.887,0.0069
+Bread,"Bread, rye | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Brood,1.485,1.887,0.0069
+Bread,"Baguette, white | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Brood,1.084,1.358,0.007
+Bread,Bread brown wheat | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Brood,1.156,1.525,0.0079
+Bread,"Bread, wholemeal  | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Brood,0.964,1.135,0.0078
+Bread,"Bread, white water based | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Brood,1.118,1.374,0.0095
+Bread,Roll brown hard | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Brood,1.156,1.525,0.0079
+Bread,"Roll, white hard | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Brood,1.118,1.374,0.0095
+Bread,"Roll, white soft | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Brood,1.118,1.374,0.0095
+Bread,Croissant marg | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Brood,1.964,3.942,0.0236
+Bread,Crispbakes Dutch | Ambient (average) | Cardboard box | No preparation | consumed/NL Economic,Brood,1.927,3.532,0.0189
+Bread,Crispbread | Ambient (average) | Paper foil - 250 gram | No preparation | consumed/NL Economic,Brood,1.895,3.53,0.0185
+Bread,Apple pie Dutch w shortbread w marg | Ambient (short) | Cardboard box | Chilled at consumer | consumed/NL Economic,Gebak en koek,2.154,2.229,0.0288
+Bread,Snack roll puff pastry with Dutch sausage Frikandel | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Hartige snacks en zoutjes,2.752,3.574,0.0193
+Bread,"Sausage roll, puff pastry | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Hartige snacks en zoutjes,4.99,6.289,0.0395
+Butter,Apple turnover wo butter | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Gebak en koek,1.873,2.502,0.0096
+Butter,"Cake, w butter | Ambient (short) | Plastic foil (LDPE) - 500 gram | Chilled at consumer | consumed/NL Economic",Gebak en koek,5.602,4.317,0.053
+Butter,"Cake, w butter | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Gebak en koek,5.498,4.315,0.0522
+Butter,"Cake, wo butter | Ambient (short) | Plastic foil (LDPE) - 500 gram | Chilled at consumer | consumed/NL Economic",Gebak en koek,3.089,4.929,0.0402
+Butter,"Cake, wo butter | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Gebak en koek,2.985,4.927,0.0394
+Butter,Appel pie Dutch w shortbread w butter | Ambient (short) | Cardboard box | Chilled at consumer | consumed/NL Economic,Gebak en koek,3.369,1.965,0.0357
+Butter,Peanut butter  | Ambient (long) | Glass jar - 720 ml | No preparation | consumed/NL Economic,Hartig broodbeleg,3.778,8.279,0.0726
+Butter,"Butter, salted | Cooled | Plastic cup - 250 gram | Chilled at consumer | consumed/NL Economic",Vetten en oliÃ«n,10.406,4.624,0.0812
+Butter,"Butter, unsalted | Cooled | Plastic cup - 250 gram | Chilled at consumer | consumed/NL Economic",Vetten en oliÃ«n,10.405,4.624,0.0812
+Butter,Butter product half fat | Cooled | Plastic cup - 250 gram | Chilled at consumer | consumed/NL Economic,Vetten en oliÃ«n,5.455,2.277,0.044
+Cheese,Cheese pastry w puff pastry Kaasbroodje | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Hartige snacks en zoutjes,4.133,4.422,0.0257
+Cheese,Crisps tortilla cheese | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Hartige snacks en zoutjes,3.164,4.957,0.0825
+Cheese,Cheese filled snack Kaassouffle | Frozen | Cardboard box | Deep frying | consumed/NL Economic,Hartige snacks en zoutjes,3.246,2.687,0.0219
+Cheese,Cheese 20+ | Cooled | Plastic box - 250 gram | Chilled at consumer | consumed/NL Economic,Kaas,8.451,3.693,0.0698
+Cheese,Cheese 30+ average | Cooled | Plastic box - 250 gram | Chilled at consumer | consumed/NL Economic,Kaas,8.681,3.798,0.0717
+Cheese,Cheese Edam 40+ | Cooled | Plastic box - 250 gram | Chilled at consumer | consumed/NL Economic,Kaas,8.925,3.909,0.0737
+Cheese,Cheese goat fresh | Cooled | Plastic box - 250 gram | Chilled at consumer | consumed/NL Economic,Kaas,7.639,7.096,0.085
+Cheese,Cheese Gouda 48+ | Cooled | Plastic box - 250 gram | Chilled at consumer | consumed/NL Economic,Kaas,10.217,4.545,0.074
+Cheese,Cheese Mozzarella | Cooled | Plastic box - 250 gram | Chilled at consumer | consumed/NL Economic,Kaas,6.883,2.998,0.0571
+Cheese,Cheese old 48+ | Cooled | Plastic box - 250 gram | Chilled at consumer | consumed/NL Economic,Kaas,10.59,4.665,0.0872
+Cheese,Cheese spread 48+ | Cooled | Plastic box - 250 gram | Chilled at consumer | consumed/NL Economic,Kaas,6.854,2.951,0.0504
+Chicken,Eggs chicken | Ambient (short) | Cardboard box | Boiling | consumed/NL Economic,Eieren,3.531,4.956,0.0666
+Chicken,Chicken nuggets | Frozen | Cardboard box | Deep frying | consumed/NL Economic,Hartige snacks en zoutjes,4.15,4.611,0.0319
+Chicken,Chicken nuggets | Frozen | Cardboard box | No preparation | consumed/NL Economic,Hartige snacks en zoutjes,3.119,3.266,0.0226
+Chicken,"Chicken, w skin | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic",Vlees en gevogelte,6.549,8.79,0.0774
+Chicken,Chicken fillet prepared | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,4.435,6.024,0.0521
+Chicken,Chicken fillet  | Cooled | Meat packaging (PP) - 1 kg | No preparation | consumed/NL Economic,Vlees en gevogelte,4.352,5.958,0.0515
+Chicken,Chicken schnitzel | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,4.352,6.877,0.0594
+Chicken,"Chicken fillet, sandwich meat | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic",Vleeswaren,5.961,7.34,0.0673
+Coffee,Coffee creamer half fat | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic,Melk en melkproducten,1.498,0.586,0.013
+Coffee,Coffee creamer full fat | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic,Melk en melkproducten,1.708,0.683,0.0144
+Coffee,Coffee | Ambient (long) | Coffee packaging - 500 gram | Water cooker | consumed/NL Economic,Niet-alcoholische dranken,0.239,0.445,0.0021
+Condiment_Sauces,"Mustard seed | Ambient (average) | PET bottle, non returnable | No preparation | consumed/NL Economic",Diversen,2.056,13.315,0.0065
+Condiment_Sauces,"Ketchup curry | Ambient (long) | PET bottle, non returnable | Chilled at consumer | consumed/NL Economic",Hartige sauzen,1.476,2.377,0.0164
+Condiment_Sauces,"Mayonnaise | Ambient (long) | PET bottle, non returnable | Chilled at consumer | consumed/NL Economic",Hartige sauzen,3.47,8.336,0.0186
+Condiment_Sauces,Sate sauce | Ambient (average) | Plastic box - 250 gram | Microwave | consumed/NL Economic,Hartige sauzen,1.352,2.063,0.0316
+Dairy,"Yoghurt, half fat | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,1.691,0.59,0.014
+Dairy,"Yoghurt, low fat | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,1.535,0.518,0.0129
+Dairy,"Yoghurt, full fat | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,1.903,0.688,0.0155
+Dairy,"Yoghurt, low fat w fruit | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,1.544,0.549,0.0184
+Dairy,Yoghurt full fat with fruit | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic,Melk en melkproducten,1.846,0.688,0.0205
+Dairy,Yoghurt drink | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic,Melk en melkproducten,1.51,0.514,0.0136
+Dairy,"Yoghurt, drink w sweeteners | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,1.51,0.514,0.0136
+Eggs,"Pasta, with egg | Ambient (long) | Pasta packaging - 1 kg | Boiling | consumed/NL Economic",Graanproducten en bindmiddelen,1.847,0.819,0.0241
+Fish,Fish salad  | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic,Hartig broodbeleg,5.001,3.915,0.0375
+Fish,Herring pickled (sweet)sour | Cooled | Glass jar - 720 ml | No preparation | consumed/NL Economic,Vis,0.985,0.033,0.0266
+Fish,Herring pickled (sweet)sour | Cooled | Glass jar - 720 ml | Pan frying | consumed/NL Economic,Vis,1.199,0.103,0.0303
+Fish,"White fish fillet, in batter  | Cooled | Meat packaging (PP) - 1 kg | Deep frying | consumed/NL Economic",Vis,4.122,1.835,0.0349
+Fish,Tuna in oil | Ambient (long) | Food can | No preparation | consumed/NL Economic,Vis,15.436,0.247,0.0491
+Fish,Fish fingers | Frozen | Cardboard box | Pan frying | consumed/NL Economic,Vis,5.148,1.376,0.0328
+Fish,Salmon (aquaculture) | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vis,6.392,6.948,0.0727
+Fish,Salmon (wild caught) | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vis,3.092,0.117,0.0217
+Fish,"Salmon, smoked (aquaculture) | Cooled | Meat packaging (PP) - 1 kg | No preparation | consumed/NL Economic",Vis,6.371,7.885,0.0722
+Fish,"Salmon, smoked (wild caught) | Cooled | Meat packaging (PP) - 1 kg | No preparation | consumed/NL Economic",Vis,3.071,1.054,0.0212
+Fish,"Salmon, fillet (aquaculture) | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic",Vis,6.392,6.948,0.0727
+Fish,"Salmon, fillet (wild caught) | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic",Vis,3.092,0.117,0.0217
+Fish,Claresse (catfish) fillet | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vis,28.276,8.604,0.249
+Fruits,"Beer w fruitjuice Radler | Ambient (average) | Glass bottle, non returnable | Chilled at consumer | consumed/NL Economic",Alcoholische dranken,0.545,0.127,0.0077
+Fruits,"Beer w fruitjuice Radler | Ambient (average) | Glass bottle, returnable | Chilled at consumer | consumed/NL Economic",Alcoholische dranken,0.343,0.111,0.0065
+Fruits,Beer w fruitjuice Radler | Ambient (average) | Metal can (Aluminium) | Chilled at consumer | consumed/NL Economic,Alcoholische dranken,0.433,0.112,0.0102
+Fruits,Strawberries | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,3.837,0.336,0.038
+Fruits,"Apricot, w skin | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic",Fruit,0.643,1.152,0.3259
+Fruits,"Apricot, wo skin | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic",Fruit,0.677,1.212,0.343
+Fruits,Pineapple | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,0.68,0.275,0.0135
+Fruits,"Apple, w skin | Ambient (short) | Fruit bag (LDPE) - 1 kg | No preparation | consumed/NL Economic",Fruit,0.363,0.251,0.015
+Fruits,"Apple, wo skin | Ambient (short) | Fruit bag (LDPE) - 1 kg | No preparation | consumed/NL Economic",Fruit,0.41,0.282,0.0169
+Fruits,Apple sauce | Ambient (long) | Food can | No preparation | consumed/NL Economic,Fruit,1.42,0.326,0.0369
+Fruits,Apple sauce | Ambient (long) | Glass jar - 720 ml | No preparation | consumed/NL Economic,Fruit,1.186,0.333,0.0229
+Fruits,Avocado | Ambient (short) | Not packed | No preparation | consumed/NL Economic,Fruit,1.879,2.326,0.2765
+Fruits,Banana | Ambient (short) | Not packed | No preparation | consumed/NL Economic,Fruit,0.545,0.406,0.0206
+Fruits,Lemon | Ambient (short) | Plastic net (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,0.846,0.874,0.0793
+Fruits,"Dates, dried | Ambient (long) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic",Fruit,1.644,1.665,1.4863
+Fruits,Dates | Ambient (long) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,1.445,1.461,1.3039
+Fruits,Grapes w skin | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,0.447,0.633,0.03
+Fruits,Fruit snack Knijpfruit/Slurpfruit | Ambient (long) | Aluminium foil laminated paper - 250 gram | No preparation | consumed/NL Economic,Fruit,0.894,0.551,0.047
+Fruits,Kiwi | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,0.574,0.431,0.11
+Fruits,Manderins | Ambient (short) | Plastic net (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,0.654,0.598,0.1492
+Fruits,Mango | Ambient (short) | Not packed | No preparation | consumed/NL Economic,Fruit,1.514,1.495,0.1446
+Fruits,Melon netted | Ambient (short) | Plastic net (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,0.94,1.036,0.0305
+Fruits,Olives in brine | Ambient (long) | Food can | Chilled at consumer | consumed/NL Economic,Fruit,1.77,5.41,0.3846
+Fruits,Olives in brine | Ambient (long) | Food can | No preparation | consumed/NL Economic,Fruit,1.711,5.409,0.3842
+Fruits,Olives in brine | Ambient (long) | Glass jar - 720 ml | Chilled at consumer | consumed/NL Economic,Fruit,1.583,5.415,0.3739
+Fruits,Olives in brine | Ambient (long) | Glass jar - 720 ml | No preparation | consumed/NL Economic,Fruit,1.524,5.414,0.3735
+Fruits,Olives tinned/glass | Ambient (long) | Glass jar - 720 ml | No preparation | consumed/NL Economic,Fruit,1.524,5.414,0.3735
+Fruits,Pear with skin | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,0.301,0.259,0.0167
+Fruits,Pear without skin | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,0.359,0.307,0.0199
+Fruits,Peach w skin | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,0.481,0.553,0.1754
+Fruits,Peach wo skin | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,0.498,0.574,0.1818
+Fruits,Orange | Ambient (short) | Plastic net (LDPE) - 1 kg | No preparation | consumed/NL Economic,Fruit,0.629,0.49,0.1889
+Fruits,"Figs, dried | Ambient (long) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic",Fruit,2.362,6.025,0.7917
+Fruits,"Figs, fresh | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic",Fruit,0.807,1.56,0.2093
+Fruits,"Biscuit, fruit | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Gebak en koek,2.665,4.282,0.0378
+Fruits,Beans french frozen | Frozen | Fruit bucket (LDPE) - 1 kg | Boiling | consumed/NL Economic,Groente,1.681,1.026,0.0367
+Fruits,Beans french | Ambient (short) | Fruit bucket (LDPE) - 1 kg | Boiling | consumed/NL Economic,Groente,1.059,1.07,0.033
+Fruits,Mushrooms | Ambient (short) | Fruit bucket (LDPE) - 1 kg | Boiling | consumed/NL Economic,Groente,4.406,0.608,0.0326
+Fruits,Mushrooms | Ambient (short) | Fruit bucket (LDPE) - 1 kg | Pan frying | consumed/NL Economic,Groente,4.079,0.671,0.0285
+Fruits,Mushrooms | Ambient (short) | Fruit bucket (LDPE) - 1 kg | No preparation | consumed/NL Economic,Groente,2.401,0.362,0.0167
+Fruits,Bean sprouts | Ambient (short) | Fruit bucket (LDPE) - 1 kg | Boiling | consumed/NL Economic,Groente,1.365,1.77,0.024
+Fruits,Bean sprouts | Ambient (short) | Fruit bucket (LDPE) - 1 kg | Chilled at consumer | consumed/NL Economic,Groente,0.852,1.449,0.0163
+Fruits,"Kelp, seaweed | Cooled | Fruit bucket (LDPE) - 1 kg | Chilled at consumer | consumed/NL Economic",Groente,0.394,0.007,0.0044
+Fruits,Fromage frais half fat w fruit | Cooled | Plastic box - 250 gram | Chilled at consumer | consumed/NL Economic,Melk en melkproducten,3.104,1.193,0.0348
+Fruits,"Juice, apple | Ambient (long) | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Niet-alcoholische dranken,0.446,0.323,0.0188
+Fruits,"Juice, grape | Ambient (long) | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Niet-alcoholische dranken,0.501,1.148,0.0437
+Fruits,"Juice, orange pasteurized  | Ambient (long) | PET bottle, non returnable | Chilled at consumer | consumed/NL Economic",Niet-alcoholische dranken,0.937,0.581,0.2274
+Fruits,"Orange juice, fresh prepared | No preparation | consumed/NL Economic",Niet-alcoholische dranken,1.154,0.888,0.3428
+Fruits,"Fruit drink concentrate undiluted | Ambient (long) | PET bottle, non returnable | Chilled at consumer | consumed/NL Economic",Niet-alcoholische dranken,1.045,0.643,0.0294
+Fruits,Fruit drink concentrate Roosvicee Origin | Ambient (long) | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic,Niet-alcoholische dranken,1.061,0.784,0.0568
+Fruits,"Syrup, apple | Ambient (long) | Glass jar - 125 gram | No preparation | consumed/NL Economic","Suiker, snoep, zoet beleg en zoete sauzen",1.278,0.352,0.0496
+Fruits,"Syrup, apple | Ambient (long) | Glass jar - 720 ml | No preparation | consumed/NL Economic","Suiker, snoep, zoet beleg en zoete sauzen",0.913,0.308,0.0443
+Frying_Oil_Animal,Croquette meat ragout | Frozen | Cardboard box | Deep frying | consumed/NL Economic,Hartige snacks en zoutjes,6.698,4.683,0.0455
+Grains,"Bread, multigrain w seeds  | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Brood,1.156,1.525,0.0079
+Grains,Barley grain | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Graanproducten en bindmiddelen,0.843,1.85,0.0036
+Grains,Muesli crunchy plain/w fruit | Ambient (average) | Cardboard box | No preparation | consumed/NL Economic,Graanproducten en bindmiddelen,1.83,4.176,0.0296
+Grains,Breakfast cereal Cornflakes | Ambient (average) | Cardboard box | No preparation | consumed/NL Economic,Graanproducten en bindmiddelen,1.065,2.585,0.0058
+Grains,Oat grain | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Graanproducten en bindmiddelen,1.304,3.459,0.0084
+Grains,Sorghum grain | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Graanproducten en bindmiddelen,0.804,2.241,0.0147
+Grains,Triticale grain | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Graanproducten en bindmiddelen,0.899,2.208,0.0086
+Grains,Wheat grain | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Graanproducten en bindmiddelen,0.819,1.694,0.0042
+Milk,Potatoes mashed prep w semi-skimmed milk | Boiling | consumed/NL Economic,Aardappelen en knolgewassen,1.349,0.671,0.0197
+Milk,Baby/toddler milkpowder | Ambient (long) | Cardboard box | No preparation | consumed/NL Economic,Flesvoeding en preparaten,4.741,3.107,0.0335
+Milk,Coconut milk | Ambient (long) | Metal can (Aluminium) | Chilled at consumer | consumed/NL Economic,Fruit,1.094,8.743,0.0057
+Milk,Coconut milk | Ambient (long) | Metal can (Aluminium) | No preparation | consumed/NL Economic,Fruit,1.046,8.742,0.0053
+Milk,Coconut milk | Ambient (long) | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic,Fruit,1.009,8.802,0.0029
+Milk,Coconut milk | Ambient (long) | Multilayer carton (UHT) - 1000 ml | No preparation | consumed/NL Economic,Fruit,0.961,8.801,0.0025
+Milk,Pancake prepared w whole milk and margarine | Pan frying | consumed/NL Economic,Graanproducten en bindmiddelen,1.852,1.646,0.0174
+Milk,Ice cream dairy Cornet | Frozen | Cardboard box | Freezing at consumer | consumed/NL Economic,Melk en melkproducten,3.569,1.31,0.0255
+Milk,"Ice cream, dairy cream based | Frozen | Cardboard box | Freezing at consumer | consumed/NL Economic",Melk en melkproducten,3.569,1.31,0.0255
+Milk,"Ice cream, dairy cream based | Frozen | Plastic cup - 250 gram | Freezing at consumer | consumed/NL Economic",Melk en melkproducten,3.682,1.307,0.0281
+Milk,"Fromage frais, full fat | Cooled | Plastic box - 250 gram | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,3.758,1.448,0.0294
+Milk,"Milk chocolate-, flavoured semi-skimmed | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,1.99,1.088,0.0123
+Milk,"Milk chocolate-, flavoured full fat | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,2.321,1.241,0.0146
+Milk,"Milk, semi-skimmed | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,1.485,0.588,0.0118
+Milk,Buttermilk | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic,Melk en melkproducten,1.247,0.536,0.0101
+Milk,"Milk, skimmed | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,1.33,0.516,0.0107
+Milk,"Milk, whole | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,1.698,0.686,0.0133
+Milk,"Cream, whipped | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,5.661,2.574,0.0406
+Milk,"Custard vanilla, full fat | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,1.664,0.623,0.015
+Milk,"Custard several flavours, full fat | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Melk en melkproducten,1.664,0.623,0.015
+Milk,"Softdrink with milkserum and sweetener | Ambient (average) | PET bottle, returnable | Chilled at consumer | consumed/NL Economic",Niet-alcoholische dranken,0.445,0.025,0.0064
+Milk,Cappucino w whole milk | Water cooker | consumed/NL Economic,Niet-alcoholische dranken,1.065,0.57,0.0085
+Milk,"Chocolat, milk | Ambient (average) | Aluminium foil laminated paper - 250 gram | No preparation | consumed/NL Economic","Suiker, snoep, zoet beleg en zoete sauzen",9.001,13.656,0.0294
+Milk,"Chocolat confetti, milk | Ambient (average) | Cardboard box | No preparation | consumed/NL Economic","Suiker, snoep, zoet beleg en zoete sauzen",6.521,11.002,0.0174
+Nuts,Almond paste filled tarts  | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Gebak en koek,3.67,3.499,0.3478
+Nuts,Peanut sauce | Ambient (long) | Plastic box - 250 gram | No preparation | consumed/NL Economic,Hartige sauzen,1.477,2.3,0.035
+Nuts,Linseeds | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Noten en zaden,2.202,11.818,0.0731
+Nuts,"Almonds, salted | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Noten en zaden,3.097,5.838,2.2946
+Nuts,"Almonds, blanced unsalted | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Noten en zaden,3.126,5.902,2.3196
+Nuts,"Cashew nuts, salted | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Noten en zaden,3.0,8.595,1.0722
+Nuts,"Cashew nuts, unsalted | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Noten en zaden,3.01,8.63,1.0766
+Nuts,Nuts mixed unsalted | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Noten en zaden,3.316,8.482,1.5694
+Nuts,"Hazelnuts, salted | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Noten en zaden,4.295,15.521,0.7151
+Nuts,"Hazelnuts, unsalted | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Noten en zaden,4.323,15.633,0.7202
+Nuts,"Pistachio nuts, salted | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Noten en zaden,2.431,5.139,2.8432
+Nuts,"Pistachio nuts, unsalted | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Noten en zaden,2.447,5.191,2.8718
+Nuts,"Walnuts, unsalted | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Noten en zaden,2.807,3.763,2.1611
+Nuts,"Groundnuts, salted | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Noten en zaden,2.651,6.995,0.0649
+Nuts,"Peanuts, unsalted | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Noten en zaden,2.671,7.056,0.0654
+Nuts,Sesame seed | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Noten en zaden,2.58,25.37,0.149
+Nuts,Sunflower seed | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Noten en zaden,1.099,4.987,0.0372
+Pasta,"Pasta, white | Ambient (long) | Pasta packaging - 1 kg | Boiling | consumed/NL Economic",Graanproducten en bindmiddelen,1.969,0.759,0.0249
+Pork,Spring roll w ham/chicken | Frozen | Cardboard box | Deep frying | consumed/NL Economic,Hartige snacks en zoutjes,2.715,2.691,0.0416
+Pork,Hamburger | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,26.05,14.128,0.1607
+Pork,Bacon rasher speklap | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,13.72,15.006,0.0781
+Pork,"Sausage, pork (braadworst) | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic",Vlees en gevogelte,13.967,10.993,0.0827
+Pork,Pork tenderloin prepared | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,11.773,12.871,0.067
+Pork,Pork shoulder chop | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,13.681,14.956,0.0779
+Pork,Pork <5% fat | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,11.773,12.871,0.067
+Pork,Pork 5-14% fat | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vlees en gevogelte,11.773,12.871,0.067
+Pork,Sausage smooked pork cooked | Ambient (average) | Meat packaging (PP) - 1 kg | Boiling | consumed/NL Economic,Vlees en gevogelte,8.974,8.366,0.053
+Pork,Vegetarian hamburger | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vleesvervangers en zuivelvervangers,2.472,2.366,0.017
+Pork,Ham lean | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic,Vleeswaren,10.421,10.761,0.0586
+Pork,Ham shoulder medium fat | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic,Vleeswaren,10.427,10.77,0.0589
+Pork,"Bacon, streaky  | Cooled | Meat packaging (PP) - 1 kg | No preparation | consumed/NL Economic",Vleeswaren,10.421,10.761,0.0586
+Pork,"Bacon, streaky  | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic",Vleeswaren,17.444,18.004,0.0986
+Potatoes,Sweet potatoes | Ambient (average) | Plastic foil (LDPE) - 500 gram | Boiling | consumed/NL Economic,Aardappelen en knolgewassen,1.192,0.733,0.062
+Potatoes,Sweet potatoes | Ambient (average) | Plastic foil (LDPE) - 500 gram | Pan frying | consumed/NL Economic,Aardappelen en knolgewassen,0.71,0.796,0.0571
+Potatoes,Potatoes wo skins | Ambient (average) | Plastic foil (LDPE) - 500 gram | Pan frying | consumed/NL Economic,Aardappelen en knolgewassen,0.669,0.468,0.0109
+Potatoes,Potatoes wo skins | Ambient (average) | Plastic foil (LDPE) - 500 gram | Boiling | consumed/NL Economic,Aardappelen en knolgewassen,1.151,0.404,0.0157
+Potatoes,Potato starch | Ambient (average) | Cardboard box | No preparation | consumed/NL Economic,Graanproducten en bindmiddelen,1.27,1.113,0.0159
+Potatoes,Crisps potato | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Hartige snacks en zoutjes,3.537,2.182,0.0474
+Processed,"Sausage, dutch Frikandel | Frozen | Cardboard box | Deep frying | consumed/NL Economic",Hartige snacks en zoutjes,3.965,4.706,0.0341
+Processed,"Sausage, frankfurter | Ambient (long) | Food can | Boiling | consumed/NL Economic",Vlees en gevogelte,12.965,8.274,0.0885
+Processed,"Sausage, frankfurter | Ambient (long) | Food can | No preparation | consumed/NL Economic",Vlees en gevogelte,12.352,8.267,0.0829
+Processed,"Sausage, frankfurter | Ambient (long) | Glass jar - 720 ml | Boiling | consumed/NL Economic",Vlees en gevogelte,12.771,8.279,0.0772
+Processed,"Sausage, frankfurter | Ambient (long) | Glass jar - 720 ml | No preparation | consumed/NL Economic",Vlees en gevogelte,12.157,8.272,0.0716
+Processed,Sausage smoked cooked average | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic,Vlees en gevogelte,18.198,9.993,0.1125
+Processed,"Sausage, luncheon vegetarian, sandwich meat | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic",Vleesvervangers en zuivelvervangers,3.721,5.51,0.0564
+Processed,"Sausage, luncheon, sandwich meat | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic",Vleeswaren,6.055,5.955,0.0351
+Processed,"Sausage, salami saveloy | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic",Vleeswaren,13.13,9.479,0.0772
+Processed,Salami | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic,Vleeswaren,13.13,9.479,0.0772
+Processed,Liver pate | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic,Vleeswaren,5.2,4.834,0.0316
+Pulses,Beans french | Ambient (long) | Food can | Boiling | consumed/NL Economic,Groente,1.778,1.227,0.0549
+Pulses,Beans french | Ambient (long) | Glass jar - 720 ml | Boiling | consumed/NL Economic,Groente,1.526,1.235,0.0397
+Pulses,"Beans, green | Ambient (average) | Food can | Boiling | consumed/NL Economic",Groente,1.908,1.347,0.0611
+Pulses,"Beans, green | Ambient (average) | Glass jar - 720 ml | Boiling | consumed/NL Economic",Groente,1.598,1.357,0.0419
+Pulses,Beans french frozen | Frozen | Cardboard box | Boiling | consumed/NL Economic,Groente,1.677,1.035,0.0365
+Pulses,Beans french | Ambient (short) | Plastic foil (LDPE) - 500 gram | Boiling | consumed/NL Economic,Groente,1.067,1.07,0.0332
+Pulses,"Beans, green | Ambient (average) | Plastic foil (LDPE) - 500 gram | Boiling | consumed/NL Economic",Groente,1.132,1.177,0.0361
+Pulses,Brown beans | Ambient (long) | Food can | Boiling | consumed/NL Economic,Peulvruchten,2.013,2.279,0.0541
+Pulses,Brown beans | Ambient (long) | Food can | No preparation | consumed/NL Economic,Peulvruchten,1.558,2.229,0.0478
+Pulses,Brown beans | Ambient (long) | Glass jar - 720 ml | Boiling | consumed/NL Economic,Peulvruchten,1.82,2.284,0.0429
+Pulses,Brown beans | Ambient (long) | Glass jar - 720 ml | No preparation | consumed/NL Economic,Peulvruchten,1.375,2.233,0.0374
+Pulses,Chickpeas  | Ambient (long) | Plastic foil (LDPE) - 500 gram | Boiling | consumed/NL Economic,Peulvruchten,2.342,4.658,0.0169
+Pulses,Peas marrowfat legumes boiled | Ambient (long) | Glass jar - 720 ml | Boiling | consumed/NL Economic,Peulvruchten,1.533,4.18,0.0171
+Pulses,Lentils | Ambient (average) | Plastic foil (LDPE) - 500 gram | Boiling | consumed/NL Economic,Peulvruchten,1.693,3.7,0.0233
+Pulses,"Oil soy | Ambient (long) | PET bottle, non returnable | No preparation | consumed/NL Economic",Vetten en oliÃ«n,4.348,8.572,0.07
+Pulses,Drink soya Fresh Light Alpro | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic,Vleesvervangers en zuivelvervangers,0.466,0.273,0.0061
+Pulses,"Soya drink, natural | Ambient (long) | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic",Vleesvervangers en zuivelvervangers,0.609,0.391,0.0063
+Pulses,Drink soya several flavours Alpro | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic,Vleesvervangers en zuivelvervangers,0.683,0.762,0.0079
+Pulses,Tahoe soya curd | Ambient (short) | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vleesvervangers en zuivelvervangers,2.746,2.731,0.0294
+Ready_Meals,Tortilla wrap | Ambient (average) | Plastic foil (LDPE) - 500 gram | Microwave | consumed/NL Economic,Graanproducten en bindmiddelen,1.756,1.793,0.0091
+Ready_Meals,"Oriental sauce, ready-made | Ambient (long) | Glass jar - 125 gram | No preparation | consumed/NL Economic",Hartige sauzen,1.783,0.786,0.0457
+Ready_Meals,Stock from cube prepared | Ambient (long) | Cardboard box | Water cooker | consumed/NL Economic,Kruiden en specerijen,0.311,0.072,0.0047
+Rice,"Rice, white | Ambient (long) | Cardboard box | Boiling | consumed/NL Economic",Graanproducten en bindmiddelen,2.389,1.564,0.2389
+Rice,"Rice, brown | Ambient (long) | Cardboard box | Boiling | consumed/NL Economic",Graanproducten en bindmiddelen,2.158,1.394,0.2134
+Rice,Liquorice Dutch type average | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,"Suiker, snoep, zoet beleg en zoete sauzen",1.098,0.641,0.0148
+Snacks,"Chips, frozen pre-fried | Frozen | Plastic foil (LDPE) - 500 gram | Deep frying | consumed/NL Economic",Aardappelen en knolgewassen,4.632,3.193,0.0677
+Snacks,"Biscuit, sweet | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Gebak en koek,2.663,2.486,0.0083
+Snacks,Biscuits averaged | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Gebak en koek,2.663,2.486,0.0083
+Snacks,"Biscuit, brown/wholemeal | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic",Gebak en koek,2.902,2.662,0.0083
+Snacks,Cake sponge Dutch Eierkoek | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Gebak en koek,2.434,2.399,0.0178
+Snacks,Cake Dutch spiced Ontbijtkoek | Ambient (short) | Paper foil - 250 gram | No preparation | consumed/NL Economic,Gebak en koek,1.458,2.018,0.0198
+Snacks,Chocolate chip cookie | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Gebak en koek,5.779,10.287,0.0111
+Snacks,Biscuit spiced Speculaas | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Gebak en koek,2.663,2.486,0.0083
+Snacks,Custard chocolate full fat | Cooled | Multilayer carton (UHT) - 1000 ml | Chilled at consumer | consumed/NL Economic,Melk en melkproducten,2.963,2.357,0.0347
+Snacks,Belgian chocolate bonbons | Ambient (average) | Cardboard box | No preparation | consumed/NL Economic,"Suiker, snoep, zoet beleg en zoete sauzen",8.925,15.696,0.0295
+Snacks,Chocolates filled/Belguim chocolate | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,"Suiker, snoep, zoet beleg en zoete sauzen",15.568,34.952,0.0207
+Snacks,Chocolate plain | Ambient (average) | Aluminium foil laminated paper - 250 gram | No preparation | consumed/NL Economic,"Suiker, snoep, zoet beleg en zoete sauzen",15.545,34.963,0.0205
+Snacks,Chocolate confetti averaged | Ambient (average) | Cardboard box | No preparation | consumed/NL Economic,"Suiker, snoep, zoet beleg en zoete sauzen",7.051,14.255,0.0119
+Snacks,"Chocolate spread, hazelnut | Ambient (long) | Glass jar - 125 gram | No preparation | consumed/NL Economic","Suiker, snoep, zoet beleg en zoete sauzen",4.118,6.463,0.1043
+Snacks,"Chocolate spread, duo  | Ambient (long) | Glass jar - 125 gram | No preparation | consumed/NL Economic","Suiker, snoep, zoet beleg en zoete sauzen",3.607,4.86,0.0533
+Spice_Mixes,Stock cubes | Ambient (long) | Cardboard box | No preparation | consumed/NL Economic,Kruiden en specerijen,1.53,1.017,0.0296
+Sugar,Melon honeydew | Ambient (short) | Not packed | No preparation | consumed/NL Economic,Fruit,0.825,0.953,0.0269
+Sugar,"Flour wheat, white  | Ambient (long) | Sugar packaging - 1 kg | No preparation | consumed/NL Economic",Graanproducten en bindmiddelen,0.992,2.021,0.006
+Sugar,Rye flour | Ambient (average) | Sugar packaging - 1 kg | No preparation | consumed/NL Economic,Graanproducten en bindmiddelen,1.244,2.982,0.0046
+Sugar,Tapioca starch | Ambient (average) | Sugar packaging - 1 kg | No preparation | consumed/NL Economic,Graanproducten en bindmiddelen,0.957,2.379,0.0258
+Sugar,"Soft drink, w sugar,sw&caffeine  | Ambient (long) | PET bottle, returnable | Chilled at consumer | consumed/NL Economic",Niet-alcoholische dranken,0.338,0.042,0.0047
+Sugar,"Lemonade, w sugar and sweetners | Ambient (long) | PET bottle, non returnable | Dilution | consumed/NL Economic",Niet-alcoholische dranken,0.451,0.331,0.0045
+Sugar,Honey | Ambient (long) | Glass jar - 125 gram | No preparation | consumed/NL Economic,"Suiker, snoep, zoet beleg en zoete sauzen",0.901,0.267,0.0044
+Sugar,"Honey | Ambient (long) | PET bottle, non returnable | No preparation | consumed/NL Economic","Suiker, snoep, zoet beleg en zoete sauzen",0.527,0.235,0.0035
+Sugar,Jam | Ambient (long) | Glass jar - 125 gram | Chilled at consumer | consumed/NL Economic,"Suiker, snoep, zoet beleg en zoete sauzen",1.866,1.284,0.0729
+Sugar,Jam without sugar | Ambient (long) | Glass jar - 125 gram | Chilled at consumer | consumed/NL Economic,"Suiker, snoep, zoet beleg en zoete sauzen",1.584,1.565,0.1365
+Sugar,Sugar granulated | Ambient (long) | Sugar packaging - 1 kg | No preparation | consumed/NL Economic,"Suiker, snoep, zoet beleg en zoete sauzen",1.283,1.007,0.0038
+Tea,"Ice tea | Ambient (long) | PET bottle, returnable | Chilled at consumer | consumed/NL Economic",Niet-alcoholische dranken,0.486,0.301,0.0253
+Tea,Tea | Ambient (long) | Cardboard box | Water cooker | consumed/NL Economic,Niet-alcoholische dranken,0.167,0.257,0.0218
+Tea,Tea herbal instant sw prepared | Ambient (long) | Cardboard box | Water cooker | consumed/NL Economic,Niet-alcoholische dranken,0.354,0.581,0.0474
+Tea,Mackerel steamed | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vis,1.091,0.083,0.005
+Vegetables,Peas and carrots | Ambient (long) | Food can | Boiling | consumed/NL Economic,Groente,1.976,2.67,0.0397
+Vegetables,Peas and carrots | Ambient (long) | Glass jar - 720 ml | Boiling | consumed/NL Economic,Groente,1.68,2.68,0.0214
+Vegetables,Cucumber w skin  | Ambient (short) | Not packed | Chilled at consumer | consumed/NL Economic,Groente,0.834,0.033,0.0088
+Vegetables,Cucumber wo skin | Ambient (short) | Not packed | Chilled at consumer | consumed/NL Economic,Groente,0.881,0.035,0.0093
+Vegetables,Tomato puree concentrated tinned | Ambient (long) | Food can | No preparation | consumed/NL Economic,Groente,0.836,0.324,0.0976
+Vegetables,Lettuce head | Ambient (short) | Not packed | Chilled at consumer | consumed/NL Economic,Groente,0.507,0.536,0.0261
+Vegetables,Lettuce head | Ambient (short) | Plastic foil (LDPE) - 500 gram | Chilled at consumer | consumed/NL Economic,Groente,0.566,0.537,0.0275
+Vegetables,Lettuce  | Ambient (short) | Not packed | Chilled at consumer | consumed/NL Economic,Groente,0.507,0.536,0.0261
+Vegetables,Lettuce | Ambient (short) | Plastic foil (LDPE) - 500 gram | Chilled at consumer | consumed/NL Economic,Groente,0.566,0.537,0.0275
+Vegetables,Tomato | Ambient (short) | Not packed | Boiling | consumed/NL Economic,Groente,1.878,0.044,0.0148
+Vegetables,Tomato | Ambient (short) | Not packed | Chilled at consumer | consumed/NL Economic,Groente,1.216,0.032,0.0084
+Vegetables,Tomato | Ambient (short) | Not packed | No preparation | consumed/NL Economic,Groente,1.144,0.03,0.0078
+Vegetables,Sun-dried tomatoes in oil | Ambient (average) | Glass jar - 720 ml | No preparation | consumed/NL Economic,Groente,7.584,6.803,0.0928
+Vegetables,Carrots | Ambient (average) | Plastic foil (LDPE) - 500 gram | Boiling | consumed/NL Economic,Groente,0.76,0.274,0.0145
+Vegetables,Carrots raw average | Ambient (average) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic,Groente,0.315,0.243,0.0088
+Vegetables,"Ketchup tomato | Ambient (long) | PET bottle, non returnable | Chilled at consumer | consumed/NL Economic",Hartige sauzen,1.198,0.718,0.083
+Vegetables,"Tomato sauce, ready-made | Ambient (long) | Glass jar - 125 gram | No preparation | consumed/NL Economic",Hartige sauzen,0.871,0.361,0.0251
+Vegetables,"Tomato sauce, ready-made | Ambient (long) | PET bottle, non returnable | No preparation | consumed/NL Economic",Hartige sauzen,0.544,0.333,0.0244
+Vegetables,Soup clear with meat and vegetables | Ambient (long) | Food can | Boiling | consumed/NL Economic,Soepen,4.618,2.521,0.0481
+Vegetables,Soup clear w meat vegetables and noodles | Ambient (long) | Food can | Boiling | consumed/NL Economic,Soepen,1.627,0.243,0.0268
+Vegetables,Soup vegetable based dried packet prep | Ambient (long) | Cardboard box | Water cooker | consumed/NL Economic,Soepen,0.8,0.218,0.01
+Vegetables,Herring fillet in tomato sauce | Ambient (long) | Food can | No preparation | consumed/NL Economic,Vis,0.882,0.162,0.0344
+Vegetables,Vegetable burger vegetarian | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic,Vleesvervangers en zuivelvervangers,3.191,3.041,0.0423

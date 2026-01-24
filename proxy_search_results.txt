@@ -1,0 +1,155 @@
+
+======================================================================
+RIVM DATABASE PROXY SEARCH - MISSING CATEGORIES
+======================================================================
+
+✓ Found RIVM database: d:\Agaath Mathilde de Vries\UvA studies\Complex Systems for Policy\Year 1\Challenge based project\1\Challenges\code for framework\..\datasets\Database milieubelasting voedingsmiddelen - database versie 23 september 2024.csv
+
+✓ Loaded 411 RIVM products
+✓ Columns: ['Naam', 'Eenheid     1 kg', 'Unnamed: 2', 'kg CO2 eq', 'kg SO2 eq']...
+
+✓ Using product column: 'Naam'
+✓ Using CO2 column: 'kg CO2 eq'
+
+
+======================================================================
+Searching for: Meat_Subs
+======================================================================
+✅ Found 5 potential matches:
+
+  1. Vegetarian schnitzel Valles | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic
+     → Matched by: 'Vegetarian' (4.03 kg CO2e/kg)
+  2. Mincemeat vegetarian unprepared | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic
+     → Matched by: 'Vegetarian' (4.00 kg CO2e/kg)
+  3. Sausage, luncheon vegetarian, sandwich meat | Cooled | Meat packaging (PP) - 1 kg | Chilled at consumer | consumed/NL Economic
+     → Matched by: 'Vegetarian' (3.72 kg CO2e/kg)
+  4. Vegetable burger vegetarian | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic
+     → Matched by: 'Vegetarian' (3.19 kg CO2e/kg)
+  5. Vegetarian hamburger | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic
+     → Matched by: 'Vegetarian' (2.47 kg CO2e/kg)
+
+======================================================================
+Searching for: Instant_Noodles
+======================================================================
+✅ Found 1 potential matches:
+
+  1. Soup clear w meat vegetables and noodles | Ambient (long) | Food can | Boiling | consumed/NL Economic
+     → Matched by: 'Noodles' (1.63 kg CO2e/kg)
+
+======================================================================
+Searching for: Instant_Pasta
+======================================================================
+❌ No matches found with any proxy terms
+
+======================================================================
+Searching for: Animal_Fats
+======================================================================
+✅ Found 19 potential matches:
+
+  1. Butter, salted | Cooled | Plastic cup - 250 gram | Chilled at consumer | consumed/NL Economic
+     → Matched by: 'Butter' (10.41 kg CO2e/kg)
+  2. Butter, unsalted | Cooled | Plastic cup - 250 gram | Chilled at consumer | consumed/NL Economic
+     → Matched by: 'Butter' (10.41 kg CO2e/kg)
+  3. Cake, w butter | Ambient (short) | Plastic foil (LDPE) - 500 gram | Chilled at consumer | consumed/NL Economic
+     → Matched by: 'Butter' (5.60 kg CO2e/kg)
+  4. Cake, w butter | Ambient (short) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic
+     → Matched by: 'Butter' (5.50 kg CO2e/kg)
+  5. Butter product half fat | Cooled | Plastic cup - 250 gram | Chilled at consumer | consumed/NL Economic
+     → Matched by: 'Butter' (5.45 kg CO2e/kg)
+  6. Peanut butter  | Ambient (long) | Glass jar - 720 ml | No preparation | consumed/NL Economic
+     → Matched by: 'Butter' (3.78 kg CO2e/kg)
+  7. Cooking fat liquid 97% fat <17 g sat | Cooled | PET bottle, non returnable | No preparation | consumed/NL Economic
+     → Matched by: 'Cooking fat' (3.50 kg CO2e/kg)
+  8. Appel pie Dutch w shortbread w butter | Ambient (short) | Cardboard box | Chilled at consumer | consumed/NL Economic
+     → Matched by: 'Butter' (3.37 kg CO2e/kg)
+  9. Margarine 80% fat 17-24 g saturates | Cooled | Plastic cup - 250 gram | Chilled at consumer | consumed/NL Economic
+     → Matched by: 'Margarine' (3.22 kg CO2e/kg)
+  10. Margarine 80% fat >24 g saturates | Cooled | Plastic cup - 250 gram | Chilled at consumer | consumed/NL Economic
+     → Matched by: 'Margarine' (3.22 kg CO2e/kg)
+  ... and 9 more matches
+
+======================================================================
+Searching for: Frying_Oil_Animal
+======================================================================
+✅ Found 148 potential matches:
+
+  1. Shrimps, Dutch peeled | Cooled | Meat packaging (PP) - 1 kg | Boiling | consumed/NL Economic
+     → Matched by: 'Oil' (18.96 kg CO2e/kg)
+  2. Sausage, smoke-cooked beef | Cooled | Meat packaging (PP) - 1 kg | Boiling | consumed/NL Economic
+     → Matched by: 'Oil' (18.81 kg CO2e/kg)
+  3. Chocolates filled/Belguim chocolate | Ambient (long) | Plastic foil (LDPE) - 500 gram | No preparation | consumed/NL Economic
+     → Matched by: 'Oil' (15.57 kg CO2e/kg)
+  4. Chocolate plain | Ambient (average) | Aluminium foil laminated paper - 250 gram | No preparation | consumed/NL Economic
+     → Matched by: 'Oil' (15.55 kg CO2e/kg)
+  5. Tuna in oil | Ambient (long) | Food can | No preparation | consumed/NL Economic
+     → Matched by: 'Oil' (15.44 kg CO2e/kg)
+  6. Sausage, cooked beef | Cooled | Meat packaging (PP) - 1 kg | Boiling | consumed/NL Economic
+     → Matched by: 'Oil' (14.09 kg CO2e/kg)
+  7. Sausage, frankfurter | Ambient (long) | Food can | Boiling | consumed/NL Economic
+     → Matched by: 'Oil' (12.97 kg CO2e/kg)
+  8. Sausage, frankfurter | Ambient (long) | Glass jar - 720 ml | Boiling | consumed/NL Economic
+     → Matched by: 'Oil' (12.77 kg CO2e/kg)
+  9. Chocolat, milk | Ambient (average) | Aluminium foil laminated paper - 250 gram | No preparation | consumed/NL Economic
+     → Matched by: 'Oil' (9.00 kg CO2e/kg)
+  10. Sausage smooked pork cooked | Ambient (average) | Meat packaging (PP) - 1 kg | Boiling | consumed/NL Economic
+     → Matched by: 'Oil' (8.97 kg CO2e/kg)
+  ... and 135 more matches
+
+
+======================================================================
+SUMMARY - RECOMMENDED MATCHES
+======================================================================
+
+✅ Meat_Subs            → Vegetarian schnitzel Valles | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic (4.03 kg CO2e/kg)
+   [5 total matches found]
+✅ Instant_Noodles      → Soup clear w meat vegetables and noodles | Ambient (long) | Food can | Boiling | consumed/NL Economic (1.63 kg CO2e/kg)
+   [1 total matches found]
+❌ Instant_Pasta        → No RIVM match found
+✅ Animal_Fats          → Butter, salted | Cooled | Plastic cup - 250 gram | Chilled at consumer | consumed/NL Economic (10.41 kg CO2e/kg)
+   [19 total matches found]
+✅ Frying_Oil_Animal    → Shrimps, Dutch peeled | Cooled | Meat packaging (PP) - 1 kg | Boiling | consumed/NL Economic (18.96 kg CO2e/kg)
+   [145 total matches found]
+
+
+======================================================================
+RECOMMENDED INTEGRATION VALUES
+======================================================================
+
+Add to load_lca_factors() for missing categories:
+
+factors['Meat_Subs'] = {
+    'co2': 4.03,  # From RIVM: Vegetarian schnitzel Valles | Cooled | Meat packaging (PP) - 1 kg | Pan frying | consumed/NL Economic
+    'scope12': 1.81,  # Estimated 45%
+    'land': 0.0,  # Not available
+    'water': 0.0  # Not available
+}
+
+factors['Instant_Noodles'] = {
+    'co2': 1.63,  # From RIVM: Soup clear w meat vegetables and noodles | Ambient (long) | Food can | Boiling | consumed/NL Economic
+    'scope12': 0.73,  # Estimated 45%
+    'land': 0.0,  # Not available
+    'water': 0.0  # Not available
+}
+
+# Instant_Pasta - NO MATCH FOUND - Use industry average or literature
+factors['Instant_Pasta'] = {
+    'co2': 3.0,  # PLACEHOLDER - Needs research
+    'scope12': 1.35,  # Estimated
+    'land': 0.0,
+    'water': 0.0
+}
+
+factors['Animal_Fats'] = {
+    'co2': 10.41,  # From RIVM: Butter, salted | Cooled | Plastic cup - 250 gram | Chilled at consumer | consumed/NL Economic
+    'scope12': 4.68,  # Estimated 45%
+    'land': 0.0,  # Not available
+    'water': 0.0  # Not available
+}
+
+factors['Frying_Oil_Animal'] = {
+    'co2': 18.96,  # From RIVM: Shrimps, Dutch peeled | Cooled | Meat packaging (PP) - 1 kg | Boiling | consumed/NL Economic
+    'scope12': 8.53,  # Estimated 45%
+    'land': 0.0,  # Not available
+    'water': 0.0  # Not available
+}
+
