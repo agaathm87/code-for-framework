@@ -1,0 +1,136 @@
+Diet,Category,Scope3_tonnes_per_year
+1.Monitor,Red Meat,131427.92250000002
+1.Monitor,Poultry,32394.206249999992
+1.Monitor,Dairy (Liquid),105882.77699999999
+1.Monitor,Dairy (Solid) & Eggs,152382.3462
+1.Monitor,Fish,28506.901499999996
+1.Monitor,Plant Protein,25174.925999999992
+1.Monitor,taples,0.0
+1.Monitor,Rice,27766.462499999998
+1.Monitor,Veg & Fruit,73118.35124999999
+1.Monitor,Ultra-Processed,270445.34475000005
+1.Monitor,Beverages & Additions,23990.223599999998
+1.Monitor,"Fats (Solid, Animal)",94776.19200000001
+1.Monitor,Oils (Plant-based),9255.487499999997
+1.Monitor,Condiments,18881.194499999994
+1.Monitor,TOTAL,994002.3355500001
+2.Theory,Red Meat,161415.702
+2.Theory,Poultry,36281.511
+2.Theory,Dairy (Liquid),125134.19100000002
+2.Theory,Dairy (Solid) & Eggs,168449.87249999997
+2.Theory,Fish,12957.6825
+2.Theory,Plant Protein,17659.470149999997
+2.Theory,taples,0.0
+2.Theory,Rice,23138.718749999996
+2.Theory,Veg & Fruit,67009.72949999999
+2.Theory,Ultra-Processed,302654.4412499999
+2.Theory,Beverages & Additions,26359.628399999994
+2.Theory,"Fats (Solid, Animal)",118470.23999999998
+2.Theory,Oils (Plant-based),11106.584999999997
+2.Theory,Condiments,22953.608999999997
+2.Theory,TOTAL,1093591.3810499997
+3.Metro,Red Meat,512754.0075
+3.Metro,Poultry,77746.09499999999
+3.Metro,Dairy (Liquid),96257.06999999998
+3.Metro,Dairy (Solid) & Eggs,209544.23699999996
+3.Metro,Fish,19436.523749999997
+3.Metro,Plant Protein,6849.060749999999
+3.Metro,taples,0.0
+3.Metro,Rice,18510.974999999995
+3.Metro,Veg & Fruit,50349.85199999999
+3.Metro,Ultra-Processed,509051.8125
+3.Metro,Beverages & Additions,36725.774399999995
+3.Metro,"Fats (Solid, Animal)",192514.13999999998
+3.Metro,Oils (Plant-based),14808.78
+3.Metro,Condiments,29247.3405
+3.Metro,TOTAL,1773795.6683999998
+4.Meta,Red Meat,696012.6599999999
+4.Meta,Poultry,103661.46
+4.Meta,Dairy (Liquid),24064.267499999994
+4.Meta,Dairy (Solid) & Eggs,225833.89499999996
+4.Meta,Fish,51830.73
+4.Meta,Plant Protein,5553.2925
+4.Meta,taples,0.0
+4.Meta,Rice,9255.487499999997
+4.Meta,Veg & Fruit,70341.70499999999
+4.Meta,Ultra-Processed,50905.18125
+4.Meta,Beverages & Additions,25174.925999999996
+4.Meta,"Fats (Solid, Animal)",251008.821
+4.Meta,Oils (Plant-based),12957.6825
+4.Meta,Condiments,14808.779999999999
+4.Meta,TOTAL,1541408.8882499998
+5.DuGoal,Red Meat,122172.435
+5.DuGoal,Poultry,23323.828499999996
+5.DuGoal,Dairy (Liquid),86631.363
+5.DuGoal,Dairy (Solid) & Eggs,104772.11849999998
+5.DuGoal,Fish,15549.219
+5.DuGoal,Plant Protein,60901.10774999998
+5.DuGoal,taples,0.0
+5.DuGoal,Rice,37021.94999999999
+5.DuGoal,Veg & Fruit,102921.02099999998
+5.DuGoal,Ultra-Processed,150124.00725
+5.DuGoal,Beverages & Additions,21768.9066
+5.DuGoal,"Fats (Solid, Animal)",52571.168999999994
+5.DuGoal,Oils (Plant-based),8144.828999999999
+5.DuGoal,Condiments,15549.219000000001
+5.DuGoal,TOTAL,801451.1736
+6.AmGoal,Red Meat,61086.2175
+6.AmGoal,Poultry,12957.6825
+6.AmGoal,Dairy (Liquid),48128.53499999999
+6.AmGoal,Dairy (Solid) & Eggs,86261.14349999998
+6.AmGoal,Fish,19436.523749999997
+6.AmGoal,Plant Protein,68120.38799999998
+6.AmGoal,taples,0.0
+6.AmGoal,Rice,46277.43749999999
+6.AmGoal,Veg & Fruit,107363.65499999998
+6.AmGoal,Ultra-Processed,122357.54474999999
+6.AmGoal,Beverages & Additions,17474.360399999998
+6.AmGoal,"Fats (Solid, Animal)",37762.388999999996
+6.AmGoal,Oils (Plant-based),7404.39
+6.AmGoal,Condiments,14068.340999999999
+6.AmGoal,TOTAL,648698.6078999998
+7.EAT,Red Meat,85520.70449999999
+7.EAT,Poultry,37577.27925
+7.EAT,Dairy (Liquid),120321.33749999998
+7.EAT,Dairy (Solid) & Eggs,10588.277699999999
+7.EAT,Fish,36281.511
+7.EAT,Plant Protein,30543.10875
+7.EAT,taples,0.0
+7.EAT,Rice,55532.924999999996
+7.EAT,Veg & Fruit,118470.23999999999
+7.EAT,Ultra-Processed,59235.11999999998
+7.EAT,Beverages & Additions,13327.901999999998
+7.EAT,"Fats (Solid, Animal)",18510.975
+7.EAT,Oils (Plant-based),6663.950999999999
+7.EAT,Condiments,12587.462999999998
+7.EAT,TOTAL,605160.7946999999
+8.Schijf,Red Meat,122172.435
+8.Schijf,Poultry,32394.206249999992
+8.Schijf,Dairy (Liquid),120321.33749999998
+8.Schijf,Dairy (Solid) & Eggs,127355.50799999999
+8.Schijf,Fish,32394.206249999992
+8.Schijf,Plant Protein,31283.54774999999
+8.Schijf,taples,0.0
+8.Schijf,Rice,37021.94999999999
+8.Schijf,Veg & Fruit,107363.65499999998
+8.Schijf,Ultra-Processed,152900.65350000001
+8.Schijf,Beverages & Additions,21768.9066
+8.Schijf,"Fats (Solid, Animal)",61456.43699999999
+8.Schijf,Oils (Plant-based),9255.487499999997
+8.Schijf,Condiments,16289.658
+8.Schijf,TOTAL,871977.98835
+9.Med,Red Meat,97737.94799999999
+9.Med,Poultry,25915.365
+9.Med,Dairy (Liquid),96257.06999999998
+9.Med,Dairy (Solid) & Eggs,125726.5422
+9.Med,Fish,45351.88875
+9.Med,Plant Protein,32579.31599999999
+9.Med,taples,0.0
+9.Med,Rice,41649.69375
+9.Med,Veg & Fruit,123653.31299999998
+9.Med,Ultra-Processed,108659.42324999998
+9.Med,Beverages & Additions,22361.2578
+9.Med,"Fats (Solid, Animal)",42205.023
+9.Med,Oils (Plant-based),11106.584999999997
+9.Med,Condiments,14068.340999999999
+9.Med,TOTAL,787271.76675

@@ -1,0 +1,82 @@
+base_diet,goal_diet,gap_distance_pct
+1. Monitor 2024 (Current),1. Monitor 2024 (Current),0.0
+2. Amsterdam Theoretical,1. Monitor 2024 (Current),7.920676085139008
+3. Metropolitan (High Risk),1. Monitor 2024 (Current),38.232121168821884
+4. Metabolic Balance,1. Monitor 2024 (Current),28.495654511244506
+5. Dutch Goal (60:40),1. Monitor 2024 (Current),0.0
+6. Amsterdam Goal (70:30),1. Monitor 2024 (Current),0.0
+7. EAT-Lancet (Planetary),1. Monitor 2024 (Current),0.0
+8. Schijf van 5 (Guideline),1. Monitor 2024 (Current),0.0
+9. Mediterranean Diet,1. Monitor 2024 (Current),0.0
+1. Monitor 2024 (Current),2. Amsterdam Theoretical,0.0
+2. Amsterdam Theoretical,2. Amsterdam Theoretical,0.0
+3. Metropolitan (High Risk),2. Amsterdam Theoretical,32.918839751375295
+4. Metabolic Balance,2. Amsterdam Theoretical,22.344840895150007
+5. Dutch Goal (60:40),2. Amsterdam Theoretical,0.0
+6. Amsterdam Goal (70:30),2. Amsterdam Theoretical,0.0
+7. EAT-Lancet (Planetary),2. Amsterdam Theoretical,0.0
+8. Schijf van 5 (Guideline),2. Amsterdam Theoretical,0.0
+9. Mediterranean Diet,2. Amsterdam Theoretical,0.0
+1. Monitor 2024 (Current),3. Metropolitan (High Risk),0.0
+2. Amsterdam Theoretical,3. Metropolitan (High Risk),0.0
+3. Metropolitan (High Risk),3. Metropolitan (High Risk),0.0
+4. Metabolic Balance,3. Metropolitan (High Risk),0.0
+5. Dutch Goal (60:40),3. Metropolitan (High Risk),0.0
+6. Amsterdam Goal (70:30),3. Metropolitan (High Risk),0.0
+7. EAT-Lancet (Planetary),3. Metropolitan (High Risk),0.0
+8. Schijf van 5 (Guideline),3. Metropolitan (High Risk),0.0
+9. Mediterranean Diet,3. Metropolitan (High Risk),0.0
+1. Monitor 2024 (Current),4. Metabolic Balance,0.0
+2. Amsterdam Theoretical,4. Metabolic Balance,0.0
+3. Metropolitan (High Risk),4. Metabolic Balance,13.616608320830656
+4. Metabolic Balance,4. Metabolic Balance,0.0
+5. Dutch Goal (60:40),4. Metabolic Balance,0.0
+6. Amsterdam Goal (70:30),4. Metabolic Balance,0.0
+7. EAT-Lancet (Planetary),4. Metabolic Balance,0.0
+8. Schijf van 5 (Guideline),4. Metabolic Balance,0.0
+9. Mediterranean Diet,4. Metabolic Balance,0.0
+1. Monitor 2024 (Current),5. Dutch Goal (60:40),17.936251820922163
+2. Amsterdam Theoretical,5. Dutch Goal (60:40),24.436255497511077
+3. Metropolitan (High Risk),5. Dutch Goal (60:40),49.31096346042407
+4. Metabolic Balance,5. Dutch Goal (60:40),41.32085398100989
+5. Dutch Goal (60:40),5. Dutch Goal (60:40),0.0
+6. Amsterdam Goal (70:30),5. Dutch Goal (60:40),0.0
+7. EAT-Lancet (Planetary),5. Dutch Goal (60:40),0.0
+8. Schijf van 5 (Guideline),5. Dutch Goal (60:40),9.38093160055205
+9. Mediterranean Diet,5. Dutch Goal (60:40),3.379511696156411
+1. Monitor 2024 (Current),6. Amsterdam Goal (70:30),32.54565398013259
+2. Amsterdam Theoretical,6. Amsterdam Goal (70:30),37.88849423371515
+3. Metropolitan (High Risk),6. Amsterdam Goal (70:30),58.33488128408468
+4. Metabolic Balance,6. Amsterdam Goal (70:30),51.767211374773424
+5. Dutch Goal (60:40),6. Amsterdam Goal (70:30),17.802504130484138
+6. Amsterdam Goal (70:30),6. Amsterdam Goal (70:30),0.0
+7. EAT-Lancet (Planetary),6. Amsterdam Goal (70:30),2.7581032134950045
+8. Schijf van 5 (Guideline),6. Amsterdam Goal (70:30),25.513394995370014
+9. Mediterranean Diet,6. Amsterdam Goal (70:30),20.58037811734211
+1. Monitor 2024 (Current),7. EAT-Lancet (Planetary),30.63242465543045
+2. Amsterdam Theoretical,7. EAT-Lancet (Planetary),36.126805606588555
+3. Metropolitan (High Risk),7. EAT-Lancet (Planetary),57.1531201130401
+4. Metabolic Balance,7. EAT-Lancet (Planetary),50.39916926844622
+5. Dutch Goal (60:40),7. EAT-Lancet (Planetary),15.47111010187222
+6. Amsterdam Goal (70:30),7. EAT-Lancet (Planetary),0.0
+7. EAT-Lancet (Planetary),7. EAT-Lancet (Planetary),0.0
+8. Schijf van 5 (Guideline),7. EAT-Lancet (Planetary),23.40070744592154
+9. Mediterranean Diet,7. EAT-Lancet (Planetary),18.327773822610624
+1. Monitor 2024 (Current),8. Schijf van 5 (Guideline),9.440971278427124
+2. Amsterdam Theoretical,8. Schijf van 5 (Guideline),16.613858609310913
+3. Metropolitan (High Risk),8. Schijf van 5 (Guideline),44.06360886856708
+4. Metabolic Balance,8. Schijf van 5 (Guideline),35.24635923166522
+5. Dutch Goal (60:40),8. Schijf van 5 (Guideline),0.0
+6. Amsterdam Goal (70:30),8. Schijf van 5 (Guideline),0.0
+7. EAT-Lancet (Planetary),8. Schijf van 5 (Guideline),0.0
+8. Schijf van 5 (Guideline),8. Schijf van 5 (Guideline),0.0
+9. Mediterranean Diet,8. Schijf van 5 (Guideline),0.0
+1. Monitor 2024 (Current),9. Mediterranean Diet,15.06589376674334
+2. Amsterdam Theoretical,9. Mediterranean Diet,21.79324920728746
+3. Metropolitan (High Risk),9. Mediterranean Diet,47.538004175497925
+4. Metabolic Balance,9. Mediterranean Diet,39.26842324118554
+5. Dutch Goal (60:40),9. Mediterranean Diet,0.0
+6. Amsterdam Goal (70:30),9. Mediterranean Diet,0.0
+7. EAT-Lancet (Planetary),9. Mediterranean Diet,0.0
+8. Schijf van 5 (Guideline),9. Mediterranean Diet,6.21133261666294
+9. Mediterranean Diet,9. Mediterranean Diet,0.0
