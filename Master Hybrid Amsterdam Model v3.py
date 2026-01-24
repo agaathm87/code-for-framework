@@ -657,8 +657,10 @@ def run_full_analysis():
     # Output directories
     core_dir = os.path.join('images', 'core')
     appendix_dir = os.path.join('images', 'appendix')
+    data_dir = os.path.join('data', 'results')  # For CSV exports
     os.makedirs(core_dir, exist_ok=True)
     os.makedirs(appendix_dir, exist_ok=True)
+    os.makedirs(data_dir, exist_ok=True)
     
     # CORE REPORT: 3 focus diets (baseline, high-risk, healthy) vs 4 policy goals
     focus_diets_core = ['1. Monitor 2024 (Current)', '3. Metropolitan (High Risk)', '9. Mediterranean Diet']
@@ -700,6 +702,71 @@ def run_full_analysis():
         results_water[name] = water
         # Total = Scope 1+2 + Scope 3
         total_footprints[name] = sum(scope12.values()) + sum(co2.values())
+
+    # ============================================================================
+    # EXPORT: Core Calculation Results as CSV (for reproducibility)
+    # ============================================================================
+    print("Exporting calculation results to CSV...")
+    
+    # Export Scope 1+2 emissions (production, retail, household) by category
+    scope12_export = []
+    for diet, categories in results_scope12.items():
+        for cat, value in categories.items():
+            scope12_export.append({'Diet': diet, 'Category': cat, 'Scope12_kton': value})
+    scope12_df = pd.DataFrame(scope12_export)
+    scope12_df.to_csv(os.path.join(data_dir, 'emissions_scope12_by_category.csv'), index=False)
+    print(f"  ✓ Saved: emissions_scope12_by_category.csv ({len(scope12_export)} rows)")
+    
+    # Export Scope 3 emissions (supply chain) by category
+    scope3_export = []
+    for diet, categories in results_co2.items():
+        for cat, value in categories.items():
+            scope3_export.append({'Diet': diet, 'Category': cat, 'Scope3_kton': value})
+    scope3_df = pd.DataFrame(scope3_export)
+    scope3_df.to_csv(os.path.join(data_dir, 'emissions_scope3_by_category.csv'), index=False)
+    print(f"  ✓ Saved: emissions_scope3_by_category.csv ({len(scope3_export)} rows)")
+    
+    # Export Land Use impacts by diet and category
+    land_export = []
+    for diet, categories in results_land.items():
+        for cat, value in categories.items():
+            land_export.append({'Diet': diet, 'Category': cat, 'Land_hectares': value})
+    land_df = pd.DataFrame(land_export)
+    land_df.to_csv(os.path.join(data_dir, 'impacts_land_use_by_category.csv'), index=False)
+    print(f"  ✓ Saved: impacts_land_use_by_category.csv ({len(land_export)} rows)")
+    
+    # Export Water Use impacts by diet and category
+    water_export = []
+    for diet, categories in results_water.items():
+        for cat, value in categories.items():
+            water_export.append({'Diet': diet, 'Category': cat, 'Water_m3': value})
+    water_df = pd.DataFrame(water_export)
+    water_df.to_csv(os.path.join(data_dir, 'impacts_water_use_by_category.csv'), index=False)
+    print(f"  ✓ Saved: impacts_water_use_by_category.csv ({len(water_export)} rows)")
+    
+    # Export summary totals (all metrics by diet)
+    summary_export = []
+    for diet in results_co2.keys():
+        summary_export.append({
+            'Diet': diet,
+            'Scope12_kton': sum(results_scope12.get(diet, {}).values()),
+            'Scope3_kton': sum(results_co2.get(diet, {}).values()),
+            'Land_hectares': sum(results_land.get(diet, {}).values()),
+            'Water_m3': sum(results_water.get(diet, {}).values()),
+            'Total_Emissions_kton': total_footprints.get(diet, 0)
+        })
+    summary_df = pd.DataFrame(summary_export)
+    summary_df.to_csv(os.path.join(data_dir, 'emissions_totals_by_diet.csv'), index=False)
+    print(f"  ✓ Saved: emissions_totals_by_diet.csv ({len(summary_export)} rows)")
+    
+    # Export Food Mass (composition) by diet and category
+    mass_export = []
+    for diet, categories in results_mass.items():
+        for cat, value in categories.items():
+            mass_export.append({'Diet': diet, 'Category': cat, 'Mass_grams': value})
+    mass_df = pd.DataFrame(mass_export)
+    mass_df.to_csv(os.path.join(data_dir, 'diet_composition_by_category_grams.csv'), index=False)
+    print(f"  ✓ Saved: diet_composition_by_category_grams.csv ({len(mass_export)} rows)")
 
     # ============================================================================
     # CHART 1a/1b: NEXUS ANALYSIS - Stacked Composition + Diverging from Baseline
@@ -3578,10 +3645,9 @@ def run_full_analysis():
     
     plt.savefig(os.path.join(core_dir, '15_Table_APA_Emissions.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '15_Table_APA_Emissions.png'), dpi=300, bbox_inches='tight')
-    table_df.to_csv(os.path.join(core_dir, '15_Table_APA_Emissions.csv'), index=False)
-    table_df.to_csv(os.path.join(appendix_dir, '15_Table_APA_Emissions.csv'), index=False)
+    table_df.to_csv(os.path.join(data_dir, '15_APA_emissions_summary.csv'), index=False)
     plt.close()
-    print("✓ Saved: 15_Table_APA_Emissions (core + appendix)")
+    print("✓ Saved: 15_Table_APA_Emissions (core + appendix) + data/15_APA_emissions_summary.csv")
 
     # ============================================================================
     # CHART 17: EMISSIONS BY CATEGORY - MULTI-DIET vs GOAL REFERENCES
@@ -3761,19 +3827,36 @@ def run_full_analysis():
     param_names = list(sensitivity_params.keys())
     param_values = list(sensitivity_params.values())
     
+    # Export sensitivity parameters to CSV
+    sensitivity_export = []
+    for param, value in sensitivity_params.items():
+        sensitivity_export.append({
+            'Parameter': param,
+            'Emission_Change_kton': value,
+            'Absolute_Impact_kton': abs(value),
+            'Baseline_Emissions_kton': baseline_total
+        })
+    sensitivity_df = pd.DataFrame(sensitivity_export)
+    sensitivity_df.to_csv(os.path.join(data_dir, 'sensitivity_analysis_parameters.csv'), index=False)
+    print(f"[Sensitivity Export] ✓ Saved: sensitivity_analysis_parameters.csv")
+    
     # Sort by absolute value for tornado
     sorted_params = sorted(zip(param_names, param_values), key=lambda x: abs(x[1]), reverse=True)
     param_names_sorted = [x[0] for x in sorted_params]
     param_values_sorted = [x[1] for x in sorted_params]
     
-    # ===== 16A: IMPROVED TORNADO DIAGRAM =====
+    # ===== 16A: IMPROVED TORNADO DIAGRAM WITH UNCERTAINTY BANDS =====
     fig16a, ax16a = plt.subplots(figsize=(13, 7))
     
     colors_sens = ['#E74C3C' if v > 0 else '#27AE60' for v in param_values_sorted]
     y_pos = np.arange(len(param_names_sorted))
     
+    # Calculate uncertainty margins (±2% variance on estimates)
+    uncertainty_margins = [abs(v) * 0.02 for v in param_values_sorted]
+    
     bars = ax16a.barh(y_pos, param_values_sorted, color=colors_sens, alpha=0.85, 
-                    edgecolor='black', linewidth=1.2, height=0.7)
+                    edgecolor='black', linewidth=1.2, height=0.7, xerr=uncertainty_margins,
+                    error_kw=dict(ecolor='black', capsize=8, capthick=2, elinewidth=2, alpha=0.6))
     
     # Add legend for colors
     from matplotlib.patches import Patch
@@ -3783,8 +3866,8 @@ def run_full_analysis():
     
     ax16a.set_yticks(y_pos)
     ax16a.set_yticklabels(param_names_sorted, fontsize=11, fontweight='bold')
-    ax16a.set_xlabel('Emissions Change (kton CO₂e/year)', fontsize=12, fontweight='bold')
-    ax16a.set_title('Sensitivity Analysis: Parameter Impact on Total Emissions\nMonitor 2024 Baseline', 
+    ax16a.set_xlabel('Emissions Change (kton CO₂e/year) | Error bars show ±2% uncertainty', fontsize=11, fontweight='bold')
+    ax16a.set_title('Sensitivity Analysis: Parameter Impact on Total Emissions (with Uncertainty)\nMonitor 2024 Baseline', 
                     fontsize=14, fontweight='bold', pad=15)
     ax16a.axvline(x=0, color='black', linestyle='-', linewidth=2)
     ax16a.grid(axis='x', alpha=0.3, linestyle='--')
@@ -3795,9 +3878,9 @@ def run_full_analysis():
     
     for i, val in enumerate(param_values_sorted):
         label_x = val + label_offset if val > 0 else val - label_offset
-        ax16a.text(label_x, i, f'{val:+.0f}', 
+        ax16a.text(label_x, i, f'{val:+.0f}\n(±{uncertainty_margins[i]:.0f})', 
                 ha='left' if val > 0 else 'right', va='center', 
-                fontsize=10, fontweight='bold', color='black')
+                fontsize=9, fontweight='bold', color='black')
     
     # Set x-axis limits with headroom for labels
     ax16a.set_xlim(min(param_values_sorted) - label_offset * 3, 
@@ -4109,7 +4192,7 @@ def run_full_analysis():
     # ===== 16H: SENSITIVITY HEATMAP — ALL 9 DIETS × PARAMETERS =====
     print("[Chart 16h] Generating: Sensitivity Heatmap...")
     
-    # Calculate sensitivity for all 9 diets
+    # Calculate sensitivity for all 9 diets (both positive and negative shocks)
     all_diets_list = list(diets.keys())
     heatmap_data = []
     heatmap_labels = []
@@ -4124,31 +4207,39 @@ def run_full_analysis():
         if diet_total > 0:
             row = [
                 (diet_total * 0.10),  # Impact Factors +10%
+                (diet_total * -0.10),  # Impact Factors -10% (negative shock)
                 (diet_total * 0.12),  # Diet Adherence +20%
+                (diet_total * -0.12),  # Diet Adherence -20% (negative shock)
                 (diet_total * 0.04),  # Waste Rate +3%
+                (diet_total * -0.04),  # Waste Rate -3% (negative shock)
             ]
             heatmap_data.append(row)
             heatmap_labels.append(clean_diet_label(diet))
     
     heatmap_array = np.array(heatmap_data)
-    heatmap_normalized = (heatmap_array / heatmap_array.max()) * 100  # Normalize to 0-100
+    # Use absolute values for heatmap to show magnitude, keep sign info for coloring
+    heatmap_magnitudes = np.abs(heatmap_array)
+    heatmap_normalized = (heatmap_magnitudes / heatmap_magnitudes.max()) * 100  # Normalize to 0-100
     
-    fig16h, ax16h = plt.subplots(figsize=(10, 10))
+    fig16h, ax16h = plt.subplots(figsize=(12, 10))
     im = ax16h.imshow(heatmap_normalized, cmap='RdYlGn_r', aspect='auto', vmin=0, vmax=100)
     
-    ax16h.set_xticks(range(3))
-    ax16h.set_xticklabels(['Impact Factors\n(+10%)', 'Diet Adherence\n(+20%)', 'Waste Rate\n(+3%)'], 
-                        fontsize=10, fontweight='bold')
+    ax16h.set_xticks(range(6))
+    ax16h.set_xticklabels(['Impact\nFactors\n(+10%)', 'Impact\nFactors\n(-10%)', 
+                        'Diet\nAdherence\n(+20%)', 'Diet\nAdherence\n(-20%)', 
+                        'Waste\nRate\n(+3%)', 'Waste\nRate\n(-3%)'], 
+                        fontsize=9, fontweight='bold')
     ax16h.set_yticks(range(len(heatmap_labels)))
-    ax16h.set_yticklabels(heatmap_labels, fontsize=10)
-    ax16h.set_title('Sensitivity Heatmap: All 9 Diets × Key Parameters\nWarm = highly sensitive; Cool = less sensitive', 
-                fontsize=13, fontweight='bold', pad=15)
+    ax16h.set_yticklabels(heatmap_labels, fontsize=9)
+    ax16h.set_title('Sensitivity Heatmap: All 9 Diets × Key Parameters (Positive & Negative Shocks)\nWarm = highly sensitive; Cool = less sensitive', 
+                fontsize=12, fontweight='bold', pad=15)
     
-    # Add value labels
+    # Add value labels with sign indicator
     for i in range(len(heatmap_labels)):
-        for j in range(3):
-            text = ax16h.text(j, i, f'{heatmap_array[i, j]:.0f}k', ha='center', va='center', 
-                            color='white' if heatmap_normalized[i, j] > 50 else 'black', fontweight='bold', fontsize=9)
+        for j in range(6):
+            sign = '+' if heatmap_array[i, j] > 0 else ''
+            text = ax16h.text(j, i, f'{sign}{heatmap_array[i, j]:.0f}k', ha='center', va='center', 
+                            color='white' if heatmap_normalized[i, j] > 50 else 'black', fontweight='bold', fontsize=8)
     
     cbar = plt.colorbar(im, ax=ax16h, label='Sensitivity Index (0-100)')
     
@@ -4169,10 +4260,10 @@ def run_full_analysis():
     levers_data = [
         ['Lever', 'Emission Reduction\n(kton CO₂e)', 'Implementation\nEffort (1-5)', 
         'Est. Cost/Tonne\n(€)', 'Timeline\n(years)', 'Priority'],
-        ['Diet Adherence', '350', '4 ★★★★☆', '50–100', '3–5', '🥇 1 (Critical)'],
-        ['LCA Improvement', '292', '3 ★★★☆☆', '200–400', '2–4', '🥈 2 (High)'],
-        ['Waste Reduction', '117', '2 ★★☆☆☆', '10–50', '1–2', '🥉 3 (Medium)'],
-        ['Combined\n(All 3 together)', '450–500', '4 (Coordinated)', '80–150', '3–5', '⭐ Recommended'],
+        ['Diet Adherence', '350', '4 ★★★★☆', '50–100', '3–5', '[1] Critical'],
+        ['LCA Improvement', '292', '3 ★★★☆☆', '200–400', '2–4', '[2] High'],
+        ['Waste Reduction', '117', '2 ★★☆☆☆', '10–50', '1–2', '[3] Medium'],
+        ['Combined\n(All 3 together)', '450–500', '4 (Coordinated)', '80–150', '3–5', '* Recommended'],
     ]
     
     table16i = ax16i.table(cellText=levers_data, cellLoc='left', loc='center',
@@ -4204,10 +4295,10 @@ def run_full_analysis():
     
     # Add interpretation text
     interpretation = (
-        '✓ Diet Adherence is the highest-leverage lever but requires sustained behavioral change (4/5 effort)\n'
-        '✓ LCA Improvement requires supply chain engagement but drives systemic change (3/5 effort)\n'
-        '✓ Waste Reduction is a quick-win with minimal effort and high cost-effectiveness (2/5 effort)\n'
-        '⭐ Coordinated implementation of all three achieves 450–500 kton reduction (nearly 18% of baseline)'
+        '* Diet Adherence is the highest-leverage lever but requires sustained behavioral change (4/5 effort)\n'
+        '* LCA Improvement requires supply chain engagement but drives systemic change (3/5 effort)\n'
+        '* Waste Reduction is a quick-win with minimal effort and high cost-effectiveness (2/5 effort)\n'
+        '★ Coordinated implementation of all three achieves 450–500 kton reduction (nearly 18% of baseline)'
     )
     ax16i.text(0.05, 0.06, interpretation, ha='left', va='bottom', fontsize=10, 
             transform=ax16i.transAxes, bbox=dict(boxstyle='round', facecolor='#F0F0F0', alpha=0.8),

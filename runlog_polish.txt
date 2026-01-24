@@ -1,0 +1,3 @@
+
+EnvironmentLocationNotFound: Not a conda environment: C:\Users\agaat\anaconda3\envs\csp
+
