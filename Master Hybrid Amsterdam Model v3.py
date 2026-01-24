@@ -851,6 +851,17 @@ def run_full_analysis():
     safe_savefig(os.path.join(core_dir, '1a_Nexus_Stacked.png'), dpi=200)
     plt.close()
     gc.collect()
+    # Export per-chart data (Chart 1a - core)
+    try:
+        df_1a_core = pd.DataFrame({
+            'diet': diet_labels,
+            'co2_pct': co2_pct,
+            'land_pct': land_pct,
+            'water_pct': water_pct
+        })
+        df_1a_core.to_csv(os.path.join(data_dir, '1a_Nexus_Stacked_core.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 1a core CSV: {e}")
     
     # ===== CHART 1b: DIVERGING BARS (without baseline) =====
     # Shows % change from baseline - excludes Monitor 2024 baseline (6 diets: 2 focus + 4 goals)
@@ -920,6 +931,17 @@ def run_full_analysis():
     safe_savefig(os.path.join(core_dir, '1b_Nexus_Diverging.png'), dpi=200)
     plt.close()
     gc.collect()
+    # Export per-chart data (Chart 1b - core)
+    try:
+        df_1b_core = pd.DataFrame({
+            'diet': diet_labels_div,
+            'co2_change_pct': co2_change,
+            'land_change_pct': land_change,
+            'water_change_pct': water_change
+        })
+        df_1b_core.to_csv(os.path.join(data_dir, '1b_Nexus_Diverging_core.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 1b core CSV: {e}")
     
     # ===== APPENDIX: All 9 diets with same format =====
     print("Generating 1a/1b (appendix)...")
@@ -977,6 +999,17 @@ def run_full_analysis():
     safe_savefig(os.path.join(appendix_dir, '1a_Nexus_Stacked.png'), dpi=200)
     plt.close()
     gc.collect()
+    # Export per-chart data (Chart 1a - appendix)
+    try:
+        df_1a_all = pd.DataFrame({
+            'diet': diet_labels_app,
+            'co2_pct': co2_pct_app,
+            'land_pct': land_pct_app,
+            'water_pct': water_pct_app
+        })
+        df_1a_all.to_csv(os.path.join(data_dir, '1a_Nexus_Stacked_all.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 1a appendix CSV: {e}")
     
     # Chart 1b appendix - all 9 diets (excluding baseline)
     df_nexus_no_baseline = df_nexus.drop('1. Monitor 2024 (Current)', errors='ignore')
@@ -1036,6 +1069,17 @@ def run_full_analysis():
     safe_savefig(os.path.join(appendix_dir, '1b_Nexus_Diverging.png'), dpi=200)
     plt.close()
     gc.collect()
+    # Export per-chart data (Chart 1b - appendix)
+    try:
+        df_1b_all = pd.DataFrame({
+            'diet': diet_labels_div_app,
+            'co2_change_pct': co2_change_app,
+            'land_change_pct': land_change_app,
+            'water_change_pct': water_change_app
+        })
+        df_1b_all.to_csv(os.path.join(data_dir, '1b_Nexus_Diverging_all.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 1b appendix CSV: {e}")
 
     # ============================================================================
     # CHART 1c: SYSTEM-WIDE IMPACT CHANGE (Baseline vs Goal Diets)
@@ -1109,6 +1153,12 @@ def run_full_analysis():
         plt.savefig(os.path.join(core_dir, '1c_System_Wide_Impact_Change.png'), dpi=300, bbox_inches='tight')
         plt.savefig(os.path.join(appendix_dir, '1c_System_Wide_Impact_Change.png'), dpi=300, bbox_inches='tight')
         plt.close()
+        # Export per-chart data (Chart 1c)
+        try:
+            df_change.rename(columns={'co2': 'co2_change_pct', 'water': 'water_change_pct', 'land': 'land_change_pct'}, inplace=True)
+            df_change.to_csv(os.path.join(data_dir, '1c_System_Wide_Impact_Change.csv'), index=False)
+        except Exception as e:
+            print(f"Warning: failed to export 1c CSV: {e}")
 
     # ============================================================================
     # CHART 1d: SYSTEM-WIDE IMPACT MATRIX (per-diet panels, GHG/Water/Land)
@@ -1174,6 +1224,27 @@ def run_full_analysis():
     plot_system_wide_matrix(focus_and_goals_core, os.path.join(core_dir, '1d_System_Wide_Impact_Matrix.png'))
     # Appendix matrix (all diets)
     plot_system_wide_matrix(df_nexus.index.tolist(), os.path.join(appendix_dir, '1d_System_Wide_Impact_Matrix.png'))
+    # Export per-chart data (Chart 1d - core + appendix)
+    try:
+        def build_system_wide_df(diet_keys):
+            rows = []
+            for diet in diet_keys:
+                if diet not in df_nexus.index or diet == baseline_key:
+                    continue
+                row = df_nexus.loc[diet]
+                rows.append({
+                    'diet': clean_diet_label(diet),
+                    'GHG Emissions': ((row['co2'] - baseline_vals['co2']) / baseline_vals['co2']) * 100,
+                    'Water Use': ((row['water'] - baseline_vals['water']) / baseline_vals['water']) * 100,
+                    'Land Use': ((row['land'] - baseline_vals['land']) / baseline_vals['land']) * 100,
+                })
+            return pd.DataFrame(rows)
+        df_1d_core = build_system_wide_df(focus_and_goals_core)
+        df_1d_all = build_system_wide_df(df_nexus.index.tolist())
+        df_1d_core.to_csv(os.path.join(data_dir, '1d_System_Wide_Impact_Matrix_core.csv'), index=False)
+        df_1d_all.to_csv(os.path.join(data_dir, '1d_System_Wide_Impact_Matrix_all.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 1d CSVs: {e}")
 
 
     # 2. ALL PLATES
@@ -1217,6 +1288,17 @@ def run_full_analysis():
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '2_All_Plates_Mass.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 2 - core)
+    try:
+        rows2c = []
+        for name, mass_dict in results_mass_core.items():
+            total = sum(mass_dict.get(c, 0.0) for c in CAT_ORDER)
+            for c in CAT_ORDER:
+                val = mass_dict.get(c, 0.0)
+                rows2c.append({'diet': name, 'category': c, 'mass_share_pct': (val / total * 100) if total else 0.0})
+        pd.DataFrame(rows2c).to_csv(os.path.join(data_dir, '2_All_Plates_Mass_core.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 2 core CSV: {e}")
     
     # APPENDIX: All 9 diets
     n_diets = len(results_mass)
@@ -1256,6 +1338,17 @@ def run_full_analysis():
     plt.tight_layout()
     plt.savefig(os.path.join(appendix_dir, '2_All_Plates_Mass.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 2 - appendix)
+    try:
+        rows2a = []
+        for name, mass_dict in results_mass.items():
+            total = sum(mass_dict.get(c, 0.0) for c in CAT_ORDER)
+            for c in CAT_ORDER:
+                val = mass_dict.get(c, 0.0)
+                rows2a.append({'diet': name, 'category': c, 'mass_share_pct': (val / total * 100) if total else 0.0})
+        pd.DataFrame(rows2a).to_csv(os.path.join(data_dir, '2_All_Plates_Mass_all.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 2 appendix CSV: {e}")
 
     # 3. ALL EMISSIONS (Scope 3 only)
     print("Generating 3_All_Emissions_Donuts.png...")
@@ -1300,6 +1393,17 @@ def run_full_analysis():
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '3_All_Emissions_Donuts.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 3 - core)
+    try:
+        rows3c = []
+        for name, co2_dict in results_co2_core.items():
+            total = sum(co2_dict.get(c, 0.0) for c in CAT_ORDER)
+            for c in CAT_ORDER:
+                val = co2_dict.get(c, 0.0)
+                rows3c.append({'diet': name, 'category': c, 'scope3_share_pct': (val / total * 100) if total else 0.0})
+        pd.DataFrame(rows3c).to_csv(os.path.join(data_dir, '3_All_Emissions_Donuts_core.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 3 core CSV: {e}")
     
     # APPENDIX: All 9 diets
     n_diets3 = len(results_co2)
@@ -1341,6 +1445,17 @@ def run_full_analysis():
     plt.tight_layout()
     plt.savefig(os.path.join(appendix_dir, '3_All_Emissions_Donuts.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 3 - appendix)
+    try:
+        rows3a = []
+        for name, co2_dict in results_co2.items():
+            total = sum(co2_dict.get(c, 0.0) for c in CAT_ORDER)
+            for c in CAT_ORDER:
+                val = co2_dict.get(c, 0.0)
+                rows3a.append({'diet': name, 'category': c, 'scope3_share_pct': (val / total * 100) if total else 0.0})
+        pd.DataFrame(rows3a).to_csv(os.path.join(data_dir, '3_All_Emissions_Donuts_all.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 3 appendix CSV: {e}")
 
     # 4. DISTANCE TO GOALS
     print("Generating 4_Distance_To_Goals.png...")
@@ -1365,6 +1480,11 @@ def run_full_analysis():
     fig4.tight_layout()
     fig4.savefig(os.path.join(core_dir, '4_Distance_To_Goals.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 4 - core)
+    try:
+        df_matrix_core.to_csv(os.path.join(data_dir, '4_Distance_To_Goals_core.csv'))
+    except Exception as e:
+        print(f"Warning: failed to export 4 core CSV: {e}")
     
     # APPENDIX: All 9 diets vs all goals
     all_diets = list(diets.keys())
@@ -1387,6 +1507,11 @@ def run_full_analysis():
     fig4b.tight_layout()
     fig4b.savefig(os.path.join(appendix_dir, '4_Distance_To_Goals.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 4 - appendix)
+    try:
+        df_matrix_all.to_csv(os.path.join(data_dir, '4_Distance_To_Goals_all.csv'))
+    except Exception as e:
+        print(f"Warning: failed to export 4 appendix CSV: {e}")
 
     # Pre-calculate scope totals for 4A-4E charts
     # This is needed before Charts 4A-4E but after total_footprints are calculated
@@ -1452,6 +1577,12 @@ def run_full_analysis():
     fig4a.tight_layout()
     fig4a.savefig(os.path.join(core_dir, '4a_Distance_Scope3_vs_Total.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 4a - core)
+    try:
+        df_scope3_core.to_csv(os.path.join(data_dir, '4a_Distance_Scope3_core.csv'))
+        df_matrix_core.to_csv(os.path.join(data_dir, '4a_Distance_Total_core.csv'))
+    except Exception as e:
+        print(f"Warning: failed to export 4a core CSVs: {e}")
     
     # 4B: GAP ANALYSIS DASHBOARD - Readiness Score
     print("Generating 4b_Gap_Analysis_Readiness.png...")
@@ -1495,6 +1626,14 @@ def run_full_analysis():
     fig4b.tight_layout()
     fig4b.savefig(os.path.join(core_dir, '4b_Gap_Analysis_Readiness.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 4b - core)
+    try:
+        df_gap_core = df_matrix_core.clip(lower=0)
+        df_gap_core.reset_index().melt(id_vars='index', var_name='goal_diet', value_name='gap_distance_pct') \
+            .rename(columns={'index': 'base_diet'}) \
+            .to_csv(os.path.join(data_dir, '4b_Gap_Analysis_Readiness_core.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 4b core CSV: {e}")
     
     # 4C: SCOPE BREAKDOWN WATERFALL - shows Scope 1, 2, 3 contribution
     print("Generating 4c_Scope_Breakdown_Waterfall.png...")
@@ -1541,6 +1680,30 @@ def run_full_analysis():
     fig4c.tight_layout()
     safe_savefig(os.path.join(core_dir, '4c_Scope_Breakdown_Waterfall.png'), dpi=300)
     plt.close()
+    # Export per-chart data (Chart 4c - core)
+    try:
+        rows4c = []
+        for base_diet in baselines_core:
+            base_s3 = scope3_totals.get(base_diet, 0.0)
+            base_total = total_footprints[base_diet]
+            base_s12 = base_total - base_s3
+            avg_goal_s12 = np.mean([total_footprints.get(g, 0.0) - scope3_totals.get(g, 0.0) for g in goals_core])
+            avg_goal_s3 = np.mean([scope3_totals.get(g, 0.0) for g in goals_core])
+            avg_goal_total = avg_goal_s12 + avg_goal_s3
+            reduction_pct = ((base_total - avg_goal_total) / base_total * 100) if base_total else 0.0
+            rows4c.append({
+                'diet': base_diet,
+                'scope12_current': base_s12,
+                'scope3_current': base_s3,
+                'scope12_goal_avg': avg_goal_s12,
+                'scope3_goal_avg': avg_goal_s3,
+                'total_current': base_total,
+                'total_goal_avg': avg_goal_total,
+                'reduction_pct': reduction_pct
+            })
+        pd.DataFrame(rows4c).to_csv(os.path.join(data_dir, '4c_Scope_Breakdown_Waterfall_core.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 4c core CSV: {e}")
     
     # 4D: DIET SHIFT - Food Category Composition Changes (Each Diet to Each Goal)
     print("Generating 4d_Diet_Shift_Categories.png...")
@@ -1604,6 +1767,39 @@ def run_full_analysis():
         pass
     fig4d.savefig(os.path.join(core_dir, '4d_Diet_Shift_Categories.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 4d - core, per base→goal, top 8 changes)
+    try:
+        rows4d = []
+        for base_diet in baselines_core:
+            base_profile = diets[base_diet]
+            base_total_weight = sum(base_profile.values())
+            base_comp = {cat: 0 for cat in CAT_ORDER}
+            for item, grams in base_profile.items():
+                cat = VISUAL_MAPPING.get(item, item)
+                if cat in base_comp and base_total_weight > 0:
+                    base_comp[cat] += grams / base_total_weight * 100
+            for goal_diet in goals_core:
+                goal_profile = diets[goal_diet]
+                goal_total_weight = sum(goal_profile.values())
+                goal_comp = {cat: 0 for cat in CAT_ORDER}
+                for item, grams in goal_profile.items():
+                    cat = VISUAL_MAPPING.get(item, item)
+                    if cat in goal_comp and goal_total_weight > 0:
+                        goal_comp[cat] += grams / goal_total_weight * 100
+                changes = {cat: goal_comp[cat] - base_comp[cat] for cat in CAT_ORDER}
+                sorted_cats = sorted(changes.items(), key=lambda x: abs(x[1]), reverse=True)[:8]
+                for cat, delta in sorted_cats:
+                    rows4d.append({
+                        'base_diet': base_diet,
+                        'goal_diet': goal_diet,
+                        'category': cat,
+                        'base_pct': base_comp.get(cat, 0.0),
+                        'goal_pct': goal_comp.get(cat, 0.0),
+                        'delta_pct': delta
+                    })
+        pd.DataFrame(rows4d).to_csv(os.path.join(data_dir, '4d_Diet_Shift_Categories_core.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 4d core CSV: {e}")
 
     # 4D-AVG: DIET SHIFT - Average Goal Composition (Core)
     print("Generating 4d-avg_Diet_Shift_Categories.png...")
@@ -1655,6 +1851,40 @@ def run_full_analysis():
         pass
     fig4d_avg.savefig(os.path.join(core_dir, '4d-avg_Diet_Shift_Categories.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 4d-avg - core, per base→avg goals, top 8 changes)
+    try:
+        rows4davg = []
+        for base_diet in baselines_core:
+            base_profile = diets[base_diet]
+            base_total_weight = sum(base_profile.values())
+            base_comp = {cat: 0 for cat in CAT_ORDER}
+            for item, grams in base_profile.items():
+                cat = VISUAL_MAPPING.get(item, item)
+                if cat in base_comp and base_total_weight > 0:
+                    base_comp[cat] += grams / base_total_weight * 100
+            goal_profiles = [diets[g] for g in goals_core]
+            goal_weights = [sum(p.values()) for p in goal_profiles]
+            avg_goal_comp = {cat: 0 for cat in CAT_ORDER}
+            for gp, gw in zip(goal_profiles, goal_weights):
+                for item, grams in gp.items():
+                    cat = VISUAL_MAPPING.get(item, item)
+                    if cat in avg_goal_comp and gw > 0:
+                        avg_goal_comp[cat] += grams / gw * 100
+            for cat in avg_goal_comp:
+                avg_goal_comp[cat] /= max(len(goals_core), 1)
+            changes = {cat: avg_goal_comp[cat] - base_comp[cat] for cat in CAT_ORDER}
+            sorted_cats = sorted(changes.items(), key=lambda x: abs(x[1]), reverse=True)[:8]
+            for cat, delta in sorted_cats:
+                rows4davg.append({
+                    'base_diet': base_diet,
+                    'category': cat,
+                    'base_pct': base_comp.get(cat, 0.0),
+                    'avg_goal_pct': avg_goal_comp.get(cat, 0.0),
+                    'delta_pct': delta
+                })
+        pd.DataFrame(rows4davg).to_csv(os.path.join(data_dir, '4d_avg_Diet_Shift_Categories_core.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 4d-avg core CSV: {e}")
     
     # 4E: SANKEY-STYLE REDUCTION PATHWAY
     print("Generating 4e_Reduction_Pathways.png...")
@@ -1706,6 +1936,11 @@ def run_full_analysis():
         pass
     fig4e.savefig(os.path.join(core_dir, '4e_Reduction_Pathways.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 4e - core)
+    try:
+        df_matrix_core.to_csv(os.path.join(data_dir, '4e_Reduction_Pathways_core.csv'))
+    except Exception as e:
+        print(f"Warning: failed to export 4e core CSV: {e}")
 
     # ================================================
     # APPENDIX VERSIONS (4A-4E)
@@ -1740,6 +1975,12 @@ def run_full_analysis():
     fig4a_app.tight_layout()
     fig4a_app.savefig(os.path.join(appendix_dir, '4a_Distance_Scope3_vs_Total.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 4a - appendix)
+    try:
+        df_scope3_all.to_csv(os.path.join(data_dir, '4a_Distance_Scope3_all.csv'))
+        df_matrix_all.to_csv(os.path.join(data_dir, '4a_Distance_Total_all.csv'))
+    except Exception as e:
+        print(f"Warning: failed to export 4a appendix CSVs: {e}")
     
     # 4B Appendix: Gap Analysis for all 9 diets
     print("Generating 4b_Gap_Analysis_Readiness_Appendix.png...")
@@ -1787,6 +2028,14 @@ def run_full_analysis():
     fig4b_app.tight_layout()
     fig4b_app.savefig(os.path.join(appendix_dir, '4b_Gap_Analysis_Readiness.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 4b - appendix)
+    try:
+        df_gap_all = df_matrix_all.clip(lower=0)
+        df_gap_all.reset_index().melt(id_vars='index', var_name='goal_diet', value_name='gap_distance_pct') \
+            .rename(columns={'index': 'base_diet'}) \
+            .to_csv(os.path.join(data_dir, '4b_Gap_Analysis_Readiness_all.csv'), index=False)
+    except Exception as e:
+        print(f"Warning: failed to export 4b appendix CSV: {e}")
     
     # 4C Appendix: Scope Breakdown for all 9 diets
     print("Generating 4c_Scope_Breakdown_Waterfall_Appendix.png...")
@@ -1980,6 +2229,11 @@ def run_full_analysis():
         pass
     fig4e_app.savefig(os.path.join(appendix_dir, '4e_Reduction_Pathways.png'), dpi=300, bbox_inches='tight')
     plt.close()
+    # Export per-chart data (Chart 4e - appendix)
+    try:
+        df_matrix_all.to_csv(os.path.join(data_dir, '4e_Reduction_Pathways_all.csv'))
+    except Exception as e:
+        print(f"Warning: failed to export 4e appendix CSV: {e}")
 
     # ================================================
     # END: 4A-4E DIET ADAPTATION VISUALIZATIONS
@@ -2439,6 +2693,11 @@ def run_full_analysis():
     plt.xticks(rotation=15, ha='right')
     plt.tight_layout()
     plt.savefig(os.path.join(appendix_dir, '6_Scope12_vs_Scope3_Total.png'), dpi=300, bbox_inches='tight')
+    # CSV exports for Chart 6
+    df_compare_core.reset_index().rename(columns={'index': 'Diet'}).to_csv(
+        os.path.join(data_dir, '6_Scope12_vs_Scope3_Total_core.csv'), index=False)
+    df_compare_app.reset_index().rename(columns={'index': 'Diet'}).to_csv(
+        os.path.join(data_dir, '6_Scope12_vs_Scope3_Total_all.csv'), index=False)
     plt.close()
 
     # Chart 7: Scope shares - CORE
@@ -2477,6 +2736,19 @@ def run_full_analysis():
     ax7_app.grid(axis='y', alpha=0.3)
     plt.tight_layout()
     plt.savefig(os.path.join(appendix_dir, '7_Scope_Shares.png'), dpi=300, bbox_inches='tight')
+    # CSV exports for Chart 7 (scope shares)
+    df_share_core = pd.DataFrame({
+        'Diet': list(df_compare_core.index),
+        'Scope1+2_share_pct': list(share_s12_core.values),
+        'Scope3_share_pct': list(share_s3_core.values)
+    })
+    df_share_core.to_csv(os.path.join(data_dir, '7_Scope_Shares_core.csv'), index=False)
+    df_share_all = pd.DataFrame({
+        'Diet': list(df_compare_app.index),
+        'Scope1+2_share_pct': list(share_s12_app.values),
+        'Scope3_share_pct': list(share_s3_app.values)
+    })
+    df_share_all.to_csv(os.path.join(data_dir, '7_Scope_Shares_all.csv'), index=False)
 
     print("Generating 8_All_Total_Emissions_Donuts.png...")
     results_total = {}
@@ -2528,6 +2800,13 @@ def run_full_analysis():
     plt.suptitle('Total Emissions (Scope 1+2+3) by Category', fontsize=16, fontweight='bold', y=0.98)
     plt.savefig(os.path.join(core_dir, '8_All_Total_Emissions_Donuts.png'), dpi=150, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '8_All_Total_Emissions_Donuts.png'), dpi=150, bbox_inches='tight')
+    # CSV export for Chart 8 (total emissions by category per diet)
+    total_rows = []
+    for diet_name, cat_map in results_total.items():
+        for cat, val in cat_map.items():
+            total_rows.append({'Diet': clean_diet_label(diet_name), 'Category': cat,
+                            'Total_emissions_tonnes_per_year': val})
+    pd.DataFrame(total_rows).to_csv(os.path.join(data_dir, '8_Total_Emissions_by_Category_all.csv'), index=False)
     plt.close()
 
     print("\nScope 1+2 vs Scope 3 vs Total Summary (Tonnes CO2e/Year):")
@@ -2599,6 +2878,32 @@ def run_full_analysis():
     plot_transition('1. Monitor 2024 (Current)', '8. Schijf van 5 (Guideline)', os.path.join(appendix_dir, '5d_Transition_Schijf.png'))
     plot_transition('1. Monitor 2024 (Current)', '9. Mediterranean Diet', os.path.join(appendix_dir, '5e_Transition_Mediterranean.png'))
 
+    # CSV export for Chart 5 transitions (Scope 3 bars data)
+    transitions = [
+        ('1. Monitor 2024 (Current)', '5. Dutch Goal (60:40)'),
+        ('1. Monitor 2024 (Current)', '6. Amsterdam Goal (70:30)'),
+        ('1. Monitor 2024 (Current)', '7. EAT-Lancet (Planetary)'),
+        ('1. Monitor 2024 (Current)', '8. Schijf van 5 (Guideline)'),
+        ('1. Monitor 2024 (Current)', '9. Mediterranean Diet'),
+    ]
+    trans_rows = []
+    for baseline_key, goal_key in transitions:
+        for cat in CAT_ORDER:
+            b_val = results_co2.get(baseline_key, {}).get(cat, 0.0)
+            g_val = results_co2.get(goal_key, {}).get(cat, 0.0)
+            delta = g_val - b_val
+            pct = (delta / b_val * 100.0) if b_val else 0.0
+            trans_rows.append({
+                'Baseline': clean_diet_label(baseline_key),
+                'Goal': clean_diet_label(goal_key),
+                'Category': cat,
+                'Baseline_scope3_tonnes_per_year': b_val,
+                'Goal_scope3_tonnes_per_year': g_val,
+                'Delta_tonnes_per_year': delta,
+                'Delta_pct': pct
+            })
+    pd.DataFrame(trans_rows).to_csv(os.path.join(data_dir, '5_Transitions_Scope3_by_Category.csv'), index=False)
+
     # 6. TABLE VISUALIZATION (New Request)
     print("Generating 6_Table_Tonnage.png...")
     # Prepare Dataframe for Table
@@ -2641,6 +2946,21 @@ def run_full_analysis():
     plt.title("Master Scope 3 Tonnage Report (Tonnes CO2e/Year)", fontweight='bold', y=1.05)
     plt.savefig(os.path.join(core_dir, '6_Table_Tonnage.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '6_Table_Tonnage.png'), dpi=300, bbox_inches='tight')
+    # CSV exports for 6_Table_Tonnage
+    # Wide format matching displayed table
+    wide_data = {'Category': CAT_ORDER + ['TOTAL']}
+    for diet_key, short_name in zip(diets.keys(), short_names):
+        col_vals = [results_co2[diet_key][cat] for cat in CAT_ORDER]
+        col_vals.append(sum(results_co2[diet_key].values()))
+        wide_data[short_name] = col_vals
+    pd.DataFrame(wide_data).to_csv(os.path.join(data_dir, '6_Table_Tonnage.csv'), index=False)
+    # Long format for analysis
+    long_rows = []
+    for diet_key, short_name in zip(diets.keys(), short_names):
+        for cat in CAT_ORDER:
+            long_rows.append({'Diet': short_name, 'Category': cat, 'Scope3_tonnes_per_year': results_co2[diet_key][cat]})
+        long_rows.append({'Diet': short_name, 'Category': 'TOTAL', 'Scope3_tonnes_per_year': sum(results_co2[diet_key].values())})
+    pd.DataFrame(long_rows).to_csv(os.path.join(data_dir, '6_Table_Tonnage_long.csv'), index=False)
     plt.close()
 
     # ---------------------------------------------------------
@@ -2706,6 +3026,23 @@ def run_full_analysis():
     plt.tight_layout()
     safe_savefig(os.path.join(core_dir, '9_Scope_Breakdown_by_Category.png'), dpi=200)
     safe_savefig(os.path.join(appendix_dir, '9_Scope_Breakdown_by_Category.png'), dpi=200)
+    # CSV export for Chart 9 (scope breakdown by category)
+    scope_breakdown_rows = []
+    for diet_name in all_comparison_diets:
+        for cat in CAT_ORDER:
+            scope12_val = results_scope12[diet_name][cat]
+            scope3_val = results_co2[diet_name][cat]
+            total_val = scope12_val + scope3_val
+            scope_breakdown_rows.append({
+                'Diet': clean_diet_label(diet_name),
+                'Category': cat,
+                'Scope1+2_tonnes_per_year': scope12_val,
+                'Scope3_tonnes_per_year': scope3_val,
+                'Total_tonnes_per_year': total_val,
+                'Scope1+2_pct': (scope12_val / total_val * 100) if total_val else 0,
+                'Scope3_pct': (scope3_val / total_val * 100) if total_val else 0
+            })
+    pd.DataFrame(scope_breakdown_rows).to_csv(os.path.join(data_dir, '9_Scope_Breakdown_by_Category.csv'), index=False)
     plt.close()
     gc.collect()
 
@@ -2803,6 +3140,29 @@ def run_full_analysis():
     plt.tight_layout()
     safe_savefig(os.path.join(core_dir, '10_Multi_Resource_Impact.png'), dpi=200)
     safe_savefig(os.path.join(appendix_dir, '10_Multi_Resource_Impact.png'), dpi=200)
+    # CSV export for Chart 10 (multi-resource impact by food type)
+    multi_resource_rows = []
+    for diet_name in comparison_diets_9:
+        type_totals_co2 = {'Plant-based': 0, 'Animal': 0, 'Dairy': 0, 'Processed': 0, 'Oils': 0, 'Fats': 0}
+        type_totals_land = {'Plant-based': 0, 'Animal': 0, 'Dairy': 0, 'Processed': 0, 'Oils': 0, 'Fats': 0}
+        type_totals_water = {'Plant-based': 0, 'Animal': 0, 'Dairy': 0, 'Processed': 0, 'Oils': 0, 'Fats': 0}
+        for cat in CAT_ORDER:
+            food_type = FOOD_TYPE_MAP.get(cat, 'Processed')
+            type_totals_co2[food_type] += results_scope12[diet_name][cat] + results_co2[diet_name][cat]
+            type_totals_land[food_type] += results_land[diet_name][cat]
+            type_totals_water[food_type] += results_water[diet_name][cat]
+        total_co2 = sum(type_totals_co2.values())
+        total_land = sum(type_totals_land.values())
+        total_water = sum(type_totals_water.values())
+        for food_type in type_totals_co2.keys():
+            multi_resource_rows.append({
+                'Diet': clean_diet_label(diet_name),
+                'Food_Type': food_type,
+                'CO2_pct': (type_totals_co2[food_type] / total_co2 * 100) if total_co2 else 0,
+                'Land_pct': (type_totals_land[food_type] / total_land * 100) if total_land else 0,
+                'Water_pct': (type_totals_water[food_type] / total_water * 100) if total_water else 0
+            })
+    pd.DataFrame(multi_resource_rows).to_csv(os.path.join(data_dir, '10_Multi_Resource_Impact.csv'), index=False)
     plt.close()
     gc.collect()
 
@@ -2876,6 +3236,24 @@ def run_full_analysis():
     plt.tight_layout()
     safe_savefig(os.path.join(core_dir, '11_Emissions_vs_Protein.png'), dpi=200)
     safe_savefig(os.path.join(appendix_dir, '11_Emissions_vs_Protein.png'), dpi=200)
+    # CSV export for Chart 11 (emissions vs protein)
+    protein_rows = []
+    for diet_name in all_comparison_diets_11:
+        mass_data = results_mass[diet_name]
+        total_emissions = {cat: results_scope12[diet_name][cat] + results_co2[diet_name][cat] for cat in CAT_ORDER}
+        total_emission = sum(total_emissions.values())
+        protein_data = {cat: mass_data.get(cat, 0) * PROTEIN_CONTENT.get(cat, 0) for cat in CAT_ORDER}
+        total_protein = sum(protein_data.values())
+        for cat in CAT_ORDER:
+            emission_pct = (total_emissions[cat] / total_emission * 100) if total_emission else 0
+            protein_pct = (protein_data[cat] / total_protein * 100) if total_protein else 0
+            protein_rows.append({
+                'Diet': clean_diet_label(diet_name),
+                'Category': cat,
+                'Emissions_share_pct': emission_pct,
+                'Protein_share_pct': protein_pct
+            })
+    pd.DataFrame(protein_rows).to_csv(os.path.join(data_dir, '11_Emissions_vs_Protein.csv'), index=False)
     plt.close()
 
     # ---------------------------------------------------------
@@ -2939,6 +3317,21 @@ def run_full_analysis():
         plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '12_Diets_vs_Goals_MultiResource.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '12_Diets_vs_Goals_MultiResource.png'), dpi=300, bbox_inches='tight')
+    # CSV export for Chart 12 (multi-resource gap)
+    multiresource_gap_rows = []
+    for diet in comparison_diets:
+        for ref_key, ref_title in zip(goal_refs, goal_titles):
+            for res_name, fn in resource_map.items():
+                ref_val = fn(ref_key)
+                diet_val = fn(diet)
+                pct_change = ((diet_val - ref_val) / ref_val * 100) if ref_val else 0.0
+                multiresource_gap_rows.append({
+                    'Diet': clean_diet_label(diet),
+                    'Goal_Reference': ref_title,
+                    'Resource': res_name,
+                    'Pct_vs_goal': pct_change
+                })
+    pd.DataFrame(multiresource_gap_rows).to_csv(os.path.join(data_dir, '12_Diets_vs_Goals_MultiResource.csv'), index=False)
     plt.close()
 
     # ---------------------------------------------------------
@@ -2995,6 +3388,21 @@ def run_full_analysis():
         plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '12b_Emissions_vs_Reference_MultiGoal.png'), dpi=150, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '12b_Emissions_vs_Reference_MultiGoal.png'), dpi=150, bbox_inches='tight')
+    # CSV export for Chart 12b (total emissions vs goals)
+    emissions_vs_ref_rows = []
+    for diet in comparison_diets:
+        for ref_key, ref_title in zip(ref_keys, ref_titles):
+            ref_val = total_emissions_map.get(ref_key, 0)
+            diet_val = total_emissions_map.get(diet, 0)
+            pct = (diet_val / ref_val * 100) if ref_val else 0.0
+            emissions_vs_ref_rows.append({
+                'Diet': clean_diet_label(diet),
+                'Goal_Reference': ref_title,
+                'Total_emissions_pct_of_goal': pct,
+                'Goal_total_tonnes_per_year': ref_val,
+                'Diet_total_tonnes_per_year': diet_val
+            })
+    pd.DataFrame(emissions_vs_ref_rows).to_csv(os.path.join(data_dir, '12b_Emissions_vs_Reference_MultiGoal.csv'), index=False)
     plt.close()
 
     # Per-goal single panels for clarity
@@ -3180,6 +3588,39 @@ def run_full_analysis():
             ha='left', va='center', fontsize=9, color='gray')
     
     safe_savefig(os.path.join(core_dir, '13_Amsterdam_Food_Infographic.png'), dpi=200)
+    # CSV export for Chart 13 (infographic data blocks)
+    infographic_data = {
+        'Total_Scope12_tonnes': total_scope12_display,
+        'Total_Scope3_tonnes': total_scope3,
+        'Total_Emissions_tonnes': total_emissions_display,
+        'Base_Food_Consumption_tonnes': base_food_disp,
+        'Food_Waste_tonnes': waste_emissions_disp,
+        'Retail_Distribution_tonnes': retail_emissions_disp,
+        'Total_Land_m2': total_land,
+        'Total_Water_L': total_water
+    }
+    pd.DataFrame([infographic_data]).to_csv(os.path.join(data_dir, '13_Infographic_Summary.csv'), index=False)
+    # Top 6 categories details
+    cat_emissions = {cat: results_scope12[monitor_diet][cat] + results_co2[monitor_diet][cat] for cat in CAT_ORDER}
+    sorted_cats_top = sorted(CAT_ORDER, key=lambda c: cat_emissions[c], reverse=True)[:6]
+    mass_data_monitor = results_mass.get(monitor_diet, {})
+    total_mass_monitor = sum(mass_data_monitor.values()) if mass_data_monitor else 0
+    infographic_top6 = []
+    for cat in sorted_cats_top:
+        total_cat = cat_emissions[cat]
+        mass_pct = (mass_data_monitor.get(cat, 0) / total_mass_monitor * 100) if total_mass_monitor else 0
+        scope3_pct = (results_co2[monitor_diet][cat] / total_scope3 * 100) if total_scope3 else 0
+        scope12_cat = results_scope12[monitor_diet][cat] * scope12_scale
+        scope3_cat = results_co2[monitor_diet][cat]
+        infographic_top6.append({
+            'Category': cat,
+            'Scope1+2_kton': scope12_cat / 1000,
+            'Scope3_kton': scope3_cat / 1000,
+            'Total_kton': total_cat / 1000,
+            'Mass_share_pct': mass_pct,
+            'Scope3_share_pct': scope3_pct
+        })
+    pd.DataFrame(infographic_top6).to_csv(os.path.join(data_dir, '13_Infographic_Top6_Categories.csv'), index=False)
     plt.close()
     gc.collect()
     # Save to appendix as well (same data for all versions)
@@ -3235,6 +3676,23 @@ def run_full_analysis():
     plt.savefig(os.path.join(core_dir, '9_CO2_vs_Mass_Share.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '9_CO2_vs_Mass_Share.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '9_CO2_vs_Mass_Share.png'), dpi=300, bbox_inches='tight')
+    # CSV export for Chart 9 second variant (CO2 vs Mass share)
+    co2_mass_share_rows = []
+    for diet_name in diet_names:
+        mass_data = results_mass[diet_name]
+        co2_data = results_co2[diet_name]
+        total_mass = sum(mass_data.values())
+        total_co2 = sum(co2_data.values())
+        for cat in CAT_ORDER:
+            co2_pct = (co2_data[cat] / total_co2 * 100) if total_co2 else 0
+            mass_pct = (mass_data[cat] / total_mass * 100) if total_mass else 0
+            co2_mass_share_rows.append({
+                'Diet': clean_diet_label(diet_name),
+                'Category': cat,
+                'CO2_share_pct': co2_pct,
+                'Mass_share_pct': mass_pct
+            })
+    pd.DataFrame(co2_mass_share_rows).to_csv(os.path.join(data_dir, '9_CO2_vs_Mass_Share.csv'), index=False)
     plt.close()
     print("✓ Saved: 9_CO2_vs_Mass_Share.png (core + appendix)")
 
@@ -3290,6 +3748,22 @@ def run_full_analysis():
     plt.savefig(os.path.join(core_dir, '10_Impact_by_Food_Type.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '10_Impact_by_Food_Type.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '10_Impact_by_Food_Type.png'), dpi=300, bbox_inches='tight')
+    # CSV export for Chart 10 second variant (impact by food type)
+    impact_type_rows = []
+    for diet_name in comparison_diets_4:
+        type_totals = {'Plant-based': 0, 'Animal': 0, 'Mixed (Dairy/Eggs)': 0, 'Processed': 0}
+        for cat in CAT_ORDER:
+            food_type = FOOD_TYPE_MAP.get(cat, 'Processed')
+            type_totals[food_type] += results_co2[diet_name][cat]
+        total = sum(type_totals.values())
+        for food_type, val in type_totals.items():
+            pct = (val / total * 100) if total else 0
+            impact_type_rows.append({
+                'Diet': clean_diet_label(diet_name),
+                'Food_Type': food_type,
+                'CO2_pct': pct
+            })
+    pd.DataFrame(impact_type_rows).to_csv(os.path.join(data_dir, '10_Impact_by_Food_Type.csv'), index=False)
     plt.close()
     print("✓ Saved: 10_Impact_by_Food_Type.png (core + appendix)")
 
@@ -3345,6 +3819,23 @@ def run_full_analysis():
     plt.savefig(os.path.join(core_dir, '11_Emissions_vs_Protein.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '11_Emissions_vs_Protein.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '11_Emissions_vs_Protein.png'), dpi=300, bbox_inches='tight')
+    # CSV export for Chart 11 second variant (mass vs protein)
+    mass_protein_rows = []
+    for diet_name in diet_names:
+        mass_data = results_mass[diet_name]
+        total_mass = sum(mass_data.values())
+        protein_data = {cat: mass_data.get(cat, 0) * PROTEIN_CONTENT.get(cat, 0) for cat in CAT_ORDER}
+        total_protein = sum(protein_data.values())
+        for cat in CAT_ORDER:
+            mass_pct = (mass_data[cat] / total_mass * 100) if total_mass else 0
+            protein_pct = (protein_data[cat] / total_protein * 100) if total_protein else 0
+            mass_protein_rows.append({
+                'Diet': clean_diet_label(diet_name),
+                'Category': cat,
+                'Mass_share_pct': mass_pct,
+                'Protein_share_pct': protein_pct
+            })
+    pd.DataFrame(mass_protein_rows).to_csv(os.path.join(data_dir, '11_Mass_vs_Protein.csv'), index=False)
     plt.close()
     print("✓ Saved: 11_Emissions_vs_Protein.png (core + appendix)")
 
@@ -3382,6 +3873,21 @@ def run_full_analysis():
     plt.suptitle('Dietary Intake vs Schijf van 5 Reference (Selected Diets)', fontsize=14, fontweight='bold', y=0.995)
     plt.savefig('images/12_Dietary_Intake_Comparison.png', dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '12_Dietary_Intake_Comparison.png'), dpi=300, bbox_inches='tight')
+    # CSV export for Chart 12 (dietary intake vs reference)
+    intake_ref_rows = []
+    ref_mass = results_mass[reference_diet]
+    for diet_name in comparison_diets_ref:
+        diet_mass = results_mass[diet_name]
+        for cat in CAT_ORDER:
+            pct_of_ref = (diet_mass[cat] / ref_mass[cat] * 100) if ref_mass[cat] > 0 else 0
+            intake_ref_rows.append({
+                'Diet': clean_diet_label(diet_name),
+                'Category': cat,
+                'Pct_of_reference': pct_of_ref,
+                'Diet_mass_grams': diet_mass[cat],
+                'Reference_mass_grams': ref_mass[cat]
+            })
+    pd.DataFrame(intake_ref_rows).to_csv(os.path.join(data_dir, '12_Dietary_Intake_Comparison.csv'), index=False)
     plt.close()
     print("✓ Saved: 12_Dietary_Intake_Comparison.png (core + appendix)")
 
@@ -3429,6 +3935,25 @@ def run_full_analysis():
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '14a_Delta_Analysis_Total_Emissions.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '14a_Delta_Analysis_Total_Emissions.png'), dpi=300, bbox_inches='tight')
+    # CSV export for Chart 14a (total emissions change vs goals)
+    delta_14a_rows = []
+    for focus_diet in focus_diets:
+        baseline_scope12 = sum(results_scope12.get(focus_diet, {}).values())
+        baseline_co2 = sum(results_co2.get(focus_diet, {}).values())
+        baseline_total = baseline_scope12 * scope12_scale + baseline_co2
+        for goal_diet in goal_diets:
+            goal_scope12 = sum(results_scope12.get(goal_diet, {}).values())
+            goal_co2 = sum(results_co2.get(goal_diet, {}).values())
+            goal_total = goal_scope12 * scope12_scale + goal_co2
+            reduction_pct = ((baseline_total - goal_total) / baseline_total * 100) if baseline_total else 0
+            delta_14a_rows.append({
+                'Baseline_Diet': clean_diet_label(focus_diet),
+                'Goal_Diet': clean_diet_label(goal_diet),
+                'Baseline_total_tonnes': baseline_total,
+                'Goal_total_tonnes': goal_total,
+                'Reduction_pct': reduction_pct
+            })
+    pd.DataFrame(delta_14a_rows).to_csv(os.path.join(data_dir, '14a_Delta_Analysis_Total_Emissions.csv'), index=False)
     plt.close()
     print("✓ Saved: 14a_Delta_Analysis_Total_Emissions.png")
 
@@ -3475,6 +4000,26 @@ def run_full_analysis():
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '14b_Delta_Analysis_By_Category.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '14b_Delta_Analysis_By_Category.png'), dpi=300, bbox_inches='tight')
+    # CSV export for Chart 14b (category-level deltas)
+    delta_14b_rows = []
+    baseline_diet = '1. Monitor 2024 (Current)'
+    for goal_diet in goal_diets:
+        baseline_cats = {cat: results_scope12.get(baseline_diet, {}).get(cat, 0) * scope12_scale + 
+                        results_co2.get(baseline_diet, {}).get(cat, 0) for cat in CAT_ORDER}
+        goal_cats = {cat: results_scope12.get(goal_diet, {}).get(cat, 0) * scope12_scale + 
+                    results_co2.get(goal_diet, {}).get(cat, 0) for cat in CAT_ORDER}
+        for cat in CAT_ORDER:
+            delta = goal_cats.get(cat, 0) - baseline_cats.get(cat, 0)
+            delta_pct = (delta / baseline_cats.get(cat, 1) * 100) if baseline_cats.get(cat, 0) else 0
+            delta_14b_rows.append({
+                'Goal_Diet': clean_diet_label(goal_diet),
+                'Category': cat,
+                'Baseline_tonnes': baseline_cats.get(cat, 0),
+                'Goal_tonnes': goal_cats.get(cat, 0),
+                'Delta_kton': delta / 1000,
+                'Delta_pct': delta_pct
+            })
+    pd.DataFrame(delta_14b_rows).to_csv(os.path.join(data_dir, '14b_Delta_Analysis_By_Category.csv'), index=False)
     plt.close()
     print("✓ Saved: 14b_Delta_Analysis_By_Category.png")
 
@@ -3532,6 +4077,26 @@ def run_full_analysis():
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '14c_Mass_vs_Emissions_Share.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '14c_Mass_vs_Emissions_Share.png'), dpi=300, bbox_inches='tight')
+    # CSV export for Chart 14c (mass vs emissions share)
+    mass_emissions_share_rows = []
+    for focus_diet in focus_diets:
+        mass_data = results_mass.get(focus_diet, {})
+        total_mass = sum(mass_data.values()) if mass_data else 1
+        scope12_data = results_scope12.get(focus_diet, {})
+        co2_data = results_co2.get(focus_diet, {})
+        emissions_by_cat = {cat: (scope12_data.get(cat, 0) * scope12_scale + co2_data.get(cat, 0)) for cat in CAT_ORDER}
+        total_emissions = sum(emissions_by_cat.values()) if emissions_by_cat else 1
+        for cat in CAT_ORDER:
+            mass_share_pct = (mass_data.get(cat, 0) / total_mass * 100) if total_mass else 0
+            emissions_share_pct = (emissions_by_cat.get(cat, 0) / total_emissions * 100) if total_emissions else 0
+            mass_emissions_share_rows.append({
+                'Diet': clean_diet_label(focus_diet),
+                'Category': cat,
+                'Mass_share_pct': mass_share_pct,
+                'Emissions_share_pct': emissions_share_pct,
+                'Gap_pct': emissions_share_pct - mass_share_pct
+            })
+    pd.DataFrame(mass_emissions_share_rows).to_csv(os.path.join(data_dir, '14c_Mass_vs_Emissions_Share.csv'), index=False)
     plt.close()
     print("✓ Saved: 14c_Mass_vs_Emissions_Share.png")
 
@@ -3587,6 +4152,29 @@ def run_full_analysis():
     plt.savefig(os.path.join(core_dir, '14d_Scope_Breakdown_Baseline_vs_Goals.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '14d_Scope_Breakdown_Baseline_vs_Goals.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '14d_Scope_Breakdown_Baseline_vs_Goals.png'), dpi=300, bbox_inches='tight')
+    # CSV export for Chart 14d (scope breakdown baseline vs goals)
+    scope_breakdown_14d_rows = []
+    for focus_diet in focus_diets:
+        baseline_s12 = sum(results_scope12.get(focus_diet, {}).values()) * scope12_scale
+        baseline_s3 = sum(results_co2.get(focus_diet, {}).values())
+        scope_breakdown_14d_rows.append({
+            'Focus_Diet': clean_diet_label(focus_diet),
+            'Scenario': 'Baseline (Monitor)',
+            'Scope1+2_kton': baseline_s12 / 1000,
+            'Scope3_kton': baseline_s3 / 1000,
+            'Total_kton': (baseline_s12 + baseline_s3) / 1000
+        })
+        for goal_diet in goal_diets:
+            goal_s12 = sum(results_scope12.get(goal_diet, {}).values()) * scope12_scale
+            goal_s3 = sum(results_co2.get(goal_diet, {}).values())
+            scope_breakdown_14d_rows.append({
+                'Focus_Diet': clean_diet_label(focus_diet),
+                'Scenario': clean_diet_label(goal_diet),
+                'Scope1+2_kton': goal_s12 / 1000,
+                'Scope3_kton': goal_s3 / 1000,
+                'Total_kton': (goal_s12 + goal_s3) / 1000
+            })
+    pd.DataFrame(scope_breakdown_14d_rows).to_csv(os.path.join(data_dir, '14d_Scope_Breakdown_Baseline_vs_Goals.csv'), index=False)
     plt.close()
     print("✓ Saved: 14d_Scope_Breakdown_Baseline_vs_Goals.png (core + appendix)")
 
@@ -3891,6 +4479,14 @@ def run_full_analysis():
     fig16a.savefig(os.path.join(appendix_dir, '16a_Sensitivity_Tornado_Diagram.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("✓ Saved: 16a_Sensitivity_Tornado_Diagram.png")
+    # Export 16a tornado data to CSV
+    tornado_df = pd.DataFrame({
+        'Parameter': param_names_sorted,
+        'Emission_Change_kton': param_values_sorted,
+        'Uncertainty_kton': uncertainty_margins
+    })
+    tornado_df.to_csv(os.path.join(data_dir, '16a_Sensitivity_Tornado_Diagram.csv'), index=False)
+    print("[Data Export] ✓ 16a_Sensitivity_Tornado_Diagram.csv")
     
     # ===== 16B: SENSITIVITY TABLE =====
     fig16b, ax16b = plt.subplots(figsize=(12, 6))
@@ -3941,6 +4537,10 @@ def run_full_analysis():
     fig16b.savefig(os.path.join(appendix_dir, '16b_Sensitivity_Analysis_Table.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("✓ Saved: 16b_Sensitivity_Analysis_Table.png")
+    # Export 16b sensitivity table to CSV
+    table_df_16b = pd.DataFrame(table_data_sens[1:], columns=table_data_sens[0])
+    table_df_16b.to_csv(os.path.join(data_dir, '16b_Sensitivity_Analysis_Table.csv'), index=False)
+    print("[Data Export] ✓ 16b_Sensitivity_Analysis_Table.csv")
     
     # ===== 16C: GROUPED COMPARISON CHART =====
     # Compare all goals' sensitivity to the same parameters
@@ -3994,6 +4594,20 @@ def run_full_analysis():
     ax16c.grid(axis='y', alpha=0.3, linestyle='--')
     ax16c.set_ylim(0, max([comparison_data[d][p] for d in comparison_diets for p in params_short]) * 1.15)
     
+    # Export 16c grouped comparison data to CSV (tidy format)
+    rows_16c = []
+    for diet in comparison_diets:
+        for param in params_short:
+            rows_16c.append({
+                'Diet': clean_diet_label(diet),
+                'Parameter': param,
+                'Impact_kton': comparison_data[diet][param],
+                'Total_kton': comparison_data[diet]['Total']
+            })
+    df16c = pd.DataFrame(rows_16c)
+    df16c.to_csv(os.path.join(data_dir, '16c_Sensitivity_Grouped_Comparison.csv'), index=False)
+    print("[Data Export] ✓ 16c_Sensitivity_Grouped_Comparison.csv")
+
     fig16c.tight_layout()
     fig16c.savefig(os.path.join(core_dir, '16c_Sensitivity_Grouped_Comparison.png'), dpi=300, bbox_inches='tight')
     fig16c.savefig(os.path.join(appendix_dir, '16c_Sensitivity_Grouped_Comparison.png'), dpi=300, bbox_inches='tight')
@@ -4030,6 +4644,13 @@ def run_full_analysis():
     fig16d.savefig(os.path.join(appendix_dir, '16d_Sensitivity_Radar_Chart.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("✓ Saved: 16d_Sensitivity_Radar_Chart.png")
+    # Export 16d radar chart data to CSV (magnitude % per parameter)
+    df16d = pd.DataFrame({
+        'Parameter': param_names_sorted,
+        'Magnitude_percent': [abs(v) / baseline_total * 100 for v in param_values_sorted]
+    })
+    df16d.to_csv(os.path.join(data_dir, '16d_Sensitivity_Radar_Chart.csv'), index=False)
+    print("[Data Export] ✓ 16d_Sensitivity_Radar_Chart.csv")
     
     # ===== 16E: WATERFALL CHART =====
     fig16e, ax16e = plt.subplots(figsize=(13, 7))
@@ -4090,6 +4711,13 @@ def run_full_analysis():
     fig16e.savefig(os.path.join(appendix_dir, '16e_Sensitivity_Waterfall_Chart.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("✓ Saved: 16e_Sensitivity_Waterfall_Chart.png")
+    # Export 16e waterfall data to CSV
+    df16e = pd.DataFrame({
+        'Label': waterfall_labels,
+        'Value_kton': waterfall_values
+    })
+    df16e.to_csv(os.path.join(data_dir, '16e_Sensitivity_Waterfall_Chart.csv'), index=False)
+    print("[Data Export] ✓ 16e_Sensitivity_Waterfall_Chart.csv")
     
     # ===== 16F: SCENARIO STACKING — COMBINED PARAMETER IMPACTS =====
     print("[Chart 16f] Generating: Scenario Stacking (Combined Impacts)...")
@@ -4139,6 +4767,19 @@ def run_full_analysis():
     fig16f.savefig(os.path.join(appendix_dir, '16f_Scenario_Stacking.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("✓ Saved: 16f_Scenario_Stacking.png")
+    # Export 16f scenario stacking data to CSV
+    rows_16f = []
+    for name, total in zip(scenario_names, scenario_totals):
+        reduction = baseline_total - total
+        reduction_pct = (reduction / baseline_total * 100) if baseline_total > 0 else 0
+        rows_16f.append({
+            'Scenario': name,
+            'Total_kton': total,
+            'Reduction_kton': reduction,
+            'Reduction_percent': reduction_pct
+        })
+    pd.DataFrame(rows_16f).to_csv(os.path.join(data_dir, '16f_Scenario_Stacking.csv'), index=False)
+    print("[Data Export] ✓ 16f_Scenario_Stacking.csv")
     
     # ===== 16G: FEASIBILITY QUADRANT — IMPACT VS EFFORT =====
     print("[Chart 16g] Generating: Feasibility Quadrant...")
@@ -4188,6 +4829,17 @@ def run_full_analysis():
     fig16g.savefig(os.path.join(appendix_dir, '16g_Feasibility_Quadrant.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("✓ Saved: 16g_Feasibility_Quadrant.png")
+    # Export 16g feasibility quadrant data to CSV
+    rows_16g = []
+    for param, data in param_analysis.items():
+        rows_16g.append({
+            'Parameter': param,
+            'Impact_kton': data['impact'],
+            'Feasibility': data['feasibility'],
+            'Bubble_size': data['size']
+        })
+    pd.DataFrame(rows_16g).to_csv(os.path.join(data_dir, '16g_Feasibility_Quadrant.csv'), index=False)
+    print("[Data Export] ✓ 16g_Feasibility_Quadrant.csv")
     
     # ===== 16H: SENSITIVITY HEATMAP — ALL 9 DIETS × PARAMETERS =====
     print("[Chart 16h] Generating: Sensitivity Heatmap...")
@@ -4248,6 +4900,14 @@ def run_full_analysis():
     fig16h.savefig(os.path.join(appendix_dir, '16h_Sensitivity_Heatmap.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("✓ Saved: 16h_Sensitivity_Heatmap.png")
+    # Export 16h heatmap data to CSV
+    heatmap_columns = ['Impact Factors (+10%)', 'Impact Factors (-10%)',
+                       'Diet Adherence (+20%)', 'Diet Adherence (-20%)',
+                       'Waste Rate (+3%)', 'Waste Rate (-3%)']
+    df16h = pd.DataFrame(heatmap_array, columns=heatmap_columns)
+    df16h.insert(0, 'Diet', heatmap_labels)
+    df16h.to_csv(os.path.join(data_dir, '16h_Sensitivity_Heatmap.csv'), index=False)
+    print("[Data Export] ✓ 16h_Sensitivity_Heatmap.csv")
     
     # ===== 16I: POLICY LEVERS DASHBOARD — SUMMARY RECOMMENDATIONS =====
     print("[Chart 16i] Generating: Policy Levers Dashboard...")
@@ -4309,6 +4969,10 @@ def run_full_analysis():
     fig16i.savefig(os.path.join(appendix_dir, '16i_Policy_Levers_Dashboard.png'), dpi=300, bbox_inches='tight')
     plt.close()
     print("✓ Saved: 16i_Policy_Levers_Dashboard.png")
+    # Export 16i policy levers table to CSV
+    df16i = pd.DataFrame(levers_data[1:], columns=levers_data[0])
+    df16i.to_csv(os.path.join(data_dir, '16i_Policy_Levers_Dashboard.csv'), index=False)
+    print("[Data Export] ✓ 16i_Policy_Levers_Dashboard.csv")
     
     print("✓ Comprehensive Sensitivity Analysis Complete (9 visualizations total: 16a-16i)")
 
