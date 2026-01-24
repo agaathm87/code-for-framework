@@ -3,19 +3,19 @@ Master Hybrid Amsterdam Model v3
 Comprehensive Food Systems Scope 3 Emissions Analysis with Sensitivity Suite
 
 CORE FEATURES:
-✅ Empirical Monitor 2024 Data — Baseline reflects actual Amsterdam consumption (48% plant / 52% animal)
-✅ Expanded Food System — 31 explicit food items across 14 granular categories
-✅ Transparent Scope 1+2 — Verified against Monitor 2024's 1,750 kton target (88.1% base + 9.7% waste + 2.2% retail)
-✅ Calibrated LCA Factors — Scope 1+2 coefficients validated for accuracy
-✅ Multi-Metric Analysis — CO2, land use, water footprint tracking
-✅ Income-Sensitive Consumption — Valencia downscaling by neighborhood income
-✅ Education-Based Behavioral Effects — High-education areas show 15% lower meat preference
-✅ Scope 1+2 + Scope 3 Breakdown — Separates local emissions (11-14%) from supply chain (86-89%)
-✅ 9 Dietary Scenarios — Includes Schijf van 5, Mediterranean, and 4 reference goals
-✅ Delta Analysis — Category-level emissions changes to achieve goals
-✅ **COMPREHENSIVE SENSITIVITY ANALYSIS** — 5-visualization suite (tornado, table, radar, grouped, waterfall)
-✅ APA-Formatted Tables — Publication-ready emissions data (PNG + CSV)
-✅ Spatial Hotspot Analysis — Neighborhood-level with education-income interactions
+Empirical Monitor 2024 Data — Baseline reflects actual Amsterdam consumption (48% plant / 52% animal)
+Expanded Food System — 31 explicit food items across 14 granular categories
+Transparent Scope 1+2 — Verified against Monitor 2024's 1,750 kton target (88.1% base + 9.7% waste + 2.2% retail)
+Calibrated LCA Factors — Scope 1+2 coefficients validated for accuracy
+Multi-Metric Analysis — CO2, land use, water footprint tracking
+Income-Sensitive Consumption — Valencia downscaling by neighborhood income
+Education-Based Behavioral Effects — High-education areas show 15% lower meat preference
+Scope 1+2 + Scope 3 Breakdown — Separates local emissions (11-14%) from supply chain (86-89%)
+9 Dietary Scenarios — Includes Schijf van 5, Mediterranean, and 4 reference goals
+Delta Analysis — Category-level emissions changes to achieve goals
+Comprehensive Sensitivity Analysis — 5-visualization suite (tornado, table, radar, grouped, waterfall)
+APA-Formatted Tables — Publication-ready emissions data (PNG + CSV)
+Spatial Hotspot Analysis — Neighborhood-level with education-income interactions
 
 SENSITIVITY ANALYSIS SUITE (Chart 16 - 5 Visualizations):
 16a: Tornado Diagram — Rank parameters by impact magnitude
@@ -89,6 +89,28 @@ import gc  # Garbage collection for memory management
 
 # Turn off interactive mode to prevent display issues
 plt.ioff()
+
+# Global chart spacing defaults for consistent titles/labels across all figures
+plt.rcParams.update({
+    'axes.titlesize': 13,
+    'axes.titleweight': 'bold',
+    'axes.titlepad': 12,
+    'axes.labelsize': 11,
+    'axes.labelweight': 'bold',
+    'axes.labelpad': 8,
+})
+
+# Paul Tol colorblind-safe palette (common subsets)
+# Reference: Tol (2018) color schemes for scientific graphics
+TOL_BLUE = '#0072B2'
+TOL_ORANGE = '#D55E00'
+TOL_GREEN = '#009E73'
+TOL_PINK = '#CC79A7'
+TOL_YELLOW = '#F0E442'
+
+TOL2 = [TOL_BLUE, TOL_ORANGE]
+TOL3 = [TOL_BLUE, TOL_ORANGE, TOL_GREEN]
+TOL4 = [TOL_BLUE, TOL_ORANGE, TOL_GREEN, TOL_PINK]
 
 # ==========================================
 # CHART FORMATTING UTILITIES
@@ -204,8 +226,8 @@ VISUAL_MAPPING = {
 # --- COLOR PALETTE ---
 # Consistent category ordering for all visualizations (14 categories)
 CAT_ORDER = ['Red Meat', 'Poultry', 'Dairy (Liquid)', 'Dairy (Solid) & Eggs', 'Fish', 'Plant Protein', 
-             'Staples', 'Rice', 'Veg & Fruit', 'Ultra-Processed', 'Beverages & Additions', 
-             'Fats (Solid, Animal)', 'Oils (Plant-based)', 'Condiments']
+            'taples', 'Rice', 'Veg & Fruit', 'Ultra-Processed', 'Beverages & Additions', 
+            'Fats (Solid, Animal)', 'Oils (Plant-based)', 'Condiments']
 
 # Colorblind-friendly palette with INTUITIVE color assignments
 # Paul Tol's vibrant qualitative scheme - optimized for deuteranopia, protanopia, tritanopia
@@ -321,32 +343,32 @@ def load_diet_profiles():
     
     Diet Scenarios:
     1. Monitor 2024 (Current): Empirical data from Amsterdam Food Monitor 2024
-       - 48% plant protein / 52% animal protein
-       - Reflects actual consumption patterns with higher plant-based uptake
-       - Lower meat than national average (-20%)
-       
+    - 48% plant protein / 52% animal protein
+    - Reflects actual consumption patterns with higher plant-based uptake
+    - Lower meat than national average (-20%)
+    
     2. Amsterdam Theoretical: Pre-Monitor baseline estimate
-       - Used for historical comparison
-       
+    - Used for historical comparison
+    
     3. Metropolitan (High Risk): Western high-meat diet
-       - High red meat, processed foods, low vegetables
-       - Represents unhealthy urban consumption pattern
-       
+    - High red meat, processed foods, low vegetables
+    - Represents unhealthy urban consumption pattern
+    
     4. Metabolic Balance: Animal-based low-carb diet
-       - High meat/fish/eggs, minimal grains
-       - Keto/paleo style consumption
-       
+    - High meat/fish/eggs, minimal grains
+    - Keto/paleo style consumption
+    
     5. Dutch Goal (60:40): National protein transition target
-       - 60% plant protein, 40% animal protein
-       - Moderate reduction pathway
-       
+    - 60% plant protein, 40% animal protein 
+    - Moderate reduction pathway
+    
     6. Amsterdam Goal (70:30): City protein transition target
-       - 70% plant protein, 30% animal protein
-       - Ambitious reduction pathway
-       
+    - 70% plant protein, 30% animal protein
+    - Ambitious reduction pathway
+
     7. EAT-Lancet (Planetary): Global sustainability benchmark
-       - Planetary health diet for 10 billion people
-       - Maximum environmental sustainability
+    - Planetary health diet for 10 billion people
+    - Maximum environmental sustainability
     
     Returns:
         dict: Dictionary mapping diet names to consumption profiles (grams/day per food item)
@@ -464,7 +486,7 @@ def load_neighborhood_data():
     - High education neighborhoods (Zuid, Centrum) eat 52% plant protein
     - Low education neighborhoods eat 39% plant protein
     - This creates a counter-intuitive pattern: wealthy areas have LOWER meat 
-      consumption despite higher overall food expenditure
+    consumption despite higher overall food expenditure
     
     Key Neighborhoods:
     - Zuid & Centrum: Highest income + education = Lower meat intensity
@@ -734,15 +756,15 @@ def run_full_analysis():
         # CO2 label
         if co2_pct[i] > 5:
             ax1a.text(co2_pct[i]/2, i, f"{co2_pct[i]:.0f}%", 
-                     ha='center', va='center', fontsize=10, fontweight='bold', color='white')
+                    ha='center', va='center', fontsize=10, fontweight='bold', color='white')
         # Land label
         if land_pct[i] > 5:
             ax1a.text(co2_pct[i] + land_pct[i]/2, i, f"{land_pct[i]:.0f}%", 
-                     ha='center', va='center', fontsize=10, fontweight='bold', color='white')
+                    ha='center', va='center', fontsize=10, fontweight='bold', color='white')
         # Water label
         if water_pct[i] > 5:
             ax1a.text(co2_pct[i] + land_pct[i] + water_pct[i]/2, i, f"{water_pct[i]:.0f}%", 
-                     ha='center', va='center', fontsize=10, fontweight='bold', color='white')
+                    ha='center', va='center', fontsize=10, fontweight='bold', color='white')
     
     ax1a.set_yticks(y_pos)
     ax1a.set_yticklabels(diet_labels, fontsize=11, fontweight='bold')
@@ -786,25 +808,25 @@ def run_full_analysis():
         ax1b.barh(y_offset - bar_height, co2_val, bar_height, color=color_co2, alpha=0.85, edgecolor='black', linewidth=0.5)
         offset_x = co2_val + (3 if co2_val > 0 else -3)
         ax1b.text(offset_x, y_offset - bar_height, f'{co2_val:.0f}%', 
-                 ha='left' if co2_val > 0 else 'right', va='center', fontsize=10, fontweight='bold')
+                ha='left' if co2_val > 0 else 'right', va='center', fontsize=10, fontweight='bold')
         
         # Land diverging bar
         land_val = land_change[i]
         color_land = '#27AE60' if land_val < 0 else '#2ECC71'
         ax1b.barh(y_offset, land_val, bar_height, label='Land' if i == 0 else '', 
-                 color=color_land, alpha=0.85, edgecolor='black', linewidth=0.5)
+                color=color_land, alpha=0.85, edgecolor='black', linewidth=0.5)
         offset_x = land_val + (3 if land_val > 0 else -3)
         ax1b.text(offset_x, y_offset, f'{land_val:.0f}%', 
-                 ha='left' if land_val > 0 else 'right', va='center', fontsize=10, fontweight='bold')
+                ha='left' if land_val > 0 else 'right', va='center', fontsize=10, fontweight='bold')
         
         # Water diverging bar
         water_val = water_change[i]
         color_water = '#2980B9' if water_val < 0 else '#3498DB'
         ax1b.barh(y_offset + bar_height, water_val, bar_height, label='Water' if i == 0 else '', 
-                 color=color_water, alpha=0.85, edgecolor='black', linewidth=0.5)
+                color=color_water, alpha=0.85, edgecolor='black', linewidth=0.5)
         offset_x = water_val + (3 if water_val > 0 else -3)
         ax1b.text(offset_x, y_offset + bar_height, f'{water_val:.0f}%', 
-                 ha='left' if water_val > 0 else 'right', va='center', fontsize=10, fontweight='bold')
+                ha='left' if water_val > 0 else 'right', va='center', fontsize=10, fontweight='bold')
     
     ax1b.axvline(x=0, color='black', linestyle='-', linewidth=2.5)
     ax1b.set_yticks(y_pos_div)
@@ -819,8 +841,8 @@ def run_full_analysis():
     # Create custom legend
     from matplotlib.patches import Patch
     legend_elements = [Patch(facecolor='#E74C3C', edgecolor='black', label='CO₂'),
-                      Patch(facecolor='#2ECC71', edgecolor='black', label='Land'),
-                      Patch(facecolor='#3498DB', edgecolor='black', label='Water')]
+                    Patch(facecolor='#2ECC71', edgecolor='black', label='Land'),
+                    Patch(facecolor='#3498DB', edgecolor='black', label='Water')]
     ax1b.legend(handles=legend_elements, loc='lower right', fontsize=11, frameon=True)
     
     plt.tight_layout()
@@ -862,13 +884,13 @@ def run_full_analysis():
     for i, diet in enumerate(diets_list_app):
         if co2_pct_app[i] > 4:
             ax1a_app.text(co2_pct_app[i]/2, i, f"{co2_pct_app[i]:.0f}%", 
-                         ha='center', va='center', fontsize=9, fontweight='bold', color='white')
+                        ha='center', va='center', fontsize=9, fontweight='bold', color='white')
         if land_pct_app[i] > 4:
             ax1a_app.text(co2_pct_app[i] + land_pct_app[i]/2, i, f"{land_pct_app[i]:.0f}%", 
-                         ha='center', va='center', fontsize=9, fontweight='bold', color='white')
+                        ha='center', va='center', fontsize=9, fontweight='bold', color='white')
         if water_pct_app[i] > 4:
             ax1a_app.text(co2_pct_app[i] + land_pct_app[i] + water_pct_app[i]/2, i, f"{water_pct_app[i]:.0f}%", 
-                         ha='center', va='center', fontsize=9, fontweight='bold', color='white')
+                        ha='center', va='center', fontsize=9, fontweight='bold', color='white')
     
     ax1a_app.set_yticks(y_pos_app)
     ax1a_app.set_yticklabels(diet_labels_app, fontsize=10)
@@ -912,21 +934,21 @@ def run_full_analysis():
         ax1b_app.barh(y_offset - bar_height, co2_val, bar_height, color=color_co2, alpha=0.85, edgecolor='black', linewidth=0.5)
         offset_x = co2_val + (2 if co2_val > 0 else -2)
         ax1b_app.text(offset_x, y_offset - bar_height, f'{co2_val:.0f}%', 
-                     ha='left' if co2_val > 0 else 'right', va='center', fontsize=9)
+                    ha='left' if co2_val > 0 else 'right', va='center', fontsize=9)
         
         land_val = land_change_app[i]
         color_land = '#27AE60' if land_val < 0 else '#2ECC71'
         ax1b_app.barh(y_offset, land_val, bar_height, color=color_land, alpha=0.85, edgecolor='black', linewidth=0.5)
         offset_x = land_val + (2 if land_val > 0 else -2)
         ax1b_app.text(offset_x, y_offset, f'{land_val:.0f}%', 
-                     ha='left' if land_val > 0 else 'right', va='center', fontsize=9)
+                    ha='left' if land_val > 0 else 'right', va='center', fontsize=9)
         
         water_val = water_change_app[i]
         color_water = '#2980B9' if water_val < 0 else '#3498DB'
         ax1b_app.barh(y_offset + bar_height, water_val, bar_height, color=color_water, alpha=0.85, edgecolor='black', linewidth=0.5)
         offset_x = water_val + (2 if water_val > 0 else -2)
         ax1b_app.text(offset_x, y_offset + bar_height, f'{water_val:.0f}%', 
-                     ha='left' if water_val > 0 else 'right', va='center', fontsize=9)
+                ha='left' if water_val > 0 else 'right', va='center', fontsize=9)
     
     ax1b_app.axvline(x=0, color='black', linestyle='-', linewidth=2.5)
     ax1b_app.set_yticks(y_pos_div_app)
@@ -943,6 +965,145 @@ def run_full_analysis():
     safe_savefig(os.path.join(appendix_dir, '1b_Nexus_Diverging.png'), dpi=200)
     plt.close()
     gc.collect()
+
+    # ============================================================================
+    # CHART 1c: SYSTEM-WIDE IMPACT CHANGE (Baseline vs Goal Diets)
+    # ============================================================================
+    print("Generating 1c_System_Wide_Impact_Change.png (core + appendix)...")
+
+    goal_diets_change = ['8. Schijf van 5 (Guideline)', '7. EAT-Lancet (Planetary)', '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)']
+    baseline_key = '1. Monitor 2024 (Current)'
+    baseline_vals = df_nexus.loc[baseline_key]
+
+    # Compute % change vs baseline for GHG (co2), Water, Land
+    change_rows = []
+    for diet in goal_diets_change:
+        if diet not in df_nexus.index:
+            continue
+        row = df_nexus.loc[diet]
+        pct_co2 = ((row['co2'] - baseline_vals['co2']) / baseline_vals['co2']) * 100
+        pct_water = ((row['water'] - baseline_vals['water']) / baseline_vals['water']) * 100
+        pct_land = ((row['land'] - baseline_vals['land']) / baseline_vals['land']) * 100
+        change_rows.append({
+            'diet': clean_diet_label(diet),
+            'co2': pct_co2,
+            'water': pct_water,
+            'land': pct_land
+        })
+
+    if change_rows:
+        df_change = pd.DataFrame(change_rows)
+        x = np.arange(len(df_change))
+        width = 0.25
+
+        fig_change, ax_change = plt.subplots(figsize=(12, 6.5))
+
+        # Colorblind-friendly Tol palette
+        tol_red = '#D55E00'
+        tol_blue = '#0072B2'
+        tol_green = '#009E73'
+
+        bars_co2 = ax_change.bar(x - width, df_change['co2'], width, label='GHG Emissions', color=tol_red)
+        bars_water = ax_change.bar(x, df_change['water'], width, label='Water Use', color=tol_blue)
+        bars_land = ax_change.bar(x + width, df_change['land'], width, label='Land Use', color=tol_green)
+
+        # Annotate bars
+        def annotate(bars):
+            for b in bars:
+                height = b.get_height()
+                ax_change.text(b.get_x() + b.get_width()/2, height + (2 if height >= 0 else -2),
+                            f"{height:.1f}%", ha='center', va='bottom' if height >= 0 else 'top',
+                            fontsize=9, fontweight='bold')
+
+        annotate(bars_co2)
+        annotate(bars_water)
+        annotate(bars_land)
+
+        ax_change.axhline(0, color='black', linewidth=1.2)
+        ax_change.set_xticks(x)
+        ax_change.set_xticklabels(df_change['diet'], fontsize=11)
+        ax_change.set_ylabel('% Change from Monitor 2024', fontsize=12, fontweight='bold')
+        ax_change.set_title('System-Wide Environmental Impact Change:\nMonitor 2024 vs Goal Diets', fontsize=14, fontweight='bold', pad=14)
+
+        # Baseline annotation box
+        baseline_text = (f"Monitor 2024 Baseline:\nGHG: {baseline_vals['co2']:.0f} kton CO2e\n"
+                        f"Water: {baseline_vals['water']:.1f} ML\nLand: {baseline_vals['land']:.2f} km²")
+        ax_change.text(0.98, 0.98, baseline_text, transform=ax_change.transAxes,
+                    ha='right', va='top', fontsize=9, bbox=dict(boxstyle='round', facecolor='#f9f9f9',
+                                                                edgecolor='gray', alpha=0.8))
+
+        ax_change.legend(loc='upper left', bbox_to_anchor=(1.02, 1), frameon=True, fontsize=10)
+        ax_change.grid(axis='y', linestyle='--', alpha=0.3)
+        plt.tight_layout()
+        plt.savefig(os.path.join(core_dir, '1c_System_Wide_Impact_Change.png'), dpi=300, bbox_inches='tight')
+        plt.savefig(os.path.join(appendix_dir, '1c_System_Wide_Impact_Change.png'), dpi=300, bbox_inches='tight')
+        plt.close()
+
+    # ============================================================================
+    # CHART 1d: SYSTEM-WIDE IMPACT MATRIX (per-diet panels, GHG/Water/Land)
+    # ============================================================================
+    def plot_system_wide_matrix(diet_keys, out_path):
+        panels = []
+        for diet in diet_keys:
+            if diet not in df_nexus.index or diet == baseline_key:
+                continue
+            row = df_nexus.loc[diet]
+            panels.append({
+                'diet': clean_diet_label(diet),
+                'GHG Emissions': ((row['co2'] - baseline_vals['co2']) / baseline_vals['co2']) * 100,
+                'Water Use': ((row['water'] - baseline_vals['water']) / baseline_vals['water']) * 100,
+                'Land Use': ((row['land'] - baseline_vals['land']) / baseline_vals['land']) * 100,
+            })
+        if not panels:
+            return
+
+        df_panels = pd.DataFrame(panels)
+        impacts = ['GHG Emissions', 'Water Use', 'Land Use']
+        n = len(df_panels)
+        cols = 3 if n > 3 else n
+        rows = int(np.ceil(n / cols))
+
+        fig, axes = plt.subplots(rows, cols, figsize=(4 * cols, 3.5 * rows), sharey=True)
+        axes = np.array(axes).reshape(-1)
+
+        y_min = min(df_panels[impacts].min().min(), -30)
+        y_max = max(df_panels[impacts].max().max(), 30)
+
+        # Colorblind-friendly Tol palette (red, blue, green)
+        colors = ['#D55E00', '#0072B2', '#009E73']
+
+        for idx, (_, r) in enumerate(df_panels.iterrows()):
+            ax = axes[idx]
+            vals = [r[i] for i in impacts]
+            x_imp = np.arange(len(impacts))
+            bars = ax.bar(x_imp, vals, color=colors, alpha=0.9)
+            ax.axhline(0, color='black', linewidth=1.0)
+            ax.set_xticks(x_imp)
+            ax.set_xticklabels(impacts, rotation=20, fontsize=9)
+            ax.set_title(r['diet'], fontsize=11, fontweight='bold', pad=8)
+            ax.text(0.02, 0.92, 'Intervention', transform=ax.transAxes, ha='left', va='top',
+                    fontsize=8, fontweight='bold', color='#555555',
+                    bbox=dict(boxstyle='round,pad=0.25', facecolor='#f4f4f4', edgecolor='#cccccc', alpha=0.9))
+            ax.set_ylim(y_min, y_max)
+            ax.grid(axis='y', linestyle='--', alpha=0.35)
+            for b, v in zip(bars, vals):
+                ax.text(b.get_x() + b.get_width()/2, v + (2 if v >= 0 else -2), f"{v:.1f}%",
+                        ha='center', va='bottom' if v >= 0 else 'top', fontsize=8, fontweight='bold')
+
+        for j in range(len(df_panels), len(axes)):
+            axes[j].axis('off')
+
+        fig.suptitle('Change of Food System-Wide Impacts (vs Monitor 2024 Baseline)', fontsize=14, fontweight='bold', y=0.98)
+        fig.legend(impacts, loc='lower center', ncol=3, frameon=True, bbox_to_anchor=(0.5, 0.0), fontsize=10)
+        plt.tight_layout(rect=[0, 0.06, 1, 0.96])
+        plt.savefig(out_path, dpi=300, bbox_inches='tight')
+        plt.close()
+
+    # Core matrix (focus + goals)
+    plot_system_wide_matrix(focus_and_goals_core, os.path.join(core_dir, '1d_System_Wide_Impact_Matrix.png'))
+    # Appendix matrix (all diets)
+    plot_system_wide_matrix(df_nexus.index.tolist(), os.path.join(appendix_dir, '1d_System_Wide_Impact_Matrix.png'))
+
 
     # 2. ALL PLATES
     print("Generating 2_All_Plates_Mass.png...")
@@ -964,8 +1125,8 @@ def run_full_analysis():
             return f'{pct:.0f}%' if pct > 2 else ''
         
         wedges, texts, autotexts = ax.pie(vals, labels=None, autopct=autopct_format, 
-                                           startangle=90, pctdistance=0.75, colors=COLORS,
-                                           wedgeprops=dict(width=0.5, edgecolor='white', linewidth=1.5))
+                                        startangle=90, pctdistance=0.75, colors=COLORS,
+                                        wedgeprops=dict(width=0.5, edgecolor='white', linewidth=1.5))
         
         # Make percentage text bold and white for better visibility
         for autotext in autotexts:
@@ -980,7 +1141,7 @@ def run_full_analysis():
     
     # Create better legend with 2 rows for readability
     fig2.legend(CAT_ORDER, loc='lower center', ncol=7, frameon=True, 
-              bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
+            bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
     fig2.suptitle('Mass Distribution: 3 Focus Diets', fontsize=15, fontweight='bold', y=0.98)
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '2_All_Plates_Mass.png'), dpi=300, bbox_inches='tight')
@@ -1003,8 +1164,8 @@ def run_full_analysis():
             return f'{pct:.0f}%' if pct > 2 else ''
         
         wedges, texts, autotexts = ax.pie(vals, labels=None, autopct=autopct_format, 
-                                           startangle=90, pctdistance=0.75, colors=COLORS,
-                                           wedgeprops=dict(width=0.5, edgecolor='white', linewidth=1.5))
+                                        startangle=90, pctdistance=0.75, colors=COLORS,
+                                        wedgeprops=dict(width=0.5, edgecolor='white', linewidth=1.5))
         
         # Make percentage text bold and white for better visibility
         for autotext in autotexts:
@@ -1019,7 +1180,7 @@ def run_full_analysis():
     
     # Create better legend with 2 rows for readability
     fig2b.legend(CAT_ORDER, loc='lower center', ncol=7, frameon=True,
-               bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
+            bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
     fig2b.suptitle('Mass Distribution: All 9 Diets', fontsize=15, fontweight='bold', y=0.98)
     plt.tight_layout()
     plt.savefig(os.path.join(appendix_dir, '2_All_Plates_Mass.png'), dpi=300, bbox_inches='tight')
@@ -1045,8 +1206,8 @@ def run_full_analysis():
             return f'{pct:.0f}%' if pct > 2 else ''
         
         wedges, texts, autotexts = ax.pie(vals, labels=None, autopct=autopct_format, 
-                                           startangle=90, pctdistance=0.75, colors=COLORS,
-                                           wedgeprops=dict(width=0.5, edgecolor='white', linewidth=1.5))
+                                        startangle=90, pctdistance=0.75, colors=COLORS,
+                                        wedgeprops=dict(width=0.5, edgecolor='white', linewidth=1.5))
         
         # Make percentage text bold and white for better visibility
         for autotext in autotexts:
@@ -1063,7 +1224,7 @@ def run_full_analysis():
     
     # Create better legend with 2 rows for readability
     fig3.legend(CAT_ORDER, loc='lower center', ncol=7, frameon=True,
-              bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
+            bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
     fig3.suptitle('Scope 3 Emissions Distribution: 3 Focus Diets', fontsize=15, fontweight='bold', y=0.98)
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '3_All_Emissions_Donuts.png'), dpi=300, bbox_inches='tight')
@@ -1086,8 +1247,8 @@ def run_full_analysis():
             return f'{pct:.0f}%' if pct > 2 else ''
         
         wedges, texts, autotexts = ax.pie(vals, labels=None, autopct=autopct_format, 
-                                           startangle=90, pctdistance=0.75, colors=COLORS,
-                                           wedgeprops=dict(width=0.5, edgecolor='white', linewidth=1.5))
+                                        startangle=90, pctdistance=0.75, colors=COLORS,
+                                        wedgeprops=dict(width=0.5, edgecolor='white', linewidth=1.5))
         
         # Make percentage text bold and white for better visibility
         for autotext in autotexts:
@@ -1104,7 +1265,7 @@ def run_full_analysis():
     
     # Create better legend with 2 rows for readability
     fig3b.legend(CAT_ORDER, loc='lower center', ncol=7, frameon=True,
-               bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
+            bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
     fig3b.suptitle('Scope 3 Emissions Distribution: All 9 Diets', fontsize=15, fontweight='bold', y=0.98)
     plt.tight_layout()
     plt.savefig(os.path.join(appendix_dir, '3_All_Emissions_Donuts.png'), dpi=300, bbox_inches='tight')
@@ -1257,7 +1418,7 @@ def run_full_analysis():
         for bar in bars:
             width = bar.get_width()
             ax.text(width, bar.get_y() + bar.get_height()/2, f'{width:.1f}%', 
-                   ha='left', va='center', fontweight='bold', fontsize=9)
+                ha='left', va='center', fontweight='bold', fontsize=9)
     
     fig4b.suptitle('Gap Analysis: Reduction Required by Diet & Goal', fontsize=13, fontweight='bold')
     fig4b.tight_layout()
@@ -1295,15 +1456,15 @@ def run_full_analysis():
         for bar in bars:
             height = bar.get_height()
             ax.text(bar.get_x() + bar.get_width()/2, height, f'{int(height/1000)}k',
-                   ha='center', va='bottom', fontweight='bold', fontsize=9)
+                ha='center', va='bottom', fontweight='bold', fontsize=9)
         
         # Add reduction arrows
         ax.annotate('', xy=(2, avg_goal_total), xytext=(1, base_total),
-                   arrowprops=dict(arrowstyle='<->', color='red', lw=2, linestyle='dashed'))
+                arrowprops=dict(arrowstyle='<->', color='red', lw=2, linestyle='dashed'))
         reduction_pct = (base_total - avg_goal_total) / base_total * 100
         ax.text(1.5, (base_total + avg_goal_total)/2, f'↓{reduction_pct:.0f}%', 
-               ha='center', fontsize=10, fontweight='bold', color='red',
-               bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.7))
+            ha='center', fontsize=10, fontweight='bold', color='red',
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.7))
     
     fig4c.suptitle('Scope Breakdown Waterfall: Current vs Goal', fontsize=13, fontweight='bold')
     fig4c.tight_layout()
@@ -1363,7 +1524,7 @@ def run_full_analysis():
                 width = bar.get_width()
                 if abs(width) > 0.3:  # Only show if > 0.3%
                     ax.text(width, bar.get_y() + bar.get_height()/2, f'{width:.1f}%', 
-                           ha='left' if width > 0 else 'right', va='center', fontweight='bold', fontsize=7)
+                        ha='left' if width > 0 else 'right', va='center', fontweight='bold', fontsize=7)
     
     fig4d.suptitle('Diet Adaptation: Food Category Composition Changes (Each Diet to Each Goal)', fontsize=13, fontweight='bold')
     try:
@@ -1456,7 +1617,7 @@ def run_full_analysis():
             
             # Add percentage text
             ax4e.text(i, j, f'{reduction:.0f}%', ha='center', va='center', 
-                     fontsize=10, fontweight='bold', color='white' if abs(reduction) > 30 else 'black')
+                    fontsize=10, fontweight='bold', color='white' if abs(reduction) > 30 else 'black')
     
     ax4e.set_xticks(range(len(baselines_core)))
     ax4e.set_xticklabels([clean_diet_label(d) for d in baselines_core], rotation=15, ha='right')
@@ -1465,7 +1626,7 @@ def run_full_analysis():
     ax4e.set_xlabel('Current Diets', fontweight='bold', fontsize=11)
     ax4e.set_ylabel('Goal Diets', fontweight='bold', fontsize=11)
     ax4e.set_title('Reduction Pathway Matrix: Efficiency of Diet Adaptations\n(Red = Reduction needed | Blue = Already exceeds goal)', 
-                  fontsize=12, fontweight='bold', pad=15)
+                fontsize=12, fontweight='bold', pad=15)
     ax4e.invert_yaxis()
     
     try:
@@ -1546,7 +1707,7 @@ def run_full_analysis():
             width = bar.get_width()
             if width > 0:
                 ax.text(width, bar.get_y() + bar.get_height()/2, f'{width:.0f}%', 
-                       ha='left', va='center', fontweight='bold', fontsize=7)
+                    ha='left', va='center', fontweight='bold', fontsize=7)
     
     for j in range(n_diets_gap, len(axes_gap)):
         axes_gap[j].axis('off')
@@ -1586,13 +1747,13 @@ def run_full_analysis():
         for bar in bars:
             height = bar.get_height()
             ax.text(bar.get_x() + bar.get_width()/2, height, f'{int(height/1000)}k',
-                   ha='center', va='bottom', fontweight='bold', fontsize=7)
+                ha='center', va='bottom', fontweight='bold', fontsize=7)
         
         if avg_goal_total > 0:
             reduction_pct = (base_total - avg_goal_total) / base_total * 100
             ax.text(1.5, max(base_total, avg_goal_total) * 0.9, f'↓{reduction_pct:.0f}%', 
-                   ha='center', fontsize=8, fontweight='bold', color='red',
-                   bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.7))
+                ha='center', fontsize=8, fontweight='bold', color='red',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.7))
     
     for j in range(n_diets_scope, len(axes_scope)):
         axes_scope[j].axis('off')
@@ -1647,7 +1808,7 @@ def run_full_analysis():
             width = bar.get_width()
             if abs(width) > 0.5:
                 ax.text(width, bar.get_y() + bar.get_height()/2, f'{width:.1f}%', 
-                       ha='left' if width > 0 else 'right', va='center', fontweight='bold', fontsize=7)
+                    ha='left' if width > 0 else 'right', va='center', fontweight='bold', fontsize=7)
     
     for j in range(n_diets_shift, len(axes_shift)):
         axes_shift[j].axis('off')
@@ -1730,7 +1891,7 @@ def run_full_analysis():
             ax4e_app.add_patch(rect)
             
             ax4e_app.text(i, j, f'{reduction:.0f}%', ha='center', va='center', 
-                         fontsize=8, fontweight='bold', color='white' if abs(reduction) > 30 else 'black')
+                        fontsize=8, fontweight='bold', color='white' if abs(reduction) > 30 else 'black')
     
     ax4e_app.set_xticks(range(len(all_diets)))
     ax4e_app.set_xticklabels([clean_diet_label(d) for d in all_diets], rotation=45, ha='right', fontsize=9)
@@ -1739,7 +1900,7 @@ def run_full_analysis():
     ax4e_app.set_xlabel('Current Diets', fontweight='bold', fontsize=11)
     ax4e_app.set_ylabel('Goal Diets', fontweight='bold', fontsize=11)
     ax4e_app.set_title('Reduction Pathway Matrix: Efficiency of Diet Adaptations (All 9 Diets)\n(Red = Reduction needed | Blue = Already exceeds goal)', 
-                      fontsize=12, fontweight='bold', pad=15)
+                    fontsize=12, fontweight='bold', pad=15)
     ax4e_app.invert_yaxis()
     
     try:
@@ -1768,9 +1929,9 @@ def run_full_analysis():
     ax_title = fig_info.add_subplot(gs[0, :])
     ax_title.axis('off')
     ax_title.text(0.5, 0.7, 'Amsterdam Food System Emissions', ha='center', va='top', 
-                 fontsize=18, fontweight='bold', transform=ax_title.transAxes)
+                fontsize=18, fontweight='bold', transform=ax_title.transAxes)
     ax_title.text(0.5, 0.25, 'Current Baseline → Policy Goals: Reduction Pathways & Food Category Shifts',
-                 ha='center', va='top', fontsize=10, style='italic', transform=ax_title.transAxes)
+                ha='center', va='top', fontsize=10, style='italic', transform=ax_title.transAxes)
     
     # -------- PANEL 1: SCOPE BREAKDOWN --------
     ax_scope = fig_info.add_subplot(gs[1, 0])
@@ -1783,11 +1944,11 @@ def run_full_analysis():
     
     scope_vals = [current_s12, current_s3]
     scope_labels = [f'Scope 1+2\n{current_s12/1000:.0f}k\n({current_s12/current_total*100:.0f}%)',
-                   f'Scope 3\n{current_s3/1000:.0f}k\n({current_s3/current_total*100:.0f}%)']
+                f'Scope 3\n{current_s3/1000:.0f}k\n({current_s3/current_total*100:.0f}%)']
     scope_colors = ['#7f8c8d', '#e67e22']
     
     wedges, texts, autotexts = ax_scope.pie(scope_vals, labels=scope_labels, colors=scope_colors,
-                                              autopct='', startangle=90, textprops={'fontsize': 9, 'fontweight': 'bold'})
+                                            autopct='', startangle=90, textprops={'fontsize': 9, 'fontweight': 'bold'})
     ax_scope.set_title('Scope Breakdown\n(Current Baseline)', fontsize=11, fontweight='bold', pad=10)
     
     # -------- PANEL 2: FOOD CATEGORY COMPARISON --------
@@ -1830,7 +1991,7 @@ def run_full_analysis():
     # Add value labels
     for i, (bar, val) in enumerate(zip(bars, vals_top)):
         ax_cat.text(val, bar.get_y() + bar.get_height()/2, f' {val:.1f}%', 
-                   ha='left' if val > 0 else 'right', va='center', fontsize=8, fontweight='bold')
+                ha='left' if val > 0 else 'right', va='center', fontsize=8, fontweight='bold')
     
     # -------- PANEL 3: REDUCTION PATHWAY --------
     ax_pathway = fig_info.add_subplot(gs[2, :])
@@ -1865,22 +2026,22 @@ def run_full_analysis():
     for i, (bar, val) in enumerate(zip(bars_path[:-1], pathway_data[:-1])):
         height = bar.get_height()
         ax_pathway.text(bar.get_x() + bar.get_width()/2, height + 50, f'{int(val/1000)}k',
-                       ha='center', va='bottom', fontsize=9, fontweight='bold')
+                    ha='center', va='bottom', fontsize=9, fontweight='bold')
         
         # Arrow to goal
         reduction_pct = (val - avg_goal) / val * 100
         ax_pathway.annotate('', xy=(len(pathway_data)-1 - 0.15, avg_goal),
-                           xytext=(i + 0.15, val),
-                           arrowprops=dict(arrowstyle='->', color='red', lw=1.5, alpha=0.6))
+                        xytext=(i + 0.15, val),
+                        arrowprops=dict(arrowstyle='->', color='red', lw=1.5, alpha=0.6))
         
         # Reduction percentage
         mid_x = (i + len(pathway_data) - 1) / 2
         mid_y = (val + avg_goal) / 2
         ax_pathway.text(mid_x, mid_y, f'↓{reduction_pct:.0f}%', fontsize=8, fontweight='bold', 
-                       color='red', bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.7))
+                    color='red', bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.7))
     
     ax_pathway.text(len(pathway_data)-1, avg_goal + 50, f'{int(avg_goal/1000)}k',
-                   ha='center', va='bottom', fontsize=9, fontweight='bold')
+                ha='center', va='bottom', fontsize=9, fontweight='bold')
     
     # -------- PANEL 4: KEY RECOMMENDATIONS --------
     ax_rec = fig_info.add_subplot(gs[3, :])
@@ -1919,7 +2080,7 @@ def run_full_analysis():
     rec_text += f"\n\nFeasibility of Reaching Goals: {feasibility}\n(Average reduction needed: {avg_reduction:.0f}%)"
     
     ax_rec.text(0.05, 0.95, rec_text, transform=ax_rec.transAxes, fontsize=9, verticalalignment='top',
-               fontfamily='monospace', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+            fontfamily='monospace', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
     
     fig_info.savefig(os.path.join(core_dir, '5_Infographic_Summary.png'), dpi=300, bbox_inches='tight')
     plt.close()
@@ -1934,9 +2095,9 @@ def run_full_analysis():
     ax_title_app = fig_info_app.add_subplot(gs_app[0])
     ax_title_app.axis('off')
     ax_title_app.text(0.5, 0.7, 'Amsterdam Food System Emissions', ha='center', va='top', 
-                     fontsize=18, fontweight='bold', transform=ax_title_app.transAxes)
+                fontsize=18, fontweight='bold', transform=ax_title_app.transAxes)
     ax_title_app.text(0.5, 0.25, 'All 9 Diets: Current Baseline → Policy Goals',
-                     ha='center', va='top', fontsize=10, style='italic', transform=ax_title_app.transAxes)
+                    ha='center', va='top', fontsize=10, style='italic', transform=ax_title_app.transAxes)
     
     # -------- SCOPE BREAKDOWN - ALL DIETS --------
     ax_scope_app = fig_info_app.add_subplot(gs_app[1])
@@ -1963,7 +2124,7 @@ def run_full_analysis():
     for bar, pct in zip(bars_scope_app, scope_shares):
         height = bar.get_height()
         ax_scope_app.text(bar.get_x() + bar.get_width()/2, height + 1, f'{pct:.0f}%',
-                         ha='center', va='bottom', fontsize=7, fontweight='bold')
+                        ha='center', va='bottom', fontsize=7, fontweight='bold')
     
     # -------- REDUCTION NEEDED MATRIX --------
     ax_reduction_app = fig_info_app.add_subplot(gs_app[2])
@@ -1995,7 +2156,7 @@ def run_full_analysis():
         height = bar.get_height()
         if height > 0:
             ax_reduction_app.text(bar.get_x() + bar.get_width()/2, height + 1, f'{red:.0f}%',
-                                 ha='center', va='bottom', fontsize=7, fontweight='bold')
+                                ha='center', va='bottom', fontsize=7, fontweight='bold')
     
     # -------- SUMMARY STATISTICS --------
     ax_stats_app = fig_info_app.add_subplot(gs_app[3])
@@ -2020,8 +2181,8 @@ def run_full_analysis():
 ✓ Diet shift strategies are critical for emissions reduction"""
     
     ax_stats_app.text(0.05, 0.95, stats_text, transform=ax_stats_app.transAxes, fontsize=9, 
-                     verticalalignment='top', fontfamily='monospace',
-                     bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.5))
+                    verticalalignment='top', fontfamily='monospace',
+                    bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.5))
     
     fig_info_app.savefig(os.path.join(appendix_dir, '5_Infographic_Summary.png'), dpi=300, bbox_inches='tight')
     plt.close()
@@ -2064,13 +2225,13 @@ def run_full_analysis():
     for cat_idx, cat in enumerate(CAT_ORDER):
         values = [category_data_core[i][cat_idx] for i in range(len(diets_to_plot_core))]
         ax_stack_core.bar(x_pos, values, bottom=bottom, label=cat, color=COLORS[cat_idx],
-                         edgecolor='white', linewidth=1.5)
+                        edgecolor='white', linewidth=1.5)
         
         # Add percentage labels for larger categories
         for i, (val, bot) in enumerate(zip(values, bottom)):
             if val > 3:  # Only show if > 3%
                 ax_stack_core.text(i, bot + val/2, f'{val:.0f}%', ha='center', va='center',
-                                 fontsize=8, fontweight='bold', color='white')
+                                fontsize=8, fontweight='bold', color='white')
         bottom += values
     
     ax_stack_core.set_xlabel('Current Diets', fontweight='bold', fontsize=12)
@@ -2188,9 +2349,10 @@ def run_full_analysis():
     core_labels_clean = [clean_diet_label(d) for d in df_compare_core.index]
     df_compare_core.index = core_labels_clean
     
-    ax6 = df_compare_core.plot(kind='bar', figsize=(14, 8), color=['#7f8c8d', '#e67e22', '#2c3e50'])
+    ax6 = df_compare_core.plot(kind='bar', figsize=(14, 8), color=TOL3)
     ax6.set_title('Scope 1+2, Scope 3, and Total Food Emissions by Diet (Tonnes CO2e/Year)')
     ax6.set_ylabel('Tonnes CO2e / Year')
+    ax6.legend(loc='upper left', bbox_to_anchor=(1.02, 1), frameon=True)
     plt.xticks(rotation=15, ha='right')
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '6_Scope12_vs_Scope3_Total.png'), dpi=300, bbox_inches='tight')
@@ -2199,9 +2361,10 @@ def run_full_analysis():
     df_compare_app = df_compare.copy()
     app_labels_clean = [clean_diet_label(d) for d in df_compare_app.index]
     df_compare_app.index = app_labels_clean
-    ax6_app = df_compare_app.plot(kind='bar', figsize=(14, 8), color=['#7f8c8d', '#e67e22', '#2c3e50'])
+    ax6_app = df_compare_app.plot(kind='bar', figsize=(14, 8), color=TOL3)
     ax6_app.set_title('Scope 1+2, Scope 3, and Total Food Emissions by Diet (All 9 Diets, Tonnes CO2e/Year)')
     ax6_app.set_ylabel('Tonnes CO2e / Year')
+    ax6_app.legend(loc='upper left', bbox_to_anchor=(1.02, 1), frameon=True)
     plt.xticks(rotation=15, ha='right')
     plt.tight_layout()
     plt.savefig(os.path.join(appendix_dir, '6_Scope12_vs_Scope3_Total.png'), dpi=300, bbox_inches='tight')
@@ -2214,13 +2377,13 @@ def run_full_analysis():
     
     fig7, ax7 = plt.subplots(figsize=(14, 6))
     x = np.arange(len(share_s12_core))
-    ax7.bar(x, share_s12_core, label='Scope 1+2', color='#7f8c8d', width=0.4)
-    ax7.bar(x, share_s3_core, bottom=share_s12_core, label='Scope 3', color='#e67e22', width=0.4)
+    ax7.bar(x, share_s12_core, label='Scope 1+2', color=TOL_BLUE, width=0.4)
+    ax7.bar(x, share_s3_core, bottom=share_s12_core, label='Scope 3', color=TOL_ORANGE, width=0.4)
     ax7.set_title('Share of Scope 1+2 and Scope 3 in Total Food CO2')
     ax7.set_ylabel('% of Total Emissions')
     ax7.set_xticks(x)
     ax7.set_xticklabels(df_compare_core.index, rotation=15, ha='right')  # Already cleaned
-    ax7.legend(loc='upper left', fontsize=10, frameon=True)
+    ax7.legend(loc='upper left', bbox_to_anchor=(1.02, 1), fontsize=10, frameon=True)
     ax7.grid(axis='y', alpha=0.3)
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '7_Scope_Shares.png'), dpi=300, bbox_inches='tight')
@@ -2233,13 +2396,13 @@ def run_full_analysis():
     
     fig7_app, ax7_app = plt.subplots(figsize=(14, 6))
     x_app = np.arange(len(share_s12_app))
-    ax7_app.bar(x_app, share_s12_app, label='Scope 1+2', color='#7f8c8d', width=0.4)
-    ax7_app.bar(x_app, share_s3_app, bottom=share_s12_app, label='Scope 3', color='#e67e22', width=0.4)
+    ax7_app.bar(x_app, share_s12_app, label='Scope 1+2', color=TOL_BLUE, width=0.4)
+    ax7_app.bar(x_app, share_s3_app, bottom=share_s12_app, label='Scope 3', color=TOL_ORANGE, width=0.4)
     ax7_app.set_title('Share of Scope 1+2 and Scope 3 in Total Food CO2 (All 9 Diets)')
     ax7_app.set_ylabel('% of Total Emissions')
     ax7_app.set_xticks(x_app)
     ax7_app.set_xticklabels(df_compare_app.index, rotation=15, ha='right')  # Already cleaned
-    ax7_app.legend(loc='upper left', fontsize=10, frameon=True)
+    ax7_app.legend(loc='upper left', bbox_to_anchor=(1.02, 1), fontsize=10, frameon=True)
     ax7_app.grid(axis='y', alpha=0.3)
     plt.tight_layout()
     plt.savefig(os.path.join(appendix_dir, '7_Scope_Shares.png'), dpi=300, bbox_inches='tight')
@@ -2290,7 +2453,7 @@ def run_full_analysis():
     for j in range(n_diets8, len(axes8)): axes8[j].axis('off')
     fig8.subplots_adjust(bottom=0.15)
     fig8.legend(CAT_ORDER, loc='lower center', ncol=8, frameon=True, 
-              bbox_to_anchor=(0.5, -0.02), fontsize=9, edgecolor='black')
+            bbox_to_anchor=(0.5, -0.02), fontsize=9, edgecolor='black')
     plt.suptitle('Total Emissions (Scope 1+2+3) by Category', fontsize=16, fontweight='bold', y=0.98)
     plt.savefig(os.path.join(core_dir, '8_All_Total_Emissions_Donuts.png'), dpi=150, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '8_All_Total_Emissions_Donuts.png'), dpi=150, bbox_inches='tight')
@@ -2324,6 +2487,10 @@ def run_full_analysis():
         x = np.arange(len(CAT_ORDER))
         # Use category colors consistent with emission donuts for both Baseline and Goal
         cat_colors = [COLOR_MAP[c] for c in CAT_ORDER]
+        from matplotlib.patches import Patch
+        baseline_handle = Patch(facecolor='#999999', edgecolor='black', alpha=0.65, label='Baseline')
+        goal_handle = Patch(facecolor='#999999', edgecolor='black', alpha=0.95, label='Goal')
+
         ax3.bar(x - 0.2, b_co2, 0.4, label='Baseline', color=cat_colors,
             alpha=0.65, edgecolor='black', linewidth=0.6)
         ax3.bar(x + 0.2, g_co2, 0.4, label='Goal', color=cat_colors,
@@ -2334,15 +2501,14 @@ def run_full_analysis():
         ax3.set_ylabel('Tonnes CO2e/Year', fontweight='bold')
         ax3.legend(handles=[baseline_handle, goal_handle], loc='upper left', fontsize=10, frameon=True)
         ax3.grid(axis='y', alpha=0.3)
+        
+        
         # Legends: Baseline vs Goal + Category color legend matching pies
-        from matplotlib.patches import Patch
-        baseline_handle = Patch(facecolor='#999999', edgecolor='black', alpha=0.65, label='Baseline')
-        goal_handle = Patch(facecolor='#999999', edgecolor='black', alpha=0.95, label='Goal')
-
+        
         cat_handles = [Patch(facecolor=COLOR_MAP[c], label=c) for c in CAT_ORDER]
         fig.subplots_adjust(bottom=0.12)
         fig.legend(handles=cat_handles, loc='lower center', ncol=7, frameon=True,
-                 bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
+                bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
 
         plt.tight_layout()
         safe_savefig(filename, dpi=300)
@@ -2449,7 +2615,7 @@ def run_full_analysis():
         s12_total = sum([scope12_data[c] for c in CAT_ORDER])
         s12_pct = (s12_total / total_emissions * 100) if total_emissions > 0 else 0
         ax.set_title(f'{diet_name.split("(")[0].strip()}\nTotal: {total_emissions/1000:.0f} kton ({s12_pct:.0f}% S1+2)', 
-                     fontsize=11, fontweight='bold')
+                    fontsize=11, fontweight='bold')
         if idx == 0:
             ax.legend(loc='upper left', fontsize=8, frameon=True)
         ax.grid(axis='x', alpha=0.3, linestyle='--')
@@ -2461,10 +2627,10 @@ def run_full_analysis():
             s3_pct_cat = (scope3_data[cat] / total * 100) if total > 0 else 0
             if s12_pct_cat > 4:
                 ax.text(scope12_vals[i]/2, y_pos[i], f'{s12_pct_cat:.0f}%',
-                       ha='center', va='center', fontsize=7, fontweight='bold', color='white')
+                    ha='center', va='center', fontsize=7, fontweight='bold', color='white')
             if s3_pct_cat > 4:
                 ax.text(scope12_vals[i] + scope3_vals[i]/2, y_pos[i], f'{s3_pct_cat:.0f}%',
-                       ha='center', va='center', fontsize=7, fontweight='bold', color='white')
+                    ha='center', va='center', fontsize=7, fontweight='bold', color='white')
     
     plt.tight_layout()
     safe_savefig(os.path.join(core_dir, '9_Scope_Breakdown_by_Category.png'), dpi=200)
@@ -2495,8 +2661,8 @@ def run_full_analysis():
     
     fig10, axes = plt.subplots(3, 3, figsize=(20, 16))
     comparison_diets_9 = ['1. Monitor 2024 (Current)', '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)',
-                          '4. Metabolic Balance', '7. EAT-Lancet (Planetary)', '8. Schijf van 5 (Guideline)',
-                          '2. Amsterdam Theoretical', '3. Metropolitan (High Risk)', '9. Mediterranean Diet']
+                        '4. Metabolic Balance', '7. EAT-Lancet (Planetary)', '8. Schijf van 5 (Guideline)',
+                        '2. Amsterdam Theoretical', '3. Metropolitan (High Risk)', '9. Mediterranean Diet']
     
     for idx, diet_name in enumerate(comparison_diets_9):
         ax = axes[idx // 3, idx % 3]
@@ -2547,7 +2713,7 @@ def run_full_analysis():
         
         ax.set_ylabel('Percentage (%)', fontsize=10, fontweight='bold')
         ax.set_title(f'{diet_name.split("(")[0].strip()}\nTotal CO2: {total_co2/1000:.0f} kton', 
-                     fontsize=11, fontweight='bold')
+                    fontsize=11, fontweight='bold')
         ax.set_xticks(x)
         ax.set_xticklabels(categories, fontsize=9)
         ax.set_ylim(0, 100)
@@ -2561,7 +2727,7 @@ def run_full_analysis():
             bottom = plant_vals[i]
             if height > 8:
                 ax.text(rect.get_x() + rect.get_width()/2., bottom + height/2,
-                       f'{height:.0f}%', ha='center', va='center', fontsize=8, fontweight='bold', color='white')
+                    f'{height:.0f}%', ha='center', va='center', fontsize=8, fontweight='bold', color='white')
     
     plt.tight_layout()
     safe_savefig(os.path.join(core_dir, '10_Multi_Resource_Impact.png'), dpi=200)
@@ -2584,9 +2750,9 @@ def run_full_analysis():
     fig11, axes = plt.subplots(3, 3, figsize=(22, 18))
     axes = axes.flatten()
     all_comparison_diets_11 = ['1. Monitor 2024 (Current)', '2. Amsterdam Theoretical',
-                               '3. Metropolitan (High Risk)', '4. Metabolic Balance',
-                               '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)',
-                               '7. EAT-Lancet (Planetary)', '8. Schijf van 5 (Guideline)', '9. Mediterranean Diet']
+                            '3. Metropolitan (High Risk)', '4. Metabolic Balance',
+                            '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)',
+                            '7. EAT-Lancet (Planetary)', '8. Schijf van 5 (Guideline)', '9. Mediterranean Diet']
     
     for idx, diet_name in enumerate(all_comparison_diets_11):
         ax = axes[idx]
@@ -2594,7 +2760,7 @@ def run_full_analysis():
         
         # Total emissions = Scope 1+2 + Scope 3
         total_emissions = {cat: results_scope12[diet_name][cat] + results_co2[diet_name][cat] 
-                          for cat in CAT_ORDER}
+                        for cat in CAT_ORDER}
         
         total_mass = sum(mass_data.values())
         total_emission = sum(total_emissions.values())
@@ -2620,7 +2786,7 @@ def run_full_analysis():
         ax.set_yticklabels(sorted_cats, fontsize=9)
         ax.set_xlabel('Percentage (%)', fontsize=10, fontweight='bold')
         ax.set_title(f'{diet_name.split("(")[0].strip()}\nTotal: {total_emission/1000:.0f} kton CO2e', 
-                     fontsize=11, fontweight='bold')
+                    fontsize=11, fontweight='bold')
         if idx == 0:
             ax.legend(loc='lower right', fontsize=8)
         ax.grid(axis='x', alpha=0.3, linestyle='--')
@@ -2633,8 +2799,8 @@ def run_full_analysis():
         
         # Add efficiency indicator
         ax.text(0.98, 0.98, f'Plant: {plant_pct_total:.0f}%\nAnimal: {100-plant_pct_total:.0f}%',
-               transform=ax.transAxes, ha='right', va='top', fontsize=9, 
-               bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.7))
+            transform=ax.transAxes, ha='right', va='top', fontsize=9, 
+            bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.7))
     
     plt.tight_layout()
     safe_savefig(os.path.join(core_dir, '11_Emissions_vs_Protein.png'), dpi=200)
@@ -2659,7 +2825,7 @@ def run_full_analysis():
     ]
     goal_titles = ['Schijf van 5', 'Dutch Goal 60:40', 'Amsterdam Goal 70:30', 'EAT-Lancet']
     diet_labels = ['Monitor', 'Mediterranean', 'Municipal', 'Metabolic']
-    diet_colors = ['#3498DB', '#E67E22', '#9B59B6', '#E74C3C']
+    diet_colors = TOL4
     resource_map = {
         'CO2 (Scope 1+2+3)': lambda d: sum((results_scope12[d][c] + results_co2[d][c]) for c in CAT_ORDER),
         'Land (m²)': lambda d: sum(results_land.get(d, {}).values()),
@@ -2695,7 +2861,7 @@ def run_full_analysis():
     handles = [plt.Rectangle((0, 0), 1, 1, color=color) for color in diet_colors]
     fig12.subplots_adjust(bottom=0.15)
     fig12.legend(handles, diet_labels, title='Diets vs Goals', loc='lower center', ncol=4, 
-               bbox_to_anchor=(0.5, -0.05), fontsize=9, frameon=True, edgecolor='black')
+            bbox_to_anchor=(0.5, -0.05), fontsize=9, frameon=True, edgecolor='black')
     try:
         plt.tight_layout(rect=[0, 0.03, 1, 1])
     except:
@@ -2778,7 +2944,7 @@ def run_full_analysis():
         ax_single.set_ylim(0, max(pct_vals + [140]))
         for rect, val in zip(bars, pct_vals):
             ax_single.text(rect.get_x() + rect.get_width()/2, rect.get_height() + 2, f'{val:.0f}%',
-                           ha='center', va='bottom', fontsize=9)
+                        ha='center', va='bottom', fontsize=9)
         ax_single.legend(loc='upper left', fontsize=9, frameon=True)
         ax_single.text(0.02, 0.94, f'Ref total: {ref_val/1000:.1f} kton', transform=ax_single.transAxes,
                         ha='left', va='top', fontsize=9, bbox=dict(boxstyle='round', facecolor='white', alpha=0.85))
@@ -2829,13 +2995,13 @@ def run_full_analysis():
     ax1_pie = fig.add_subplot(top_grid[0, 1])
     ax1_text.axis('off')
     ax1_text.text(0.0, 0.95, 'Amsterdam Food System Emissions', 
-             ha='left', fontsize=22, fontweight='bold', transform=ax1_text.transAxes)
+            ha='left', fontsize=22, fontweight='bold', transform=ax1_text.transAxes)
     total_kton = total_emissions_display/1000
     ax1_text.text(0.0, 0.80, f'Total: {total_kton:.0f} kiloton CO2e per year', 
-             ha='left', fontsize=17, color='#E74C3C', transform=ax1_text.transAxes)
+            ha='left', fontsize=17, color='#E74C3C', transform=ax1_text.transAxes)
     pop_formatted = f"{cfg.POPULATION_TOTAL:,}"
     ax1_text.text(0.0, 0.68, f'(Population: {pop_formatted} | Monitor 2024 Diet)', 
-             ha='left', fontsize=12, color='gray', transform=ax1_text.transAxes)
+            ha='left', fontsize=12, color='gray', transform=ax1_text.transAxes)
 
     # Quick comparison vs goal reference diets
     goal_refs_inf = [
@@ -2856,8 +3022,8 @@ def run_full_analysis():
         goal_lines.append(f"{title}: {pct_vs:.0f}% of ref ({ref_total/1000:.0f} kton)")
     ax1_text.text(0.0, 0.50, 'Versus goals:', ha='left', fontsize=12, fontweight='bold', transform=ax1_text.transAxes)
     ax1_text.text(0.0, 0.30, '\n'.join(goal_lines), ha='left', fontsize=10, 
-                  bbox=dict(boxstyle='round', facecolor='white', alpha=0.8, edgecolor='#CCCCCC'),
-                  transform=ax1_text.transAxes)
+                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8, edgecolor='#CCCCCC'),
+                transform=ax1_text.transAxes)
 
     # Pie chart showing Scope 1+2 vs Scope 3
     scope_vals = [total_scope12_display, total_scope3]
@@ -2866,8 +3032,8 @@ def run_full_analysis():
     colors_scope = ['#F39C12', '#3498DB']
 
     wedges, texts = ax1_pie.pie(scope_vals, labels=scope_labels, colors=colors_scope, radius=0.9,
-                             startangle=90, labeldistance=1.1, pctdistance=0.75,
-                             textprops={'fontsize': 11, 'fontweight': 'bold'})
+                            startangle=90, labeldistance=1.1, pctdistance=0.75,
+                            textprops={'fontsize': 11, 'fontweight': 'bold'})
     ax1_pie.set_title('Scope 1+2 vs Scope 3', fontsize=12, fontweight='bold', pad=10)
     
     # --- PANEL 2: Scope 1+2 detailed breakdown ---
@@ -2875,8 +3041,8 @@ def run_full_analysis():
     breakdown_labels = ['Base Food\nConsumption', 'Food Waste\n(11%)', 'Retail/Distribution\n(2.5%)']
     breakdown_vals = [base_food_disp, waste_emissions_disp, retail_emissions_disp]
     breakdown_pcts = [base_food/total_scope12*100 if total_scope12 else 0,
-                      waste_emissions/total_scope12*100 if total_scope12 else 0,
-                      retail_emissions/total_scope12*100 if total_scope12 else 0]
+                    waste_emissions/total_scope12*100 if total_scope12 else 0,
+                    retail_emissions/total_scope12*100 if total_scope12 else 0]
     colors_breakdown = ['#2ECC71', '#E74C3C', '#95A5A6']
     
     bars = ax2.barh(breakdown_labels, breakdown_vals, color=colors_breakdown, alpha=0.8)
@@ -2910,7 +3076,7 @@ def run_full_analysis():
     
     # Get total emissions by category
     cat_emissions = {cat: results_scope12[monitor_diet][cat] + results_co2[monitor_diet][cat] 
-                     for cat in CAT_ORDER}
+                    for cat in CAT_ORDER}
     sorted_cats_top = sorted(CAT_ORDER, key=lambda c: cat_emissions[c], reverse=True)[:6]
     mass_data_monitor = results_mass.get(monitor_diet, {})
     total_mass_monitor = sum(mass_data_monitor.values()) if mass_data_monitor else 0
@@ -3158,7 +3324,7 @@ def run_full_analysis():
     
     fig, axes = plt.subplots(1, 3, figsize=(16, 6))
     fig.suptitle('Emissions Reduction Required to Achieve Dietary Goals\n(from Current Diet)', 
-                 fontsize=16, fontweight='bold', y=0.98)
+                fontsize=16, fontweight='bold', y=0.98)
     
     for idx, focus_diet in enumerate(focus_diets):
         ax = axes[idx]
@@ -3187,7 +3353,7 @@ def run_full_analysis():
         for bar, val in zip(bars, reductions):
             height = bar.get_height()
             ax.text(bar.get_x() + bar.get_width()/2, height + 1, 
-                   f'{val:.1f}%', ha='center', va='bottom', fontsize=11, fontweight='bold')
+                f'{val:.1f}%', ha='center', va='bottom', fontsize=11, fontweight='bold')
     
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '14a_Delta_Analysis_Total_Emissions.png'), dpi=300, bbox_inches='tight')
@@ -3202,7 +3368,7 @@ def run_full_analysis():
     
     fig, axes = plt.subplots(2, 2, figsize=(16, 12))
     fig.suptitle('Category-by-Category Emissions Change to Achieve Goals\n(Positive = Increase, Negative = Decrease)', 
-                 fontsize=16, fontweight='bold')
+                fontsize=16, fontweight='bold')
     axes = axes.flatten()
     
     for idx, goal_diet in enumerate(goal_diets):
@@ -3210,9 +3376,9 @@ def run_full_analysis():
         baseline_diet = '1. Monitor 2024 (Current)'
         
         baseline_cats = {cat: results_scope12.get(baseline_diet, {}).get(cat, 0) * scope12_scale + 
-                         results_co2.get(baseline_diet, {}).get(cat, 0) for cat in CAT_ORDER}
+                        results_co2.get(baseline_diet, {}).get(cat, 0) for cat in CAT_ORDER}
         goal_cats = {cat: results_scope12.get(goal_diet, {}).get(cat, 0) * scope12_scale + 
-                     results_co2.get(goal_diet, {}).get(cat, 0) for cat in CAT_ORDER}
+                    results_co2.get(goal_diet, {}).get(cat, 0) for cat in CAT_ORDER}
         
         deltas = {cat: (goal_cats.get(cat, 0) - baseline_cats.get(cat, 0)) for cat in CAT_ORDER}
         sorted_deltas = sorted(deltas.items(), key=lambda x: x[1])
@@ -3233,7 +3399,7 @@ def run_full_analysis():
         
         for i, val in enumerate(vals_sorted):
             ax.text(val + (0.5 if val > 0 else -0.5), i, f'{val:.1f}', 
-                   ha='left' if val > 0 else 'right', va='center', fontsize=9, fontweight='bold')
+                ha='left' if val > 0 else 'right', va='center', fontsize=9, fontweight='bold')
     
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '14b_Delta_Analysis_By_Category.png'), dpi=300, bbox_inches='tight')
@@ -3248,7 +3414,7 @@ def run_full_analysis():
     
     fig, axes = plt.subplots(1, 3, figsize=(16, 6))
     fig.suptitle('Food Category Share: Mass vs Emissions\n(Gap = Over-Emitting Category)', 
-                 fontsize=16, fontweight='bold', y=0.98)
+                fontsize=16, fontweight='bold', y=0.98)
     
     for idx, focus_diet in enumerate(focus_diets):
         ax = axes[idx]
@@ -3279,16 +3445,16 @@ def run_full_analysis():
         emis_vals = [emissions_share.get(cat, 0) for cat in sorted_cats_mass]
         
         bars1 = ax.bar(x - width/2, mass_vals, width, label='Mass Share (%)', 
-                       color='#3498DB', alpha=0.8, edgecolor='black', linewidth=0.8)
+                    color='#3498DB', alpha=0.8, edgecolor='black', linewidth=0.8)
         bars2 = ax.bar(x + width/2, emis_vals, width, label='Emissions Share (%)', 
-                       color='#E74C3C', alpha=0.8, edgecolor='black', linewidth=0.8)
+                    color='#E74C3C', alpha=0.8, edgecolor='black', linewidth=0.8)
         
         ax.set_ylabel('Share (%)', fontsize=11, fontweight='bold')
         ax.set_xlabel('Food Category', fontsize=11, fontweight='bold')
         ax.set_title(focus_diet.split('(')[0].strip(), fontsize=13, fontweight='bold')
         ax.set_xticks(x)
         ax.set_xticklabels([c.replace(' & ', '\n& ').replace(' (', '\n(') for c in sorted_cats_mass], 
-                           fontsize=9, rotation=45, ha='right')
+                    fontsize=9, rotation=45, ha='right')
         ax.legend(fontsize=10, loc='upper right')
         ax.grid(axis='y', alpha=0.3, linestyle='--')
     
@@ -3305,7 +3471,7 @@ def run_full_analysis():
     
     fig, axes = plt.subplots(1, 3, figsize=(16, 6))
     fig.suptitle('Emissions Scope Breakdown: Baseline vs Dietary Goals\n(Scope 1+2 = Production/Retail | Scope 3 = Supply Chain)', 
-                 fontsize=16, fontweight='bold', y=0.98)
+            fontsize=16, fontweight='bold', y=0.98)
     
     for idx, focus_diet in enumerate(focus_diets):
         ax = axes[idx]
@@ -3402,9 +3568,9 @@ def run_full_analysis():
                 table[(i, j)].set_facecolor('#FFFFFF')
     
     plt.title('Table 15: Emissions by Scope and Dietary Scenario (APA Format)\n', 
-             fontsize=14, fontweight='bold', pad=20)
+            fontsize=14, fontweight='bold', pad=20)
     plt.figtext(0.5, 0.02, 'Note: Scope 1+2 includes production, retail, and household emissions. Scope 3 includes supply chain impacts.',
-               ha='center', fontsize=10, style='italic', wrap=True)
+            ha='center', fontsize=10, style='italic', wrap=True)
     
     plt.savefig(os.path.join(core_dir, '15_Table_APA_Emissions.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '15_Table_APA_Emissions.png'), dpi=300, bbox_inches='tight')
@@ -3437,7 +3603,7 @@ def run_full_analysis():
             # Total emissions = Scope 1+2 + Scope 3
             vals = [(results_scope12[baseline].get(cat, 0) + results_co2[baseline].get(cat, 0)) for cat in CAT_ORDER]
             ax.barh(x_pos + base_idx * width, vals, width, label=baseline.split('. ')[1][:20], 
-                   color=diet_colors_core[base_idx], alpha=0.85, edgecolor='black', linewidth=0.5)
+                color=diet_colors_core[base_idx], alpha=0.85, edgecolor='black', linewidth=0.5)
         
         # Add reference line
         ref_vals = [(results_scope12[goal_ref].get(cat, 0) + results_co2[goal_ref].get(cat, 0)) for cat in CAT_ORDER]
@@ -3451,7 +3617,7 @@ def run_full_analysis():
         ax.grid(axis='x', alpha=0.3, linestyle='--')
     
     fig17_core.suptitle('Emissions by Category: 3 Focus Diets vs 4 Goal References (Total: Scope 1+2+3)',
-                       fontsize=13, fontweight='bold', y=0.995)
+                    fontsize=13, fontweight='bold', y=0.995)
     try:
         fig17_core.tight_layout()
     except:
@@ -3482,7 +3648,7 @@ def run_full_analysis():
             vals = [(results_scope12[baseline].get(cat, 0) + results_co2[baseline].get(cat, 0)) for cat in CAT_ORDER]
             color_idx = all_diets_list.index(baseline)
             ax.barh(x_pos + base_idx * width, vals, width, 
-                   color=diet_colors_app[color_idx % len(diet_colors_app)], alpha=0.75, edgecolor='black', linewidth=0.3)
+                color=diet_colors_app[color_idx % len(diet_colors_app)], alpha=0.75, edgecolor='black', linewidth=0.3)
         
         # Reference line (goal diet average)
         ref_vals = [(results_scope12[goal_ref].get(cat, 0) + results_co2[goal_ref].get(cat, 0)) for cat in CAT_ORDER]
@@ -3495,7 +3661,7 @@ def run_full_analysis():
         ax.grid(axis='x', alpha=0.3, linestyle='--')
     
     fig17_app.suptitle('Emissions by Category: All 9 Diets vs All 9 Goals (Excluding Self-Comparison, Total: Scope 1+2+3)',
-                      fontsize=13, fontweight='bold', y=0.995)
+                    fontsize=13, fontweight='bold', y=0.995)
     try:
         fig17_app.tight_layout()
     except:
@@ -3603,12 +3769,12 @@ def run_full_analysis():
     y_pos = np.arange(len(param_names_sorted))
     
     bars = ax16a.barh(y_pos, param_values_sorted, color=colors_sens, alpha=0.85, 
-                      edgecolor='black', linewidth=1.2, height=0.7)
+                    edgecolor='black', linewidth=1.2, height=0.7)
     
     # Add legend for colors
     from matplotlib.patches import Patch
     legend_elements = [Patch(facecolor='#E74C3C', edgecolor='black', label='Increase (worse)'),
-                       Patch(facecolor='#27AE60', edgecolor='black', label='Decrease (better)')]
+                    Patch(facecolor='#27AE60', edgecolor='black', label='Decrease (better)')]
     ax16a.legend(handles=legend_elements, loc='lower right', fontsize=11, frameon=True)
     
     ax16a.set_yticks(y_pos)
@@ -3626,8 +3792,8 @@ def run_full_analysis():
     for i, val in enumerate(param_values_sorted):
         label_x = val + label_offset if val > 0 else val - label_offset
         ax16a.text(label_x, i, f'{val:+.0f}', 
-                  ha='left' if val > 0 else 'right', va='center', 
-                  fontsize=10, fontweight='bold', color='black')
+                ha='left' if val > 0 else 'right', va='center', 
+                fontsize=10, fontweight='bold', color='black')
     
     # Set x-axis limits with headroom for labels
     ax16a.set_xlim(min(param_values_sorted) - label_offset * 3, 
@@ -3656,7 +3822,7 @@ def run_full_analysis():
     table_data_sens.append(['Baseline (Monitor 2024)', f'{baseline_total:,.0f}', '—', '—'])
     
     table16b = ax16b.table(cellText=table_data_sens, cellLoc='left', loc='center',
-                          colWidths=[0.35, 0.25, 0.15, 0.25])
+                        colWidths=[0.35, 0.25, 0.15, 0.25])
     table16b.auto_set_font_size(False)
     table16b.set_fontsize(10)
     table16b.scale(1, 2.2)
@@ -3678,9 +3844,9 @@ def run_full_analysis():
                 table16b[(i, j)].set_text_props(fontsize=10, weight='bold')
     
     ax16b.text(0.5, 0.98, 'Sensitivity Analysis Results Table', 
-              ha='center', va='top', fontsize=14, fontweight='bold', transform=ax16b.transAxes)
+            ha='center', va='top', fontsize=14, fontweight='bold', transform=ax16b.transAxes)
     ax16b.text(0.5, 0.92, 'Parameter Impact on Total Food System Emissions (Monitor 2024)', 
-              ha='center', va='top', fontsize=11, style='italic', transform=ax16b.transAxes)
+            ha='center', va='top', fontsize=11, style='italic', transform=ax16b.transAxes)
     
     fig16b.tight_layout()
     fig16b.subplots_adjust(top=0.88)
@@ -3695,7 +3861,7 @@ def run_full_analysis():
     
     # Calculate sensitivity for top 3 goals as well
     comparison_diets = ['1. Monitor 2024 (Current)', '8. Schijf van 5 (Guideline)', 
-                       '6. Amsterdam Goal (70:30)', '7. EAT-Lancet (Planetary)']
+                    '6. Amsterdam Goal (70:30)', '7. EAT-Lancet (Planetary)']
     comparison_data = {}
     
     for diet in comparison_diets:
@@ -3719,25 +3885,25 @@ def run_full_analysis():
     width = 0.25
     
     params_short = ['Impact Factors', 'Diet Adherence', 'Waste Rate']
-    colors_bars = ['#E74C3C', '#3498DB', '#F39C12']
+    colors_bars = [TOL_ORANGE, TOL_BLUE, TOL_YELLOW]
     
     for idx, param in enumerate(params_short):
         values = [comparison_data[diet][param] for diet in comparison_diets]
         ax16c.bar(x_pos + idx*width, values, width, label=param, color=colors_bars[idx], 
-                 alpha=0.85, edgecolor='black', linewidth=1)
+                alpha=0.85, edgecolor='black', linewidth=1)
         
         # Add value labels on bars
         for i, v in enumerate(values):
             ax16c.text(x_pos[i] + idx*width, v + max(values)*0.02, f'{v:.0f}', 
-                      ha='center', va='bottom', fontsize=9, fontweight='bold')
+                    ha='center', va='bottom', fontsize=9, fontweight='bold')
     
     ax16c.set_xlabel('Diet Scenario', fontsize=12, fontweight='bold')
     ax16c.set_ylabel('Emission Impact (kton CO₂e/year)', fontsize=12, fontweight='bold')
     ax16c.set_title('Sensitivity Comparison: Impact Parameters Across Diet Goals', 
-                   fontsize=14, fontweight='bold', pad=15)
+                fontsize=14, fontweight='bold', pad=15)
     ax16c.set_xticks(x_pos + width)
     ax16c.set_xticklabels(x_labels, fontsize=11, fontweight='bold')
-    ax16c.legend(loc='upper left', fontsize=11, frameon=True, edgecolor='black')
+    ax16c.legend(loc='upper left', bbox_to_anchor=(1.02, 1), fontsize=11, frameon=True, edgecolor='black')
     ax16c.grid(axis='y', alpha=0.3, linestyle='--')
     ax16c.set_ylim(0, max([comparison_data[d][p] for d in comparison_diets for p in params_short]) * 1.15)
     
@@ -3768,7 +3934,7 @@ def run_full_analysis():
     ax16d.set_xticklabels(spider_params, fontsize=10, fontweight='bold')
     ax16d.set_ylim(0, max(spider_values) * 1.1)
     ax16d.set_title('Sensitivity Parameter Magnitude\n(% Change in Total Emissions)', 
-                   fontsize=13, fontweight='bold', pad=20)
+                fontsize=13, fontweight='bold', pad=20)
     ax16d.grid(True, alpha=0.3)
     ax16d.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1), fontsize=11, frameon=True)
     
@@ -3814,7 +3980,7 @@ def run_full_analysis():
         # Add value labels
         y_pos_label = value + bottom if i != 0 and i != len(waterfall_labels)-1 else value/2
         ax16e.text(i, y_pos_label + baseline_total*0.03, f'{value:+.0f}' if i > 0 and i < len(waterfall_labels)-1 else f'{value:,.0f}', 
-                  ha='center', va='bottom', fontsize=10, fontweight='bold')
+                ha='center', va='bottom', fontsize=10, fontweight='bold')
     
     # Connection lines
     for i in range(len(waterfall_labels) - 1):
@@ -3828,7 +3994,7 @@ def run_full_analysis():
     ax16e.set_xticklabels(waterfall_labels, fontsize=10, fontweight='bold')
     ax16e.set_ylabel('Cumulative Emissions (kton CO₂e/year)', fontsize=12, fontweight='bold')
     ax16e.set_title('Sensitivity Waterfall: Cumulative Impact of Parameter Changes\nMonitor 2024 Baseline', 
-                   fontsize=14, fontweight='bold', pad=15)
+                fontsize=14, fontweight='bold', pad=15)
     ax16e.grid(axis='y', alpha=0.3, linestyle='--')
     ax16e.set_ylim(0, max(waterfall_values) * 1.15)
     
