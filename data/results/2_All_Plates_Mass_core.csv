@@ -1,43 +1,49 @@
 diet,category,mass_share_pct
-1. Monitor 2024 (Current),Red Meat,2.281021897810219
-1. Monitor 2024 (Current),Poultry,2.281021897810219
-1. Monitor 2024 (Current),Dairy (Liquid),20.072992700729927
-1. Monitor 2024 (Current),Dairy (Solid) & Eggs,5.748175182481752
-1. Monitor 2024 (Current),Fish,2.0072992700729926
-1. Monitor 2024 (Current),Plant Protein,4.562043795620438
-1. Monitor 2024 (Current),taples,0.0
-1. Monitor 2024 (Current),Rice,2.737226277372263
-1. Monitor 2024 (Current),Veg & Fruit,27.82846715328467
-1. Monitor 2024 (Current),Ultra-Processed,23.083941605839417
-1. Monitor 2024 (Current),Beverages & Additions,3.64963503649635
-1. Monitor 2024 (Current),"Fats (Solid, Animal)",1.824817518248175
-1. Monitor 2024 (Current),Oils (Plant-based),2.281021897810219
-1. Monitor 2024 (Current),Condiments,1.6423357664233578
-3. Metropolitan (High Risk),Red Meat,5.397070161912105
-3. Metropolitan (High Risk),Poultry,4.626060138781804
-3. Metropolitan (High Risk),Dairy (Liquid),15.420200462606015
-3. Metropolitan (High Risk),Dairy (Solid) & Eggs,6.168080185042406
-3. Metropolitan (High Risk),Fish,1.156515034695451
-3. Metropolitan (High Risk),Plant Protein,1.156515034695451
-3. Metropolitan (High Risk),taples,0.0
-3. Metropolitan (High Risk),Rice,1.5420200462606015
-3. Metropolitan (High Risk),Veg & Fruit,16.191210485736317
-3. Metropolitan (High Risk),Ultra-Processed,35.46646106399383
-3. Metropolitan (High Risk),Beverages & Additions,4.626060138781804
-3. Metropolitan (High Risk),"Fats (Solid, Animal)",3.084040092521203
-3. Metropolitan (High Risk),Oils (Plant-based),3.084040092521203
-3. Metropolitan (High Risk),Condiments,2.081727062451812
-9. Mediterranean Diet,Red Meat,1.353637901861252
-9. Mediterranean Diet,Poultry,1.6920473773265652
-9. Mediterranean Diet,Dairy (Liquid),16.920473773265652
-9. Mediterranean Diet,Dairy (Solid) & Eggs,4.060913705583756
-9. Mediterranean Diet,Fish,2.961082910321489
-9. Mediterranean Diet,Plant Protein,8.460236886632826
-9. Mediterranean Diet,taples,0.0
-9. Mediterranean Diet,Rice,3.807106598984772
-9. Mediterranean Diet,Veg & Fruit,43.9932318104907
-9. Mediterranean Diet,Ultra-Processed,8.629441624365482
-9. Mediterranean Diet,Beverages & Additions,3.6379018612521152
-9. Mediterranean Diet,"Fats (Solid, Animal)",0.7614213197969544
-9. Mediterranean Diet,Oils (Plant-based),2.5380710659898478
-9. Mediterranean Diet,Condiments,1.1844331641285957
+1. Monitor 2024 (Current),Red Meat,1.8367346938775513
+1. Monitor 2024 (Current),Poultry,1.7006802721088436
+1. Monitor 2024 (Current),Processed Meats,2.0408163265306123
+1. Monitor 2024 (Current),Dairy (Milk & Milkproducts),14.965986394557824
+1. Monitor 2024 (Current),Cheese & Eggs,4.285714285714286
+1. Monitor 2024 (Current),Fish,1.4965986394557822
+1. Monitor 2024 (Current),Plant Protein,3.4013605442176873
+1. Monitor 2024 (Current),Staples,30.952380952380953
+1. Monitor 2024 (Current),Rice,2.0408163265306123
+1. Monitor 2024 (Current),Veg & Fruit,20.74829931972789
+1. Monitor 2024 (Current),Ultra-Processed,8.16326530612245
+1. Monitor 2024 (Current),Soups,1.3605442176870748
+1. Monitor 2024 (Current),Beverages & Additions,2.7210884353741496
+1. Monitor 2024 (Current),Fats (Butter),1.3605442176870748
+1. Monitor 2024 (Current),Oils (Plant-based),1.7006802721088436
+1. Monitor 2024 (Current),Condiments,1.2244897959183674
+3. Metropolitan (High Risk),Red Meat,4.69630557294928
+3. Metropolitan (High Risk),Poultry,3.757044458359424
+3. Metropolitan (High Risk),Processed Meats,3.757044458359424
+3. Metropolitan (High Risk),Dairy (Milk & Milkproducts),12.523481527864746
+3. Metropolitan (High Risk),Cheese & Eggs,5.009392611145898
+3. Metropolitan (High Risk),Fish,0.939261114589856
+3. Metropolitan (High Risk),Plant Protein,0.939261114589856
+3. Metropolitan (High Risk),Staples,26.29931120851597
+3. Metropolitan (High Risk),Rice,1.2523481527864746
+3. Metropolitan (High Risk),Veg & Fruit,13.149655604257985
+3. Metropolitan (High Risk),Ultra-Processed,16.28052598622417
+3. Metropolitan (High Risk),Soups,0.939261114589856
+3. Metropolitan (High Risk),Beverages & Additions,3.757044458359424
+3. Metropolitan (High Risk),Fats (Butter),2.504696305572949
+3. Metropolitan (High Risk),Oils (Plant-based),2.504696305572949
+3. Metropolitan (High Risk),Condiments,1.6906700062617408
+9. Mediterranean Diet,Red Meat,1.645123384253819
+9. Mediterranean Diet,Poultry,1.1750881316098707
+9. Mediterranean Diet,Processed Meats,0.5875440658049353
+9. Mediterranean Diet,Dairy (Milk & Milkproducts),11.750881316098708
+9. Mediterranean Diet,Cheese & Eggs,2.82021151586369
+9. Mediterranean Diet,Fish,2.056404230317274
+9. Mediterranean Diet,Plant Protein,5.875440658049354
+9. Mediterranean Diet,Staples,30.25851938895417
+9. Mediterranean Diet,Rice,2.6439482961222094
+9. Mediterranean Diet,Veg & Fruit,30.552291421856637
+9. Mediterranean Diet,Ultra-Processed,3.231492361927144
+9. Mediterranean Diet,Soups,1.762632197414806
+9. Mediterranean Diet,Beverages & Additions,2.526439482961222
+9. Mediterranean Diet,Fats (Butter),0.5287896592244419
+9. Mediterranean Diet,Oils (Plant-based),1.762632197414806
+9. Mediterranean Diet,Condiments,0.8225616921269095
