@@ -212,9 +212,8 @@ class HybridModelConfig:
 # Maps model food items to 16 aggregated categories for comprehensive visualization
 # Aligned with model_to_group items from RIVM database
 VISUAL_MAPPING = {
-    'Beef': 'Red Meat', 'Pork': 'Red Meat', 'Lamb': 'Red Meat',
+    'Beef': 'Red Meat', 'Pork': 'Red Meat', 'Lamb': 'Red Meat','Processed_Meats': 'Red Meat',
     'Chicken': 'Poultry',
-    'Processed_Meats': 'Processed Meats',
     'Milk': 'Dairy (Milk & Milkproducts)', 'Dairy': 'Dairy (Milk & Milkproducts)',
     'Cheese': 'Cheese & Eggs', 'Eggs': 'Cheese & Eggs',
     'Fish': 'Fish',
@@ -232,7 +231,7 @@ VISUAL_MAPPING = {
 
 # --- COLOR PALETTE ---
 # Consistent category ordering for all visualizations (16 categories)
-CAT_ORDER = ['Red Meat', 'Poultry', 'Processed Meats', 'Dairy (Milk & Milkproducts)', 'Cheese & Eggs', 'Fish', 'Plant Protein', 
+CAT_ORDER = ['Red Meat', 'Poultry', 'Dairy (Milk & Milkproducts)', 'Cheese & Eggs', 'Fish', 'Plant Protein', 
             'Staples', 'Rice', 'Veg & Fruit', 'Ultra-Processed', 'Soups', 'Beverages & Additions', 
             'Fats (Butter)', 'Oils (Plant-based)', 'Condiments']
 
@@ -242,7 +241,6 @@ CAT_ORDER = ['Red Meat', 'Poultry', 'Processed Meats', 'Dairy (Milk & Milkproduc
 COLORS = [
     '#CC3311',  # Red Meat - dark red (RED for red meat!)
     '#EE7733',  # Poultry - bright orange (chicken/poultry color)
-    '#AA4466',  # Processed Meats - rose/pink (processed)
     '#33BBEE',  # Dairy (Milk And Milkproducts) - sky blue (milk cartons)
     '#0077BB',  # Cheese & Eggs - deep blue (dairy family)
     '#88CCEE',  # Fish - light cyan (ocean/water)
@@ -583,8 +581,8 @@ def load_impact_factors():
                 missing.append(item)
                 continue
 
-        # Apply category-specific Scope 1+2 percentage when available; fallback to global ratio
-        scope12_pct = scope12_pct_by_item.get(item, SCOPE12_RATIO)
+        # Uniform split: 85% Scope 3 / 15% Scope 1+2 (no category-specific override)
+        scope12_pct = SCOPE12_RATIO
         total_co2 = float(co2_total)
         records[item] = {
             'co2': total_co2 * (1.0 - scope12_pct),
@@ -1293,6 +1291,17 @@ def run_full_analysis():
     print(f"\n[CALIBRATION] Raw Scope 1+2 for Monitor 2024: {total_scope12_monitor_raw:,.0f} kton")
     print(f"[CALIBRATION] Target Scope 1+2: {scope12_target_kton:,.0f} kton")
     print(f"[CALIBRATION] Scale factor: {scope12_scale:.4f}")
+
+    # Apply calibration to Scope 1+2 (baseline set to 1.75 Mton) so every chart uses calibrated values
+    # Only the Monitor 2024 diet is scaled; all other diets remain as calculated
+    results_scope12 = {
+        diet: {cat: val * (scope12_scale if diet == monitor_diet_key else 1.0)
+               for cat, val in cats.items()}
+        for diet, cats in results_scope12.items()
+    }
+    # Recompute totals to reflect calibrated Scope 1+2 values
+    for diet in total_footprints.keys():
+        total_footprints[diet] = sum(results_scope12.get(diet, {}).values()) + sum(results_co2.get(diet, {}).values())
 
     # ============================================================================
     # EXPORT: Core Calculation Results as CSV (for reproducibility)
@@ -2125,35 +2134,13 @@ def run_full_analysis():
     except Exception as e:
         print(f"Warning: failed to export 4 appendix CSV: {e}")
 
-    # Pre-calculate scope totals for 4A-4E charts
-    # This is needed before Charts 4A-4E but after total_footprints are calculated
-    factors = load_impact_factors()
-    results_scope12_pre = {}
-    for name, profile in diets.items():
-        cat_totals = {cat: 0.0 for cat in CAT_ORDER}
-        for item, grams_day in profile.items():
-            if item not in factors.index:
-                continue
-            kg_day = grams_day / 1000.0
-            kg_year_person = kg_day * 365.0
-            scope12_intensity = factors.loc[item, 'scope12'] if 'scope12' in factors.columns else 0.0
-            co2_scope12_person_year = kg_year_person * scope12_intensity
-            cat = VISUAL_MAPPING.get(item, item)
-            if cat in cat_totals:
-                cat_totals[cat] += co2_scope12_person_year
-            else:
-                cat_totals[cat] = co2_scope12_person_year
-        try:
-            pop = cfg.POPULATION_TOTAL
-        except AttributeError:
-            pop = None
-        if pop:
-            for cat in cat_totals:
-                cat_totals[cat] = (cat_totals[cat] * pop) / 1000.0
-        results_scope12_pre[name] = cat_totals
-
+    # Use already-calculated cradle-to-grave scope totals for 4A-4E charts
+    # Apply calibration scale to Monitor 2024 baseline only
     scope3_totals = {diet: sum(results_co2.get(diet, {}).values()) for diet in results_co2}
-    scope12_totals = {diet: sum(results_scope12_pre.get(diet, {}).values()) for diet in results_scope12_pre}
+    scope12_totals = {}
+    for diet in results_scope12:
+        scale_factor = scope12_scale if diet == monitor_diet_key else 1.0
+        scope12_totals[diet] = sum(results_scope12.get(diet, {}).values()) * scale_factor
 
     # ================================================
     # 4A-4E: DIET ADAPTATION & REDUCTION STRATEGIES
@@ -3249,33 +3236,12 @@ def run_full_analysis():
     # NEW: Scope 1+2 vs Scope 3 Comparison & Shares
     # ---------------------------------------------
     print("Generating 6_Scope12_vs_Scope3.png and 7_Scope3_Share.png...")
-    factors = load_impact_factors()
-    results_scope12 = {}
-    for name, profile in diets.items():
-        cat_totals = {cat: 0.0 for cat in CAT_ORDER}
-        for item, grams_day in profile.items():
-            if item not in factors.index:
-                continue
-            kg_day = grams_day / 1000.0
-            kg_year_person = kg_day * 365.0
-            scope12_intensity = factors.loc[item, 'scope12'] if 'scope12' in factors.columns else 0.0
-            co2_scope12_person_year = kg_year_person * scope12_intensity
-            cat = VISUAL_MAPPING.get(item, item)
-            if cat in cat_totals:
-                cat_totals[cat] += co2_scope12_person_year
-            else:
-                cat_totals[cat] = co2_scope12_person_year
-        try:
-            pop = cfg.POPULATION_TOTAL
-        except AttributeError:
-            pop = None
-        if pop:
-            for cat in cat_totals:
-                cat_totals[cat] = (cat_totals[cat] * pop) / 1000.0
-        results_scope12[name] = cat_totals
-
+    # Use already-calculated cradle-to-grave data (properly accounts for waste and full lifecycle)
     scope3_totals = {diet: sum(results_co2.get(diet, {}).values()) for diet in results_co2}
-    scope12_totals = {diet: sum(results_scope12.get(diet, {}).values()) for diet in results_scope12}
+    scope12_totals = {}
+    for diet in results_scope12:
+        scale_factor = scope12_scale if diet == monitor_diet_key else 1.0
+        scope12_totals[diet] = sum(results_scope12.get(diet, {}).values()) * scale_factor
     total_totals = {diet: scope12_totals.get(diet, 0.0) + scope3_totals.get(diet, 0.0) for diet in results_co2}
     
     df_compare = pd.DataFrame({
@@ -3368,30 +3334,21 @@ def run_full_analysis():
     df_share_all.to_csv(os.path.join(data_dir, '7_Scope_Shares_all.csv'), index=False)
 
     print("Generating 8_All_Total_Emissions_Donuts.png...")
+    # Use the properly calculated cradle-to-grave data (scope 1+2 + scope 3)
     results_total = {}
-    for name, profile in diets.items():
+    for name in diets.keys():
         cat_totals = {cat: 0.0 for cat in CAT_ORDER}
-        for item, grams_day in profile.items():
-            if item not in factors.index:
-                continue
-            kg_day = grams_day / 1000.0
-            kg_year_person = kg_day * 365.0
-            scope3_intensity = factors.loc[item, 'co2'] if 'co2' in factors.columns else 0.0
-            scope12_intensity = factors.loc[item, 'scope12'] if 'scope12' in factors.columns else 0.0
-            total_intensity = scope3_intensity + scope12_intensity
-            co2_total_person_year = kg_year_person * total_intensity
-            cat = VISUAL_MAPPING.get(item, item)
-            if cat in cat_totals:
-                cat_totals[cat] += co2_total_person_year
-            else:
-                cat_totals[cat] = co2_total_person_year
-        try:
-            pop = cfg.POPULATION_TOTAL
-        except AttributeError:
-            pop = None
-        if pop:
-            for cat in cat_totals:
-                cat_totals[cat] = (cat_totals[cat] * pop) / 1000.0
+        # Get scope 1+2 and scope 3 from already-calculated results
+        scope12_dict = results_scope12.get(name, {})
+        scope3_dict = results_co2.get(name, {})
+        
+        for cat in CAT_ORDER:
+            # Apply calibration scale to Monitor 2024 baseline only
+            scale_factor = scope12_scale if name == monitor_diet_key else 1.0
+            scope12_val = scope12_dict.get(cat, 0.0) * scale_factor
+            scope3_val = scope3_dict.get(cat, 0.0)
+            cat_totals[cat] = scope12_val + scope3_val
+        
         results_total[name] = cat_totals
 
     n_diets8 = len(results_total)

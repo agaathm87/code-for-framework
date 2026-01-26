@@ -1,7 +1,6 @@
 Diet,Category,Water_m3
-1. Monitor 2024 (Current),Red Meat,2119209846.5469398
+1. Monitor 2024 (Current),Red Meat,5661117626.375459
 1. Monitor 2024 (Current),Poultry,1221607894.3126857
-1. Monitor 2024 (Current),Processed Meats,3541907779.828519
 1. Monitor 2024 (Current),Dairy (Milk & Milkproducts),3064984985.37
 1. Monitor 2024 (Current),Cheese & Eggs,2026690497.9458096
 1. Monitor 2024 (Current),Fish,604931327.7699995
@@ -15,9 +14,8 @@ Diet,Category,Water_m3
 1. Monitor 2024 (Current),Fats (Butter),1276426186.8582733
 1. Monitor 2024 (Current),Oils (Plant-based),3724909982.2199993
 1. Monitor 2024 (Current),Condiments,387375973.15094995
-2. Amsterdam Theoretical,Red Meat,2747432643.413763
+2. Amsterdam Theoretical,Red Meat,6879658386.547035
 2. Amsterdam Theoretical,Poultry,1368200841.6302083
-2. Amsterdam Theoretical,Processed Meats,4132225743.133272
 2. Amsterdam Theoretical,Dairy (Milk & Milkproducts),3622254982.71
 2. Amsterdam Theoretical,Cheese & Eggs,1974167501.5305157
 2. Amsterdam Theoretical,Fish,274968785.34999985
@@ -31,9 +29,8 @@ Diet,Category,Water_m3
 2. Amsterdam Theoretical,Fats (Butter),1595532733.572842
 2. Amsterdam Theoretical,Oils (Plant-based),4469891978.664
 2. Amsterdam Theoretical,Condiments,469866597.7572
-3. Metropolitan (High Risk),Red Meat,5886272970.55823
+3. Metropolitan (High Risk),Red Meat,12970088530.215267
 3. Metropolitan (High Risk),Poultry,2931858946.3504457
-3. Metropolitan (High Risk),Processed Meats,7083815559.657038
 3. Metropolitan (High Risk),Dairy (Milk & Milkproducts),2786349986.7
 3. Metropolitan (High Risk),Cheese & Eggs,2406628982.1975102
 3. Metropolitan (High Risk),Fish,412453178.02499974
@@ -47,9 +44,8 @@ Diet,Category,Water_m3
 3. Metropolitan (High Risk),Fats (Butter),3120686306.6891227
 3. Metropolitan (High Risk),Oils (Plant-based),5959855971.552
 3. Metropolitan (High Risk),Condiments,608010897.0978
-4. Metabolic Balance,Red Meat,8635221385.431759
+4. Metabolic Balance,Red Meat,10406175275.346018
 4. Metabolic Balance,Poultry,3909145261.8005943
-4. Metabolic Balance,Processed Meats,1770953889.9142594
 4. Metabolic Balance,Dairy (Milk & Milkproducts),696587496.675
 4. Metabolic Balance,Cheese & Eggs,3383915297.647659
 4. Metabolic Balance,Fish,1099875141.3999994
@@ -63,9 +59,8 @@ Diet,Category,Water_m3
 4. Metabolic Balance,Fats (Butter),4198850681.939003
 4. Metabolic Balance,Oils (Plant-based),5214873975.108
 4. Metabolic Balance,Condiments,295866373.58775
-5. Dutch Goal (60:40),Red Meat,1647853277.464352
+5. Dutch Goal (60:40),Red Meat,3418807167.3786116
 5. Dutch Goal (60:40),Poultry,879557683.9051337
-5. Dutch Goal (60:40),Processed Meats,1770953889.9142594
 5. Dutch Goal (60:40),Dairy (Milk & Milkproducts),2507714988.0299997
 5. Dutch Goal (60:40),Cheese & Eggs,1203314491.0987551
 5. Dutch Goal (60:40),Fish,329962542.41999984
@@ -79,9 +74,8 @@ Diet,Category,Water_m3
 5. Dutch Goal (60:40),Fats (Butter),787209492.7179368
 5. Dutch Goal (60:40),Oils (Plant-based),3277920784.3535995
 5. Dutch Goal (60:40),Condiments,317423923.48485
-6. Amsterdam Goal (70:30),Red Meat,784331138.921176
+6. Amsterdam Goal (70:30),Red Meat,1964967065.530682
 6. Amsterdam Goal (70:30),Poultry,488643157.7250743
-6. Amsterdam Goal (70:30),Processed Meats,1180635926.6095061
 6. Amsterdam Goal (70:30),Dairy (Milk & Milkproducts),1393174993.35
 6. Amsterdam Goal (70:30),Cheese & Eggs,1109244540.1965265
 6. Amsterdam Goal (70:30),Fish,412453178.02499974
@@ -97,7 +91,6 @@ Diet,Category,Water_m3
 6. Amsterdam Goal (70:30),Condiments,283327798.6476
 7. EAT-Lancet (Planetary),Red Meat,1098063594.4896464
 7. EAT-Lancet (Planetary),Poultry,1417065157.4027157
-7. EAT-Lancet (Planetary),Processed Meats,0.0
 7. EAT-Lancet (Planetary),Dairy (Milk & Milkproducts),3482937483.375
 7. EAT-Lancet (Planetary),Cheese & Eggs,635236105.0425966
 7. EAT-Lancet (Planetary),Fish,769912598.9799995
@@ -111,9 +104,8 @@ Diet,Category,Water_m3
 7. EAT-Lancet (Planetary),Fats (Butter),170110147.42576835
 7. EAT-Lancet (Planetary),Oils (Plant-based),2681935187.1983995
 7. EAT-Lancet (Planetary),Condiments,249231673.81035
-8. Schijf van 5 (Guideline),Red Meat,1647853277.464352
+8. Schijf van 5 (Guideline),Red Meat,4009125130.683364
 8. Schijf van 5 (Guideline),Poultry,1221607894.3126857
-8. Schijf van 5 (Guideline),Processed Meats,2361271853.2190123
 8. Schijf van 5 (Guideline),Dairy (Milk & Milkproducts),3482937483.375
 8. Schijf van 5 (Guideline),Cheese & Eggs,1541706020.863521
 8. Schijf van 5 (Guideline),Fish,687421963.3749995
@@ -127,9 +119,8 @@ Diet,Category,Water_m3
 8. Schijf van 5 (Guideline),Fats (Butter),801285324.809249
 8. Schijf van 5 (Guideline),Oils (Plant-based),3724909982.2199993
 8. Schijf van 5 (Guideline),Condiments,329962498.42499995
-9. Mediterranean Diet,Red Meat,2205221817.7378817
+9. Mediterranean Diet,Red Meat,3385857744.347388
 9. Mediterranean Diet,Poultry,977286315.4501486
-9. Mediterranean Diet,Processed Meats,1180635926.6095061
 9. Mediterranean Diet,Dairy (Milk & Milkproducts),2786349986.7
 9. Mediterranean Diet,Cheese & Eggs,1443977389.3185062
 9. Mediterranean Diet,Fish,962390748.7249994

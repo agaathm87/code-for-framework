@@ -1,7 +1,6 @@
 Diet,Category,Mass_grams
-1. Monitor 2024 (Current),Red Meat,27.0
+1. Monitor 2024 (Current),Red Meat,57.0
 1. Monitor 2024 (Current),Poultry,25.0
-1. Monitor 2024 (Current),Processed Meats,30.0
 1. Monitor 2024 (Current),Dairy (Milk & Milkproducts),220.0
 1. Monitor 2024 (Current),Cheese & Eggs,63.0
 1. Monitor 2024 (Current),Fish,22.0
@@ -15,9 +14,8 @@ Diet,Category,Mass_grams
 1. Monitor 2024 (Current),Fats (Butter),20.0
 1. Monitor 2024 (Current),Oils (Plant-based),25.0
 1. Monitor 2024 (Current),Condiments,18.0
-2. Amsterdam Theoretical,Red Meat,35.0
+2. Amsterdam Theoretical,Red Meat,70.0
 2. Amsterdam Theoretical,Poultry,28.0
-2. Amsterdam Theoretical,Processed Meats,35.0
 2. Amsterdam Theoretical,Dairy (Milk & Milkproducts),260.0
 2. Amsterdam Theoretical,Cheese & Eggs,65.0
 2. Amsterdam Theoretical,Fish,10.0
@@ -31,9 +29,8 @@ Diet,Category,Mass_grams
 2. Amsterdam Theoretical,Fats (Butter),25.0
 2. Amsterdam Theoretical,Oils (Plant-based),30.0
 2. Amsterdam Theoretical,Condiments,22.0
-3. Metropolitan (High Risk),Red Meat,75.0
+3. Metropolitan (High Risk),Red Meat,135.0
 3. Metropolitan (High Risk),Poultry,60.0
-3. Metropolitan (High Risk),Processed Meats,60.0
 3. Metropolitan (High Risk),Dairy (Milk & Milkproducts),200.0
 3. Metropolitan (High Risk),Cheese & Eggs,80.0
 3. Metropolitan (High Risk),Fish,15.0
@@ -47,9 +44,8 @@ Diet,Category,Mass_grams
 3. Metropolitan (High Risk),Fats (Butter),40.0
 3. Metropolitan (High Risk),Oils (Plant-based),40.0
 3. Metropolitan (High Risk),Condiments,27.0
-4. Metabolic Balance,Red Meat,110.0
+4. Metabolic Balance,Red Meat,125.0
 4. Metabolic Balance,Poultry,80.0
-4. Metabolic Balance,Processed Meats,15.0
 4. Metabolic Balance,Dairy (Milk & Milkproducts),50.0
 4. Metabolic Balance,Cheese & Eggs,100.0
 4. Metabolic Balance,Fish,40.0
@@ -63,9 +59,8 @@ Diet,Category,Mass_grams
 4. Metabolic Balance,Fats (Butter),52.0
 4. Metabolic Balance,Oils (Plant-based),35.0
 4. Metabolic Balance,Condiments,15.0
-5. Dutch Goal (60:40),Red Meat,21.0
+5. Dutch Goal (60:40),Red Meat,36.0
 5. Dutch Goal (60:40),Poultry,18.0
-5. Dutch Goal (60:40),Processed Meats,15.0
 5. Dutch Goal (60:40),Dairy (Milk & Milkproducts),180.0
 5. Dutch Goal (60:40),Cheese & Eggs,40.0
 5. Dutch Goal (60:40),Fish,12.0
@@ -79,9 +74,8 @@ Diet,Category,Mass_grams
 5. Dutch Goal (60:40),Fats (Butter),11.0
 5. Dutch Goal (60:40),Oils (Plant-based),22.0
 5. Dutch Goal (60:40),Condiments,15.0
-6. Amsterdam Goal (70:30),Red Meat,10.0
+6. Amsterdam Goal (70:30),Red Meat,20.0
 6. Amsterdam Goal (70:30),Poultry,10.0
-6. Amsterdam Goal (70:30),Processed Meats,10.0
 6. Amsterdam Goal (70:30),Dairy (Milk & Milkproducts),100.0
 6. Amsterdam Goal (70:30),Cheese & Eggs,35.0
 6. Amsterdam Goal (70:30),Fish,15.0
@@ -97,7 +91,6 @@ Diet,Category,Mass_grams
 6. Amsterdam Goal (70:30),Condiments,14.0
 7. EAT-Lancet (Planetary),Red Meat,14.0
 7. EAT-Lancet (Planetary),Poultry,29.0
-7. EAT-Lancet (Planetary),Processed Meats,0.0
 7. EAT-Lancet (Planetary),Dairy (Milk & Milkproducts),250.0
 7. EAT-Lancet (Planetary),Cheese & Eggs,13.0
 7. EAT-Lancet (Planetary),Fish,28.0
@@ -111,9 +104,8 @@ Diet,Category,Mass_grams
 7. EAT-Lancet (Planetary),Fats (Butter),4.0
 7. EAT-Lancet (Planetary),Oils (Plant-based),18.0
 7. EAT-Lancet (Planetary),Condiments,13.0
-8. Schijf van 5 (Guideline),Red Meat,21.0
+8. Schijf van 5 (Guideline),Red Meat,41.0
 8. Schijf van 5 (Guideline),Poultry,25.0
-8. Schijf van 5 (Guideline),Processed Meats,20.0
 8. Schijf van 5 (Guideline),Dairy (Milk & Milkproducts),250.0
 8. Schijf van 5 (Guideline),Cheese & Eggs,50.0
 8. Schijf van 5 (Guideline),Fish,25.0
@@ -127,9 +119,8 @@ Diet,Category,Mass_grams
 8. Schijf van 5 (Guideline),Fats (Butter),13.0
 8. Schijf van 5 (Guideline),Oils (Plant-based),25.0
 8. Schijf van 5 (Guideline),Condiments,16.0
-9. Mediterranean Diet,Red Meat,28.0
+9. Mediterranean Diet,Red Meat,38.0
 9. Mediterranean Diet,Poultry,20.0
-9. Mediterranean Diet,Processed Meats,10.0
 9. Mediterranean Diet,Dairy (Milk & Milkproducts),200.0
 9. Mediterranean Diet,Cheese & Eggs,48.0
 9. Mediterranean Diet,Fish,35.0

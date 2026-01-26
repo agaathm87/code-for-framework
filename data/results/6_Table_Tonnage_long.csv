@@ -1,7 +1,7 @@
 Diet,Category,Scope3_tonnes_per_year
-1.Monitor,Red Meat,140680.4864259941
+1.Monitor,Red Meat,372089.3965536569
 1.Monitor,Poultry,25889.399380852912
-1.Monitor,Processed Meats,231408.91012766282
+1.Monitor,Processed Meats,0.0
 1.Monitor,Dairy (Milk & Milkproducts),183092.52412605
 1.Monitor,Cheese & Eggs,83975.42296125036
 1.Monitor,Fish,40339.60554070193
@@ -16,9 +16,9 @@ Diet,Category,Scope3_tonnes_per_year
 1.Monitor,Oils (Plant-based),53618.9059940625
 1.Monitor,Condiments,12354.89581602675
 1.Monitor,TOTAL,1640362.5935364505
-2.Theory,Red Meat,182196.50905512695
+2.Theory,Red Meat,452173.5708707337
 2.Theory,Poultry,28996.127306555267
-2.Theory,Processed Meats,269977.0618156067
+2.Theory,Processed Meats,0.0
 2.Theory,Dairy (Milk & Milkproducts),216382.07396715
 2.Theory,Cheese & Eggs,86910.62217241614
 2.Theory,Fish,18336.184336682694
@@ -33,9 +33,9 @@ Diet,Category,Scope3_tonnes_per_year
 2.Theory,Oils (Plant-based),64342.687192875
 2.Theory,Condiments,15014.760178330498
 2.Theory,TOTAL,1741194.622252605
-3.Metro,Red Meat,391006.9714066183
+3.Metro,Red Meat,853824.791661944
 3.Metro,Poultry,62134.55851404699
-3.Metro,Processed Meats,462817.82025532564
+3.Metro,Processed Meats,0.0
 3.Metro,Dairy (Milk & Milkproducts),166447.7492055
 3.Metro,Cheese & Eggs,107020.19025421687
 3.Metro,Fish,27504.27650502404
@@ -50,9 +50,9 @@ Diet,Category,Scope3_tonnes_per_year
 3.Metro,Oils (Plant-based),85790.2495905
 3.Metro,Condiments,19174.85403347325
 3.Metro,TOTAL,2305010.8099277597
-4.Meta,Red Meat,572383.2476578605
+4.Meta,Red Meat,688087.7027216919
 4.Meta,Poultry,82846.07801872933
-4.Meta,Processed Meats,115704.45506383141
+4.Meta,Processed Meats,0.0
 4.Meta,Dairy (Milk & Milkproducts),41611.937301375
 4.Meta,Cheese & Eggs,132909.5896350698
 4.Meta,Fish,73344.73734673078
@@ -67,9 +67,9 @@ Diet,Category,Scope3_tonnes_per_year
 4.Meta,Oils (Plant-based),75066.46839168751
 4.Meta,Condiments,9653.2362039225
 4.Meta,TOTAL,1606354.2355623741
-5.DuGoal,Red Meat,109645.99855463009
+5.DuGoal,Red Meat,225350.4536184615
 5.DuGoal,Poultry,18640.367554214095
-5.DuGoal,Processed Meats,115704.45506383141
+5.DuGoal,Processed Meats,0.0
 5.DuGoal,Dairy (Milk & Milkproducts),149802.97428495
 5.DuGoal,Cheese & Eggs,53510.095127108434
 5.DuGoal,Fish,22003.421204019236
@@ -84,9 +84,9 @@ Diet,Category,Scope3_tonnes_per_year
 5.DuGoal,Oils (Plant-based),47184.637274775
 5.DuGoal,Condiments,10167.244451469001
 5.DuGoal,TOTAL,1595697.3716568763
-6.AmGoal,Red Meat,52407.67378884405
+6.AmGoal,Red Meat,129543.97716473168
 6.AmGoal,Poultry,10355.759752341166
-6.AmGoal,Processed Meats,77136.30337588763
+6.AmGoal,Processed Meats,0.0
 6.AmGoal,Dairy (Milk & Milkproducts),83223.87460275
 6.AmGoal,Cheese & Eggs,46691.48600881468
 6.AmGoal,Fish,27504.27650502404
@@ -118,9 +118,9 @@ Diet,Category,Scope3_tonnes_per_year
 7.EAT,Oils (Plant-based),38605.612315725
 7.EAT,Condiments,8194.801960884
 7.EAT,TOTAL,1456122.0812081047
-8.Schijf,Red Meat,109645.99855463009
+8.Schijf,Red Meat,263918.60530640534
 8.Schijf,Poultry,25889.399380852912
-8.Schijf,Processed Meats,154272.60675177525
+8.Schijf,Processed Meats,0.0
 8.Schijf,Dairy (Milk & Milkproducts),208059.68650687498
 8.Schijf,Cheese & Eggs,66801.05409061542
 8.Schijf,Fish,45840.460841706736
@@ -135,9 +135,9 @@ Diet,Category,Scope3_tonnes_per_year
 8.Schijf,Oils (Plant-based),53618.9059940625
 8.Schijf,Condiments,10639.457449215
 8.Schijf,TOTAL,1680363.4804916752
-9.Med,Red Meat,141820.08978545445
+9.Med,Red Meat,218956.39316134207
 9.Med,Poultry,20711.519504682332
-9.Med,Processed Meats,77136.30337588763
+9.Med,Processed Meats,0.0
 9.Med,Dairy (Milk & Milkproducts),166447.7492055
 9.Med,Cheese & Eggs,64212.11415253013
 9.Med,Fish,64176.645178389444
