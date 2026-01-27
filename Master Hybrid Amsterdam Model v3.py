@@ -687,7 +687,7 @@ def load_diet_profiles():
             'Beef': 45, 'Pork': 25, 'Lamb': 5, 'Chicken': 60, 'Processed_Meats': 60, 'Cheese': 50, 'Milk': 200,
             'Fish': 15, 'Eggs': 30, 'Pulses': 5, 'Nuts': 5, 'Meat_Subs': 5,
             'Grains': 180, 'Vegetables': 110, 'Fruits': 100, 'Potatoes': 80,
-            'Sugar': 80, 'Snacks': 80, 'Cookies_Pastries': 100, 'Soups': 15,
+            'Sugar': 80, 'Snacks': 180, 'Cookies_Pastries': 100, 'Soups': 15,
             'Coffee': 18, 'Tea': 2, 'Alcohol': 40, 'Oils': 40,
             'Rice': 20, 'Bread': 120, 'Pasta': 40, 'Dairy': 0,
             'Butter': 20, 'Animal_Fats': 20,
@@ -734,7 +734,7 @@ def load_diet_profiles():
             'Condiment_Sauces': 8, 'Spice_Mixes': 5
         },
         '8. Schijf van 5 (Guideline)': {
-            'Beef': 10, 'Pork': 10, 'Lamb': 13, 'Chicken': 25, 'Processed_Meats': 20, 'Cheese': 30, 'Milk': 250,
+            'Beef': 10, 'Pork': 10, 'Lamb': 13, 'Chicken': 25, 'Processed_Meats': 20, 'Cheese': 40, 'Milk': 250,
             'Fish': 25, 'Eggs': 20, 'Pulses': 30, 'Nuts': 25, 'Meat_Subs': 20,
             'Grains': 240, 'Vegetables': 250, 'Fruits': 200, 'Potatoes': 70,
             'Sugar': 25, 'Snacks': 35, 'Cookies_Pastries': 30, 'Soups': 25,
@@ -747,7 +747,7 @@ def load_diet_profiles():
             'Beef': 8, 'Pork': 8, 'Lamb': 12, 'Chicken': 20, 'Processed_Meats': 10, 'Cheese': 30, 'Milk': 200,
             'Fish': 35, 'Eggs': 18, 'Pulses': 60, 'Nuts': 30, 'Meat_Subs': 10,
             'Grains': 240, 'Vegetables': 300, 'Fruits': 220, 'Potatoes': 60,
-            'Sugar': 20, 'Snacks': 20, 'Cookies_Pastries': 15, 'Soups': 30,
+            'Sugar': 20, 'Snacks': 15, 'Cookies_Pastries': 15, 'Soups': 30,
             'Coffee': 8, 'Tea': 5, 'Alcohol': 30, 'Oils': 30,
             'Rice': 45, 'Bread': 180, 'Pasta': 35, 'Dairy': 0,
             'Butter': 6, 'Animal_Fats': 3,
@@ -2059,9 +2059,9 @@ def run_full_analysis():
         ax = axes3b[i]
         vals = [co2_dict[c] for c in CAT_ORDER]
         
-        # Only show percentages for slices > 3% to avoid clutter
+        # Only show percentages for slices > 2% to avoid clutter
         def autopct_format(pct):
-            return f'{pct:.0f}%' if pct > 3 else ''
+            return f'{pct:.0f}%' if pct > 2 else ''
         
         wedges, texts, autotexts = ax.pie(vals, labels=None, autopct=autopct_format, 
                                         startangle=90, pctdistance=0.75, colors=COLORS,

@@ -38,7 +38,7 @@ Diet,Category,Mass_grams
 3. Metropolitan (High Risk),Staples,420.0
 3. Metropolitan (High Risk),Rice,20.0
 3. Metropolitan (High Risk),Veg & Fruit,210.0
-3. Metropolitan (High Risk),Ultra-Processed,260.0
+3. Metropolitan (High Risk),Ultra-Processed,360.0
 3. Metropolitan (High Risk),Soups,15.0
 3. Metropolitan (High Risk),Beverages & Additions,60.0
 3. Metropolitan (High Risk),Fats (Butter),40.0
@@ -107,7 +107,7 @@ Diet,Category,Mass_grams
 8. Schijf van 5 (Guideline),Red Meat,53.0
 8. Schijf van 5 (Guideline),Poultry,25.0
 8. Schijf van 5 (Guideline),Dairy (Milk & Milkproducts),250.0
-8. Schijf van 5 (Guideline),Cheese & Eggs,50.0
+8. Schijf van 5 (Guideline),Cheese & Eggs,60.0
 8. Schijf van 5 (Guideline),Fish,25.0
 8. Schijf van 5 (Guideline),Plant Protein,75.0
 8. Schijf van 5 (Guideline),Staples,510.0
@@ -128,7 +128,7 @@ Diet,Category,Mass_grams
 9. Mediterranean Diet,Staples,515.0
 9. Mediterranean Diet,Rice,45.0
 9. Mediterranean Diet,Veg & Fruit,520.0
-9. Mediterranean Diet,Ultra-Processed,55.0
+9. Mediterranean Diet,Ultra-Processed,50.0
 9. Mediterranean Diet,Soups,30.0
 9. Mediterranean Diet,Beverages & Additions,43.0
 9. Mediterranean Diet,Fats (Butter),9.0

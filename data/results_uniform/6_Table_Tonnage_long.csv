@@ -40,13 +40,13 @@ Diet,Category,Scope3_tonnes_per_year
 3.Metro,Staples,349308.78848980693
 3.Metro,Rice,28029.276698324702
 3.Metro,Veg & Fruit,165890.47920816002
-3.Metro,Ultra-Processed,548714.1282398595
+3.Metro,Ultra-Processed,769862.3271842594
 3.Metro,Soups,22965.38989038
 3.Metro,Beverages & Additions,26045.039875680002
 3.Metro,Fats (Butter),74771.73778128234
 3.Metro,Oils (Plant-based),105587.999496
 3.Metro,Condiments,23516.793887748005
-3.Metro,TOTAL,3691514.121128005
+3.Metro,TOTAL,3912662.320072405
 4.Meta,Red Meat,1376175.4054433838
 4.Meta,Poultry,165692.15603745866
 4.Meta,Dairy (Milk & Milkproducts),66579.0996822
@@ -114,7 +114,7 @@ Diet,Category,Scope3_tonnes_per_year
 8.Schijf,Red Meat,643772.8340594186
 8.Schijf,Poultry,51778.798761705824
 8.Schijf,Dairy (Milk & Milkproducts),332895.498411
-8.Schijf,Cheese & Eggs,114154.86960449803
+8.Schijf,Cheese & Eggs,138398.81313620915
 8.Schijf,Fish,73344.73734673078
 8.Schijf,Plant Protein,103094.9495079
 8.Schijf,Staples,410724.6498493644
@@ -126,7 +126,7 @@ Diet,Category,Scope3_tonnes_per_year
 8.Schijf,Fats (Butter),21989.595150312933
 8.Schijf,Oils (Plant-based),65992.499685
 8.Schijf,Condiments,12928.663938288
-8.Schijf,TOTAL,2490771.946085346
+8.Schijf,TOTAL,2515015.889617057
 9.Med,Red Meat,437912.78632268414
 9.Med,Poultry,41423.039009364664
 9.Med,Dairy (Milk & Milkproducts),266316.3987288
@@ -136,10 +136,10 @@ Diet,Category,Scope3_tonnes_per_year
 9.Med,Staples,413778.3661549322
 9.Med,Rice,63065.872571230575
 9.Med,Veg & Fruit,418715.07800136006
-9.Med,Ultra-Processed,122899.83904221891
+9.Med,Ultra-Processed,111842.42909499891
 9.Med,Soups,45930.77978076
 9.Med,Beverages & Additions,18994.107909336
 9.Med,Fats (Butter),14512.421372184699
 9.Med,Oils (Plant-based),79190.99962199999
 9.Med,Condiments,11133.667946856001
-9.Med,TOTAL,2274036.733842272
+9.Med,TOTAL,2262979.323895052

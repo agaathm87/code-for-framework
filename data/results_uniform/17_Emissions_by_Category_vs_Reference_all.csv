@@ -23,7 +23,7 @@ Metropolitan,Monitor 2024,Plant Protein,26360.337374175
 Metropolitan,Monitor 2024,Staples,436635.98561225866
 Metropolitan,Monitor 2024,Rice,35036.59587290588
 Metropolitan,Monitor 2024,Veg & Fruit,207363.0990102
-Metropolitan,Monitor 2024,Ultra-Processed,685892.6602998243
+Metropolitan,Monitor 2024,Ultra-Processed,962327.9089803242
 Metropolitan,Monitor 2024,Soups,28706.737362975
 Metropolitan,Monitor 2024,Beverages & Additions,32556.2998446
 Metropolitan,Monitor 2024,Fats (Butter),93464.67222660291
@@ -92,7 +92,7 @@ EAT-Lancet,Monitor 2024,Condiments,12347.92994106
 Schijf van Vijf (50-50),Monitor 2024,Red Meat,804716.0425742732
 Schijf van Vijf (50-50),Monitor 2024,Poultry,64723.49845213228
 Schijf van Vijf (50-50),Monitor 2024,Dairy (Milk & Milkproducts),416119.37301374995
-Schijf van Vijf (50-50),Monitor 2024,Cheese & Eggs,142693.58700562254
+Schijf van Vijf (50-50),Monitor 2024,Cheese & Eggs,172998.5164202614
 Schijf van Vijf (50-50),Monitor 2024,Fish,91680.92168341347
 Schijf van Vijf (50-50),Monitor 2024,Plant Protein,128868.686884875
 Schijf van Vijf (50-50),Monitor 2024,Staples,513405.8123117055
@@ -113,7 +113,7 @@ Mediterranean Diet,Monitor 2024,Plant Protein,159335.22423944998
 Mediterranean Diet,Monitor 2024,Staples,517222.9576936652
 Mediterranean Diet,Monitor 2024,Rice,78832.34071403822
 Mediterranean Diet,Monitor 2024,Veg & Fruit,523393.84750170005
-Mediterranean Diet,Monitor 2024,Ultra-Processed,153624.79880277364
+Mediterranean Diet,Monitor 2024,Ultra-Processed,139803.03636874864
 Mediterranean Diet,Monitor 2024,Soups,57413.47472595
 Mediterranean Diet,Monitor 2024,Beverages & Additions,23742.63488667
 Mediterranean Diet,Monitor 2024,Fats (Butter),18140.526715230873
@@ -143,7 +143,7 @@ Metropolitan,Amsterdam Theoretical,Plant Protein,26360.337374175
 Metropolitan,Amsterdam Theoretical,Staples,436635.98561225866
 Metropolitan,Amsterdam Theoretical,Rice,35036.59587290588
 Metropolitan,Amsterdam Theoretical,Veg & Fruit,207363.0990102
-Metropolitan,Amsterdam Theoretical,Ultra-Processed,685892.6602998243
+Metropolitan,Amsterdam Theoretical,Ultra-Processed,962327.9089803242
 Metropolitan,Amsterdam Theoretical,Soups,28706.737362975
 Metropolitan,Amsterdam Theoretical,Beverages & Additions,32556.2998446
 Metropolitan,Amsterdam Theoretical,Fats (Butter),93464.67222660291
@@ -212,7 +212,7 @@ EAT-Lancet,Amsterdam Theoretical,Condiments,12347.92994106
 Schijf van Vijf (50-50),Amsterdam Theoretical,Red Meat,804716.0425742732
 Schijf van Vijf (50-50),Amsterdam Theoretical,Poultry,64723.49845213228
 Schijf van Vijf (50-50),Amsterdam Theoretical,Dairy (Milk & Milkproducts),416119.37301374995
-Schijf van Vijf (50-50),Amsterdam Theoretical,Cheese & Eggs,142693.58700562254
+Schijf van Vijf (50-50),Amsterdam Theoretical,Cheese & Eggs,172998.5164202614
 Schijf van Vijf (50-50),Amsterdam Theoretical,Fish,91680.92168341347
 Schijf van Vijf (50-50),Amsterdam Theoretical,Plant Protein,128868.686884875
 Schijf van Vijf (50-50),Amsterdam Theoretical,Staples,513405.8123117055
@@ -233,7 +233,7 @@ Mediterranean Diet,Amsterdam Theoretical,Plant Protein,159335.22423944998
 Mediterranean Diet,Amsterdam Theoretical,Staples,517222.9576936652
 Mediterranean Diet,Amsterdam Theoretical,Rice,78832.34071403822
 Mediterranean Diet,Amsterdam Theoretical,Veg & Fruit,523393.84750170005
-Mediterranean Diet,Amsterdam Theoretical,Ultra-Processed,153624.79880277364
+Mediterranean Diet,Amsterdam Theoretical,Ultra-Processed,139803.03636874864
 Mediterranean Diet,Amsterdam Theoretical,Soups,57413.47472595
 Mediterranean Diet,Amsterdam Theoretical,Beverages & Additions,23742.63488667
 Mediterranean Diet,Amsterdam Theoretical,Fats (Butter),18140.526715230873
@@ -332,7 +332,7 @@ EAT-Lancet,Metropolitan,Condiments,12347.92994106
 Schijf van Vijf (50-50),Metropolitan,Red Meat,804716.0425742732
 Schijf van Vijf (50-50),Metropolitan,Poultry,64723.49845213228
 Schijf van Vijf (50-50),Metropolitan,Dairy (Milk & Milkproducts),416119.37301374995
-Schijf van Vijf (50-50),Metropolitan,Cheese & Eggs,142693.58700562254
+Schijf van Vijf (50-50),Metropolitan,Cheese & Eggs,172998.5164202614
 Schijf van Vijf (50-50),Metropolitan,Fish,91680.92168341347
 Schijf van Vijf (50-50),Metropolitan,Plant Protein,128868.686884875
 Schijf van Vijf (50-50),Metropolitan,Staples,513405.8123117055
@@ -353,7 +353,7 @@ Mediterranean Diet,Metropolitan,Plant Protein,159335.22423944998
 Mediterranean Diet,Metropolitan,Staples,517222.9576936652
 Mediterranean Diet,Metropolitan,Rice,78832.34071403822
 Mediterranean Diet,Metropolitan,Veg & Fruit,523393.84750170005
-Mediterranean Diet,Metropolitan,Ultra-Processed,153624.79880277364
+Mediterranean Diet,Metropolitan,Ultra-Processed,139803.03636874864
 Mediterranean Diet,Metropolitan,Soups,57413.47472595
 Mediterranean Diet,Metropolitan,Beverages & Additions,23742.63488667
 Mediterranean Diet,Metropolitan,Fats (Butter),18140.526715230873
@@ -398,7 +398,7 @@ Metropolitan,Metabolic Balance,Plant Protein,26360.337374175
 Metropolitan,Metabolic Balance,Staples,436635.98561225866
 Metropolitan,Metabolic Balance,Rice,35036.59587290588
 Metropolitan,Metabolic Balance,Veg & Fruit,207363.0990102
-Metropolitan,Metabolic Balance,Ultra-Processed,685892.6602998243
+Metropolitan,Metabolic Balance,Ultra-Processed,962327.9089803242
 Metropolitan,Metabolic Balance,Soups,28706.737362975
 Metropolitan,Metabolic Balance,Beverages & Additions,32556.2998446
 Metropolitan,Metabolic Balance,Fats (Butter),93464.67222660291
@@ -452,7 +452,7 @@ EAT-Lancet,Metabolic Balance,Condiments,12347.92994106
 Schijf van Vijf (50-50),Metabolic Balance,Red Meat,804716.0425742732
 Schijf van Vijf (50-50),Metabolic Balance,Poultry,64723.49845213228
 Schijf van Vijf (50-50),Metabolic Balance,Dairy (Milk & Milkproducts),416119.37301374995
-Schijf van Vijf (50-50),Metabolic Balance,Cheese & Eggs,142693.58700562254
+Schijf van Vijf (50-50),Metabolic Balance,Cheese & Eggs,172998.5164202614
 Schijf van Vijf (50-50),Metabolic Balance,Fish,91680.92168341347
 Schijf van Vijf (50-50),Metabolic Balance,Plant Protein,128868.686884875
 Schijf van Vijf (50-50),Metabolic Balance,Staples,513405.8123117055
@@ -473,7 +473,7 @@ Mediterranean Diet,Metabolic Balance,Plant Protein,159335.22423944998
 Mediterranean Diet,Metabolic Balance,Staples,517222.9576936652
 Mediterranean Diet,Metabolic Balance,Rice,78832.34071403822
 Mediterranean Diet,Metabolic Balance,Veg & Fruit,523393.84750170005
-Mediterranean Diet,Metabolic Balance,Ultra-Processed,153624.79880277364
+Mediterranean Diet,Metabolic Balance,Ultra-Processed,139803.03636874864
 Mediterranean Diet,Metabolic Balance,Soups,57413.47472595
 Mediterranean Diet,Metabolic Balance,Beverages & Additions,23742.63488667
 Mediterranean Diet,Metabolic Balance,Fats (Butter),18140.526715230873
@@ -518,7 +518,7 @@ Metropolitan,Dutch Goal,Plant Protein,26360.337374175
 Metropolitan,Dutch Goal,Staples,436635.98561225866
 Metropolitan,Dutch Goal,Rice,35036.59587290588
 Metropolitan,Dutch Goal,Veg & Fruit,207363.0990102
-Metropolitan,Dutch Goal,Ultra-Processed,685892.6602998243
+Metropolitan,Dutch Goal,Ultra-Processed,962327.9089803242
 Metropolitan,Dutch Goal,Soups,28706.737362975
 Metropolitan,Dutch Goal,Beverages & Additions,32556.2998446
 Metropolitan,Dutch Goal,Fats (Butter),93464.67222660291
@@ -572,7 +572,7 @@ EAT-Lancet,Dutch Goal,Condiments,12347.92994106
 Schijf van Vijf (50-50),Dutch Goal,Red Meat,804716.0425742732
 Schijf van Vijf (50-50),Dutch Goal,Poultry,64723.49845213228
 Schijf van Vijf (50-50),Dutch Goal,Dairy (Milk & Milkproducts),416119.37301374995
-Schijf van Vijf (50-50),Dutch Goal,Cheese & Eggs,142693.58700562254
+Schijf van Vijf (50-50),Dutch Goal,Cheese & Eggs,172998.5164202614
 Schijf van Vijf (50-50),Dutch Goal,Fish,91680.92168341347
 Schijf van Vijf (50-50),Dutch Goal,Plant Protein,128868.686884875
 Schijf van Vijf (50-50),Dutch Goal,Staples,513405.8123117055
@@ -593,7 +593,7 @@ Mediterranean Diet,Dutch Goal,Plant Protein,159335.22423944998
 Mediterranean Diet,Dutch Goal,Staples,517222.9576936652
 Mediterranean Diet,Dutch Goal,Rice,78832.34071403822
 Mediterranean Diet,Dutch Goal,Veg & Fruit,523393.84750170005
-Mediterranean Diet,Dutch Goal,Ultra-Processed,153624.79880277364
+Mediterranean Diet,Dutch Goal,Ultra-Processed,139803.03636874864
 Mediterranean Diet,Dutch Goal,Soups,57413.47472595
 Mediterranean Diet,Dutch Goal,Beverages & Additions,23742.63488667
 Mediterranean Diet,Dutch Goal,Fats (Butter),18140.526715230873
@@ -638,7 +638,7 @@ Metropolitan,Amsterdam Goal,Plant Protein,26360.337374175
 Metropolitan,Amsterdam Goal,Staples,436635.98561225866
 Metropolitan,Amsterdam Goal,Rice,35036.59587290588
 Metropolitan,Amsterdam Goal,Veg & Fruit,207363.0990102
-Metropolitan,Amsterdam Goal,Ultra-Processed,685892.6602998243
+Metropolitan,Amsterdam Goal,Ultra-Processed,962327.9089803242
 Metropolitan,Amsterdam Goal,Soups,28706.737362975
 Metropolitan,Amsterdam Goal,Beverages & Additions,32556.2998446
 Metropolitan,Amsterdam Goal,Fats (Butter),93464.67222660291
@@ -692,7 +692,7 @@ EAT-Lancet,Amsterdam Goal,Condiments,12347.92994106
 Schijf van Vijf (50-50),Amsterdam Goal,Red Meat,804716.0425742732
 Schijf van Vijf (50-50),Amsterdam Goal,Poultry,64723.49845213228
 Schijf van Vijf (50-50),Amsterdam Goal,Dairy (Milk & Milkproducts),416119.37301374995
-Schijf van Vijf (50-50),Amsterdam Goal,Cheese & Eggs,142693.58700562254
+Schijf van Vijf (50-50),Amsterdam Goal,Cheese & Eggs,172998.5164202614
 Schijf van Vijf (50-50),Amsterdam Goal,Fish,91680.92168341347
 Schijf van Vijf (50-50),Amsterdam Goal,Plant Protein,128868.686884875
 Schijf van Vijf (50-50),Amsterdam Goal,Staples,513405.8123117055
@@ -713,7 +713,7 @@ Mediterranean Diet,Amsterdam Goal,Plant Protein,159335.22423944998
 Mediterranean Diet,Amsterdam Goal,Staples,517222.9576936652
 Mediterranean Diet,Amsterdam Goal,Rice,78832.34071403822
 Mediterranean Diet,Amsterdam Goal,Veg & Fruit,523393.84750170005
-Mediterranean Diet,Amsterdam Goal,Ultra-Processed,153624.79880277364
+Mediterranean Diet,Amsterdam Goal,Ultra-Processed,139803.03636874864
 Mediterranean Diet,Amsterdam Goal,Soups,57413.47472595
 Mediterranean Diet,Amsterdam Goal,Beverages & Additions,23742.63488667
 Mediterranean Diet,Amsterdam Goal,Fats (Butter),18140.526715230873
@@ -758,7 +758,7 @@ Metropolitan,EAT-Lancet,Plant Protein,26360.337374175
 Metropolitan,EAT-Lancet,Staples,436635.98561225866
 Metropolitan,EAT-Lancet,Rice,35036.59587290588
 Metropolitan,EAT-Lancet,Veg & Fruit,207363.0990102
-Metropolitan,EAT-Lancet,Ultra-Processed,685892.6602998243
+Metropolitan,EAT-Lancet,Ultra-Processed,962327.9089803242
 Metropolitan,EAT-Lancet,Soups,28706.737362975
 Metropolitan,EAT-Lancet,Beverages & Additions,32556.2998446
 Metropolitan,EAT-Lancet,Fats (Butter),93464.67222660291
@@ -812,7 +812,7 @@ Amsterdam Goal,EAT-Lancet,Condiments,13917.08493357
 Schijf van Vijf (50-50),EAT-Lancet,Red Meat,804716.0425742732
 Schijf van Vijf (50-50),EAT-Lancet,Poultry,64723.49845213228
 Schijf van Vijf (50-50),EAT-Lancet,Dairy (Milk & Milkproducts),416119.37301374995
-Schijf van Vijf (50-50),EAT-Lancet,Cheese & Eggs,142693.58700562254
+Schijf van Vijf (50-50),EAT-Lancet,Cheese & Eggs,172998.5164202614
 Schijf van Vijf (50-50),EAT-Lancet,Fish,91680.92168341347
 Schijf van Vijf (50-50),EAT-Lancet,Plant Protein,128868.686884875
 Schijf van Vijf (50-50),EAT-Lancet,Staples,513405.8123117055
@@ -833,7 +833,7 @@ Mediterranean Diet,EAT-Lancet,Plant Protein,159335.22423944998
 Mediterranean Diet,EAT-Lancet,Staples,517222.9576936652
 Mediterranean Diet,EAT-Lancet,Rice,78832.34071403822
 Mediterranean Diet,EAT-Lancet,Veg & Fruit,523393.84750170005
-Mediterranean Diet,EAT-Lancet,Ultra-Processed,153624.79880277364
+Mediterranean Diet,EAT-Lancet,Ultra-Processed,139803.03636874864
 Mediterranean Diet,EAT-Lancet,Soups,57413.47472595
 Mediterranean Diet,EAT-Lancet,Beverages & Additions,23742.63488667
 Mediterranean Diet,EAT-Lancet,Fats (Butter),18140.526715230873
@@ -878,7 +878,7 @@ Metropolitan,Schijf van Vijf (50-50),Plant Protein,26360.337374175
 Metropolitan,Schijf van Vijf (50-50),Staples,436635.98561225866
 Metropolitan,Schijf van Vijf (50-50),Rice,35036.59587290588
 Metropolitan,Schijf van Vijf (50-50),Veg & Fruit,207363.0990102
-Metropolitan,Schijf van Vijf (50-50),Ultra-Processed,685892.6602998243
+Metropolitan,Schijf van Vijf (50-50),Ultra-Processed,962327.9089803242
 Metropolitan,Schijf van Vijf (50-50),Soups,28706.737362975
 Metropolitan,Schijf van Vijf (50-50),Beverages & Additions,32556.2998446
 Metropolitan,Schijf van Vijf (50-50),Fats (Butter),93464.67222660291
@@ -953,7 +953,7 @@ Mediterranean Diet,Schijf van Vijf (50-50),Plant Protein,159335.22423944998
 Mediterranean Diet,Schijf van Vijf (50-50),Staples,517222.9576936652
 Mediterranean Diet,Schijf van Vijf (50-50),Rice,78832.34071403822
 Mediterranean Diet,Schijf van Vijf (50-50),Veg & Fruit,523393.84750170005
-Mediterranean Diet,Schijf van Vijf (50-50),Ultra-Processed,153624.79880277364
+Mediterranean Diet,Schijf van Vijf (50-50),Ultra-Processed,139803.03636874864
 Mediterranean Diet,Schijf van Vijf (50-50),Soups,57413.47472595
 Mediterranean Diet,Schijf van Vijf (50-50),Beverages & Additions,23742.63488667
 Mediterranean Diet,Schijf van Vijf (50-50),Fats (Butter),18140.526715230873
@@ -998,7 +998,7 @@ Metropolitan,Mediterranean Diet,Plant Protein,26360.337374175
 Metropolitan,Mediterranean Diet,Staples,436635.98561225866
 Metropolitan,Mediterranean Diet,Rice,35036.59587290588
 Metropolitan,Mediterranean Diet,Veg & Fruit,207363.0990102
-Metropolitan,Mediterranean Diet,Ultra-Processed,685892.6602998243
+Metropolitan,Mediterranean Diet,Ultra-Processed,962327.9089803242
 Metropolitan,Mediterranean Diet,Soups,28706.737362975
 Metropolitan,Mediterranean Diet,Beverages & Additions,32556.2998446
 Metropolitan,Mediterranean Diet,Fats (Butter),93464.67222660291
@@ -1067,7 +1067,7 @@ EAT-Lancet,Mediterranean Diet,Condiments,12347.92994106
 Schijf van Vijf (50-50),Mediterranean Diet,Red Meat,804716.0425742732
 Schijf van Vijf (50-50),Mediterranean Diet,Poultry,64723.49845213228
 Schijf van Vijf (50-50),Mediterranean Diet,Dairy (Milk & Milkproducts),416119.37301374995
-Schijf van Vijf (50-50),Mediterranean Diet,Cheese & Eggs,142693.58700562254
+Schijf van Vijf (50-50),Mediterranean Diet,Cheese & Eggs,172998.5164202614
 Schijf van Vijf (50-50),Mediterranean Diet,Fish,91680.92168341347
 Schijf van Vijf (50-50),Mediterranean Diet,Plant Protein,128868.686884875
 Schijf van Vijf (50-50),Mediterranean Diet,Staples,513405.8123117055
