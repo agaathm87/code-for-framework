@@ -328,7 +328,7 @@ def load_impact_factors():
     # Configurable split ratios (defaults: 85% scope 3, 15% scope 1+2)
     # Toggle between uniform and category-specific splits
     USE_UNIFORM_SPLIT = True  # Set to True for uniform 85/15 split; False for category-specific percentages
-    SCOPE3_RATIO = 0.85
+    SCOPE3_RATIO = 0.80
     SCOPE12_RATIO = 1.0 - SCOPE3_RATIO
 
     # Category-specific Scope 1+2 percentages (Monitor calibration)
@@ -1904,9 +1904,9 @@ def run_full_analysis():
         ax = axes2[i]
         vals = [mass_dict[c] for c in CAT_ORDER]
         
-        # Only show percentages for slices > 2% to avoid clutter
+        # Only show percentages for slices > 3% to avoid clutter
         def autopct_format(pct):
-            return f'{pct:.0f}%' if pct > 2 else ''
+            return f'{pct:.0f}%' if pct > 3 else ''
         
         wedges, texts, autotexts = ax.pie(vals, labels=None, autopct=autopct_format, 
                                         startangle=90, pctdistance=0.75, colors=COLORS,
@@ -1954,9 +1954,9 @@ def run_full_analysis():
         ax = axes2b[i]
         vals = [mass_dict[c] for c in CAT_ORDER]
         
-        # Only show percentages for slices > 2% to avoid clutter
+        # Only show percentages for slices > 3% to avoid clutter
         def autopct_format(pct):
-            return f'{pct:.0f}%' if pct > 2 else ''
+            return f'{pct:.0f}%' if pct > 3 else ''
         
         wedges, texts, autotexts = ax.pie(vals, labels=None, autopct=autopct_format, 
                                         startangle=90, pctdistance=0.75, colors=COLORS,
@@ -2007,9 +2007,9 @@ def run_full_analysis():
         ax = axes3[i]
         vals = [co2_dict[c] for c in CAT_ORDER]
         
-        # Only show percentages for slices > 2% to avoid clutter
+        # Only show percentages for slices > 3% to avoid clutter
         def autopct_format(pct):
-            return f'{pct:.0f}%' if pct > 2 else ''
+            return f'{pct:.0f}%' if pct > 3 else ''
         
         wedges, texts, autotexts = ax.pie(vals, labels=None, autopct=autopct_format, 
                                         startangle=90, pctdistance=0.75, colors=COLORS,
@@ -2059,9 +2059,9 @@ def run_full_analysis():
         ax = axes3b[i]
         vals = [co2_dict[c] for c in CAT_ORDER]
         
-        # Only show percentages for slices > 2% to avoid clutter
+        # Only show percentages for slices > 3% to avoid clutter
         def autopct_format(pct):
-            return f'{pct:.0f}%' if pct > 2 else ''
+            return f'{pct:.0f}%' if pct > 3 else ''
         
         wedges, texts, autotexts = ax.pie(vals, labels=None, autopct=autopct_format, 
                                         startangle=90, pctdistance=0.75, colors=COLORS,
@@ -3378,11 +3378,14 @@ def run_full_analysis():
     fig8, axes8 = plt.subplots(rows8, cols8, figsize=(5 * cols8, 5 * rows8), dpi=100)
     axes8 = np.array(axes8).reshape(-1)
     
+    def autopct_format(pct):
+        return f'{pct:.0f}%' if pct > 3 else ''
+    
     for i, (name, total_dict) in enumerate(results_total.items()):
         if i >= len(axes8): break
         ax = axes8[i]
         vals = [total_dict[c] for c in CAT_ORDER]
-        ax.pie(vals, labels=None, autopct='%1.0f%%', startangle=90, pctdistance=0.85, colors=COLORS)
+        ax.pie(vals, labels=None, autopct=autopct_format, startangle=90, pctdistance=0.85, colors=COLORS)
         ax.set_title(clean_diet_label(name), fontsize=12, fontweight='bold')
         ax.add_artist(plt.Circle((0,0),0.65,fc='white'))
         total_t = sum(vals)
@@ -3416,23 +3419,62 @@ def run_full_analysis():
     # 5. TRANSITIONS (One per goal)
     def plot_transition(baseline_key, goal_key, filename):
         print(f"Generating {os.path.basename(filename)}...")
-        fig = plt.figure(figsize=(16, 10))
-        grid = plt.GridSpec(2, 2)
+        
+        # Helper to add descriptive labels
+        def get_full_label(diet_key):
+            """Add descriptive text after diet name"""
+            label = clean_diet_label(diet_key)
+            if 'Monitor 2024' in diet_key or 'Monitor 2024' in label:
+                return 'Monitor 2024 (Current)'
+            elif 'Amsterdam Goal' in diet_key:
+                return 'Amsterdam Goal (70:30)'
+            elif 'Dutch Goal' in diet_key:
+                return 'Dutch Goal (60:40)'
+            elif 'Schijf van' in diet_key:
+                return 'Schijf van Vijf (50:50)'
+            elif 'EAT-Lancet' in diet_key:
+                return 'EAT-Lancet (Planetary)'
+            elif 'Mediterranean' in diet_key:
+                return 'Mediterranean Diet'
+            elif 'Metropolitan' in diet_key:
+                return 'Metropolitan (High Risk)'
+            else:
+                return label
+        
+        fig = plt.figure(figsize=(16, 12))
+        grid = plt.GridSpec(3, 2, height_ratios=[1, 0.15, 1.2], hspace=0.4, wspace=0.3)
+        
         b_mass = [results_mass[baseline_key][c] for c in CAT_ORDER]
         g_mass = [results_mass[goal_key][c] for c in CAT_ORDER]
         b_co2 = [results_co2[baseline_key][c] for c in CAT_ORDER]
         g_co2 = [results_co2[goal_key][c] for c in CAT_ORDER]
+        
+        # Helper function to hide small percentages
+        def autopct_format(pct):
+            return f'{pct:.0f}%' if pct > 3 else ''
+        
+        # Left pie chart
         ax1 = fig.add_subplot(grid[0, 0])
-        ax1.pie(b_mass, autopct='%1.0f%%', startangle=90, pctdistance=0.85, colors=COLORS)
-        ax1.set_title(f"{clean_diet_label(baseline_key)} (Mass)", fontweight='bold')
+        ax1.pie(b_mass, autopct=autopct_format, startangle=90, pctdistance=0.85, colors=COLORS)
+        ax1.set_title(f"{get_full_label(baseline_key)} (Mass)", fontweight='bold', fontsize=12)
+        
+        # Right pie chart
         ax2 = fig.add_subplot(grid[0, 1])
-        ax2.pie(g_mass, autopct='%1.0f%%', startangle=90, pctdistance=0.85, colors=COLORS)
-        ax2.set_title(f"{clean_diet_label(goal_key)} (Mass)", fontweight='bold')
-        ax3 = fig.add_subplot(grid[1, :])
-        x = np.arange(len(CAT_ORDER))
-        # Use category colors consistent with emission donuts for both Baseline and Goal
-        cat_colors = [COLOR_MAP[c] for c in CAT_ORDER]
+        ax2.pie(g_mass, autopct=autopct_format, startangle=90, pctdistance=0.85, colors=COLORS)
+        ax2.set_title(f"{get_full_label(goal_key)} (Mass)", fontweight='bold', fontsize=12)
+        
+        # Legend between pie charts (in middle row spanning both columns)
+        ax_legend = fig.add_subplot(grid[1, :])
+        ax_legend.axis('off')
         from matplotlib.patches import Patch
+        cat_handles = [Patch(facecolor=COLOR_MAP[c], label=c) for c in CAT_ORDER]
+        ax_legend.legend(handles=cat_handles, loc='center', ncol=8, frameon=True,
+                        fontsize=9, edgecolor='black', title='Food Categories', title_fontsize=10)
+        
+        # Bar chart (bottom row spanning both columns)
+        ax3 = fig.add_subplot(grid[2, :])
+        x = np.arange(len(CAT_ORDER))
+        cat_colors = [COLOR_MAP[c] for c in CAT_ORDER]
         baseline_handle = Patch(facecolor='#999999', edgecolor='black', alpha=0.65, label='Baseline')
         goal_handle = Patch(facecolor='#999999', edgecolor='black', alpha=0.95, label='Goal')
 
@@ -3441,21 +3483,17 @@ def run_full_analysis():
         ax3.bar(x + 0.2, g_co2, 0.4, label='Goal', color=cat_colors,
             alpha=0.95, edgecolor='black', linewidth=0.8)
         ax3.set_xticks(x)
-        ax3.set_xticklabels(CAT_ORDER, rotation=15)
-        ax3.set_title(f"Scope 3 Impact Gap: {clean_diet_label(baseline_key)} vs {clean_diet_label(goal_key)}", fontweight='bold')
+        ax3.set_xticklabels(CAT_ORDER, rotation=15, ha='right')
+        ax3.set_title(f"Scope 3 Impact Gap: {get_full_label(baseline_key)} vs {get_full_label(goal_key)}", 
+                     fontweight='bold', fontsize=12)
         ax3.set_ylabel('Tonnes CO2e/Year', fontweight='bold')
-        ax3.legend(handles=[baseline_handle, goal_handle], loc='upper left', fontsize=10, frameon=True)
+        ax3.legend(handles=[baseline_handle, goal_handle], loc='upper right', fontsize=10, frameon=True)
         ax3.grid(axis='y', alpha=0.3)
         
+        # Main title
+        fig.suptitle('Comparison Between Diets', fontsize=14, fontweight='bold', y=0.98)
         
-        # Legends: Baseline vs Goal + Category color legend matching pies
-        
-        cat_handles = [Patch(facecolor=COLOR_MAP[c], label=c) for c in CAT_ORDER]
-        fig.subplots_adjust(bottom=0.12)
-        fig.legend(handles=cat_handles, loc='lower center', ncol=7, frameon=True,
-                bbox_to_anchor=(0.5, -0.05), fontsize=9, edgecolor='black')
-
-        plt.tight_layout()
+        plt.tight_layout(rect=[0, 0, 1, 0.97])
         safe_savefig(filename, dpi=300)
         plt.close()
 
