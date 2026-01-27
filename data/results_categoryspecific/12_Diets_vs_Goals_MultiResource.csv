@@ -1,0 +1,49 @@
+Diet,Goal_Reference,Resource,Pct_vs_goal
+Monitor 2024,Schijf van 5,CO2 (Scope 1+2+3),14.440726272415002
+Monitor 2024,Schijf van 5,Land (m²),5.452164806316561
+Monitor 2024,Schijf van 5,Water (L),-10.30109537343371
+Monitor 2024,Dutch Goal 60:40,CO2 (Scope 1+2+3),30.479103982872292
+Monitor 2024,Dutch Goal 60:40,Land (m²),11.413339836260658
+Monitor 2024,Dutch Goal 60:40,Water (L),-15.404552616572506
+Monitor 2024,Amsterdam Goal 70:30,CO2 (Scope 1+2+3),51.75958900659276
+Monitor 2024,Amsterdam Goal 70:30,Land (m²),20.124500350670836
+Monitor 2024,Amsterdam Goal 70:30,Water (L),-17.76944469506378
+Monitor 2024,EAT-Lancet,CO2 (Scope 1+2+3),50.69291260053597
+Monitor 2024,EAT-Lancet,Land (m²),20.93171970398151
+Monitor 2024,EAT-Lancet,Water (L),-24.88085011532878
+Mediterranean Diet,Schijf van 5,CO2 (Scope 1+2+3),-8.701527756634157
+Mediterranean Diet,Schijf van 5,Land (m²),-2.892740053028672
+Mediterranean Diet,Schijf van 5,Water (L),7.839506498070022
+Mediterranean Diet,Dutch Goal 60:40,CO2 (Scope 1+2+3),4.093562155161996
+Mediterranean Diet,Dutch Goal 60:40,Land (m²),2.5967003419161805
+Mediterranean Diet,Dutch Goal 60:40,Water (L),1.7039320133500673
+Mediterranean Diet,Amsterdam Goal 70:30,CO2 (Scope 1+2+3),21.070698132424845
+Mediterranean Diet,Amsterdam Goal 70:30,Land (m²),10.618507481355309
+Mediterranean Diet,Amsterdam Goal 70:30,Water (L),-1.139233081334508
+Mediterranean Diet,EAT-Lancet,CO2 (Scope 1+2+3),20.219725498616036
+Mediterranean Diet,EAT-Lancet,Land (m²),11.361847930744265
+Mediterranean Diet,EAT-Lancet,Water (L),-9.688840841003254
+Amsterdam Theoretical,Schijf van 5,CO2 (Scope 1+2+3),5.999528950727899
+Amsterdam Theoretical,Schijf van 5,Land (m²),0.27970404684983313
+Amsterdam Theoretical,Schijf van 5,Water (L),-26.910940461847943
+Amsterdam Theoretical,Dutch Goal 60:40,CO2 (Scope 1+2+3),20.854909004813695
+Amsterdam Theoretical,Dutch Goal 60:40,Land (m²),5.9484816283457995
+Amsterdam Theoretical,Dutch Goal 60:40,Water (L),-31.06937352016771
+Amsterdam Theoretical,Amsterdam Goal 70:30,CO2 (Scope 1+2+3),40.565736276111025
+Amsterdam Theoretical,Amsterdam Goal 70:30,Land (m²),14.232357069823045
+Amsterdam Theoretical,Amsterdam Goal 70:30,Water (L),-32.99635065155801
+Amsterdam Theoretical,EAT-Lancet,CO2 (Scope 1+2+3),39.57773838176238
+Amsterdam Theoretical,EAT-Lancet,Land (m²),14.999982068319378
+Amsterdam Theoretical,EAT-Lancet,Water (L),-38.79091343162283
+Metabolic Balance,Schijf van 5,CO2 (Scope 1+2+3),6.466805276543639
+Metabolic Balance,Schijf van 5,Land (m²),2.69494277543479
+Metabolic Balance,Schijf van 5,Water (L),-24.91536160225445
+Metabolic Balance,Dutch Goal 60:40,CO2 (Scope 1+2+3),21.387672106646114
+Metabolic Balance,Dutch Goal 60:40,Land (m²),8.500252981240923
+Metabolic Balance,Dutch Goal 60:40,Water (L),-29.1873339666298
+Metabolic Balance,Amsterdam Goal 70:30,CO2 (Scope 1+2+3),41.18539035790621
+Metabolic Balance,Amsterdam Goal 70:30,Land (m²),16.98364573261851
+Metabolic Balance,Amsterdam Goal 70:30,Water (L),-31.16692409989237
+Metabolic Balance,EAT-Lancet,CO2 (Scope 1+2+3),40.19303708546716
+Metabolic Balance,EAT-Lancet,Land (m²),17.769758994946695
+Metabolic Balance,EAT-Lancet,Water (L),-37.11969806857495

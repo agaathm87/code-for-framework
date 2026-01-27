@@ -664,12 +664,12 @@ def load_diet_profiles():
     """
     diets = {
         '1. Monitor 2024 (Current)': {
-            'Beef': 10, 'Pork': 15, 'Lamb': 2, 'Chicken': 25, 'Processed_Meats': 30, 'Cheese': 35, 'Milk': 220, 
+            'Beef': 15, 'Pork': 18, 'Lamb': 13, 'Chicken': 45, 'Processed_Meats': 30, 'Cheese': 35, 'Milk': 220, 
             'Fish': 22, 'Eggs': 28, 'Pulses': 15, 'Nuts': 15, 'Meat_Subs': 20, 
             'Grains': 230, 'Vegetables': 160, 'Fruits': 145, 'Potatoes': 45,
             'Sugar': 35, 'Snacks': 45, 'Cookies_Pastries': 40, 'Soups': 20,
             'Coffee': 12, 'Tea': 3, 'Alcohol': 25, 'Oils': 25,
-            'Rice': 30, 'Bread': 150, 'Pasta': 30, 'Dairy': 0,
+            'Rice': 80, 'Bread': 150, 'Pasta': 30, 'Dairy': 0,
             'Butter': 12, 'Animal_Fats': 8,
             'Condiment_Sauces': 15, 'Spice_Mixes': 3
         },
@@ -734,7 +734,7 @@ def load_diet_profiles():
             'Condiment_Sauces': 8, 'Spice_Mixes': 5
         },
         '8. Schijf van 5 (Guideline)': {
-            'Beef': 10, 'Pork': 10, 'Lamb': 1, 'Chicken': 25, 'Processed_Meats': 20, 'Cheese': 30, 'Milk': 250,
+            'Beef': 10, 'Pork': 10, 'Lamb': 13, 'Chicken': 25, 'Processed_Meats': 20, 'Cheese': 30, 'Milk': 250,
             'Fish': 25, 'Eggs': 20, 'Pulses': 30, 'Nuts': 25, 'Meat_Subs': 20,
             'Grains': 240, 'Vegetables': 250, 'Fruits': 200, 'Potatoes': 70,
             'Sugar': 25, 'Snacks': 35, 'Cookies_Pastries': 30, 'Soups': 25,
@@ -1236,17 +1236,31 @@ KEY FINDINGS:
 
 def run_full_analysis():
     cfg = HybridModelConfig()
+    
+    # Load impact factors and check which split method is being used
+    factors = load_impact_factors()
+    
+    # Determine output folder suffix based on split method
+    # Check the USE_UNIFORM_SPLIT flag from load_impact_factors scope
+    import inspect
+    source = inspect.getsource(load_impact_factors)
+    use_uniform = 'USE_UNIFORM_SPLIT = True' in source
+    folder_suffix = '_uniform' if use_uniform else '_categoryspecific'
+    
     engine = Scope3Engine(cfg)
     diets = load_diet_profiles()
     neighborhoods = load_neighborhood_data()
 
-    # Output directories
-    core_dir = os.path.join('images', 'core')
-    appendix_dir = os.path.join('images', 'appendix')
-    data_dir = os.path.join('data', 'results')  # For CSV exports
+    # Output directories - different folders for uniform vs category-specific splits
+    core_dir = os.path.join('images', f'core{folder_suffix}')
+    appendix_dir = os.path.join('images', f'appendix{folder_suffix}')
+    data_dir = os.path.join('data', f'results{folder_suffix}')  # For CSV exports
     os.makedirs(core_dir, exist_ok=True)
     os.makedirs(appendix_dir, exist_ok=True)
     os.makedirs(data_dir, exist_ok=True)
+    
+    print(f"\n[OUTPUT] Using split method: {'UNIFORM (85/15)' if use_uniform else 'CATEGORY-SPECIFIC'}")
+    print(f"[OUTPUT] Saving to: {core_dir}, {appendix_dir}, {data_dir}\n")
     
     # CORE REPORT: 3 focus diets (baseline, high-risk, healthy) vs 4 policy goals
     focus_diets_core = ['1. Monitor 2024 (Current)', '3. Metropolitan (High Risk)', '9. Mediterranean Diet']
