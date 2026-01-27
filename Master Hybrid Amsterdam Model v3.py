@@ -327,7 +327,7 @@ def load_impact_factors():
     # All 33 food items explicitly modeled for transparency
     # Configurable split ratios (defaults: 85% scope 3, 15% scope 1+2)
     # Toggle between uniform and category-specific splits
-    USE_UNIFORM_SPLIT = False  # Set to True for uniform 85/15 split; False for category-specific percentages
+    USE_UNIFORM_SPLIT = True  # Set to True for uniform 85/15 split; False for category-specific percentages
     SCOPE3_RATIO = 0.85
     SCOPE12_RATIO = 1.0 - SCOPE3_RATIO
 
