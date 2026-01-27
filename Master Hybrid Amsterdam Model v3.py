@@ -326,11 +326,14 @@ def load_impact_factors():
     # System boundary verified against Amsterdam Monitor 2024 (1750 kton total Scope 1+2)
     # All 33 food items explicitly modeled for transparency
     # Configurable split ratios (defaults: 85% scope 3, 15% scope 1+2)
+    # Toggle between uniform and category-specific splits
+    USE_UNIFORM_SPLIT = False  # Set to True for uniform 85/15 split; False for category-specific percentages
     SCOPE3_RATIO = 0.85
     SCOPE12_RATIO = 1.0 - SCOPE3_RATIO
 
     # Category-specific Scope 1+2 percentages (Monitor calibration)
     # Values represent the share of total CO2 attributed to Scope 1+2.
+    # Used when USE_UNIFORM_SPLIT = False
     scope12_pct_by_item = {
         # Meats
         'Beef': 0.60, 'Pork': 0.60, 'Chicken': 0.60, 'Lamb': 0.60,
@@ -581,8 +584,12 @@ def load_impact_factors():
                 missing.append(item)
                 continue
 
-        # Uniform split: 85% Scope 3 / 15% Scope 1+2 (no category-specific override)
-        scope12_pct = SCOPE12_RATIO
+        # Choose between uniform or category-specific Scope 1+2 split
+        if USE_UNIFORM_SPLIT:
+            scope12_pct = SCOPE12_RATIO  # Uniform: 85% Scope 3 / 15% Scope 1+2
+        else:
+            scope12_pct = scope12_pct_by_item.get(item, SCOPE12_RATIO)  # Category-specific, fallback to uniform
+        
         total_co2 = float(co2_total)
         records[item] = {
             'co2': total_co2 * (1.0 - scope12_pct),

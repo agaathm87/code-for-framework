@@ -1,7 +1,6 @@
 Diet,Category,Pct_of_reference,Diet_mass_grams,Reference_mass_grams
 Monitor 2024,Red Meat,139.02439024390242,57.0,41.0
 Monitor 2024,Poultry,100.0,25.0,25.0
-Monitor 2024,Processed Meats,0.0,0.0,0.0
 Monitor 2024,Dairy (Milk & Milkproducts),88.0,220.0,250.0
 Monitor 2024,Cheese & Eggs,126.0,63.0,50.0
 Monitor 2024,Fish,88.0,22.0,25.0
@@ -17,7 +16,6 @@ Monitor 2024,Oils (Plant-based),100.0,25.0,25.0
 Monitor 2024,Condiments,112.5,18.0,16.0
 Metropolitan,Red Meat,329.2682926829268,135.0,41.0
 Metropolitan,Poultry,240.0,60.0,25.0
-Metropolitan,Processed Meats,0.0,0.0,0.0
 Metropolitan,Dairy (Milk & Milkproducts),80.0,200.0,250.0
 Metropolitan,Cheese & Eggs,160.0,80.0,50.0
 Metropolitan,Fish,60.0,15.0,25.0
@@ -33,7 +31,6 @@ Metropolitan,Oils (Plant-based),160.0,40.0,25.0
 Metropolitan,Condiments,168.75,27.0,16.0
 Dutch Goal,Red Meat,87.8048780487805,36.0,41.0
 Dutch Goal,Poultry,72.0,18.0,25.0
-Dutch Goal,Processed Meats,0.0,0.0,0.0
 Dutch Goal,Dairy (Milk & Milkproducts),72.0,180.0,250.0
 Dutch Goal,Cheese & Eggs,80.0,40.0,50.0
 Dutch Goal,Fish,48.0,12.0,25.0
@@ -49,7 +46,6 @@ Dutch Goal,Oils (Plant-based),88.0,22.0,25.0
 Dutch Goal,Condiments,93.75,15.0,16.0
 Amsterdam Goal,Red Meat,48.78048780487805,20.0,41.0
 Amsterdam Goal,Poultry,40.0,10.0,25.0
-Amsterdam Goal,Processed Meats,0.0,0.0,0.0
 Amsterdam Goal,Dairy (Milk & Milkproducts),40.0,100.0,250.0
 Amsterdam Goal,Cheese & Eggs,70.0,35.0,50.0
 Amsterdam Goal,Fish,60.0,15.0,25.0
@@ -65,7 +61,6 @@ Amsterdam Goal,Oils (Plant-based),80.0,20.0,25.0
 Amsterdam Goal,Condiments,87.5,14.0,16.0
 EAT-Lancet,Red Meat,34.146341463414636,14.0,41.0
 EAT-Lancet,Poultry,115.99999999999999,29.0,25.0
-EAT-Lancet,Processed Meats,0.0,0.0,0.0
 EAT-Lancet,Dairy (Milk & Milkproducts),100.0,250.0,250.0
 EAT-Lancet,Cheese & Eggs,26.0,13.0,50.0
 EAT-Lancet,Fish,112.00000000000001,28.0,25.0
