@@ -327,7 +327,7 @@ def load_impact_factors():
     # All 33 food items explicitly modeled for transparency
     # Configurable split ratios (defaults: 85% scope 3, 15% scope 1+2)
     # Toggle between uniform and category-specific splits
-    USE_UNIFORM_SPLIT = True  # Set to True for uniform 85/15 split; False for category-specific percentages
+    USE_UNIFORM_SPLIT = False  # Set to True for uniform 85/15 split; False for category-specific percentages
     SCOPE3_RATIO = 0.80
     SCOPE12_RATIO = 1.0 - SCOPE3_RATIO
 
@@ -3428,10 +3428,8 @@ def run_full_analysis():
     print("Generating 6_Scope12_vs_Scope3.png and 7_Scope3_Share.png...")
     # Use already-calculated cradle-to-grave data (properly accounts for waste and full lifecycle)
     scope3_totals = {diet: sum(results_co2.get(diet, {}).values()) for diet in results_co2}
-    scope12_totals = {}
-    for diet in results_scope12:
-        scale_factor = scope12_scale if diet == monitor_diet_key else 1.0
-        scope12_totals[diet] = sum(results_scope12.get(diet, {}).values()) * scale_factor
+    # NOTE: results_scope12 already includes calibration for Monitor 2024, so NO additional scaling needed
+    scope12_totals = {diet: sum(results_scope12.get(diet, {}).values()) for diet in results_scope12}
     total_totals = {diet: scope12_totals.get(diet, 0.0) + scope3_totals.get(diet, 0.0) for diet in results_co2}
     
     df_compare = pd.DataFrame({
@@ -4866,39 +4864,51 @@ def run_full_analysis():
     focus_diets = ['1. Monitor 2024 (Current)', '3. Metropolitan (High Risk)', '9. Mediterranean Diet']
     goal_diets = ['5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)', '7. EAT-Lancet (Planetary)', '8. Schijf van 5 (Guideline)']
     
-    fig, axes = plt.subplots(1, 3, figsize=(16, 6))
-    fig.suptitle('Emissions Reduction Required to Achieve Dietary Goals\n(from Current Diet)', 
-                fontsize=16, fontweight='bold', y=0.98)
+    fig, axes = plt.subplots(2, 2, figsize=(16, 10))
+    fig.suptitle('Total Emissions Change to Achieve Dietary Goals\n(Positive = Increase, Negative = Decrease)', 
+                fontsize=16, fontweight='bold')
+    axes = axes.flatten()
     
-    for idx, focus_diet in enumerate(focus_diets):
+    # Prepare data for all baseline diets
+    all_baselines = focus_diets + ['4. Metabolic Balance']  # Add 4th baseline to fill 2x2 grid
+    
+    for idx, baseline_diet in enumerate(all_baselines[:4]):  # Use 4 baselines for 2x2 grid
         ax = axes[idx]
-        # Sum across all categories (not looking for 'TOTAL' key which doesn't exist)
-        baseline_scope12 = sum(results_scope12.get(focus_diet, {}).values())
-        baseline_co2 = sum(results_co2.get(focus_diet, {}).values())
+        # Sum across all categories for baseline
+        baseline_scope12 = sum(results_scope12.get(baseline_diet, {}).values())
+        baseline_co2 = sum(results_co2.get(baseline_diet, {}).values())
         baseline_total = baseline_scope12 + baseline_co2  # Already scaled, don't multiply again
         
-        goal_names = ['Dutch\n60:40', 'Amsterdam\n70:30', 'EAT-Lancet', 'Schijf\nvan 5']
-        reductions = []
+        goal_labels = []
+        deltas_kton = []
         
         for goal_diet in goal_diets:
             goal_scope12 = sum(results_scope12.get(goal_diet, {}).values())
             goal_co2 = sum(results_co2.get(goal_diet, {}).values())
             goal_total = goal_scope12 + goal_co2  # Already scaled, don't multiply again
-            reduction_pct = ((baseline_total - goal_total) / baseline_total * 100) if baseline_total else 0
-            reductions.append(reduction_pct)
+            delta = (goal_total - baseline_total) / 1000  # Convert to kton
+            deltas_kton.append(delta)
+            goal_labels.append(clean_diet_label(goal_diet))
         
-        colors_goals = ['#FF9800', '#E74C3C', '#27AE60', '#3498DB']
-        bars = ax.bar(goal_names, reductions, color=colors_goals, alpha=0.8, width=0.6, edgecolor='black', linewidth=1.5)
-        ax.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
-        ax.set_ylabel('Emissions Reduction (%)', fontsize=12, fontweight='bold')
-        ax.set_title(clean_diet_label(focus_diet), fontsize=13, fontweight='bold')
-        ax.set_ylim([min(reductions) - 10, max(reductions) + 10])
-        ax.grid(axis='y', alpha=0.3, linestyle='--')
+        # Sort by delta (most negative first)
+        sorted_pairs = sorted(zip(goal_labels, deltas_kton), key=lambda x: x[1])
+        goal_labels_sorted = [p[0] for p in sorted_pairs]
+        deltas_sorted = [p[1] for p in sorted_pairs]
         
-        for bar, val in zip(bars, reductions):
-            height = bar.get_height()
-            ax.text(bar.get_x() + bar.get_width()/2, height + 1, 
-                f'{val:.1f}%', ha='center', va='bottom', fontsize=11, fontweight='bold')
+        colors_delta = ['#27AE60' if v < 0 else '#E74C3C' for v in deltas_sorted]
+        
+        y_pos = np.arange(len(goal_labels_sorted))
+        ax.barh(y_pos, deltas_sorted, color=colors_delta, alpha=0.8, edgecolor='black', linewidth=0.8)
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels(goal_labels_sorted, fontsize=10)
+        ax.set_xlabel('Total Emissions Change (kton CO₂e)', fontsize=11, fontweight='bold')
+        ax.set_title(clean_diet_label(baseline_diet), fontsize=13, fontweight='bold')
+        ax.axvline(x=0, color='black', linestyle='-', linewidth=1.2)
+        ax.grid(axis='x', alpha=0.3, linestyle='--')
+        
+        for i, val in enumerate(deltas_sorted):
+            ax.text(val + (50 if val > 0 else -50), i, f'{val:,.0f}', 
+                ha='left' if val > 0 else 'right', va='center', fontsize=9, fontweight='bold')
     
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '14a_Delta_Analysis_Total_Emissions.png'), dpi=300, bbox_inches='tight')

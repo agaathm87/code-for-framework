@@ -1,17 +1,17 @@
 Diet,Food_Type,CO2_pct
-Monitor 2024,Plant-based,40.306977019990356
-Monitor 2024,Animal,30.561017824482505
-Monitor 2024,Mixed (Dairy/Eggs),0.0
-Monitor 2024,Processed,29.132005155527146
-Dutch Goal,Plant-based,58.62508479855073
-Dutch Goal,Animal,16.66946672353683
-Dutch Goal,Mixed (Dairy/Eggs),0.0
-Dutch Goal,Processed,24.705448477912434
-Amsterdam Goal,Plant-based,68.1566107275337
-Amsterdam Goal,Animal,11.613245507735611
-Amsterdam Goal,Mixed (Dairy/Eggs),0.0
-Amsterdam Goal,Processed,20.230143764730677
-EAT-Lancet,Plant-based,64.99769552368555
-EAT-Lancet,Animal,10.62711463042274
-EAT-Lancet,Mixed (Dairy/Eggs),0.0
-EAT-Lancet,Processed,24.375189845891697
+Monitor 2024 (Current),Plant-based,40.306977019990356
+Monitor 2024 (Current),Animal,30.561017824482505
+Monitor 2024 (Current),Mixed (Dairy/Eggs),0.0
+Monitor 2024 (Current),Processed,29.132005155527146
+Dutch Goal (60:40),Plant-based,58.62508479855073
+Dutch Goal (60:40),Animal,16.66946672353683
+Dutch Goal (60:40),Mixed (Dairy/Eggs),0.0
+Dutch Goal (60:40),Processed,24.705448477912434
+Amsterdam Goal (70:30),Plant-based,68.1566107275337
+Amsterdam Goal (70:30),Animal,11.613245507735611
+Amsterdam Goal (70:30),Mixed (Dairy/Eggs),0.0
+Amsterdam Goal (70:30),Processed,20.230143764730677
+EAT-Lancet (Planetary),Plant-based,64.99769552368555
+EAT-Lancet (Planetary),Animal,10.62711463042274
+EAT-Lancet (Planetary),Mixed (Dairy/Eggs),0.0
+EAT-Lancet (Planetary),Processed,24.375189845891697

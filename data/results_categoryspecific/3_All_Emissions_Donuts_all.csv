@@ -29,21 +29,21 @@ diet,category,scope3_share_pct
 2. Amsterdam Theoretical,Fats (Butter),1.8234393039677097
 2. Amsterdam Theoretical,Oils (Plant-based),3.6953185112433937
 2. Amsterdam Theoretical,Condiments,0.862325209740524
-3. Metropolitan (High Risk),Red Meat,37.042116591579166
-3. Metropolitan (High Risk),Poultry,2.6956298099094087
-3. Metropolitan (High Risk),Dairy (Milk & Milkproducts),7.221126620691057
-3. Metropolitan (High Risk),Cheese & Eggs,4.642936588118254
-3. Metropolitan (High Risk),Fish,1.1932385039828095
-3. Metropolitan (High Risk),Plant Protein,0.8538107422878767
-3. Metropolitan (High Risk),Staples,12.601478195467527
-3. Metropolitan (High Risk),Rice,0.9880121698042085
-3. Metropolitan (High Risk),Veg & Fruit,6.581277542062951
-3. Metropolitan (High Risk),Ultra-Processed,17.60803208731952
-3. Metropolitan (High Risk),Soups,0.6849731672248025
-3. Metropolitan (High Risk),Beverages & Additions,0.8767147562389671
-3. Metropolitan (High Risk),Fats (Butter),2.456873990444596
-3. Metropolitan (High Risk),Oils (Plant-based),3.7219022670522186
-3. Metropolitan (High Risk),Condiments,0.8318769678166585
+3. Metropolitan (High Risk),Red Meat,34.74999382625503
+3. Metropolitan (High Risk),Poultry,2.5288273962594188
+3. Metropolitan (High Risk),Dairy (Milk & Milkproducts),6.774291767783735
+3. Metropolitan (High Risk),Cheese & Eggs,4.355637113066077
+3. Metropolitan (High Risk),Fish,1.1194023037030967
+3. Metropolitan (High Risk),Plant Protein,0.8009779341291431
+3. Metropolitan (High Risk),Staples,11.821713492304395
+3. Metropolitan (High Risk),Rice,0.9268751345803532
+3. Metropolitan (High Risk),Veg & Fruit,6.174035800307073
+3. Metropolitan (High Risk),Ultra-Processed,22.70635050726216
+3. Metropolitan (High Risk),Soups,0.6425878303515562
+3. Metropolitan (High Risk),Beverages & Additions,0.8224646745379723
+3. Metropolitan (High Risk),Fats (Butter),2.3048455071070366
+3. Metropolitan (High Risk),Oils (Plant-based),3.4915953164347884
+3. Metropolitan (High Risk),Condiments,0.7804013959181875
 4. Metabolic Balance,Red Meat,42.83536516967548
 4. Metabolic Balance,Poultry,5.15739780084842
 4. Metabolic Balance,Dairy (Milk & Milkproducts),2.5904583422601637
@@ -104,33 +104,33 @@ diet,category,scope3_share_pct
 7. EAT-Lancet (Planetary),Fats (Butter),0.28879235021927585
 7. EAT-Lancet (Planetary),Oils (Plant-based),2.6512620620171474
 7. EAT-Lancet (Planetary),Condiments,0.5627826173808859
-8. Schijf van 5 (Guideline),Red Meat,18.516977659624484
-8. Schijf van 5 (Guideline),Poultry,1.4893248195437292
-8. Schijf van 5 (Guideline),Dairy (Milk & Milkproducts),11.968931781798947
-8. Schijf van 5 (Guideline),Cheese & Eggs,3.842826415757471
-8. Schijf van 5 (Guideline),Fish,2.6370382358645164
-8. Schijf van 5 (Guideline),Plant Protein,5.606732731054508
-8. Schijf van 5 (Guideline),Staples,19.53219837872167
-8. Schijf van 5 (Guideline),Rice,2.6201895368713624
-8. Schijf van 5 (Guideline),Veg & Fruit,18.892985180855504
-8. Schijf van 5 (Guideline),Ultra-Processed,8.100315231806416
-8. Schijf van 5 (Guideline),Soups,1.513779874253074
-8. Schijf van 5 (Guideline),Beverages & Additions,0.6491695510903466
-8. Schijf van 5 (Guideline),Fats (Butter),0.932976112192507
-8. Schijf van 5 (Guideline),Oils (Plant-based),3.0845044459702136
-8. Schijf van 5 (Guideline),Condiments,0.612050044595252
-9. Mediterranean Diet,Red Meat,13.224472762116562
-9. Mediterranean Diet,Poultry,1.2509291078333116
-9. Mediterranean Diet,Dairy (Milk & Milkproducts),10.053068987402257
-9. Mediterranean Diet,Cheese & Eggs,3.8782670026096318
-9. Mediterranean Diet,Fish,3.876124756495457
-9. Mediterranean Diet,Plant Protein,7.528730078671295
-9. Mediterranean Diet,Staples,20.606742104821517
-9. Mediterranean Diet,Rice,3.094842232608486
-9. Mediterranean Diet,Veg & Fruit,23.079100622929246
-9. Mediterranean Diet,Ultra-Processed,5.535463102512818
-9. Mediterranean Diet,Soups,1.9072044755175248
-9. Mediterranean Diet,Beverages & Additions,0.8868844032674784
-9. Mediterranean Diet,Fats (Butter),0.6375039295764664
-9. Mediterranean Diet,Oils (Plant-based),3.886153320020035
-9. Mediterranean Diet,Condiments,0.5545131136179016
+8. Schijf van 5 (Guideline),Red Meat,18.372842611580026
+8. Schijf van 5 (Guideline),Poultry,1.4777320041089077
+8. Schijf van 5 (Guideline),Dairy (Milk & Milkproducts),11.875766331738918
+8. Schijf van 5 (Guideline),Cheese & Eggs,4.591308111266801
+8. Schijf van 5 (Guideline),Fish,2.6165116877523924
+8. Schijf van 5 (Guideline),Plant Protein,5.563090258377929
+8. Schijf van 5 (Guideline),Staples,19.380160913241028
+8. Schijf van 5 (Guideline),Rice,2.599794138025793
+8. Schijf van 5 (Guideline),Veg & Fruit,18.745923312725505
+8. Schijf van 5 (Guideline),Ultra-Processed,8.037262861890918
+8. Schijf van 5 (Guideline),Soups,1.5019967021331468
+8. Schijf van 5 (Guideline),Beverages & Additions,0.6441164540809232
+8. Schijf van 5 (Guideline),Fats (Butter),0.9257138818638279
+8. Schijf van 5 (Guideline),Oils (Plant-based),3.060494847606726
+8. Schijf van 5 (Guideline),Condiments,0.6072858836071603
+9. Mediterranean Diet,Red Meat,13.2854719194413
+9. Mediterranean Diet,Poultry,1.256699139109674
+9. Mediterranean Diet,Dairy (Milk & Milkproducts),10.099439738644277
+9. Mediterranean Diet,Cheese & Eggs,3.8961558835725993
+9. Mediterranean Diet,Fish,3.8940037561414074
+9. Mediterranean Diet,Plant Protein,7.563457072993511
+9. Mediterranean Diet,Staples,20.701792692184295
+9. Mediterranean Diet,Rice,3.109117491186878
+9. Mediterranean Diet,Veg & Fruit,23.185555202641815
+9. Mediterranean Diet,Ultra-Processed,5.099736306331959
+9. Mediterranean Diet,Soups,1.916001640285091
+9. Mediterranean Diet,Beverages & Additions,0.8909752431986354
+9. Mediterranean Diet,Fats (Butter),0.640444477997177
+9. Mediterranean Diet,Oils (Plant-based),3.904078577383415
+9. Mediterranean Diet,Condiments,0.5570708588879514

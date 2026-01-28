@@ -1,76 +1,76 @@
 Diet,Category,Pct_of_reference,Diet_mass_grams,Reference_mass_grams
-Monitor 2024,Red Meat,143.39622641509433,76.0,53.0
-Monitor 2024,Poultry,180.0,45.0,25.0
-Monitor 2024,Dairy (Milk & Milkproducts),88.0,220.0,250.0
-Monitor 2024,Cheese & Eggs,126.0,63.0,50.0
-Monitor 2024,Fish,88.0,22.0,25.0
-Monitor 2024,Plant Protein,66.66666666666666,50.0,75.0
-Monitor 2024,Staples,89.2156862745098,455.0,510.0
-Monitor 2024,Rice,200.0,80.0,40.0
-Monitor 2024,Veg & Fruit,67.77777777777779,305.0,450.0
-Monitor 2024,Ultra-Processed,133.33333333333331,120.0,90.0
-Monitor 2024,Soups,80.0,20.0,25.0
-Monitor 2024,Beverages & Additions,114.28571428571428,40.0,35.0
-Monitor 2024,Fats (Butter),153.84615384615387,20.0,13.0
-Monitor 2024,Oils (Plant-based),100.0,25.0,25.0
-Monitor 2024,Condiments,112.5,18.0,16.0
-Metropolitan,Red Meat,254.7169811320755,135.0,53.0
-Metropolitan,Poultry,240.0,60.0,25.0
-Metropolitan,Dairy (Milk & Milkproducts),80.0,200.0,250.0
-Metropolitan,Cheese & Eggs,160.0,80.0,50.0
-Metropolitan,Fish,60.0,15.0,25.0
-Metropolitan,Plant Protein,20.0,15.0,75.0
-Metropolitan,Staples,82.35294117647058,420.0,510.0
-Metropolitan,Rice,50.0,20.0,40.0
-Metropolitan,Veg & Fruit,46.666666666666664,210.0,450.0
-Metropolitan,Ultra-Processed,288.88888888888886,260.0,90.0
-Metropolitan,Soups,60.0,15.0,25.0
-Metropolitan,Beverages & Additions,171.42857142857142,60.0,35.0
-Metropolitan,Fats (Butter),307.69230769230774,40.0,13.0
-Metropolitan,Oils (Plant-based),160.0,40.0,25.0
-Metropolitan,Condiments,168.75,27.0,16.0
-Dutch Goal,Red Meat,67.9245283018868,36.0,53.0
-Dutch Goal,Poultry,72.0,18.0,25.0
-Dutch Goal,Dairy (Milk & Milkproducts),72.0,180.0,250.0
-Dutch Goal,Cheese & Eggs,80.0,40.0,50.0
-Dutch Goal,Fish,48.0,12.0,25.0
-Dutch Goal,Plant Protein,180.0,135.0,75.0
-Dutch Goal,Staples,104.90196078431373,535.0,510.0
-Dutch Goal,Rice,100.0,40.0,40.0
-Dutch Goal,Veg & Fruit,95.55555555555556,430.0,450.0
-Dutch Goal,Ultra-Processed,88.88888888888889,80.0,90.0
-Dutch Goal,Soups,100.0,25.0,25.0
-Dutch Goal,Beverages & Additions,100.0,35.0,35.0
-Dutch Goal,Fats (Butter),84.61538461538461,11.0,13.0
-Dutch Goal,Oils (Plant-based),88.0,22.0,25.0
-Dutch Goal,Condiments,93.75,15.0,16.0
-Amsterdam Goal,Red Meat,37.735849056603776,20.0,53.0
-Amsterdam Goal,Poultry,40.0,10.0,25.0
-Amsterdam Goal,Dairy (Milk & Milkproducts),40.0,100.0,250.0
-Amsterdam Goal,Cheese & Eggs,70.0,35.0,50.0
-Amsterdam Goal,Fish,60.0,15.0,25.0
-Amsterdam Goal,Plant Protein,213.33333333333334,160.0,75.0
-Amsterdam Goal,Staples,104.90196078431373,535.0,510.0
-Amsterdam Goal,Rice,125.0,50.0,40.0
-Amsterdam Goal,Veg & Fruit,100.0,450.0,450.0
-Amsterdam Goal,Ultra-Processed,70.0,63.0,90.0
-Amsterdam Goal,Soups,120.0,30.0,25.0
-Amsterdam Goal,Beverages & Additions,80.0,28.0,35.0
-Amsterdam Goal,Fats (Butter),61.53846153846154,8.0,13.0
-Amsterdam Goal,Oils (Plant-based),80.0,20.0,25.0
-Amsterdam Goal,Condiments,87.5,14.0,16.0
-EAT-Lancet,Red Meat,26.41509433962264,14.0,53.0
-EAT-Lancet,Poultry,115.99999999999999,29.0,25.0
-EAT-Lancet,Dairy (Milk & Milkproducts),100.0,250.0,250.0
-EAT-Lancet,Cheese & Eggs,26.0,13.0,50.0
-EAT-Lancet,Fish,112.00000000000001,28.0,25.0
-EAT-Lancet,Plant Protein,166.66666666666669,125.0,75.0
-EAT-Lancet,Staples,92.54901960784314,472.0,510.0
-EAT-Lancet,Rice,150.0,60.0,40.0
-EAT-Lancet,Veg & Fruit,111.11111111111111,500.0,450.0
-EAT-Lancet,Ultra-Processed,50.0,45.0,90.0
-EAT-Lancet,Soups,80.0,20.0,25.0
-EAT-Lancet,Beverages & Additions,62.857142857142854,22.0,35.0
-EAT-Lancet,Fats (Butter),30.76923076923077,4.0,13.0
-EAT-Lancet,Oils (Plant-based),72.0,18.0,25.0
-EAT-Lancet,Condiments,81.25,13.0,16.0
+Monitor 2024 (Current),Red Meat,143.39622641509433,76.0,53.0
+Monitor 2024 (Current),Poultry,180.0,45.0,25.0
+Monitor 2024 (Current),Dairy (Milk & Milkproducts),88.0,220.0,250.0
+Monitor 2024 (Current),Cheese & Eggs,105.0,63.0,60.0
+Monitor 2024 (Current),Fish,88.0,22.0,25.0
+Monitor 2024 (Current),Plant Protein,66.66666666666666,50.0,75.0
+Monitor 2024 (Current),Staples,89.2156862745098,455.0,510.0
+Monitor 2024 (Current),Rice,200.0,80.0,40.0
+Monitor 2024 (Current),Veg & Fruit,67.77777777777779,305.0,450.0
+Monitor 2024 (Current),Ultra-Processed,133.33333333333331,120.0,90.0
+Monitor 2024 (Current),Soups,80.0,20.0,25.0
+Monitor 2024 (Current),Beverages & Additions,114.28571428571428,40.0,35.0
+Monitor 2024 (Current),Fats (Butter),153.84615384615387,20.0,13.0
+Monitor 2024 (Current),Oils (Plant-based),100.0,25.0,25.0
+Monitor 2024 (Current),Condiments,112.5,18.0,16.0
+Metropolitan (High Risk),Red Meat,254.7169811320755,135.0,53.0
+Metropolitan (High Risk),Poultry,240.0,60.0,25.0
+Metropolitan (High Risk),Dairy (Milk & Milkproducts),80.0,200.0,250.0
+Metropolitan (High Risk),Cheese & Eggs,133.33333333333331,80.0,60.0
+Metropolitan (High Risk),Fish,60.0,15.0,25.0
+Metropolitan (High Risk),Plant Protein,20.0,15.0,75.0
+Metropolitan (High Risk),Staples,82.35294117647058,420.0,510.0
+Metropolitan (High Risk),Rice,50.0,20.0,40.0
+Metropolitan (High Risk),Veg & Fruit,46.666666666666664,210.0,450.0
+Metropolitan (High Risk),Ultra-Processed,400.0,360.0,90.0
+Metropolitan (High Risk),Soups,60.0,15.0,25.0
+Metropolitan (High Risk),Beverages & Additions,171.42857142857142,60.0,35.0
+Metropolitan (High Risk),Fats (Butter),307.69230769230774,40.0,13.0
+Metropolitan (High Risk),Oils (Plant-based),160.0,40.0,25.0
+Metropolitan (High Risk),Condiments,168.75,27.0,16.0
+Dutch Goal (60:40),Red Meat,67.9245283018868,36.0,53.0
+Dutch Goal (60:40),Poultry,72.0,18.0,25.0
+Dutch Goal (60:40),Dairy (Milk & Milkproducts),72.0,180.0,250.0
+Dutch Goal (60:40),Cheese & Eggs,66.66666666666666,40.0,60.0
+Dutch Goal (60:40),Fish,48.0,12.0,25.0
+Dutch Goal (60:40),Plant Protein,180.0,135.0,75.0
+Dutch Goal (60:40),Staples,104.90196078431373,535.0,510.0
+Dutch Goal (60:40),Rice,100.0,40.0,40.0
+Dutch Goal (60:40),Veg & Fruit,95.55555555555556,430.0,450.0
+Dutch Goal (60:40),Ultra-Processed,88.88888888888889,80.0,90.0
+Dutch Goal (60:40),Soups,100.0,25.0,25.0
+Dutch Goal (60:40),Beverages & Additions,100.0,35.0,35.0
+Dutch Goal (60:40),Fats (Butter),84.61538461538461,11.0,13.0
+Dutch Goal (60:40),Oils (Plant-based),88.0,22.0,25.0
+Dutch Goal (60:40),Condiments,93.75,15.0,16.0
+Amsterdam Goal (70:30),Red Meat,37.735849056603776,20.0,53.0
+Amsterdam Goal (70:30),Poultry,40.0,10.0,25.0
+Amsterdam Goal (70:30),Dairy (Milk & Milkproducts),40.0,100.0,250.0
+Amsterdam Goal (70:30),Cheese & Eggs,58.333333333333336,35.0,60.0
+Amsterdam Goal (70:30),Fish,60.0,15.0,25.0
+Amsterdam Goal (70:30),Plant Protein,213.33333333333334,160.0,75.0
+Amsterdam Goal (70:30),Staples,104.90196078431373,535.0,510.0
+Amsterdam Goal (70:30),Rice,125.0,50.0,40.0
+Amsterdam Goal (70:30),Veg & Fruit,100.0,450.0,450.0
+Amsterdam Goal (70:30),Ultra-Processed,70.0,63.0,90.0
+Amsterdam Goal (70:30),Soups,120.0,30.0,25.0
+Amsterdam Goal (70:30),Beverages & Additions,80.0,28.0,35.0
+Amsterdam Goal (70:30),Fats (Butter),61.53846153846154,8.0,13.0
+Amsterdam Goal (70:30),Oils (Plant-based),80.0,20.0,25.0
+Amsterdam Goal (70:30),Condiments,87.5,14.0,16.0
+EAT-Lancet (Planetary),Red Meat,26.41509433962264,14.0,53.0
+EAT-Lancet (Planetary),Poultry,115.99999999999999,29.0,25.0
+EAT-Lancet (Planetary),Dairy (Milk & Milkproducts),100.0,250.0,250.0
+EAT-Lancet (Planetary),Cheese & Eggs,21.666666666666668,13.0,60.0
+EAT-Lancet (Planetary),Fish,112.00000000000001,28.0,25.0
+EAT-Lancet (Planetary),Plant Protein,166.66666666666669,125.0,75.0
+EAT-Lancet (Planetary),Staples,92.54901960784314,472.0,510.0
+EAT-Lancet (Planetary),Rice,150.0,60.0,40.0
+EAT-Lancet (Planetary),Veg & Fruit,111.11111111111111,500.0,450.0
+EAT-Lancet (Planetary),Ultra-Processed,50.0,45.0,90.0
+EAT-Lancet (Planetary),Soups,80.0,20.0,25.0
+EAT-Lancet (Planetary),Beverages & Additions,62.857142857142854,22.0,35.0
+EAT-Lancet (Planetary),Fats (Butter),30.76923076923077,4.0,13.0
+EAT-Lancet (Planetary),Oils (Plant-based),72.0,18.0,25.0
+EAT-Lancet (Planetary),Condiments,81.25,13.0,16.0
