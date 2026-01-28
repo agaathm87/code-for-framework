@@ -1,16 +1,16 @@
 Diet,Goal_Reference,Resource,Pct_vs_goal
-Monitor 2024,Schijf van 5,CO2 (Scope 1+2+3),42.721189737004664
-Monitor 2024,Schijf van 5,Land (m²),4.37087634038675
-Monitor 2024,Schijf van 5,Water (L),-10.472633036325478
-Monitor 2024,Dutch Goal 60:40,CO2 (Scope 1+2+3),64.30681812726525
-Monitor 2024,Dutch Goal 60:40,Land (m²),11.413339836260658
-Monitor 2024,Dutch Goal 60:40,Water (L),-15.404552616572506
-Monitor 2024,Amsterdam Goal 70:30,CO2 (Scope 1+2+3),91.10443303816635
-Monitor 2024,Amsterdam Goal 70:30,Land (m²),20.124500350670836
-Monitor 2024,Amsterdam Goal 70:30,Water (L),-17.76944469506378
-Monitor 2024,EAT-Lancet,CO2 (Scope 1+2+3),89.76121254614317
-Monitor 2024,EAT-Lancet,Land (m²),20.93171970398151
-Monitor 2024,EAT-Lancet,Water (L),-24.88085011532878
+Monitor 2024 (Current),Schijf van 5,CO2 (Scope 1+2+3),42.721189737004664
+Monitor 2024 (Current),Schijf van 5,Land (m²),4.37087634038675
+Monitor 2024 (Current),Schijf van 5,Water (L),-10.472633036325478
+Monitor 2024 (Current),Dutch Goal 60:40,CO2 (Scope 1+2+3),64.30681812726525
+Monitor 2024 (Current),Dutch Goal 60:40,Land (m²),11.413339836260658
+Monitor 2024 (Current),Dutch Goal 60:40,Water (L),-15.404552616572506
+Monitor 2024 (Current),Amsterdam Goal 70:30,CO2 (Scope 1+2+3),91.10443303816635
+Monitor 2024 (Current),Amsterdam Goal 70:30,Land (m²),20.124500350670836
+Monitor 2024 (Current),Amsterdam Goal 70:30,Water (L),-17.76944469506378
+Monitor 2024 (Current),EAT-Lancet,CO2 (Scope 1+2+3),89.76121254614317
+Monitor 2024 (Current),EAT-Lancet,Land (m²),20.93171970398151
+Monitor 2024 (Current),EAT-Lancet,Water (L),-24.88085011532878
 Mediterranean Diet,Schijf van 5,CO2 (Scope 1+2+3),-10.021271307370554
 Mediterranean Diet,Schijf van 5,Land (m²),-4.329016587131599
 Mediterranean Diet,Schijf van 5,Water (L),7.48980291697132

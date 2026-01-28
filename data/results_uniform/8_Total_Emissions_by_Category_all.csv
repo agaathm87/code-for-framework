@@ -1,19 +1,19 @@
 Diet,Category,Total_emissions_tonnes_per_year
-Monitor 2024,Red Meat,2462331.060665916
-Monitor 2024,Poultry,245630.37081584038
-Monitor 2024,Dairy (Milk & Milkproducts),772054.8979758307
-Monitor 2024,Cheese & Eggs,376466.07388056983
-Monitor 2024,Fish,170101.9208117451
-Monitor 2024,Plant Protein,186520.6716875931
-Monitor 2024,Staples,962767.2589061683
-Monitor 2024,Rice,295480.93873515096
-Monitor 2024,Veg & Fruit,635159.7013083101
-Monitor 2024,Ultra-Processed,676847.8674169227
-Monitor 2024,Soups,80699.37059338881
-Monitor 2024,Beverages & Additions,44678.387167604145
-Monitor 2024,Fats (Butter),90407.70076190087
-Monitor 2024,Oils (Plant-based),173921.05731333798
-Monitor 2024,Condiments,39746.75896467483
+Monitor 2024 (Current),Red Meat,2462331.060665916
+Monitor 2024 (Current),Poultry,245630.37081584038
+Monitor 2024 (Current),Dairy (Milk & Milkproducts),772054.8979758307
+Monitor 2024 (Current),Cheese & Eggs,376466.07388056983
+Monitor 2024 (Current),Fish,170101.9208117451
+Monitor 2024 (Current),Plant Protein,186520.6716875931
+Monitor 2024 (Current),Staples,962767.2589061683
+Monitor 2024 (Current),Rice,295480.93873515096
+Monitor 2024 (Current),Veg & Fruit,635159.7013083101
+Monitor 2024 (Current),Ultra-Processed,676847.8674169227
+Monitor 2024 (Current),Soups,80699.37059338881
+Monitor 2024 (Current),Beverages & Additions,44678.387167604145
+Monitor 2024 (Current),Fats (Butter),90407.70076190087
+Monitor 2024 (Current),Oils (Plant-based),173921.05731333798
+Monitor 2024 (Current),Condiments,39746.75896467483
 Amsterdam Theoretical,Red Meat,1130433.927176834
 Amsterdam Theoretical,Poultry,72490.31826638816
 Amsterdam Theoretical,Dairy (Milk & Milkproducts),432764.1479343
@@ -29,21 +29,21 @@ Amsterdam Theoretical,Beverages & Additions,24754.519881839995
 Amsterdam Theoretical,Fats (Butter),53600.37924870218
 Amsterdam Theoretical,Oils (Plant-based),98988.74952749998
 Amsterdam Theoretical,Condiments,22892.064890730002
-Metropolitan,Red Meat,2134561.9791548597
-Metropolitan,Poultry,155336.39628511746
-Metropolitan,Dairy (Milk & Milkproducts),332895.498411
-Metropolitan,Cheese & Eggs,229192.84521575324
-Metropolitan,Fish,55008.55301004807
-Metropolitan,Plant Protein,26360.337374175
-Metropolitan,Staples,436635.98561225866
-Metropolitan,Rice,35036.59587290588
-Metropolitan,Veg & Fruit,207363.0990102
-Metropolitan,Ultra-Processed,962327.9089803242
-Metropolitan,Soups,28706.737362975
-Metropolitan,Beverages & Additions,32556.2998446
-Metropolitan,Fats (Butter),93464.67222660291
-Metropolitan,Oils (Plant-based),131984.99937
-Metropolitan,Condiments,29395.992359685002
+Metropolitan (High Risk),Red Meat,2134561.9791548597
+Metropolitan (High Risk),Poultry,155336.39628511746
+Metropolitan (High Risk),Dairy (Milk & Milkproducts),332895.498411
+Metropolitan (High Risk),Cheese & Eggs,229192.84521575324
+Metropolitan (High Risk),Fish,55008.55301004807
+Metropolitan (High Risk),Plant Protein,26360.337374175
+Metropolitan (High Risk),Staples,436635.98561225866
+Metropolitan (High Risk),Rice,35036.59587290588
+Metropolitan (High Risk),Veg & Fruit,207363.0990102
+Metropolitan (High Risk),Ultra-Processed,962327.9089803242
+Metropolitan (High Risk),Soups,28706.737362975
+Metropolitan (High Risk),Beverages & Additions,32556.2998446
+Metropolitan (High Risk),Fats (Butter),93464.67222660291
+Metropolitan (High Risk),Oils (Plant-based),131984.99937
+Metropolitan (High Risk),Condiments,29395.992359685002
 Metabolic Balance,Red Meat,1720219.2568042297
 Metabolic Balance,Poultry,207115.1950468233
 Metabolic Balance,Dairy (Milk & Milkproducts),83223.87460275
@@ -59,66 +59,66 @@ Metabolic Balance,Beverages & Additions,19651.0999062
 Metabolic Balance,Fats (Butter),123430.09025175363
 Metabolic Balance,Oils (Plant-based),115486.87444875002
 Metabolic Balance,Condiments,14591.67493035
-Dutch Goal,Red Meat,563376.1340461537
-Dutch Goal,Poultry,46600.91888553523
-Dutch Goal,Dairy (Milk & Milkproducts),299605.9485699
-Dutch Goal,Cheese & Eggs,114596.42260787662
-Dutch Goal,Fish,44006.842408038465
-Dutch Goal,Plant Protein,226170.96142042498
-Dutch Goal,Staples,544383.6264402701
-Dutch Goal,Rice,70073.19174581175
-Dutch Goal,Veg & Fruit,426311.54796510004
-Dutch Goal,Ultra-Processed,217007.98985760607
-Dutch Goal,Soups,47844.562271625
-Dutch Goal,Beverages & Additions,17964.62491425
-Dutch Goal,Fats (Butter),24739.776683730874
-Dutch Goal,Oils (Plant-based),72591.74965349998
-Dutch Goal,Condiments,15486.23992608
-Amsterdam Goal,Red Meat,323859.94291182916
-Amsterdam Goal,Poultry,25889.399380852912
-Amsterdam Goal,Dairy (Milk & Milkproducts),166447.7492055
-Amsterdam Goal,Cheese & Eggs,99443.95790055717
-Amsterdam Goal,Fish,55008.55301004807
-Amsterdam Goal,Plant Protein,262503.498747
-Amsterdam Goal,Staples,536658.0790480362
-Amsterdam Goal,Rice,87591.48968226468
-Amsterdam Goal,Veg & Fruit,449482.24785449996
-Amsterdam Goal,Ultra-Processed,172801.07111845334
-Amsterdam Goal,Soups,57413.47472595
-Amsterdam Goal,Beverages & Additions,14063.734932869998
-Amsterdam Goal,Fats (Butter),16766.918088150727
-Amsterdam Goal,Oils (Plant-based),65992.499685
-Amsterdam Goal,Condiments,13917.08493357
-EAT-Lancet,Red Meat,183426.85826095415
-EAT-Lancet,Poultry,75079.25820447346
-EAT-Lancet,Dairy (Milk & Milkproducts),416119.37301374995
-EAT-Lancet,Cheese & Eggs,33656.21919510879
-EAT-Lancet,Fish,102682.63228542308
-EAT-Lancet,Plant Protein,202010.37403575
-EAT-Lancet,Staples,467112.4039798165
-EAT-Lancet,Rice,105109.78761871763
-EAT-Lancet,Veg & Fruit,507408.99757800007
-EAT-Lancet,Ultra-Processed,143915.5074917412
-EAT-Lancet,Soups,38275.6498173
-EAT-Lancet,Beverages & Additions,10500.139949879998
-EAT-Lancet,Fats (Butter),7420.450865490437
-EAT-Lancet,Oils (Plant-based),59393.249716499995
-EAT-Lancet,Condiments,12347.92994106
-Schijf van 5,Red Meat,804716.0425742732
-Schijf van 5,Poultry,64723.49845213228
-Schijf van 5,Dairy (Milk & Milkproducts),416119.37301374995
-Schijf van 5,Cheese & Eggs,172998.5164202614
-Schijf van 5,Fish,91680.92168341347
-Schijf van 5,Plant Protein,128868.686884875
-Schijf van 5,Staples,513405.8123117055
-Schijf van 5,Rice,70073.19174581175
-Schijf van 5,Veg & Fruit,449482.24785449996
-Schijf van 5,Ultra-Processed,239753.93542772226
-Schijf van 5,Soups,47844.562271625
-Schijf van 5,Beverages & Additions,17964.62491425
-Schijf van 5,Fats (Butter),27486.993937891166
-Schijf van 5,Oils (Plant-based),82490.62460625
-Schijf van 5,Condiments,16160.829922859999
+Dutch Goal (60:40),Red Meat,563376.1340461537
+Dutch Goal (60:40),Poultry,46600.91888553523
+Dutch Goal (60:40),Dairy (Milk & Milkproducts),299605.9485699
+Dutch Goal (60:40),Cheese & Eggs,114596.42260787662
+Dutch Goal (60:40),Fish,44006.842408038465
+Dutch Goal (60:40),Plant Protein,226170.96142042498
+Dutch Goal (60:40),Staples,544383.6264402701
+Dutch Goal (60:40),Rice,70073.19174581175
+Dutch Goal (60:40),Veg & Fruit,426311.54796510004
+Dutch Goal (60:40),Ultra-Processed,217007.98985760607
+Dutch Goal (60:40),Soups,47844.562271625
+Dutch Goal (60:40),Beverages & Additions,17964.62491425
+Dutch Goal (60:40),Fats (Butter),24739.776683730874
+Dutch Goal (60:40),Oils (Plant-based),72591.74965349998
+Dutch Goal (60:40),Condiments,15486.23992608
+Amsterdam Goal (70:30),Red Meat,323859.94291182916
+Amsterdam Goal (70:30),Poultry,25889.399380852912
+Amsterdam Goal (70:30),Dairy (Milk & Milkproducts),166447.7492055
+Amsterdam Goal (70:30),Cheese & Eggs,99443.95790055717
+Amsterdam Goal (70:30),Fish,55008.55301004807
+Amsterdam Goal (70:30),Plant Protein,262503.498747
+Amsterdam Goal (70:30),Staples,536658.0790480362
+Amsterdam Goal (70:30),Rice,87591.48968226468
+Amsterdam Goal (70:30),Veg & Fruit,449482.24785449996
+Amsterdam Goal (70:30),Ultra-Processed,172801.07111845334
+Amsterdam Goal (70:30),Soups,57413.47472595
+Amsterdam Goal (70:30),Beverages & Additions,14063.734932869998
+Amsterdam Goal (70:30),Fats (Butter),16766.918088150727
+Amsterdam Goal (70:30),Oils (Plant-based),65992.499685
+Amsterdam Goal (70:30),Condiments,13917.08493357
+EAT-Lancet (Planetary),Red Meat,183426.85826095415
+EAT-Lancet (Planetary),Poultry,75079.25820447346
+EAT-Lancet (Planetary),Dairy (Milk & Milkproducts),416119.37301374995
+EAT-Lancet (Planetary),Cheese & Eggs,33656.21919510879
+EAT-Lancet (Planetary),Fish,102682.63228542308
+EAT-Lancet (Planetary),Plant Protein,202010.37403575
+EAT-Lancet (Planetary),Staples,467112.4039798165
+EAT-Lancet (Planetary),Rice,105109.78761871763
+EAT-Lancet (Planetary),Veg & Fruit,507408.99757800007
+EAT-Lancet (Planetary),Ultra-Processed,143915.5074917412
+EAT-Lancet (Planetary),Soups,38275.6498173
+EAT-Lancet (Planetary),Beverages & Additions,10500.139949879998
+EAT-Lancet (Planetary),Fats (Butter),7420.450865490437
+EAT-Lancet (Planetary),Oils (Plant-based),59393.249716499995
+EAT-Lancet (Planetary),Condiments,12347.92994106
+Schijf van 5 (Guideline),Red Meat,804716.0425742732
+Schijf van 5 (Guideline),Poultry,64723.49845213228
+Schijf van 5 (Guideline),Dairy (Milk & Milkproducts),416119.37301374995
+Schijf van 5 (Guideline),Cheese & Eggs,172998.5164202614
+Schijf van 5 (Guideline),Fish,91680.92168341347
+Schijf van 5 (Guideline),Plant Protein,128868.686884875
+Schijf van 5 (Guideline),Staples,513405.8123117055
+Schijf van 5 (Guideline),Rice,70073.19174581175
+Schijf van 5 (Guideline),Veg & Fruit,449482.24785449996
+Schijf van 5 (Guideline),Ultra-Processed,239753.93542772226
+Schijf van 5 (Guideline),Soups,47844.562271625
+Schijf van 5 (Guideline),Beverages & Additions,17964.62491425
+Schijf van 5 (Guideline),Fats (Butter),27486.993937891166
+Schijf van 5 (Guideline),Oils (Plant-based),82490.62460625
+Schijf van 5 (Guideline),Condiments,16160.829922859999
 Mediterranean Diet,Red Meat,547390.9829033552
 Mediterranean Diet,Poultry,51778.798761705824
 Mediterranean Diet,Dairy (Milk & Milkproducts),332895.498411

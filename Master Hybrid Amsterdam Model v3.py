@@ -907,7 +907,7 @@ class Scope3Engine:
             if food not in self.factors.index: continue
             category = VISUAL_MAPPING.get(food, 'Other')
             if category not in agg_mass: continue
-            
+            7
             # Cradle: Production + retail loss (from farm gate to retail)
             kg_consumed_yr = (grams / 1000) * 365
             kg_produced_yr = kg_consumed_yr * self.cfg.WASTE_FACTOR
@@ -1412,7 +1412,7 @@ def run_full_analysis():
     os.makedirs(appendix_dir, exist_ok=True)
     os.makedirs(data_dir, exist_ok=True)
     
-    print(f"\n[OUTPUT] Using split method: {'UNIFORM (85/15)' if use_uniform else 'CATEGORY-SPECIFIC'}")
+    print(f"\n[OUTPUT] Using split method: {'UNIFORM (85/20)' if use_uniform else 'CATEGORY-SPECIFIC'}")
     print(f"[OUTPUT] Saving to: {core_dir}, {appendix_dir}, {data_dir}\n")
     
     # CORE REPORT: 3 focus diets (baseline, high-risk, healthy) vs 4 policy goals
@@ -1420,18 +1420,16 @@ def run_full_analysis():
     goal_diets_core = ['8. Schijf van 5 (Guideline)', '6. Amsterdam Goal (70:30)', '7. EAT-Lancet (Planetary)', '5. Dutch Goal (60:40)']
     # For appendix: use all 9 diets
     
-    # Helper function: Clean diet labels (remove numbers, standardize names)
+    # Helper function: Clean diet labels (remove numbers, keep parenthetical descriptors for clarity)
     def clean_diet_label(diet_name):
-        """Remove number prefix and standardize diet names"""
+        """Remove number prefix and standardize diet names, KEEPING descriptors for clarity"""
         # Remove number prefix (e.g., "1. " or "10. ")
         label = diet_name.split('. ', 1)[1] if '. ' in diet_name else diet_name
-        # Remove parenthetical descriptors
-        label = label.replace(' (Current)', '').replace(' (High Risk)', '')
-        label = label.replace(' (Guideline)', '').replace(' (Planetary)', '')
-        label = label.replace(' (60:40)', '').replace(' (70:30)', '')
-        # Add (50-50) to Schijf van Vijf
-        if 'Schijf van' in label or 'Schijf van 5' in label:
-            label = 'Schijf van 5'
+        # KEEP all parenthetical descriptors for clarity
+        # Only standardize Schijf van naming
+        if 'Schijf van' in label:
+            # Replace "Schijf van Vijf" with "Schijf van 5"
+            label = label.replace('Schijf van Vijf', 'Schijf van 5')
         return label
     
     # Helper function: filter data by diet list
@@ -1489,7 +1487,7 @@ def run_full_analysis():
         # Apply scaling only to Monitor 2024; keep other diets at raw calculated values
         scale_factor = scope12_scale if diet == monitor_diet_key else 1.0
         for cat, value in categories.items():
-            scope12_export.append({'Diet': diet, 'Category': cat, 'Scope12_kton': value * scale_factor})
+            scope12_export.append({'Diet': clean_diet_label(diet), 'Category': cat, 'Scope12_kton': value * scale_factor})
     scope12_df = pd.DataFrame(scope12_export)
     scope12_df.to_csv(os.path.join(data_dir, 'emissions_scope12_by_category.csv'), index=False)
     print(f"  ✓ Saved: emissions_scope12_by_category.csv ({len(scope12_export)} rows) [Monitor 2024 calibrated to 1750 kton]")
@@ -1498,7 +1496,7 @@ def run_full_analysis():
     scope3_export = []
     for diet, categories in results_co2.items():
         for cat, value in categories.items():
-            scope3_export.append({'Diet': diet, 'Category': cat, 'Scope3_kton': value})
+            scope3_export.append({'Diet': clean_diet_label(diet), 'Category': cat, 'Scope3_kton': value})
     scope3_df = pd.DataFrame(scope3_export)
     scope3_df.to_csv(os.path.join(data_dir, 'emissions_scope3_by_category.csv'), index=False)
     print(f"  ✓ Saved: emissions_scope3_by_category.csv ({len(scope3_export)} rows)")
@@ -1507,7 +1505,7 @@ def run_full_analysis():
     land_export = []
     for diet, categories in results_land.items():
         for cat, value in categories.items():
-            land_export.append({'Diet': diet, 'Category': cat, 'Land_hectares': value})
+            land_export.append({'Diet': clean_diet_label(diet), 'Category': cat, 'Land_hectares': value})
     land_df = pd.DataFrame(land_export)
     land_df.to_csv(os.path.join(data_dir, 'impacts_land_use_by_category.csv'), index=False)
     print(f"  ✓ Saved: impacts_land_use_by_category.csv ({len(land_export)} rows)")
@@ -1516,7 +1514,7 @@ def run_full_analysis():
     water_export = []
     for diet, categories in results_water.items():
         for cat, value in categories.items():
-            water_export.append({'Diet': diet, 'Category': cat, 'Water_m3': value})
+            water_export.append({'Diet': clean_diet_label(diet), 'Category': cat, 'Water_m3': value})
     water_df = pd.DataFrame(water_export)
     water_df.to_csv(os.path.join(data_dir, 'impacts_water_use_by_category.csv'), index=False)
     print(f"  ✓ Saved: impacts_water_use_by_category.csv ({len(water_export)} rows)")
@@ -1528,7 +1526,7 @@ def run_full_analysis():
         scope12_total = sum(results_scope12.get(diet, {}).values())
         scope3_total = sum(results_co2.get(diet, {}).values())
         summary_export.append({
-            'Diet': diet,
+            'Diet': clean_diet_label(diet),
             'Scope12_kton': scope12_total,
             'Scope3_kton': scope3_total,
             'Land_hectares': sum(results_land.get(diet, {}).values()),
@@ -1543,7 +1541,7 @@ def run_full_analysis():
     mass_export = []
     for diet, categories in results_mass.items():
         for cat, value in categories.items():
-            mass_export.append({'Diet': diet, 'Category': cat, 'Mass_grams': value})
+            mass_export.append({'Diet': clean_diet_label(diet), 'Category': cat, 'Mass_grams': value})
     mass_df = pd.DataFrame(mass_export)
     mass_df.to_csv(os.path.join(data_dir, 'diet_composition_by_category_grams.csv'), index=False)
     print(f"  ✓ Saved: diet_composition_by_category_grams.csv ({len(mass_export)} rows)")
@@ -3712,7 +3710,7 @@ def run_full_analysis():
     print("Generating 6_Table_Tonnage.png...")
     # Prepare Dataframe for Table
     table_data = []
-    short_names = ["1.Monitor", "2.Theory", "3.Metro", "4.Meta", "5.DuGoal", "6.AmGoal", "7.EAT", "8.Schijf", "9.Med"]
+    short_names = [clean_diet_label(d) for d in diets.keys()]
     
     for cat in CAT_ORDER:
         row = [cat]
