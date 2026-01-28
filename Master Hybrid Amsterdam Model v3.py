@@ -4916,9 +4916,12 @@ def run_full_analysis():
         ax.grid(axis='x', alpha=0.3, linestyle='--')
         
         for i, val in enumerate(deltas_sorted):
-            ax.text(val + (50 if val > 0 else -50), i, f'{val:,.0f}', 
+            # Add extra padding to prevent overlap with axis
+            offset = 80 if val > 0 else -80
+            ax.text(val + offset, i, f'{val:,.0f}', 
                 ha='left' if val > 0 else 'right', va='center', fontsize=9, fontweight='bold')
     
+    plt.subplots_adjust(left=0.12, right=0.95, top=0.93, bottom=0.1)
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '14a_Delta_Analysis_Total_Emissions.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '14a_Delta_Analysis_Total_Emissions.png'), dpi=300, bbox_inches='tight')
@@ -4982,9 +4985,15 @@ def run_full_analysis():
         ax.grid(axis='x', alpha=0.3, linestyle='--')
         
         for i, val in enumerate(vals_sorted):
-            ax.text(val + (50 if val > 0 else -50), i, f'{val:,.0f}', 
+            # Add extra padding to prevent overlap with axis
+            offset = 80 if val > 0 else -80
+            ax.text(val + offset, i, f'{val:,.0f}', 
                 ha='left' if val > 0 else 'right', va='center', fontsize=9, fontweight='bold')
+        
+        # Add right margin to accommodate labels
+        ax.margins(x=0.15)
     
+    plt.subplots_adjust(left=0.15, right=0.93, top=0.93, bottom=0.08)
     plt.tight_layout()
     plt.savefig(os.path.join(core_dir, '14b_Delta_Analysis_By_Category.png'), dpi=300, bbox_inches='tight')
     plt.savefig(os.path.join(appendix_dir, '14b_Delta_Analysis_By_Category.png'), dpi=300, bbox_inches='tight')
@@ -5478,11 +5487,12 @@ def run_full_analysis():
                     edgecolor='black', linewidth=1.2, height=0.7, xerr=uncertainty_margins,
                     error_kw=dict(ecolor='black', capsize=8, capthick=2, elinewidth=2, alpha=0.6))
     
-    # Add legend for colors
+    # Add legend for colors - positioned outside plot area to avoid overlap
     from matplotlib.patches import Patch
     legend_elements = [Patch(facecolor='#E74C3C', edgecolor='black', label='Increase (worse)'),
                     Patch(facecolor='#27AE60', edgecolor='black', label='Decrease (better)')]
-    ax16a.legend(handles=legend_elements, loc='lower right', fontsize=11, frameon=True)
+    ax16a.legend(handles=legend_elements, loc='upper right', fontsize=11, frameon=True, 
+                bbox_to_anchor=(0.99, 0.99), edgecolor='black', fancybox=True, shadow=True)
     
     ax16a.set_yticks(y_pos)
     ax16a.set_yticklabels(param_names_sorted, fontsize=11, fontweight='bold')
@@ -5492,19 +5502,22 @@ def run_full_analysis():
     ax16a.axvline(x=0, color='black', linestyle='-', linewidth=2)
     ax16a.grid(axis='x', alpha=0.3, linestyle='--')
     
-    # Add value labels with better positioning to avoid overlap
+    # Add value labels with better positioning to avoid overlap with error bars
     max_val = max(abs(v) for v in param_values_sorted)
-    label_offset = max_val * 0.06
+    label_offset = max_val * 0.10  # Increased from 0.06 to 0.10 for more space
     
     for i, val in enumerate(param_values_sorted):
         label_x = val + label_offset if val > 0 else val - label_offset
-        ax16a.text(label_x, i, f'{val:+.0f}\n(±{uncertainty_margins[i]:.0f})', 
+        # Format label with value and uncertainty on separate lines for clarity
+        label_text = f'{val:+.0f}\n(±{uncertainty_margins[i]:.0f})'
+        ax16a.text(label_x, i, label_text, 
                 ha='left' if val > 0 else 'right', va='center', 
-                fontsize=9, fontweight='bold', color='black')
+                fontsize=9, fontweight='bold', color='black', 
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.7, edgecolor='none'))
     
-    # Set x-axis limits with headroom for labels
-    ax16a.set_xlim(min(param_values_sorted) - label_offset * 3, 
-                   max(param_values_sorted) + label_offset * 3)
+    # Set x-axis limits with extra headroom for labels and legend
+    ax16a.set_xlim(min(param_values_sorted) - label_offset * 3.5, 
+                   max(param_values_sorted) + label_offset * 3.5)
     
     fig16a.tight_layout()
     fig16a.savefig(os.path.join(core_dir, '16a_Sensitivity_Tornado_Diagram.png'), dpi=300, bbox_inches='tight')
