@@ -327,7 +327,7 @@ def load_impact_factors():
     # All 33 food items explicitly modeled for transparency
     # Configurable split ratios (defaults: 85% scope 3, 15% scope 1+2)
     # Toggle between uniform and category-specific splits
-    USE_UNIFORM_SPLIT = False  # Set to True for uniform 85/15 split; False for category-specific percentages
+    USE_UNIFORM_SPLIT = True  # Set to True for uniform 85/15 split; False for category-specific percentages
     SCOPE3_RATIO = 0.80
     SCOPE12_RATIO = 1.0 - SCOPE3_RATIO
 
@@ -1454,24 +1454,32 @@ def run_full_analysis():
         # Total = Scope 1+2 + Scope 3
         total_footprints[name] = sum(scope12.values()) + sum(co2.values())
 
-    # Calibrate Scope 1+2 to Monitor 2024 baseline (1750 kton) for all graphs
+    # FIXED INFRASTRUCTURE APPROACH: Calibrate ALL diets to 1750 kton Scope 1+2
+    # This represents a scenario where Amsterdam's processing/retail infrastructure remains constant
+    # Only Scope 3 (supply chain) emissions vary with dietary changes
     monitor_diet_key = '1. Monitor 2024 (Current)'
-    total_scope12_monitor_raw = sum(results_scope12.get(monitor_diet_key, {}).values())
     scope12_target_kton = 1750
-    scope12_scale = (scope12_target_kton * 1000) / total_scope12_monitor_raw if total_scope12_monitor_raw else 1.0
     
-    print(f"\n[CALIBRATION] Raw Scope 1+2 for Monitor 2024: {total_scope12_monitor_raw:,.0f} kton")
-    print(f"[CALIBRATION] Target Scope 1+2: {scope12_target_kton:,.0f} kton")
-    print(f"[CALIBRATION] Scale factor: {scope12_scale:.4f}")
-
-    # Apply calibration to Scope 1+2 (baseline set to 1.75 Mton) so every chart uses calibrated values
-    # Only the Monitor 2024 diet is scaled; all other diets remain as calculated
+    print(f"\n[CALIBRATION - FIXED INFRASTRUCTURE APPROACH]")
+    print(f"[CALIBRATION] Target Scope 1+2 for ALL diets: {scope12_target_kton:,.0f} kton (constant)")
+    print(f"[CALIBRATION] Rationale: Amsterdam's food processing, retail, and waste infrastructure")
+    print(f"[CALIBRATION]            operates on fixed capacity; only supply chain (Scope 3) varies\n")
+    
+    # Calculate calibration scale factor for each diet to hit 1750 kton Scope 1+2
+    scope12_scales = {}
+    for diet in results_scope12.keys():
+        raw_scope12 = sum(results_scope12[diet].values())
+        scope12_scales[diet] = (scope12_target_kton * 1000) / raw_scope12 if raw_scope12 else 1.0
+        print(f"  {diet}: Raw={raw_scope12/1000:.1f} kton → Scale factor={scope12_scales[diet]:.4f}")
+    
+    # Apply calibration to ALL diets (not just Monitor 2024)
     results_scope12 = {
-        diet: {cat: val * (scope12_scale if diet == monitor_diet_key else 1.0)
+        diet: {cat: val * scope12_scales[diet]
                for cat, val in cats.items()}
         for diet, cats in results_scope12.items()
     }
-    # Recompute totals to reflect calibrated Scope 1+2 values
+    
+    # Recompute totals to reflect fixed Scope 1+2 values
     for diet in total_footprints.keys():
         total_footprints[diet] = sum(results_scope12.get(diet, {}).values()) + sum(results_co2.get(diet, {}).values())
 
@@ -1481,13 +1489,12 @@ def run_full_analysis():
     print("\nExporting calculation results to CSV...")
     
     # Export Scope 1+2 emissions (production, retail, household) by category
-    # NOTE: Apply scope12_scale calibration ONLY to Monitor 2024 baseline (1750 kton); other diets at raw values
+    # NOTE: ALL diets now calibrated to 1750 kton (fixed infrastructure approach)
     scope12_export = []
     for diet, categories in results_scope12.items():
-        # Apply scaling only to Monitor 2024; keep other diets at raw calculated values
-        scale_factor = scope12_scale if diet == monitor_diet_key else 1.0
+        # All diets already scaled in the calibration step above
         for cat, value in categories.items():
-            scope12_export.append({'Diet': clean_diet_label(diet), 'Category': cat, 'Scope12_kton': value * scale_factor})
+            scope12_export.append({'Diet': clean_diet_label(diet), 'Category': cat, 'Scope12_kton': value / 1000})
     scope12_df = pd.DataFrame(scope12_export)
     scope12_df.to_csv(os.path.join(data_dir, 'emissions_scope12_by_category.csv'), index=False)
     print(f"  ✓ Saved: emissions_scope12_by_category.csv ({len(scope12_export)} rows) [Monitor 2024 calibrated to 1750 kton]")
@@ -3531,9 +3538,8 @@ def run_full_analysis():
         scope3_dict = results_co2.get(name, {})
         
         for cat in CAT_ORDER:
-            # Apply calibration scale to Monitor 2024 baseline only
-            scale_factor = scope12_scale if name == monitor_diet_key else 1.0
-            scope12_val = scope12_dict.get(cat, 0.0) * scale_factor
+            # All diets already scaled to 1750 kton in calibration step
+            scope12_val = scope12_dict.get(cat, 0.0)
             scope3_val = scope3_dict.get(cat, 0.0)
             cat_totals[cat] = scope12_val + scope3_val
         
@@ -4415,8 +4421,9 @@ def run_full_analysis():
 
     # Calibrate Scope 1+2 display to target 1750 kton (Monitor baseline expectation)
     scope12_target_kton = 1750
-    scope12_scale = (scope12_target_kton * 1000) / total_scope12 if total_scope12 else 1.0
-    total_scope12_display = total_scope12 * scope12_scale
+    # Use the Monitor 2024 scale factor calculated earlier
+    monitor_scale = scope12_scales.get(monitor_diet_key, 1.0)
+    total_scope12_display = total_scope12 * monitor_scale
     total_emissions_display = total_scope12_display + total_scope3
     
     # Scope 1+2 breakdown (from transparent system)
@@ -4425,9 +4432,9 @@ def run_full_analysis():
     retail_emissions = base_food * 0.025
 
     # Apply calibration scaling for display values
-    base_food_disp = base_food * scope12_scale
-    waste_emissions_disp = waste_emissions * scope12_scale
-    retail_emissions_disp = retail_emissions * scope12_scale
+    base_food_disp = base_food * monitor_scale
+    waste_emissions_disp = waste_emissions * monitor_scale
+    retail_emissions_disp = retail_emissions * monitor_scale
     
     # Create figure with custom layout
     fig = plt.figure(figsize=(16, 12))
@@ -4526,7 +4533,8 @@ def run_full_analysis():
     total_mass_monitor = sum(mass_data_monitor.values()) if mass_data_monitor else 0
     
     y_pos = np.arange(len(sorted_cats_top))
-    scope12_vals = [results_scope12[monitor_diet][c] * scope12_scale / 1000 for c in sorted_cats_top]
+    # Values already scaled, just convert to kton
+    scope12_vals = [results_scope12[monitor_diet][c] / 1000 for c in sorted_cats_top]
     scope3_vals = [results_co2[monitor_diet][c]/1000 for c in sorted_cats_top]
     max_total = max((s1 + s3) for s1, s3 in zip(scope12_vals, scope3_vals)) if scope12_vals else 0
     label_offset = max_total * 0.04 if max_total else 5
@@ -4575,7 +4583,8 @@ def run_full_analysis():
         total_cat = cat_emissions[cat]
         mass_pct = (mass_data_monitor.get(cat, 0) / total_mass_monitor * 100) if total_mass_monitor else 0
         scope3_pct = (results_co2[monitor_diet][cat] / total_scope3 * 100) if total_scope3 else 0
-        scope12_cat = results_scope12[monitor_diet][cat] * scope12_scale
+        # Values already scaled
+        scope12_cat = results_scope12[monitor_diet][cat]
         scope3_cat = results_co2[monitor_diet][cat]
         infographic_top6.append({
             'Category': cat,
