@@ -1234,6 +1234,159 @@ KEY FINDINGS:
     
     plt.close()
 
+def create_consumption_impact_table(diet_name='1. Monitor 2024 (Current)', output_dir='images/core'):
+    """
+    Generate Table 7: Environmental Impact and Consumption Ratios
+    
+    Creates a comprehensive table showing:
+    - % of Total Consumption (Mass)
+    - % of Protein Intake
+    - % of CO2 Impact
+    
+    For the Monitor 2024 baseline diet and stores as PNG + CSV
+    """
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Rectangle
+    
+    # Load diet and impact data
+    diets = load_diet_profiles()
+    factors = load_impact_factors()
+    diet_data = diets[diet_name]
+    
+    # Group consumption by category and calculate totals
+    category_consumption = {}  # grams/day
+    category_protein = {}      # grams/day
+    category_co2 = {}          # kg CO2e/day
+    
+    for item, grams_per_day in diet_data.items():
+        category = VISUAL_MAPPING.get(item, item)
+        
+        if category not in category_consumption:
+            category_consumption[category] = 0
+            category_protein[category] = 0
+            category_co2[category] = 0
+        
+        # Add consumption mass
+        category_consumption[category] += grams_per_day
+        
+        # Add protein (simplified: 20% for most items except meat/dairy/eggs which are 25%)
+        protein_ratio = 0.25 if any(x in item for x in ['Beef', 'Pork', 'Lamb', 'Chicken', 'Fish', 'Eggs', 'Cheese', 'Milk', 'Dairy']) else 0.20
+        category_protein[category] += grams_per_day * protein_ratio / 100
+        
+        # Add CO2 (total Scope 1+2 + Scope 3)
+        if item in factors.index:
+            co2_total = (factors.loc[item, 'co2'] + factors.loc[item, 'scope12']) * grams_per_day / 1000  # kg CO2e
+            category_co2[category] += co2_total
+    
+    # Calculate percentages
+    total_consumption = sum(category_consumption.values())
+    total_protein = sum(category_protein.values())
+    total_co2 = sum(category_co2.values())
+    
+    # Create table data
+    table_data = []
+    for category in CAT_ORDER:
+        if category in category_consumption:
+            consumption_pct = (category_consumption[category] / total_consumption * 100) if total_consumption > 0 else 0
+            protein_pct = (category_protein[category] / total_protein * 100) if total_protein > 0 else 0
+            co2_pct = (category_co2[category] / total_co2 * 100) if total_co2 > 0 else 0
+            
+            # Determine protein level
+            if protein_pct > 10:
+                protein_level = 'High'
+            elif protein_pct > 5:
+                protein_level = 'Moderate'
+            else:
+                protein_level = 'Low'
+            
+            table_data.append({
+                'Category': category,
+                'Consumption (%)': f'{consumption_pct:.1f}%',
+                'Protein': protein_level,
+                'CO2 Impact (%)': f'{co2_pct:.1f}%'
+            })
+    
+    # Create PNG table visualization
+    fig, ax = plt.subplots(figsize=(12, 10))
+    ax.axis('tight')
+    ax.axis('off')
+    
+    # Table data for matplotlib
+    columns = ['Food Category', '% of Total\nConsumption (Mass)', '% of Protein\nIntake', '% of CO₂\nImpact']
+    cell_text = []
+    for row in table_data:
+        cell_text.append([
+            row['Category'],
+            row['Consumption (%)'],
+            row['Protein'],
+            row['CO2 Impact (%)']
+        ])
+    
+    # Create table
+    table = ax.table(cellText=cell_text, colLabels=columns, cellLoc='center', loc='center',
+                     colWidths=[0.35, 0.22, 0.22, 0.21])
+    
+    table.auto_set_font_size(False)
+    table.set_fontsize(10)
+    table.scale(1, 2.2)
+    
+    # Style header row
+    for i in range(len(columns)):
+        cell = table[(0, i)]
+        cell.set_facecolor('#2C3E50')
+        cell.set_text_props(weight='bold', color='white', fontsize=11)
+    
+    # Style data rows with alternating colors
+    for i in range(1, len(cell_text) + 1):
+        for j in range(len(columns)):
+            cell = table[(i, j)]
+            if i % 2 == 0:
+                cell.set_facecolor('#ECF0F1')
+            else:
+                cell.set_facecolor('#FFFFFF')
+            
+            # Bold first column
+            if j == 0:
+                cell.set_text_props(weight='bold', fontsize=10)
+            
+            # Color-code CO2 impact: red for high, orange for medium, green for low
+            if j == 3:  # CO2 Impact column
+                co2_val = float(cell_text[i-1][j].rstrip('%'))
+                if co2_val > 10:
+                    cell.set_facecolor('#FADBD8')  # Light red
+                elif co2_val > 5:
+                    cell.set_facecolor('#FCF3CF')  # Light yellow
+                elif i % 2 == 1:
+                    cell.set_facecolor('#FFFFFF')
+                else:
+                    cell.set_facecolor('#ECF0F1')
+    
+    # Add title
+    fig.suptitle(f'Table 7: Environmental Impact and Consumption Ratios\n{diet_name}', 
+                 fontsize=14, fontweight='bold', y=0.98)
+    
+    # Add footer with summary stats
+    fig.text(0.5, 0.02, f'Total Daily Consumption: {total_consumption:,.0f}g | Total Protein: {total_protein:,.0f}g | Total CO₂: {total_co2:.1f}kg CO₂e/day',
+             ha='center', fontsize=9, style='italic', color='#555555')
+    
+    plt.tight_layout(rect=[0, 0.04, 1, 0.96])
+    
+    # Save as PNG
+    os.makedirs(output_dir, exist_ok=True)
+    png_path = os.path.join(output_dir, '7_Consumption_Impact_Ratios.png')
+    safe_savefig(png_path, dpi=300)
+    print(f"  ✓ Saved: 7_Consumption_Impact_Ratios.png")
+    
+    # Save as CSV
+    df_table = pd.DataFrame(table_data)
+    csv_path = os.path.join(output_dir, '7_Consumption_Impact_Ratios.csv')
+    df_table.to_csv(csv_path, index=False)
+    print(f"  ✓ Saved: 7_Consumption_Impact_Ratios.csv")
+    
+    plt.close()
+    
+    return table_data
+
 def run_full_analysis():
     cfg = HybridModelConfig()
     
@@ -1267,9 +1420,9 @@ def run_full_analysis():
     goal_diets_core = ['8. Schijf van 5 (Guideline)', '6. Amsterdam Goal (70:30)', '7. EAT-Lancet (Planetary)', '5. Dutch Goal (60:40)']
     # For appendix: use all 9 diets
     
-    # Helper function: Clean diet labels (remove numbers, add 50-50 to Schijf van Vijf)
+    # Helper function: Clean diet labels (remove numbers, standardize names)
     def clean_diet_label(diet_name):
-        """Remove number prefix and add (50-50) to Schijf van Vijf"""
+        """Remove number prefix and standardize diet names"""
         # Remove number prefix (e.g., "1. " or "10. ")
         label = diet_name.split('. ', 1)[1] if '. ' in diet_name else diet_name
         # Remove parenthetical descriptors
@@ -1278,7 +1431,7 @@ def run_full_analysis():
         label = label.replace(' (60:40)', '').replace(' (70:30)', '')
         # Add (50-50) to Schijf van Vijf
         if 'Schijf van' in label or 'Schijf van 5' in label:
-            label = 'Schijf van Vijf (50-50)'
+            label = 'Schijf van 5'
         return label
     
     # Helper function: filter data by diet list
@@ -1369,12 +1522,10 @@ def run_full_analysis():
     print(f"  ✓ Saved: impacts_water_use_by_category.csv ({len(water_export)} rows)")
     
     # Export summary totals (all metrics by diet)
-    # NOTE: Apply scope12_scale calibration ONLY to Monitor 2024 baseline (1750 kton); other diets at raw values
+    # NOTE: results_scope12 already includes calibration for Monitor 2024
     summary_export = []
     for diet in results_co2.keys():
-        # Apply scaling only to Monitor 2024; keep other diets at raw calculated values
-        scale_factor = scope12_scale if diet == monitor_diet_key else 1.0
-        scope12_total = sum(results_scope12.get(diet, {}).values()) * scale_factor
+        scope12_total = sum(results_scope12.get(diet, {}).values())
         scope3_total = sum(results_co2.get(diet, {}).values())
         summary_export.append({
             'Diet': diet,
@@ -1408,6 +1559,15 @@ def run_full_analysis():
         create_neighborhood_heatmap(neighborhoods, diets, diet_name='1. Monitor 2024 (Current)', output_dir=core_dir)
     except Exception as e:
         print(f"  [WARN] Could not generate neighborhood heatmap: {str(e)}")
+    
+    # ============================================================================
+    # Generate Table 7: Environmental Impact and Consumption Ratios
+    # ============================================================================
+    print("\nGenerating Table 7: Environmental Impact and Consumption Ratios...")
+    try:
+        create_consumption_impact_table(diet_name='1. Monitor 2024 (Current)', output_dir=core_dir)
+    except Exception as e:
+        print(f"  [WARN] Could not generate consumption impact table: {str(e)}")
 
 
     # ============================================================================
@@ -1513,7 +1673,15 @@ def run_full_analysis():
     diet_labels_div = [clean_diet_label(d) for d in diets_list_div]
     
     # Calculate % change from baseline
-    co2_change = ((df_nexus_core_no_baseline['co2'] - baseline_co2) / baseline_co2 * 100).values
+    baseline_total_emissions = (
+        sum(results_scope12.get('1. Monitor 2024 (Current)', {}).values()) +
+        sum(results_co2.get('1. Monitor 2024 (Current)', {}).values())
+    )
+    co2_change = np.array([
+        (((sum(results_scope12.get(d, {}).values()) + sum(results_co2.get(d, {}).values())) - baseline_total_emissions) /
+         baseline_total_emissions * 100) if baseline_total_emissions else 0
+        for d in diets_list_div
+    ])
     land_change = ((df_nexus_core_no_baseline['land'] - baseline_land) / baseline_land * 100).values
     water_change = ((df_nexus_core_no_baseline['water'] - baseline_water) / baseline_water * 100).values
     
@@ -1564,7 +1732,7 @@ def run_full_analysis():
     
     # Create custom legend
     from matplotlib.patches import Patch
-    legend_elements = [Patch(facecolor='#E74C3C', edgecolor='black', label='CO₂'),
+    legend_elements = [Patch(facecolor='#E74C3C', edgecolor='black', label='Total CO₂ (Scope 1+2+3)'),
                     Patch(facecolor='#2ECC71', edgecolor='black', label='Land'),
                     Patch(facecolor='#3498DB', edgecolor='black', label='Water')]
     ax1b.legend(handles=legend_elements, loc='lower right', fontsize=11, frameon=True)
@@ -1663,7 +1831,15 @@ def run_full_analysis():
     baseline_land_app = df_nexus.loc['1. Monitor 2024 (Current)', 'land']
     baseline_water_app = df_nexus.loc['1. Monitor 2024 (Current)', 'water']
     
-    co2_change_app = ((df_nexus_no_baseline['co2'] - baseline_co2_app) / baseline_co2_app * 100).values
+    baseline_total_emissions_app = (
+        sum(results_scope12.get('1. Monitor 2024 (Current)', {}).values()) +
+        sum(results_co2.get('1. Monitor 2024 (Current)', {}).values())
+    )
+    co2_change_app = np.array([
+        (((sum(results_scope12.get(d, {}).values()) + sum(results_co2.get(d, {}).values())) - baseline_total_emissions_app) /
+         baseline_total_emissions_app * 100) if baseline_total_emissions_app else 0
+        for d in diets_list_div_app
+    ])
     land_change_app = ((df_nexus_no_baseline['land'] - baseline_land_app) / baseline_land_app * 100).values
     water_change_app = ((df_nexus_no_baseline['water'] - baseline_water_app) / baseline_water_app * 100).values
     
@@ -2156,12 +2332,10 @@ def run_full_analysis():
         print(f"Warning: failed to export 4 appendix CSV: {e}")
 
     # Use already-calculated cradle-to-grave scope totals for 4A-4E charts
-    # Apply calibration scale to Monitor 2024 baseline only
     scope3_totals = {diet: sum(results_co2.get(diet, {}).values()) for diet in results_co2}
     scope12_totals = {}
     for diet in results_scope12:
-        scale_factor = scope12_scale if diet == monitor_diet_key else 1.0
-        scope12_totals[diet] = sum(results_scope12.get(diet, {}).values()) * scale_factor
+        scope12_totals[diet] = sum(results_scope12.get(diet, {}).values())
 
     # ================================================
     # 4A-4E: DIET ADAPTATION & REDUCTION STRATEGIES
@@ -2265,14 +2439,13 @@ def run_full_analysis():
     for idx, base_diet in enumerate(baselines_core):
         ax = axes[idx]
         
-        # Get scope values - use calibrated Scope 1+2 values
-        base_s12_raw = sum(results_scope12.get(base_diet, {}).values())
-        base_s12 = base_s12_raw * scope12_scale  # Apply calibration
+        # Get scope values (results_scope12 already calibrated for Monitor 2024)
+        base_s12 = sum(results_scope12.get(base_diet, {}).values())
         base_s3 = scope3_totals.get(base_diet, 0.0)
         base_total = base_s12 + base_s3
         
-        # Calculate average goal values (also calibrated)
-        avg_goal_s12 = np.mean([sum(results_scope12.get(g, {}).values()) * scope12_scale for g in goals_core])
+        # Calculate average goal values
+        avg_goal_s12 = np.mean([sum(results_scope12.get(g, {}).values()) for g in goals_core])
         avg_goal_s3 = np.mean([scope3_totals.get(g, 0.0) for g in goals_core])
         avg_goal_total = avg_goal_s12 + avg_goal_s3
         
@@ -2282,7 +2455,7 @@ def run_full_analysis():
         
         bars = ax.bar(categories, values, color=colors_bar, edgecolor='black', linewidth=1.5)
         ax.set_ylabel('Tonnes CO₂e / Year', fontweight='bold')
-        ax.set_title(f'{base_diet}: Scope Breakdown (Current vs Goal Average)', fontsize=11, fontweight='bold')
+        ax.set_title(f'{clean_diet_label(base_diet)}: Scope Breakdown (Current vs Goal Average)', fontsize=11, fontweight='bold')
         
         # Add value labels
         for bar in bars:
@@ -2306,11 +2479,10 @@ def run_full_analysis():
     try:
         rows4c = []
         for base_diet in baselines_core:
-            base_s12_raw = sum(results_scope12.get(base_diet, {}).values())
-            base_s12 = base_s12_raw * scope12_scale
+            base_s12 = sum(results_scope12.get(base_diet, {}).values())
             base_s3 = scope3_totals.get(base_diet, 0.0)
             base_total = base_s12 + base_s3
-            avg_goal_s12 = np.mean([sum(results_scope12.get(g, {}).values()) * scope12_scale for g in goals_core])
+            avg_goal_s12 = np.mean([sum(results_scope12.get(g, {}).values()) for g in goals_core])
             avg_goal_s3 = np.mean([scope3_totals.get(g, 0.0) for g in goals_core])
             avg_goal_total = avg_goal_s12 + avg_goal_s3
             reduction_pct = ((base_total - avg_goal_total) / base_total * 100) if base_total else 0.0
@@ -2671,13 +2843,12 @@ def run_full_analysis():
     for idx, base_diet in enumerate(all_diets):
         ax = axes_scope[idx]
         
-        # Use calibrated Scope 1+2 values for appendix as well
-        base_s12_raw = sum(results_scope12.get(base_diet, {}).values())
-        base_s12 = base_s12_raw * scope12_scale
+        # Scope 1+2 values (results_scope12 already calibrated for Monitor 2024)
+        base_s12 = sum(results_scope12.get(base_diet, {}).values())
         base_s3 = scope3_totals.get(base_diet, 0.0)
         base_total = base_s12 + base_s3
         
-        avg_goal_s12 = np.mean([sum(results_scope12.get(g, {}).values()) * scope12_scale for g in all_goals])
+        avg_goal_s12 = np.mean([sum(results_scope12.get(g, {}).values()) for g in all_goals])
         avg_goal_s3 = np.mean([scope3_totals.get(g, 0.0) for g in all_goals])
         avg_goal_total = avg_goal_s12 + avg_goal_s3
         
@@ -2687,7 +2858,7 @@ def run_full_analysis():
         
         bars = ax.bar(categories, values, color=colors_bar, edgecolor='black', linewidth=1)
         ax.set_ylabel('Tonnes CO₂e', fontweight='bold', fontsize=9)
-        ax.set_title(f'{base_diet}', fontsize=10, fontweight='bold')
+        ax.set_title(f'{clean_diet_label(base_diet)}', fontsize=10, fontweight='bold')
         
         for bar in bars:
             height = bar.get_height()
@@ -3611,8 +3782,31 @@ def run_full_analysis():
     for idx, diet_name in enumerate(all_comparison_diets):
         ax = axes[idx]
         # Get Scope 1+2 and Scope 3 data for this diet
+        diet_profile = diets[diet_name]
+        factors = load_impact_factors()
         scope12_data = results_scope12[diet_name]
         scope3_data = results_co2[diet_name]
+        
+        # Recalculate ACTUAL category-specific Scope 1+2 vs Scope 3 splits from consumption and impact factors
+        cat_scope12_actual = {cat: 0.0 for cat in CAT_ORDER}
+        cat_scope3_actual = {cat: 0.0 for cat in CAT_ORDER}
+        
+        for food, grams_per_day in diet_profile.items():
+            if food not in factors.index:
+                continue
+            category = VISUAL_MAPPING.get(food, food)
+            if category not in CAT_ORDER:
+                continue
+            
+            kg_annual = (grams_per_day / 1000) * 365
+            kg_produced = kg_annual * 1.15  # Include waste factor
+            
+            f = factors.loc[food]
+            scope12_impact = (kg_produced + kg_annual) * f['scope12']
+            scope3_impact = (kg_produced + kg_annual) * f['co2']
+            
+            cat_scope12_actual[category] += scope12_impact
+            cat_scope3_actual[category] += scope3_impact
         
         # Calculate total emissions per category
         total_data = {cat: scope12_data[cat] + scope3_data[cat] for cat in CAT_ORDER}
@@ -3644,11 +3838,29 @@ def run_full_analysis():
             ax.legend(loc='upper left', fontsize=8, frameon=True)
         ax.grid(axis='x', alpha=0.3, linestyle='--')
         
-        # Add percentage labels for significant segments
+        # Add TWO types of percentage labels:
+        # 1. Category contribution to total (on the right side) - only if >3%
+        # 2. ACTUAL Scope 1+2 vs Scope 3 split within category (inside bars) - calculated from impacts
         for i, cat in enumerate(sorted_cats):
             total = total_data[cat]
-            s12_pct_cat = (scope12_data[cat] / total * 100) if total > 0 else 0
-            s3_pct_cat = (scope3_data[cat] / total * 100) if total > 0 else 0
+            cat_contribution_pct = (total / total_emissions * 100) if total_emissions > 0 else 0
+            
+            # Calculate ACTUAL category-specific scope split from the real impact data
+            cat_actual_total = cat_scope12_actual[cat] + cat_scope3_actual[cat]
+            if cat_actual_total > 0:
+                s12_pct_cat = (cat_scope12_actual[cat] / cat_actual_total * 100)
+                s3_pct_cat = (cat_scope3_actual[cat] / cat_actual_total * 100)
+            else:
+                s12_pct_cat = 0
+                s3_pct_cat = 0
+            
+            # Label 1: Category contribution percentage (right side of bar) - only if >3%
+            if cat_contribution_pct > 3:
+                total_bar_width = scope12_vals[i] + scope3_vals[i]
+                ax.text(total_bar_width + 15, y_pos[i], f'{cat_contribution_pct:.1f}%',
+                    ha='left', va='center', fontsize=6, fontweight='bold', color='black')
+            
+            # Label 2: ACTUAL Scope split within category (inside bars) - only if segment >4%
             if s12_pct_cat > 4:
                 ax.text(scope12_vals[i]/2, y_pos[i], f'{s12_pct_cat:.0f}%',
                     ha='center', va='center', fontsize=7, fontweight='bold', color='white')
@@ -3676,6 +3888,109 @@ def run_full_analysis():
                 'Scope3_pct': (scope3_val / total_val * 100) if total_val else 0
             })
     pd.DataFrame(scope_breakdown_rows).to_csv(os.path.join(data_dir, '9_Scope_Breakdown_by_Category.csv'), index=False)
+    plt.close()
+    gc.collect()
+
+    # ---------------------------------------------------------
+    # CHART 9B: MONITOR 2024 BASELINE - STANDALONE CATEGORY BREAKDOWN
+    # ---------------------------------------------------------
+    print("Generating 9b_Monitor2024_Category_Breakdown.png...")
+    fig9b, ax9b = plt.subplots(1, 1, figsize=(10, 8))
+    
+    diet_name = '1. Monitor 2024 (Current)'
+    diet_profile = diets[diet_name]
+    factors = load_impact_factors()
+    scope12_data = results_scope12[diet_name]
+    scope3_data = results_co2[diet_name]
+    
+    # Recalculate ACTUAL category-specific Scope 1+2 vs Scope 3 splits from consumption and impact factors
+    # This gives TRUE category ratios, not uniform splits
+    cat_scope12_actual = {cat: 0.0 for cat in CAT_ORDER}
+    cat_scope3_actual = {cat: 0.0 for cat in CAT_ORDER}
+    
+    for food, grams_per_day in diet_profile.items():
+        if food not in factors.index:
+            continue
+        category = VISUAL_MAPPING.get(food, food)
+        if category not in CAT_ORDER:
+            continue
+        
+        # Annual consumption in kg
+        kg_annual = (grams_per_day / 1000) * 365
+        kg_produced = kg_annual * 1.15  # Include waste factor
+        
+        f = factors.loc[food]
+        # Calculate actual impacts for this food
+        scope12_impact = (kg_produced + kg_annual) * f['scope12']  # cradle + grave
+        scope3_impact = (kg_produced + kg_annual) * f['co2']  # cradle + grave
+        
+        cat_scope12_actual[category] += scope12_impact
+        cat_scope3_actual[category] += scope3_impact
+    
+    # Calculate total emissions per category
+    total_data = {cat: scope12_data[cat] + scope3_data[cat] for cat in CAT_ORDER}
+    
+    # Sort all categories by total emissions (descending)
+    sorted_cats = sorted(CAT_ORDER, key=lambda c: total_data[c], reverse=True)
+    
+    y_pos = np.arange(len(sorted_cats))
+    width = 0.8
+    
+    # Stacked horizontal bars: Scope 1+2 (base) + Scope 3 (on top)
+    scope12_vals = [scope12_data[c] / 1000 for c in sorted_cats]  # Convert to kilotonnes
+    scope3_vals = [scope3_data[c] / 1000 for c in sorted_cats]
+    
+    bars1 = ax9b.barh(y_pos, scope12_vals, width, 
+                    label='Scope 1+2 (Local)', color='#F39C12', alpha=0.9, edgecolor='black', linewidth=0.5)
+    bars2 = ax9b.barh(y_pos, scope3_vals, width, left=scope12_vals,
+                    label='Scope 3 (Supply Chain)', color='#3498DB', alpha=0.9, edgecolor='black', linewidth=0.5)
+    
+    ax9b.set_yticks(y_pos)
+    ax9b.set_yticklabels(sorted_cats, fontsize=11, fontweight='bold')
+    ax9b.set_xlabel('Emissions (kton CO₂e/year)', fontsize=12, fontweight='bold')
+    
+    total_emissions = sum(total_data.values())
+    s12_total = sum([scope12_data[c] for c in CAT_ORDER])
+    s12_pct = (s12_total / total_emissions * 100) if total_emissions > 0 else 0
+    
+    ax9b.set_title(f'Monitor 2024 Baseline: Category-Level Emissions Breakdown\nTotal: {total_emissions/1000:,.0f} kton CO₂e/year (Overall Split - Scope 1+2: {s12_pct:.1f}%, Scope 3: {100-s12_pct:.1f}%)', 
+                fontsize=13, fontweight='bold', pad=15)
+    
+    ax9b.legend(loc='upper right', fontsize=10, frameon=True, fancybox=True, shadow=True)
+    ax9b.grid(axis='x', alpha=0.3, linestyle='--')
+    
+    # Add TWO types of percentage labels:
+    # 1. Category contribution to total (on the right side) - only if >3%
+    # 2. ACTUAL Scope 1+2 vs Scope 3 split within category (inside bars) - calculated from impacts, not uniform
+    for i, cat in enumerate(sorted_cats):
+        cat_total = scope12_data[cat] + scope3_data[cat]
+        cat_contribution_pct = (cat_total / total_emissions * 100) if total_emissions > 0 else 0
+        
+        # Calculate ACTUAL category-specific scope split from the real impact data
+        cat_actual_total = cat_scope12_actual[cat] + cat_scope3_actual[cat]
+        if cat_actual_total > 0:
+            s12_pct_cat = (cat_scope12_actual[cat] / cat_actual_total * 100)
+            s3_pct_cat = (cat_scope3_actual[cat] / cat_actual_total * 100)
+        else:
+            s12_pct_cat = 0
+            s3_pct_cat = 0
+        
+        # Label 1: Category contribution percentage (right side of bar) - only if >3%
+        if cat_contribution_pct > 3:
+            total_bar_width = scope12_vals[i] + scope3_vals[i]
+            ax9b.text(total_bar_width + 20, y_pos[i], f'{cat_contribution_pct:.1f}%',
+                ha='left', va='center', fontsize=9, fontweight='bold', color='black')
+        
+        # Label 2: ACTUAL Scope split within category (inside bars) - only if segment >3%
+        if s12_pct_cat > 3:
+            ax9b.text(scope12_vals[i]/2, y_pos[i], f'{s12_pct_cat:.0f}%',
+                ha='center', va='center', fontsize=8, fontweight='bold', color='white')
+        if s3_pct_cat > 3:
+            ax9b.text(scope12_vals[i] + scope3_vals[i]/2, y_pos[i], f'{s3_pct_cat:.0f}%',
+                ha='center', va='center', fontsize=8, fontweight='bold', color='white')
+    
+    plt.tight_layout()
+    safe_savefig(os.path.join(core_dir, '9b_Monitor2024_Category_Breakdown.png'), dpi=300)
     plt.close()
     gc.collect()
 
@@ -4559,17 +4874,18 @@ def run_full_analysis():
     
     for idx, focus_diet in enumerate(focus_diets):
         ax = axes[idx]
-        baseline_scope12 = results_scope12.get(focus_diet, {}).get('TOTAL', 0)
-        baseline_co2 = results_co2.get(focus_diet, {}).get('TOTAL', 0)
-        baseline_total = baseline_scope12 * scope12_scale + baseline_co2
+        # Sum across all categories (not looking for 'TOTAL' key which doesn't exist)
+        baseline_scope12 = sum(results_scope12.get(focus_diet, {}).values())
+        baseline_co2 = sum(results_co2.get(focus_diet, {}).values())
+        baseline_total = baseline_scope12 + baseline_co2  # Already scaled, don't multiply again
         
         goal_names = ['Dutch\n60:40', 'Amsterdam\n70:30', 'EAT-Lancet', 'Schijf\nvan 5']
         reductions = []
         
         for goal_diet in goal_diets:
-            goal_scope12 = results_scope12.get(goal_diet, {}).get('TOTAL', 0)
-            goal_co2 = results_co2.get(goal_diet, {}).get('TOTAL', 0)
-            goal_total = goal_scope12 * scope12_scale + goal_co2
+            goal_scope12 = sum(results_scope12.get(goal_diet, {}).values())
+            goal_co2 = sum(results_co2.get(goal_diet, {}).values())
+            goal_total = goal_scope12 + goal_co2  # Already scaled, don't multiply again
             reduction_pct = ((baseline_total - goal_total) / baseline_total * 100) if baseline_total else 0
             reductions.append(reduction_pct)
         
@@ -4577,7 +4893,7 @@ def run_full_analysis():
         bars = ax.bar(goal_names, reductions, color=colors_goals, alpha=0.8, width=0.6, edgecolor='black', linewidth=1.5)
         ax.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
         ax.set_ylabel('Emissions Reduction (%)', fontsize=12, fontweight='bold')
-        ax.set_title(focus_diet.split('(')[0].strip(), fontsize=13, fontweight='bold')
+        ax.set_title(clean_diet_label(focus_diet), fontsize=13, fontweight='bold')
         ax.set_ylim([min(reductions) - 10, max(reductions) + 10])
         ax.grid(axis='y', alpha=0.3, linestyle='--')
         
@@ -4594,11 +4910,11 @@ def run_full_analysis():
     for focus_diet in focus_diets:
         baseline_scope12 = sum(results_scope12.get(focus_diet, {}).values())
         baseline_co2 = sum(results_co2.get(focus_diet, {}).values())
-        baseline_total = baseline_scope12 * scope12_scale + baseline_co2
+        baseline_total = baseline_scope12 + baseline_co2  # Already scaled, don't multiply again
         for goal_diet in goal_diets:
             goal_scope12 = sum(results_scope12.get(goal_diet, {}).values())
             goal_co2 = sum(results_co2.get(goal_diet, {}).values())
-            goal_total = goal_scope12 * scope12_scale + goal_co2
+            goal_total = goal_scope12 + goal_co2  # Already scaled, don't multiply again
             reduction_pct = ((baseline_total - goal_total) / baseline_total * 100) if baseline_total else 0
             delta_14a_rows.append({
                 'Baseline_Diet': clean_diet_label(focus_diet),
@@ -4625,9 +4941,10 @@ def run_full_analysis():
         ax = axes[idx]
         baseline_diet = '1. Monitor 2024 (Current)'
         
-        baseline_cats = {cat: results_scope12.get(baseline_diet, {}).get(cat, 0) * scope12_scale + 
+        # NOTE: results_scope12 is ALREADY scaled for Monitor 2024, so don't multiply by scope12_scale again
+        baseline_cats = {cat: results_scope12.get(baseline_diet, {}).get(cat, 0) + 
                         results_co2.get(baseline_diet, {}).get(cat, 0) for cat in CAT_ORDER}
-        goal_cats = {cat: results_scope12.get(goal_diet, {}).get(cat, 0) * scope12_scale + 
+        goal_cats = {cat: results_scope12.get(goal_diet, {}).get(cat, 0) + 
                     results_co2.get(goal_diet, {}).get(cat, 0) for cat in CAT_ORDER}
         
         deltas = {cat: (goal_cats.get(cat, 0) - baseline_cats.get(cat, 0)) for cat in CAT_ORDER}
@@ -4648,7 +4965,7 @@ def run_full_analysis():
         ax.grid(axis='x', alpha=0.3, linestyle='--')
         
         for i, val in enumerate(vals_sorted):
-            ax.text(val + (0.5 if val > 0 else -0.5), i, f'{val:.1f}', 
+            ax.text(val + (50 if val > 0 else -50), i, f'{val:,.0f}', 
                 ha='left' if val > 0 else 'right', va='center', fontsize=9, fontweight='bold')
     
     plt.tight_layout()
@@ -4658,9 +4975,9 @@ def run_full_analysis():
     delta_14b_rows = []
     baseline_diet = '1. Monitor 2024 (Current)'
     for goal_diet in goal_diets:
-        baseline_cats = {cat: results_scope12.get(baseline_diet, {}).get(cat, 0) * scope12_scale + 
+        baseline_cats = {cat: results_scope12.get(baseline_diet, {}).get(cat, 0) + 
                         results_co2.get(baseline_diet, {}).get(cat, 0) for cat in CAT_ORDER}
-        goal_cats = {cat: results_scope12.get(goal_diet, {}).get(cat, 0) * scope12_scale + 
+        goal_cats = {cat: results_scope12.get(goal_diet, {}).get(cat, 0) + 
                     results_co2.get(goal_diet, {}).get(cat, 0) for cat in CAT_ORDER}
         for cat in CAT_ORDER:
             delta = goal_cats.get(cat, 0) - baseline_cats.get(cat, 0)
@@ -4697,8 +5014,7 @@ def run_full_analysis():
         
         emissions_by_cat = {}
         for cat in CAT_ORDER:
-            emissions_by_cat[cat] = (scope12_data.get(cat, 0) * scope12_scale + 
-                                    co2_data.get(cat, 0))
+            emissions_by_cat[cat] = (scope12_data.get(cat, 0) + co2_data.get(cat, 0))
         
         total_emissions = sum(emissions_by_cat.values()) if emissions_by_cat else 1
         
@@ -4721,7 +5037,7 @@ def run_full_analysis():
         
         ax.set_ylabel('Share (%)', fontsize=11, fontweight='bold')
         ax.set_xlabel('Food Category', fontsize=11, fontweight='bold')
-        ax.set_title(focus_diet.split('(')[0].strip(), fontsize=13, fontweight='bold')
+        ax.set_title(clean_diet_label(focus_diet), fontsize=13, fontweight='bold')
         ax.set_xticks(x)
         ax.set_xticklabels([c.replace(' & ', '\n& ').replace(' (', '\n(') for c in sorted_cats_mass], 
                     fontsize=9, rotation=45, ha='right')
@@ -4738,7 +5054,7 @@ def run_full_analysis():
         total_mass = sum(mass_data.values()) if mass_data else 1
         scope12_data = results_scope12.get(focus_diet, {})
         co2_data = results_co2.get(focus_diet, {})
-        emissions_by_cat = {cat: (scope12_data.get(cat, 0) * scope12_scale + co2_data.get(cat, 0)) for cat in CAT_ORDER}
+        emissions_by_cat = {cat: (scope12_data.get(cat, 0) + co2_data.get(cat, 0)) for cat in CAT_ORDER}
         total_emissions = sum(emissions_by_cat.values()) if emissions_by_cat else 1
         for cat in CAT_ORDER:
             mass_share_pct = (mass_data.get(cat, 0) / total_mass * 100) if total_mass else 0
@@ -4767,7 +5083,7 @@ def run_full_analysis():
         ax = axes[idx]
         
         # Baseline totals (sum categories)
-        baseline_s12 = sum(results_scope12.get(focus_diet, {}).values()) * scope12_scale
+        baseline_s12 = sum(results_scope12.get(focus_diet, {}).values())
         baseline_s3 = sum(results_co2.get(focus_diet, {}).values())
         baseline_total = baseline_s12 + baseline_s3
         
@@ -4777,7 +5093,7 @@ def run_full_analysis():
         scope3_vals = [baseline_s3]
         
         for goal_diet in goal_diets:
-            goal_s12 = sum(results_scope12.get(goal_diet, {}).values()) * scope12_scale
+            goal_s12 = sum(results_scope12.get(goal_diet, {}).values())
             goal_s3 = sum(results_co2.get(goal_diet, {}).values())
             scope12_vals.append(goal_s12)
             scope3_vals.append(goal_s3)
@@ -4808,7 +5124,7 @@ def run_full_analysis():
     # CSV export for Chart 14d (scope breakdown baseline vs goals)
     scope_breakdown_14d_rows = []
     for focus_diet in focus_diets:
-        baseline_s12 = sum(results_scope12.get(focus_diet, {}).values()) * scope12_scale
+        baseline_s12 = sum(results_scope12.get(focus_diet, {}).values())
         baseline_s3 = sum(results_co2.get(focus_diet, {}).values())
         scope_breakdown_14d_rows.append({
             'Focus_Diet': clean_diet_label(focus_diet),
@@ -4818,7 +5134,7 @@ def run_full_analysis():
             'Total_kton': (baseline_s12 + baseline_s3) / 1000
         })
         for goal_diet in goal_diets:
-            goal_s12 = sum(results_scope12.get(goal_diet, {}).values()) * scope12_scale
+            goal_s12 = sum(results_scope12.get(goal_diet, {}).values())
             goal_s3 = sum(results_co2.get(goal_diet, {}).values())
             scope_breakdown_14d_rows.append({
                 'Focus_Diet': clean_diet_label(focus_diet),
@@ -4841,7 +5157,7 @@ def run_full_analysis():
     
     for diet_name in ['1. Monitor 2024 (Current)', '5. Dutch Goal (60:40)', '6. Amsterdam Goal (70:30)', '7. EAT-Lancet (Planetary)']:
         diet_short = clean_diet_label(diet_name)
-        scope12_total = sum(results_scope12.get(diet_name, {}).values()) * scope12_scale
+        scope12_total = sum(results_scope12.get(diet_name, {}).values())
         scope3_total = sum(results_co2.get(diet_name, {}).values())
         grand_total = scope12_total + scope3_total
         
@@ -4924,7 +5240,7 @@ def run_full_analysis():
         ax.set_yticklabels(CAT_ORDER, fontsize=9)
         ax.set_xlabel('Total Emissions (kton CO₂e/year)', fontsize=10, fontweight='bold')
         ax.set_title(f'vs {goal_ref.split(". ")[1]}', fontsize=11, fontweight='bold')
-        ax.legend(fontsize=8, loc='lower right')
+        ax.legend(fontsize=8, loc='upper left')
         ax.grid(axis='x', alpha=0.3, linestyle='--')
     
     fig17_core.suptitle('Emissions by Category: 3 Focus Diets vs 4 Goal References (Total: Scope 1+2+3)',
@@ -5090,10 +5406,9 @@ def run_full_analysis():
     print("[Chart 16] Generating: Comprehensive Sensitivity Analysis...")
     
     baseline_diet = '1. Monitor 2024 (Current)'
-    # Calculate baseline emissions by summing category totals (apply Scope 1+2 calibration)
+    # Calculate baseline emissions by summing category totals (results_scope12 already calibrated)
     baseline_s12_cat = results_scope12.get(baseline_diet, {})
     baseline_s12 = sum(baseline_s12_cat.values()) if baseline_s12_cat else 0
-    baseline_s12 = baseline_s12 * scope12_scale
     baseline_s3_cat = results_co2.get(baseline_diet, {})
     baseline_s3 = sum(baseline_s3_cat.values()) if baseline_s3_cat else 0
     baseline_total = baseline_s12 + baseline_s3
