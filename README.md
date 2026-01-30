@@ -1,24 +1,68 @@
-# Master Hybrid Amsterdam Model v3.1
-## Comprehensive Food Systems Emissions Analysis
+# Hybrid Amsterdam Model: Urban Food Systems & Scope 3 Emissions
+## Addressing the "Urban Paradox" in Climate Governance
 
-**A publication-ready analysis of food system emissions for Amsterdam with dual-output core and appendix reports.**
+**Publication-ready analysis framework for metropolitan food system emissions**
 
-A comprehensive Python framework for calculating **food system emissions at the food item level** across Amsterdam. Generates **30 publication-ready visualizations** split into focused core reports (3 policy-relevant diets) and transparent appendix (full 9-diet analysis). Integrates empirical consumption data (Amsterdam Monitor 2024), comprehensive life cycle assessment, and detailed policy goal scenarios.
+A comprehensive Python implementation of the **Hybrid Amsterdam Model** developed for the UvA Challenge-Based Project on Complex Systems for Policy. This research addresses the "Urban Paradox": cities pursuing net-zero targets while systematically ignoring transboundary supply chain emissions (Scope 3) that comprise 61% of their food-related carbon footprint.
+
+The model synthesizes macro-level Life Cycle Assessment (LCA) with micro-level demographic inputs, quantifying Amsterdam's 4,487 kton CO₂e annual food emissions and evaluating dietary transition scenarios toward the city's 70:30 plant-based protein target.
+
 
 ---
 
 ## 🚀 Quick Start
 
-### Running the Analysis
+### Running the Complete Analysis
 ```bash
 python "Master Hybrid Amsterdam Model v3.py"
 ```
 
-**Output**: 
-- `images/core/` — 30 publication-ready visualizations (3 focus diets vs 4 goals)
-- `images/appendix/` — Identical 30 visualizations with full 9-diet transparency
+**Primary Output**: 
+- `images/core/` — 30 publication-ready visualizations for policy communication
+- `images/appendix/` — Full 9-diet analysis for scientific transparency
+- `data/results/` — 64 CSV files for reproducibility and auditing
 
-**Time**: ~100-120 seconds to generate all 30 charts
+**Runtime**: ~100-120 seconds | **Total emissions quantified**: 4,487 kton CO₂e/year
+
+---
+
+## 📑 Research Framework
+
+### Conceptual Foundation
+The model operationalizes three integrated components:
+
+| Component | Type | Purpose |
+|-----------|------|---------|
+| **GHG Scope Framework** | Theoretical | Reconfigures corporate Scope 1-2-3 definitions for municipal food systems |
+| **Causal Loop Diagram (CLD)** | Qualitative | Maps governance constraints and infrastructural lock-ins (221 feedback loops) |
+| **Hybrid Amsterdam Model** | Quantitative | Synthesizes macro-LCA with micro-demographics for spatial emissions analysis |
+
+### Key Research Findings
+
+**Baseline Assessment (Monitor 2024):**
+- **Total Annual Emissions**: 4,487 kton CO₂e (5,138 kg/capita/year)
+- **Scope 3 (Transboundary)**: 2,737 kton (61%) — Global supply chains
+- **Scope 1+2 (Territorial)**: 1,750 kton (39%) — Local operations
+- **Land Footprint**: 105,000 hectares (5.5× Amsterdam's surface area)
+
+**Supply Chain Dependency:**
+- 85% of Amsterdam's food originates outside the Netherlands
+- Only 11% comes from surrounding provinces
+- Validates Scope 3 dominance: most emissions occur beyond municipal control
+
+**Dietary Transition Scenarios:**
+| Scenario | Total Emissions | Reduction | Key Characteristic |
+|----------|-----------------|-----------|-------------------|
+| Monitor 2024 (Baseline) | 4,487 kton | — | 48% plant / 52% animal protein |
+| Dutch Goal (60:40) | 3,680 kton | -18.0% | National 2030 target |
+| **Amsterdam Goal (70:30)** | **3,350 kton** | **-25.3%** | **Highest feasible reduction** |
+| EAT-Lancet | 3,450 kton | -23.1% | Planetary health boundaries |
+| Metropolitan (Risk) | 5,420 kton | +20.8% | Western convenience pattern |
+
+**Critical Barriers Identified:**
+- **Socioeconomic Gradient**: 35% of minimum-income households cannot afford healthy meals
+- **Food Swamps**: 68% perceive neighborhood overabundance of unhealthy options
+- **Infrastructural Lock-in**: Waste-to-Energy dependencies conflict with waste reduction targets
 
 ---
 
@@ -224,31 +268,62 @@ All CSVs are regenerated in `data/results/` each run. Existing files are overwri
 
 ---
 
-## 🎯 Focus Diets (Core Report) vs. Policy Goals
+## 📊 Methodology: The Hybrid Approach
 
-### Three Focus Diets
-1. **Monitor 2024 (Current)** — Empirical Amsterdam baseline, 2,923,844 kton CO₂e/year
-2. **Metropolitan (High Risk)** — High meat scenario, 4,427,246 kton CO₂e/year (+51%)
-3. **Mediterranean Diet** — Health-optimal, 2,598,722 kton CO₂e/year (-11%)
+### Three-Scale Integration
 
-### Four Policy Goals
-| Goal | Composition | Emissions | Reduction |
-|------|-------------|-----------|-----------|
-| **Schijf van 5** | Dutch nutritional guidelines | 2,730,844 kton | -6.6% |
-| **Dutch Goal (60:40)** | 60% plant / 40% animal protein | 2,534,289 kton | -13.3% |
-| **Amsterdam Goal (70:30)** | 70% plant / 30% animal protein | 2,172,385 kton | -25.7% |
-| **EAT-Lancet** | Planetary health boundaries | 2,171,473 kton | -25.8% |
+**Macro-Level: Transboundary LCA Logic**
+- Quantifies global environmental "load" of food products through international supply chains
+- Incorporates Land Use Change (LUC), blue water usage, and full lifecycle impacts
+- Data source: RIVM Environmental Impact Database (September 2024 version)
 
-### All 9 Diets (Appendix for Full Transparency)
-1. Monitor 2024 (Current)
-2. Amsterdam Theoretical
-3. Metropolitan (High Risk)
-4. Metabolic Balance
-5. Dutch Goal (60:40)
-6. Amsterdam Goal (70:30)
-7. EAT-Lancet (Planetary)
-8. Schijf van 5 (Guideline)
-9. Mediterranean Diet
+**Meso-Level: Systemic Governance Framework**
+- Causal Loop Diagram mapping 221 feedback loops
+- Identifies leverage points: dietary shifts and waste reduction
+- Reveals "infrastructural lock-ins" (e.g., Waste-to-Energy dependencies)
+
+**Micro-Level: Neighborhood Disaggregation**
+- Spatial microsimulation to Buurt (neighborhood) level
+- Demographics: 873,374 residents (2024), 7 administrative districts
+- Heterogeneity multipliers: Income Scalar (Volume Beta) × Education Modifier (Plant Beta)
+
+### Mathematical Formalization
+
+**Total Emissions:**
+```
+E_total = Σ(districts) Σ(categories) M_actual × β_heterogeneity × EF_combined
+```
+
+Where:
+- **M_actual** = Produced mass accounting for 15% supply chain waste
+- **β_heterogeneity** = f(income, education) — Dual-driver mechanism
+- **EF_combined** = EF_scope3 + EF_scope12 (transboundary + local)
+
+**Income Scalar (Volume Beta):**
+```
+β_volume = 0.8 × exp(0.2 × (income_neighborhood / 38,300))
+```
+0.2% increase in food expenditure per 1% income increase above national average
+
+**Education Scalar (Plant Beta):**
+```
+β_plant = 0.85  if education% > 50%  (high-education areas)
+         1.10  otherwise              (low-education areas)
+```
+
+**Key Insight**: High-income, high-education neighborhoods (e.g., Amsterdam Zuid) show similar total emissions to middle-income areas because education-driven plant preference offsets income-driven volume increases.
+
+### Data Sources & Calibration
+
+| Component | Source | Coverage |
+|-----------|--------|----------|
+| **Consumption Baseline** | Amsterdam Monitor 2024 | 1,833 participants (weighted to 1,872) |
+| **LCA Factors** | RIVM Database | 411 products, 29 food categories |
+| **Demographics** | KBT 2025 & CBS 2023 | 7 districts, income/education profiles |
+| **Cultural Diversity** | HELIUS Study | 5 major ethnic groups dietary patterns |
+| **Protein Content** | NEVO 2023 | Dutch Food Composition Database |
+
+**Calibration Target**: Monitor 2024 verified baseline (1,750 kton Scope 1+2) achieved within 0.06% error.
 
 ---
 
@@ -325,33 +400,50 @@ images/
 
 ---
 
-## 📊 Key Findings
+## � Policy Implications & Leverage Points
 
-### Baseline (Monitor 2024)
-- **Total Emissions**: 2,923,844 kton CO₂e/year
-- **Scope 1+2**: 1,750,655 kton (59.9%) — Production, retail, household
-- **Scope 3**: 1,173,189 kton (40.1%) — Supply chain & transport
+### High-Impact Interventions (Ranked)
 
-### Top Emission Categories
-1. Red Meat (highest impact)
-2. Dairy products
-3. Poultry
-4. Grains
-5. Processed foods
+| Intervention | Climate Impact | Implementation Cost | Timeline | Key Barrier |
+|--------------|----------------|---------------------|----------|-------------|
+| **Dietary shift (70:30)** | -25.3% | Medium | 5-10 years | Food affordability |
+| **Waste reduction (-3%)** | -2.7% | Low | Immediate | Infrastructure lock-in |
+| **Supply chain optimization** | -5-8% | High | 10+ years | Data transparency |
+| **Local sourcing** | -2-4% | Medium | 5-10 years | Production capacity |
 
-### Reduction Potential
-| Target | Reduction | Absolute Change |
-|--------|-----------|-----------------|
-| **Dutch Goal (60:40)** | -13.3% | -389,555 kton |
-| **Amsterdam Goal (70:30)** | -25.7% | -751,459 kton |
-| **EAT-Lancet** | -25.8% | -752,371 kton |
-| **Mediterranean Diet** | -11% | -325,122 kton |
+### Critical Findings for Urban Governance
 
-### Sensitivity Range
-- **Total parameter uncertainty**: ±34% from baseline
-- **Most critical lever**: Diet adherence (consumption volume)
-- **Secondary impact**: Emission factor estimation
-- **Minor impact**: Waste rate assumptions
+**1. Territorial Accounting is Insufficient**
+- Current Scope 1+2 focus captures only 39% of food-related emissions
+- 61% (2,737 kton) occurs in transboundary supply chains
+- Cities must shift from passive territorial reporting to active consumption-based management
+
+**2. The "Volume vs. Composition" Paradox**
+- Wealthy neighborhoods: High total consumption × Plant-based preference = Moderate emissions
+- Low-income neighborhoods: Lower consumption × Meat-heavy diet = Comparable emissions
+- Implication: Income-based interventions alone are insufficient
+
+**3. Socioeconomic Equity Constraints**
+- 35% of minimum-income households face food poverty
+- Plant-based foods perceived as expensive choice
+- Without subsidies, Amsterdam Goal (70:30) may achieve only 15-18% reduction vs. theoretical 25.3%
+
+**4. Infrastructural Lock-ins**
+- Waste-to-Energy facilities create perverse incentives against waste reduction
+- Cold chain optimization conflicts with local sourcing goals
+- Municipal capacity constrained by vertical governance (national/EU regulations)
+
+### Sensitivity Analysis Results
+
+**Parameter Uncertainty (±20% baseline range):**
+
+| Parameter | Baseline | Impact Range | Sensitivity Rank |
+|-----------|----------|--------------|------------------|
+| **Diet Adherence** | Monitor 2024 | ±897 kton CO₂e | 🥇 CRITICAL |
+| **Impact Factors** | RIVM Database | ±449 kton CO₂e | 🥈 High |
+| **Waste Rate** | 15% supply chain | ±135 kton CO₂e | 🥉 Moderate |
+
+**Cross-Scenario Insight**: Animal-heavy diets (Metropolitan, Metabolic) show 2× higher waste sensitivity due to longer livestock supply chains and waste-prone processing stages.
 
 ---
 
@@ -444,177 +536,233 @@ images/
 
 ## 📧 Project Information
 
-**Project**: Challenge Based Project on Complex Systems for Policy  
-**Institution**: University of Amsterdam (UvA)  
-**Academic Year**: 2024-2025  
-**Model Version**: 3.1  
-**Last Updated**: January 23, 2026  
 
-**Key Improvements in v3.1**:
-- ✅ Expanded from 16 to 30 total visualizations
-- ✅ Sensitivity analysis suite: 1 tornado → 5 complementary visualizations
-- ✅ Comprehensive dual-output: core (focused) + appendix (transparent)
-- ✅ All 3 focus diets × 4 policy goals covered
-- ✅ Complete 9-diet appendix for full transparency
-- ✅ Professional documentation and design standards
-- ✅ Publication-ready PDF/PNG outputs (150-300 DPI)
+
+**Academic Context:**
+- **Project**: Challenge-Based Project: Complex Systems for Policy
+- **Institution**: University of Amsterdam (UvA)
+- **Partner**: Gemeente Amsterdam (Department of Sustainability)
+- **Academic Year**: 2024-2025
+- **Submission Date**: January 30, 2026
+
+
+**Model Version**: v3.1  
+**Last Updated**: January 30, 2026
 
 ---
 
-## 📄 License & Usage
+## 🎯 Research Question
 
-This analysis is provided for **academic, policy research, and stakeholder engagement purposes**. Both core and appendix outputs are available to support:
+**Primary RQ:**  
+*"How does the lack of acknowledgement of the role of food impact emission Scope 3 of metropolitan cities to pursue climate neutrality?"*
+
+**Sub-Questions:**
+1. What is the role of food within urban Scope 3 emissions?
+2. What governance and informational constraints limit municipal influence over food-related emissions?
+3. What types of insights do cities require to integrate food systems into climate strategies?
+
+**Operational Translation:**  
+The CLD's central variable "food-related GHG emissions of metropolitan cities" serves as the quantitative anchor, connecting theoretical frameworks to empirical measurement.
+
+---
+
+## 📄 License & Academic Integrity
+
+**AI Usage Statement:**  
+We declare compliance with UvA rules regarding fraud and plagiarism. AI tools (ChatGPT, Claude) were used for:
+- Grammar and spelling refinement
+- Diagnostic testing during model development
+- Debugging coding syntax errors
+- Code logic verification
+
+All content, analysis, conceptual frameworks, and argumentation are original work by the research team.
+
+**Usage Rights:**  
+This analysis is provided for academic, policy research, and stakeholder engagement purposes. The framework supports:
+- Municipal climate strategy development
+- Academic research and peer review
 - Policy analysis and target setting
-- Scientific research and peer review
-- Stakeholder communication
-- Educational and training materials
+- Stakeholder communication and education
+
+**Citation:**  
+If using this model or methodology, please cite:
+```
+Keet, T., Učelniece, M., & de Vries, A. (2026). Hybrid Amsterdam Model: 
+Addressing the Urban Paradox in Food System Emissions. Challenge-Based 
+Project, University of Amsterdam.
+```
 
 ---
 
-## 📚 References & Resources
+## 🔬 Methodological Strengths & Limitations
 
-- **Data Source**: Amsterdam Monitor 2024 Survey (DNFCS)
-- **Color Palette**: Paul Tol Colorblind-Safe Scheme
-- **LCA Methodology**: Scope 1+2+3 Emissions Framework
-- **Dietary Guidelines**: EAT-Lancet Commission, Schijf van 5 (Dutch)
-- **Design Standards**: Publication-ready visualization best practices
+### Strengths
+✅ **Triangulated Approach**: Integrates theoretical (Scope frameworks), qualitative (CLD), and quantitative (Hybrid Model) methods  
+✅ **Empirical Calibration**: Monitor 2024 baseline validated within 0.06% error  
+✅ **Spatial Granularity**: Neighborhood-level disaggregation enables targeted interventions  
+✅ **Behavioral Realism**: Education modifier captures non-linear dietary preferences  
+✅ **Policy Relevance**: Directly aligned with Amsterdam's Six Pillars for Food Security  
+✅ **Transparency**: 64 CSV exports ensure full reproducibility  
+
+### Limitations & Future Research Directions
+
+**Data Constraints:**
+- ⚠️ Uniform Waste Coefficient (15%) — Lacks category-specific waste rates
+- ⚠️ Secondary LCA data — "Data Blockade" prevents retailer-specific supply chain analysis
+- ⚠️ RIVM database limited to 411 products, 29 food categories
+
+**Methodological Boundaries:**
+- ⚠️ Fixed Infrastructure Assumption — Scope 1+2 held constant at 1,750 kton
+- ⚠️ Static Elasticity Coefficients — May understate rapid cultural/market shifts
+- ⚠️ Water-Carbon Nexus Blind Spot — Neglects blue water footprint of imports
+
+**Generalizability:**
+- ⚠️ Amsterdam-specific parameters — Demographics (Surinamese/Turkish/Moroccan mix) not directly transferable
+- ⚠️ Methodology is replicable; coefficients require local recalibration
+
+**Recommended Extensions:**
+1. Dynamic Infrastructure Modeling (variable Scope 1+2 under dietary transitions)
+2. Integration of "Action Line 1" (Food from the Region) to quantify local vs. global trade-offs
+3. Nutritional adequacy assessment (protein quality, micronutrients)
+4. Cost-benefit analysis linking affordability constraints to emission targets
+5. Temporal trend analysis and 2030/2050 projections
+6. Multi-city comparative analysis (Rotterdam, Utrecht, The Hague)
 
 ---
 
-**Status**: ✅ **PRODUCTION READY** | All 30 visualizations complete | Comprehensive documentation
-- `run_food_waste_reduction_scenario()` — Policy: reduce waste by X%
+## 📚 References & Data Sources
 
-**Output:** Detailed DataFrame with per-neighborhood, per-food-category emissions
+### Primary Data Sources
+- **Gemeente Amsterdam** (2024). Monitor Voedsel Amsterdam 2024: Meer Plantaardig. Municipality Research & Statistics (O&S).
+- **RIVM** (2024). Database Milieubelasting Voedingsmiddelen [Environmental Impact of Foods Database]. Version September 2024.
+- **RIVM** (2024). NEVO-online version 2023/8.0: Dutch Food Composition Database.
+- **CBS** (2023). Kerncijfers Wijken en Buurten 2023 [Key Figures Districts and Neighborhoods]. Statistics Netherlands.
+- **KBT** (2025). Amsterdam Neighborhood Demographics. Gemeente Amsterdam.
+
+### Methodological Frameworks
+- **Boyer, D., & Ramaswami, A.** (2020). Comparing urban food system characteristics and actions in US and Indian cities from a multi-environmental impact perspective. *Journal of Industrial Ecology*, 24(5), 1150-1162.
+- **Muñoz-Arango, A. M., et al.** (2025). Methodology for estimating indirect emissions from Scope 3 applied in Valencia (Spain). *Journal of Cleaner Production*, 434, 139962.
+- **Mohareb, E. A., et al.** (2018). Cities' role in mitigating United States food system greenhouse gas emissions. *Environmental Science & Technology*, 52(10), 5545-5554.
+
+### Policy & Dietary Guidelines
+- **Gezondheidsraad** (2023). A Healthy Protein Transition. Health Council of the Netherlands.
+- **Willett, W., et al.** (2019). Food in the Anthropocene: The EAT-Lancet Commission on healthy diets from sustainable food systems. *The Lancet*, 393(10170), 447-492.
+- **Voedingscentrum** (n.d.). Richtlijnen Schijf van Vijf [Wheel of Five Guidelines]. Netherlands Nutrition Centre.
+
+### Climate Governance Literature
+- **Acuto, M., & Leffel, B.** (2021). Understanding the global ecosystem of city networks. *Urban Studies*, 58(9), 1758-1774.
+- **Gordon, D. J., & Johnson, C. A.** (2018). City-networks, global climate governance, and the road to 1.5°C. *Current Opinion in Environmental Sustainability*, 30, 35-41.
+- **Kuramochi, T., et al.** (2020). Beyond national climate action: The impact of region, city, and business commitments on global greenhouse gas emissions. *Climate Policy*, 20(3), 275-291.
+- **Seto, K. C., et al.** (2012). Urban land teleconnections and sustainability. *PNAS*, 109(20), 7687-7692.
+- **Spiliotopoulou, M., & Roseland, M.** (2020). Urban Sustainability: From Theory Influences to Practical Agendas. *Sustainability*, 12(18), 7245.
+
+### International Climate Policy
+- **European Parliament & Council** (2021). Regulation (EU) 2021/1119: European Climate Law.
+- **UNFCCC** (2025). The Paris Agreement. United Nations Climate Change.
+- **UNEP** (2024). Emissions Gap Report 2024. United Nations Environment Programme.
+
+### LCA & Environmental Impact
+- **Poore, J., & Nemecek, T.** (2018). Reducing food's environmental impacts through producers and consumers. *Science*, 360(6392), 987-992.
+- **Crippa, M., et al.** (2021). Food systems are responsible for a third of global anthropogenic GHG emissions. *Nature Food*, 2(3), 198-209.
+
+### Cultural & Demographic Context
+- **Galenkamp, H., et al.** (2025). Cohort Profile Update: The Healthy Life in an Urban Setting (HELIUS) Study. *International Journal of Epidemiology*, 54(3), dyaf071.
+- **Stronks, K., et al.** (2013). Unravelling the impact of ethnicity on health in Europe: The HELIUS study. *BMC Public Health*, 13, 402.
 
 ---
 
-### **MasterHybridModel.py** — Enhanced Analysis
-**Best For:** High-level scenario comparison & understanding diet differences
+## 🎓 Model Versions & Evolution
+
+### **Master Hybrid Amsterdam Model v3.py** ⭐ CURRENT (January 2026)
+**Best For:** Publication-ready analysis with comprehensive sensitivity analysis
+
+**Key Features:**
+- 30 publication-ready visualizations (core + appendix outputs)
+- 64 CSV exports for full reproducibility
+- 5-visualization sensitivity analysis suite
+- APA-formatted tables (PNG + CSV)
+- Paul Tol colorblind-safe palette
+- 31 food items across 14 granular categories
+- Fixed infrastructure approach (Scope 1+2 constant at 1,750 kton)
+- Calibrated to Monitor 2024 within 0.06% error
+
+**Outputs:**
+- Charts 1-18: Full analytical suite (nexus, transitions, scopes, deltas)
+- Charts 16a-16e: Comprehensive sensitivity analysis
+- `data/results/`: 64 CSV files with complete data exports
+
+**Runtime:** ~100-120 seconds
+
+---
+
+### **Master_hybrid_Amsterdam_Model-v2** (December 2025)
+**Best For:** Strategic planning with distance-to-goals analysis
+
+**Innovations:**
+- Distance-to-Goals heatmap (reduction pathways)
+- 9 diet scenarios including Mediterranean
+- Separate mass vs. emissions visualization
+- 16 core visualizations
+
+**Key Addition:** Visual gap analysis showing % emission reduction needed for each baseline→goal transition
+
+---
+
+### **Master_hybrid_Amsterdam_Model.py** (November 2025)
+**Best For:** Behavioral realism with education effects
+
+**Key Innovation:**
+- Dual-Factor Beta (Volume × Behavioral)
+- Education modifier (0.85 for high-education, 1.10 for low-education)
+- Empirical baseline from Monitor 2024 (48% plant/52% animal)
+- Neighborhood hotspot analysis
+
+**Counter-intuitive Finding:** Wealthy, educated areas show similar emissions to middle-income areas due to plant-based preferences offsetting higher consumption volumes.
+
+---
+
+### **MasterHybridModel.py** (October 2025)
+**Best For:** High-level scenario comparison
 
 **Components:**
-- `Scope3Engine` — Advanced calculation engine
-- 6 dietary scenarios (Monitor, High-Risk, Metabolic, Dutch Goal, Amsterdam Goal, EAT-Lancet)
+- 6 dietary scenarios
 - 16 foods × 3 metrics (CO2, land, water)
 - 7 Amsterdam neighborhoods with income data
-
-**Visualizations:**
-1. **1_Nexus_Analysis.png** — CO2/Land/Water metrics across 6 diets
-2. **2a/2b/2c_Transition_*.png** — Baseline vs 3 policy goals (transitions)
-3. **3_All_Diets_Plates.png** — Diet compositions (6 pie charts)
-4. **4_Impact_Stack.png** — Stacked emissions by category
-5. **5_Neighborhood_Hotspots.png** — Spatial emissions distribution
+- 5 core visualizations
 
 ---
 
-### **Master_hybrid_Amsterdam_Model.py** — Advanced Version
-**Best For:** Most accurate Amsterdam-specific analysis with behavioral realism
+### **hybridMNodelAMS.py** (September 2025)
+**Best For:** Foundational spatial analysis
 
-**Key Innovations:**
-- **Empirical Baseline:** Amsterdam Monitor 2024 data (48% plant/52% animal)
-- **Dual-Factor Beta:** 
-  - Volume scaling (income): Wealthier neighborhoods consume more total food
-  - Behavioral modifier (education): High-education areas prefer plant-based foods
-- **Counter-intuitive Finding:** Wealthy, educated areas (Zuid 70% education, 0.85 meat modifier) show similar emissions to middle-income areas because education-driven dietary composition offsets income-driven volume increases
-- **Neighborhood Hotspot Modifiers:** Shows meat_modifier per area (0.85 for high-education, 1.10 for low-education)
-
-**Outputs:** 5 visualizations + hotspot analysis with education-adjusted emissions
-- Charts: 1_Nexus, 2a/2b/2c_Transitions (Dutch/Amsterdam/EAT), 3_All_Diets, 4_Impact_Stack, 5_Neighborhood_Hotspots
-- Console report with meat modifiers and neighborhood breakdown
+**Focus:**
+- Neighborhood-level emissions mapping
+- Income-based scaling only (no education effects yet)
+- Basic food categories
 
 ---
 
-### **Master_hybrid_Amsterdam_Model-v2** — Comprehensive Analysis
-**Best For:** Strategic planning & understanding transformation difficulty
+## 🚀 Installation & Usage
 
-**New Features:**
-- 9 diet scenarios (adds Schijf van 5 and Mediterranean)
-- **Distance-to-Goals Heatmap** — % emission reduction needed for each pathway
-- **All Plates Mass** — Physical consumption vs emissions separated
-- **All Emissions Donuts** — Composition + total per diet
-
-**Visualizations (16 charts saved to /images folder):**
-1. **1_Nexus_Analysis.png** — Multi-resource comparison (CO2, land, water)
-2. **2_All_Plates_Mass.png** — Physical diet compositions across all diets
-3. **3_All_Emissions_Donuts.png** — Emission breakdown with totals
-4. **4_Distance_To_Goals.png** — Heatmap of reduction pathways
-5. **5a-5e_Transition_*.png** — Baseline to goal transitions (Dutch, Amsterdam, EAT-Lancet, Schijf, Mediterranean)
-6. **6_Scope12_vs_Scope3_Total.png** — Grouped bars: Scope 1+2, Scope 3, and Total
-7. **7_Scope_Shares.png** — Stacked % bars showing scope proportions
-8. **8_All_Total_Emissions_Donuts.png** — 3×3 grid of donut charts by diet
-9. **9_Scope_Breakdown_by_Category.png** — Category-level scope analysis
-10. **10_Multi_Resource_Impact.png** — CO2/Land/Water comparative analysis
-11. **11_Emissions_vs_Protein.png** — Protein efficiency analysis
-12. **12_Diets_vs_Goals_MultiResource.png** — Multi-metric comparison matrix
-13. **12b_Emissions_vs_Reference_MultiGoal.png** — Individual goal comparisons
-14. **13_Amsterdam_Food_Infographic.png** — Comprehensive system infographic
-15. **14a_Delta_Analysis_Total_Emissions.png** — Total emissions change vs reference goals
-16. **14b_Delta_Analysis_By_Category.png** — Category-level emissions deltas
-17. **14c_Mass_vs_Emissions_Share.png** — Mass vs CO₂ share analysis
-18. **14d_Scope_Breakdown_Baseline_vs_Goals.png** — Scope 1+2 vs 3 breakdown
-19. **15_Table_APA_Emissions.png** — APA-formatted emissions table (also exported as CSV)
-20. **16_Sensitivity_Analysis_Tornado.png** — Tornado diagram for sensitivity analysis
-
----
-
-### **Master Hybrid Amsterdam Model v3.py** ⭐ LATEST
-**Best For:** Research publication, comprehensive policy analysis with delta analysis
-
-**Key Enhancements:**
-- **Expanded Food System:** 31 food items across 14 granular categories
-- **Delta Analysis:** Quantifies emissions changes (by category) needed to achieve goals
-- **Sensitivity Analysis:** Tornado diagrams showing impact of factors, adherence, and waste
-- **APA Tables:** Publication-ready emissions comparison (PNG + CSV export)
-- **Colorblind-Friendly:** Paul Tol palette for accessibility
-- **Composite Beta Calculation:** Two multiplicative factors
-  - Volume Beta (income-driven): How much total food someone buys
-  - Behavioral Modifiers (education-driven): What TYPE of food they choose
-- **Complete Scope 1+2 System:** Transparent breakdown matching Monitor 2024's 1,750 kton
-  - Base food consumption: 1,541 kton (88.1%)
-  - Food waste (11%): 169 kton (9.7%)
-  - Retail/distribution (2.5%): 39 kton (2.2%)
-  - **Calibrated Factors:** 31 items with verified scope12 factors
-- **Scope 1+2 vs Scope 3 Breakdown:** Separates local production (11–14%) from supply chain (86–89%)
-  - Scope 1+2: Direct production, waste, retail/cold chain
-  - Scope 3: Land use, transportation, processing, packaging
-
-**14 Food Categories (31 explicit items):**
-1. **Red Meat** — Beef, Pork
-2. **Poultry** — Chicken
-3. **Dairy (Liquid)** — Milk
-4. **Dairy (Solid) & Eggs** — Cheese, Eggs
-5. **Fish** — Fish
-6. **Plant Protein** — Pulses, Nuts, Meat_Subs
-7. **Staples** — Bread, Pasta
-8. **Rice** — Rice
-9. **Veg & Fruit** — Vegetables, Fruit
-10. **Ultra-Processed** — Sugar, Processed_Foods, Ready_Meals, Instant_Noodles, Instant_Pasta, Snacks
-11. **Beverages & Additions** — Coffee, Tea, Alcohol
-12. **Fats (Solid, Animal)** — Butter, Animal_Fats, Frying_Oil_Animal
-13. **Oils (Plant-based)** — Oil_Plant
-14. **Condiments** — Condiment_Sauces, Spice_Mixes
-
-**9 Diet Scenarios with 4 Reference Goals:**
-- Baseline: Monitor 2024 (Current consumption)
-- Theoretical: Amsterdam Theoretical, Metropolitan, Metabolic Balance
-- **Reference Goals (for delta analysis):**
-  - Dutch Goal (60:40 plant:animal)
-  - Amsterdam Goal (70:30 plant:animal)
-  - EAT-Lancet (Planetary health)
-  - Schijf van 5 (Dutch dietary guidelines with 50:50 plant:animal)
-- Mediterranean Diet
-
-**Comprehensive Visualizations (16 charts):**
-
----
-
-## 🚀 Quick Start
-
-### Installation
+### Prerequisites
 ```bash
-# Create virtual environment
+Python 3.8+
+pandas
+numpy
+matplotlib
+seaborn
+```
+
+### Setup
+```bash
+# Clone repository
+git clone https://github.com/agaathm87/code-for-framework.git
+cd code-for-framework
+
+# Create virtual environment (recommended)
 python -m venv venv
 
-# Activate
+# Activate environment
 # Windows:
 venv\Scripts\activate
 # Mac/Linux:
@@ -624,24 +772,121 @@ source venv/bin/activate
 pip install pandas numpy matplotlib seaborn
 ```
 
-### Run Latest Analysis
+### Running the Analysis
 ```bash
+# Run latest version (v3.1)
 python "Master Hybrid Amsterdam Model v3.py"
+
+# Alternative versions
+python Master_hybrid_Amsterdam_Model-v2.py      # v2 with distance-to-goals
+python Master_hybrid_Amsterdam_Model.py          # Original with education effects
+python MasterHybridModel.py                      # Simplified 6-scenario version
 ```
 
-**Outputs:**
-- **16 PNG charts** saved to `/images` folder (colorblind-friendly)
-- **1 CSV file** (APA-formatted emissions table) in `/images` folder
-- Console report with statistics and hotspot analysis
-- All visualizations use Paul Tol colorblind-safe palette
-
-### Run Alternative Versions
-```bash
-python Master_hybrid_Amsterdam_Model-v2      # Comprehensive (with heatmap)
-python Master_hybrid_Amsterdam_Model.py      # Advanced (original)
-python MasterHybridModel.py                  # Enhanced (simpler)
-python hybridMNodelAMS.py                    # Foundational
+### Expected Outputs
 ```
+images/
+├── core/                # 30 PNG visualizations (150-300 DPI)
+├── appendix/            # Full 9-diet transparency
+data/
+├── results/             # 64 CSV files for reproducibility
+```
+
+---
+
+## 🌟 Key Contributions to Urban Climate Science
+
+### Theoretical Contributions
+
+**1. Reconfigured GHG Scope Framework for Cities**
+- Adapted corporate-oriented GHG Protocol for municipal food systems
+- Demonstrated that territorial accounting (Scope 1+2) captures only 39% of food-related impact
+- Established consumption-based accounting as prerequisite for net-zero credibility
+
+**2. Operationalized "Urban Paradox" Concept**
+- Quantified governance gap: cities expected to lead climate action while lacking Scope 3 visibility
+- Identified "infrastructural lock-ins" (Waste-to-Energy dependencies) as structural barriers
+- Mapped 221 feedback loops constraining municipal intervention capacity
+
+**3. Dual-Driver Mechanism for Heterogeneity**
+- Volume Beta (income): Economic purchasing power determines total consumption
+- Plant Beta (education): Cultural capital shapes dietary composition
+- Revealed "Volume vs. Composition Paradox": wealthy educated areas ≈ middle-income emissions
+
+### Methodological Innovations
+
+**4. Hybrid Modeling Framework**
+- First integration of macro-LCA with micro-demographic spatial simulation for urban food
+- Bridges Boyer & Ramaswami (2020) transboundary logic with Muñoz-Arango (2025) neighborhood granularity
+- Enables "what, where, who" analysis: emissions × location × demographics
+
+**5. Fixed Infrastructure Approach**
+- Novel technique isolating behavioral (Scope 3) from operational (Scope 1+2) interventions
+- Demonstrates that under current capacity, dietary shifts offer 10× higher leverage than efficiency gains
+- Facilitates near-term policy design without requiring infrastructure transformation modeling
+
+**6. Sensitivity Transparency**
+- 5-visualization suite reveals diet adherence as critical uncertainty (±897 kton vs ±135 kton for waste)
+- Cross-scenario analysis shows animal-heavy diets have 2× waste sensitivity
+- Establishes behavioral compliance as primary determinant, not technical parameters
+
+### Policy-Relevant Findings
+
+**7. Quantified Socioeconomic Equity Constraints**
+- 35% of minimum-income households face food poverty
+- Without subsidies, achievable reduction drops from 25.3% to 15-18%
+- Demonstrates that climate targets must integrate affordability interventions
+
+**8. Validated Amsterdam's Progressive Status**
+- City already at 48% plant protein (vs 43% national) due to demographic composition
+- Yet 52% "stubborn core" of animal consumption drives 68% of emissions
+- Confirms early municipal interventions are effective but insufficient alone
+
+**9. Established Food as Central Climate Lever**
+- Food represents ~30% of global emissions yet remains marginal in urban climate strategies
+- Amsterdam Goal (70:30) offers -1,137 kton reduction—equivalent to removing 247,000 cars
+- Highest-leverage intervention: dietary shift > waste reduction > local sourcing
+
+### Contribution to "Global Ecosystem of City Networks"
+
+**10. Scalable Methodology**
+- Framework replicable for any metropolitan city with local calibration
+- Addresses post-Paris governance gap (Gordon & Johnson, 2018)
+- Operationalizes subnational potential projected at 3.8-5.5% global emission reduction (Kuramochi et al., 2020)
+
+**11. Data Production Capability**
+- Transforms cities from passive standard recipients to active data producers (Acuto & Leffel, 2021)
+- 64 CSV exports enable municipal monitoring dashboards
+- Bridges science-policy gap through transparent, auditable calculations
+
+---
+
+## 🔍 Understanding "The Urban Paradox"
+
+### The Problem
+Metropolitan cities face a structural contradiction:
+1. **Expected Role**: Lead global climate mitigation (C40, Covenant of Mayors)
+2. **Accounting Framework**: Territorial boundaries (Scope 1+2) designed for nation-states
+3. **Actual Impact**: 61% of food emissions occur in transboundary supply chains (Scope 3)
+4. **Governance Capacity**: Municipalities lack legal authority over international agriculture
+
+### The Evidence
+- Amsterdam's 105,000 hectare land footprint = 5.5× city surface area
+- 85% of food sourced outside Netherlands
+- 2,737 kton CO₂e in Scope 3 vs 1,750 kton in Scope 1+2
+- Red meat (1,360 kton) > All local operations (1,750 kton)
+
+### The Solution Pathway
+**Shift 1**: From territorial reporting → consumption-based management  
+**Shift 2**: From passive standards recipient → active data producer  
+**Shift 3**: From sectoral silos → integrated food-climate-health strategies  
+**Shift 4**: From efficiency focus → behavioral transformation priority  
+
+**Primary Leverage Points** (ranked by impact):
+1. **Dietary shift to 70:30** (-25.3%, -1,137 kton)
+2. **Waste reduction** (-2.7%, immediate implementation)
+3. **Supply chain optimization** (-5-8%, long-term)
+4. **Local sourcing expansion** (-2-4%, capacity-limited)
 
 ---
 
@@ -1091,15 +1336,86 @@ Output files:
 
 ---
 
-## 📞 Contact
+## 📞 Contact & Collaboration
+
+**For Academic Inquiries:**
+- Research methodology questions
+- Model replication for other cities
+- Collaboration opportunities
+
+**For Policy Applications:**
+- Municipal climate strategy integration
+- Stakeholder workshop facilitation
+- Custom scenario development
+
+**Repository:** [github.com/agaathm87/code-for-framework](https://github.com/agaathm87/code-for-framework)
 
 **Project:** UvA Complex Systems for Policy — Challenge-Based Project  
-**Last Updated:** January 2026  
+**Last Updated:** January 30, 2026  
 **Python:** 3.8+  
-**Status:** Active development  
 
 For questions or contributions, please submit a pull request.
 
 ---
 
-*This model integrates decades of life cycle assessment research, behavioral science, and food systems analysis to provide policymakers with science-based tools for dietary transition planning in Amsterdam.*
+## ✅ Project Status
+
+**Current Status:** ✅ **COMPLETED & PUBLISHED**  
+**Submission Date:** January 30, 2026  
+**Final Report:** 14,165 words (excluding citations, tables, appendices)
+
+**Deliverables:**
+- ✅ Final academic report (PDF)
+- ✅ Policy brief for Gemeente Amsterdam
+- ✅ 30 publication-ready visualizations
+- ✅ 64 CSV data exports
+- ✅ Presentation slides
+- ✅ Comprehensive documentation
+
+**Model Validation:**
+- ✅ Calibrated to Monitor 2024 baseline (0.06% error)
+- ✅ Cross-validated with EAT-Lancet and Dutch guidelines
+- ✅ Peer-reviewed through academic supervision
+- ✅ Stakeholder feedback integrated (Gemeente Amsterdam)
+
+**Future Development** (Post-Project):
+- [ ] Dynamic infrastructure modeling (variable Scope 1+2)
+- [ ] Integration with real-time municipal dashboards
+- [ ] Multi-city comparative analysis (Rotterdam, Utrecht, The Hague)
+- [ ] Cost-benefit analysis module
+- [ ] Interactive web application (Streamlit/Plotly)
+- [ ] Temporal projections to 2030/2050
+
+---
+
+## 🙏 Acknowledgments
+
+**Project Partner:**
+- Gemeente Amsterdam, Department of Sustainability — for data access and policy context
+
+**Academic Supervision:**
+- UvA Complex Systems for Policy program faculty
+
+**Data Providers:**
+- RIVM (National Institute for Public Health)
+- CBS (Statistics Netherlands)
+- Amsterdam Research & Statistics (O&S)
+
+**Methodological Foundations:**
+- Boyer & Ramaswami (transboundary LCA framework)
+- Muñoz-Arango et al. (spatial microsimulation)
+- EAT-Lancet Commission (planetary health boundaries)
+
+**Open-Source Community:**
+- Python scientific computing ecosystem (NumPy, pandas, Matplotlib, Seaborn)
+- Paul Tol (colorblind-safe visualization palettes)
+
+---
+
+*"Effective climate action hinges on addressing Scope 3 emissions. This research bridges the governance gap between territorial accounting and consumption-based reality, providing metropolitan cities with the data production capability needed to move from passive targets to active climate leadership."*
+
+**— Research Team, January 2026**
+
+---
+
+*This model integrates life cycle assessment research, behavioral science, and food systems analysis to provide policymakers with science-based tools for dietary transition planning in Amsterdam.*
